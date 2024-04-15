@@ -1,3 +1,8 @@
+@font-face {
+    font-family: 'Arial Rounded MT Regular';
+    font-weight: normal;
+    src: url('fonts/Arial Rounded MT Regular.ttf');
+  }
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
