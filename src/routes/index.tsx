@@ -1,0 +1,181 @@
+import { createBrowserRouter } from "react-router-dom";
+import { Suspense, lazy } from "react";
+
+const App = lazy(() => import("../App"));
+const AdminLayout = lazy(() => import("../admin/AdminLayout"));
+const Home = lazy(() => import("../pages/Home/Home"));
+const AdminHome = lazy(() => import("../admin/AdminHome/AdminHome"));
+
+// Setting Pages
+const Settings = lazy(() => import("../admin/Settings/Settings"));
+const Products = lazy(() => import("../admin/MyShop/Products/Products"));
+const Orders = lazy(() => import("../admin/MyShop/Orders/Orders"));
+const Customers = lazy(() => import("../admin/MyShop/Customers/Customers"));
+const Category = lazy(() => import("../admin/MyShop/Category/Category"));
+
+
+// Site Settings Pages
+const SiteSetting = lazy(() => import("../admin/Settings/SiteSetting/SiteSetting"));
+const Social = lazy(() => import("../admin/Settings/Social/Social"));
+const Slider = lazy(() => import("../admin/Settings/Slider/Slider"));
+const Video = lazy(() => import("../admin/Settings/Video/Video"));
+const Footer = lazy(() => import("../admin/Settings/Footer/Footer"));
+
+// Other Pages
+const Currency = lazy(() => import("../admin/Currency/Currency"));
+const Notification = lazy(() => import("../admin/Notification/Notification"));
+const CustomPage = lazy(() => import("../admin/CustomPage/CustomPage"));
+const AdminLogin = lazy(() => import("../admin/AdminLogin"));
+
+export const router = createBrowserRouter([
+  {
+    path: "/",
+    element: (
+      <Suspense fallback={<div>Loading...</div>}>
+        <App />
+      </Suspense>
+    ),
+    children: [
+      {
+        path: "/",
+        element: (
+          <Suspense fallback={<div>Loading...</div>}>
+            <Home />
+          </Suspense>
+        ),
+      },
+    ],
+  },
+  {
+    path: "/admin",
+    element: (
+      <Suspense fallback={<div>Loading...</div>}>
+        <AdminLayout />
+      </Suspense>
+    ),
+    children: [
+      {
+        path: "",
+        element: (
+          <Suspense fallback={<div>Loading...</div>}>
+            <AdminHome />
+          </Suspense>
+        ),
+      },
+      {
+        path: "products",
+        element: (
+          <Suspense fallback={<div>Loading...</div>}>
+            <Products />
+          </Suspense>
+        ),
+      },
+      {
+        path: "orders",
+        element: (
+          <Suspense fallback={<div>Loading...</div>}>
+            <Orders />
+          </Suspense>
+        ),
+      },
+      {
+        path: "customers",
+        element: (
+          <Suspense fallback={<div>Loading...</div>}>
+            <Customers />
+          </Suspense>
+        ),
+      },
+      {
+        path: "category",
+        element: (
+          <Suspense fallback={<div>Loading...</div>}>
+            <Category />
+          </Suspense>
+        ),
+      },
+      {
+        path: "",
+        element: (
+          <Suspense fallback={<div>Loading...</div>}>
+            <Settings />
+          </Suspense>
+        ),
+        children: [
+          {
+            path: "site-setting",
+            element: (
+              <Suspense fallback={<div>Loading...</div>}>
+                <SiteSetting />
+              </Suspense>
+            ),
+          },
+          {
+            path: "social",
+            element: (
+              <Suspense fallback={<div>Loading...</div>}>
+                <Social />
+              </Suspense>
+            ),
+          },
+          {
+            path: "slider",
+            element: (
+              <Suspense fallback={<div>Loading...</div>}>
+                <Slider />
+              </Suspense>
+            ),
+          },
+          {
+            path: "video",
+            element: (
+              <Suspense fallback={<div>Loading...</div>}>
+                <Video />
+              </Suspense>
+            ),
+          },
+          {
+            path: "footer",
+            element: (
+              <Suspense fallback={<div>Loading...</div>}>
+                <Footer />
+              </Suspense>
+            ),
+          },
+        ],
+      },
+      {
+        path: "currency",
+        element: (
+          <Suspense fallback={<div>Loading...</div>}>
+            <Currency />
+          </Suspense>
+        ),
+      },
+      {
+        path: "custom-page",
+        element: (
+          <Suspense fallback={<div>Loading...</div>}>
+            <CustomPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: "notification",
+        element: (
+          <Suspense fallback={<div>Loading...</div>}>
+            <Notification />
+          </Suspense>
+        ),
+      },
+      {
+        path: "login",
+        element: (
+          <Suspense fallback={<div>Loading...</div>}>
+            <AdminLogin />
+          </Suspense>
+        ),
+      },
+    ],
+  },
+]);

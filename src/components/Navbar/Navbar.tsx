@@ -54,6 +54,7 @@ function Navbar() {
                         alt="Lightmode"
                     />
                 </div>
+                
 
                 <div className="flex justify-center gap-3">
                     <button className="btn">sign up</button>

@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Slider from "../../components/Slider/Slider";
 import PopularCards from "./components/PopularCards";
 import Shuffle from "./components/Shuffle";
+import axios from "axios";
+import { ICard } from "../../models/ICard";
 
 function Home() {
+  const [products, setProducts] = useState<ICard>([]);
+ 
   return (
     <div className="py-10">
       <Slider />

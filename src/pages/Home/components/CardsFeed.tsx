@@ -15,11 +15,11 @@ function CardsFeed(data: { title: string; link: string; cards: ICard[] }) {
       </div>
 
       <div className="flex  justify-start overflow-x-auto scrollbar-none gap-12 mt-10">
-        {data.cards.map((card, idx) =>  <Card key={idx} image={card.image} category={card.category} title={card.title} link={card.link} /> )}
+        {data.cards.slice(0, data.cards.length / 2).map((card, idx) =>  <Card key={idx} data={card} /> )}
       </div>
-      <div className="flex justify-start overflow-x-scroll scrollbar-none gap-12 mt-10">
-        {data.cards.map((card, idx) => <Card key={idx} image={card.image} category={card.category} title={card.title} link={card.link} /> )}
-      </div>
+      {/* <div className="flex justify-start overflow-x-scroll scrollbar-none gap-12 mt-10">
+        {data.cards.slice( data.cards.length / 2, data.cards.length).map((card, idx) => <Card key={idx} image={card.image} category={card.category} title={card.title} /> )}
+      </div> */}
     </div>
   );
 }

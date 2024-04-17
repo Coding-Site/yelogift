@@ -1,7 +1,14 @@
+import { ICategory } from "./ICategory";
+
 export interface ICard {
-    image: string,
-    link: string,
-    title?: string
-    category?: string,
-    dark?: boolean
+  id: number
+  name: string
+  description: string
+  price: number
+  image: string
+  title?: string
+  dark?: boolean
+  category_id?: number
+  discount?: number
+  category?: ICategory
 }

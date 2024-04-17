@@ -1,17 +1,15 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { ICard } from "../../../models/ICard";
 
 function PopularCards() {
-  const [cards, setCards] = useState([
-    { image: "cards/card1.png", link: "/" },
-    { image: "cards/card1.png", link: "/" },
-  ]);
+  const [popularProducts, setPopularProducts] = useState<ICard[]>([]);
 
   useEffect(() => {
     axios
       .get(`${import.meta.env.VITE_BASEURL}/api/home/products/popular`)
-      .then((data) => setCards(data.data.data));
+      .then((populars) => setPopularProducts(populars.data.data));
   }, []);
 
   return (
@@ -24,7 +22,7 @@ function PopularCards() {
       </div>
 
       <div className="flex overflow-x-scroll scrollbar-none">
-        {cards.map((card, idx) => (
+        {popularProducts.map((card:ICard, idx) => (
           <img
             className="w-[300px]"
             src={`${import.meta.env.VITE_BASEURL}/public/storage/${card.image}`}

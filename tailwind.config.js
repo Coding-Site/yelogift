@@ -26,7 +26,7 @@ export default {
         poppins: [  '"Poppins", sans-serif'],
         arial: [  '"Arial Rounded MT Regular", sans-serif']
       },
-    },
+    }
   },
   plugins: [require("daisyui"), require('tailwind-scrollbar')],
   daisyui: {
