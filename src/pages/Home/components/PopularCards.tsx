@@ -1,10 +1,10 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { ICard } from "../../../models/ICard";
+import { IProduct } from "../../../models/IProduct";
 
 function PopularCards() {
-  const [popularProducts, setPopularProducts] = useState<ICard[]>([]);
+  const [popularProducts, setPopularProducts] = useState<IProduct[]>([]);
 
   useEffect(() => {
     axios
@@ -22,12 +22,16 @@ function PopularCards() {
       </div>
 
       <div className="flex overflow-x-scroll scrollbar-none">
-        {popularProducts.map((card:ICard, idx) => (
-          <img
-            className="w-[300px]"
-            src={`${import.meta.env.VITE_BASEURL}/public/storage/${card.image}`}
-            key={idx}
-          />
+        {popularProducts.map((card: IProduct, idx) => (
+          <Link to={`/product/${card.id}`}  key={idx}>
+            <img
+              className="w-[300px]"
+              src={`${import.meta.env.VITE_BASEURL}/public/storage/${
+                card.image
+              }`}
+             
+            />
+          </Link>
         ))}
       </div>
     </div>

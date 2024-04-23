@@ -14,22 +14,9 @@ interface Props {
 
 function App() {
   return (
-    <div className="bg-mainBlack text-mainWhite">
+    <div className="bg-mainBlack dark:bg-mainWhite text-mainWhite">
       <NonAdminLayout />
-      {/* <BrowserRouter>
-      
-        <Navbar />
-        <Routes>
-          <Route path="/"  element={<Home />} />
 
-          <Route path="cats" element={<Categories />} />
-          <Route path="admin" element={<Admin   />} >
-            <Route path="home" element={<AdminHome />}/>
-          </Route>
-        </Routes>
-
-        <Footer />
-      </BrowserRouter> */}
     </div>
   );
 }

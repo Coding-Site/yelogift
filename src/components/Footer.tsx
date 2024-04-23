@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 function Footer() {
   return (
     <footer className="bg-mainLightBlack pt-10 pb-5 text-mainWhite ">
-      <div className="flex w-full justify-between container border-b border-gray-700 pb-10">
+      <div className="flex w-full flex-col gap-y-3 sm:flex-row justify-between container border-b border-gray-700 pb-10">
 
         <div className="flex flex-col gap-3 ">
           <img className="w-[150px]" src="/logo.png" alt="logo" />

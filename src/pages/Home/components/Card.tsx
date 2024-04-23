@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"
-import { ICard } from "../../../models/ICard"
+import { IProduct } from "../../../models/IProduct"
 
-function Card( {data} ) {
+function Card( {data}: {data: IProduct} ) {
   return (
     <Link to="/" className='flex flex-shrink-0 flex-col items-center gap-2 bg-gray-200 rounded-lg py-2 h-full w-60 px-3'>
         <img className="w-[60%] mx-auto"  src="cards/top.png" alt="top card" />

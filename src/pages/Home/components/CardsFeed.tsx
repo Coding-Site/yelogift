@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
-import { ICard } from "../../../models/ICard";
 import Card from "./Card";
+import { IProduct } from "../../../models/IProduct";
 
-function CardsFeed(data: { title: string; link: string; cards: ICard[] }) {
+function CardsFeed(data: { title: string; link: string; products: IProduct[] }) {
   return (
     <div className="flex flex-col w-full container py-5">
       <div className="w-full flex justify-between border-b border-mainWhite border-opacity-65 pb-5">
@@ -15,11 +15,11 @@ function CardsFeed(data: { title: string; link: string; cards: ICard[] }) {
       </div>
 
       <div className="flex  justify-start overflow-x-auto scrollbar-none gap-12 mt-10">
-        {data.cards.slice(0, data.cards.length / 2).map((card, idx) =>  <Card key={idx} data={card} /> )}
+        {data.products.slice(0, data.products.length / 2).map((card, idx) =>  <Card key={idx} data={card} /> )}
       </div>
-      {/* <div className="flex justify-start overflow-x-scroll scrollbar-none gap-12 mt-10">
-        {data.cards.slice( data.cards.length / 2, data.cards.length).map((card, idx) => <Card key={idx} image={card.image} category={card.category} title={card.title} /> )}
-      </div> */}
+      <div className="flex justify-start overflow-x-scroll scrollbar-none gap-12 mt-10">
+        {data.products.slice( data.products.length / 2, data.products.length).map((product, idx) => <Card key={idx} data={product} /> )}
+      </div>
     </div>
   );
 }

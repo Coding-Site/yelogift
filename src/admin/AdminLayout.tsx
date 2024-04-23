@@ -1,12 +1,11 @@
-import { useAuth } from '../hooks/useAuth'
-import Sidebar from './Sidebar/Sidebar'
 import { Outlet } from 'react-router-dom'
+import Sidebar from './Sidebar/Sidebar'
 
 
 
 
 function AdminLayout() {
-  const {user} = useAuth()
+
   return (
     <div className='flex bg-mainLightBlack text-mainWhite w-full min-h-screen '>
         <Sidebar />

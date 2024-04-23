@@ -1,11 +1,13 @@
 import themes from "daisyui/src/theming/themes"
-const mainColor = '#FCD535';
+const mainLightColor = '#FCD535';
+const mainColor = '#F0B90B';
 const mainBlack = '#0B0E11';
 const mainLightBlack = '#1E2329';
 const mainWhite = '#EAECEF';
 
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: 'class',
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
@@ -21,11 +23,21 @@ export default {
         mainLightBlack,
         mainWhite,
         main: mainColor,
+        mainLightColor
       },
       fontFamily: {
-        poppins: [  '"Poppins", sans-serif'],
-        arial: [  '"Arial Rounded MT Regular", sans-serif']
+        poppins: ['"Poppins", sans-serif'],
+        arial: ['"Arial Rounded MT Regular", sans-serif']
       },
+      'input': {
+        padding: '.5rem',
+        borderRadius: '.25rem !important',
+        borderColor: '#CBD5E0',
+        borderWidth: '1px',
+        backgroundColor: '#000000',
+        color: '#4A5568',
+        fontSize: '1rem',
+      }
     }
   },
   plugins: [require("daisyui"), require('tailwind-scrollbar')],
@@ -59,4 +71,6 @@ export default {
     ]
   },
 }
+
+
 

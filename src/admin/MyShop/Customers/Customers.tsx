@@ -1,7 +1,8 @@
 
+
 function Customers() {
   return (
-    <div>Ciustomers</div>
+    <div>Customers</div>
   )
 }
 

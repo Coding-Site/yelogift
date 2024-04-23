@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ISlide } from "../../models/ISlide";
 import "./Slider.css";
 function Slider() {
@@ -11,20 +11,34 @@ function Slider() {
   ]);
 
   const GoNext = () => {
-    const activeIndex = slides.findIndex((s) => s.checked);
-    const modified: ISlide[] = slides.map((sl, idx) => {
-        if(idx == activeIndex){
-          return {...sl, checked: false}
-        }
-        if(idx == activeIndex +1){
-          return {...sl, checked: true}
-        }
-      return sl;
-    }) ;
+    // const activeIndex = slides.findIndex((s) => s.checked);
+    // const modified: ISlide[] = slides.map((sl, idx) => {
+    //     if(idx == activeIndex){
+    //       return {...sl, checked: false}
+    //     }
+    //     if(idx == activeIndex +1){
+    //       return {...sl, checked: true}
+    //     }
+    //   return sl;
+    // }) ;
 
-    setSliedes(modified)
+    // setSliedes(modified)
 
+    
+    // const elements: Element[] = Array.from(
+    //   document.getElementsByClassName("slideItem")
+    // );
+
+    // (elements as HTMLInputElement[]).forEach((element) => {
+    //   let target: HTMLInputElement;
+    //   if (element.defaultChecked) {
+    //     target = element.nextElementSibling as HTMLInputElement;
+    //     target.click();
+    //   }
+    // });
   };
+
+  useEffect(() => {}, []);
 
   const GoPrev = () => {
     const activeIndex = slides.findIndex((s) => s.checked);
@@ -44,11 +58,17 @@ function Slider() {
   };
 
   return (
-    <section  id="slider" className="relative h-auto">
-      <button className="next absolute top-[50%] -left-44 " onClick={GoNext}>
+    <section id="slider" className="relative h-auto">
+      <button
+        className="next absolute top-[20%] md:top-[50%]  md:-left-44 -left-20 "
+        onClick={GoNext}
+      >
         <img src="slider/next.png" />
       </button>
-      <button className="prev absolute top-[50%] -right-44" onClick={GoPrev}>
+      <button
+        className="prev absolute top-[20%] md:top-[50%] md:-right-44 -right-20 "
+        onClick={GoPrev}
+      >
         <img src="slider/prev.png" />
       </button>
       {slides.map((slide) => (
@@ -64,7 +84,11 @@ function Slider() {
       ))}
       {slides.map((slide) => (
         <label key={slide.id} htmlFor={slide.htmlFor} id={slide.id}>
-          <img src={slide.img} className="w-full h-full" alt={slide.id} />
+          <img
+            src={slide.img}
+            className="w-[100px] sm:w-[300px] lg:w-full h-[150px] sm:h-[500px] lg:h-full"
+            alt={slide.id}
+          />
         </label>
       ))}
     </section>

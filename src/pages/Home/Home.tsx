@@ -4,13 +4,14 @@ import PopularCards from "./components/PopularCards";
 import Shuffle from "./components/Shuffle";
 import axios from "axios";
 import { ICard } from "../../models/ICard";
+import Slider1 from "../../components/Slider/Slider1";
 
 function Home() {
   const [products, setProducts] = useState<ICard>([]);
- 
   return (
     <div className="py-10">
       <Slider />
+      
       <div className="flex flex-col gap-7 relative">
         <div className="text-lg text-main font-semibold text-center">
           Unlock Endless Gaming Adventures with Steam Gift Cards!

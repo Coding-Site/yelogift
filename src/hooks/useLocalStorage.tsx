@@ -4,14 +4,14 @@ export const useLocalStorage = () => {
   const [value, setValue] = useState<string | null>(null);
 
   const setItem = (key: string, value: string) => {
-    localStorage.setItem(key, value);
+    localStorage.setItem(key, JSON.stringify(value));
     setValue(value);
   };
 
   const getItem = (key: string) => {
     const value = localStorage.getItem(key);
-    setValue(value);
-    return value;
+    setValue(JSON.parse(value as string ));
+    return JSON.parse(value as string);
   };
 
   const removeItem = (key: string) => {
