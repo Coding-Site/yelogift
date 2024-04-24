@@ -2,14 +2,15 @@ import  {  useEffect, useState } from "react";
 
 export default function Switcher() {
   const [colorTheme, setColortheme] = useState("dark");
-  const [dark, setDark] = useState(colorTheme === "dark" ? false : true);
-  const toggleDarkMode = (e:any) => {
+  const [dark,] = useState(colorTheme === "dark" ? false : true);
+  const toggleDarkMode = () => {
     setColortheme(old => old === "dark" ? "light": "dark");
 
   } 
 useEffect(() => {
   
   console.log(colorTheme)
+  console.log(dark)
   const root = window.document.documentElement;
   root.classList.remove(colorTheme as string);
   root.classList.add(colorTheme);
