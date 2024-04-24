@@ -21,7 +21,7 @@ function Navbar() {
           />
           <Link className="" to="/">
             <img
-              src="/logo.png"
+              src="assets/logo.png"
               className="cursor-pointer w-[150px]"
               alt="logo"
             />

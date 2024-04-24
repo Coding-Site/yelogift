@@ -3,11 +3,11 @@ import { ISlide } from "../../models/ISlide";
 import "./Slider.css";
 function Slider() {
   const [slides, setSliedes] = useState<ISlide[]>([
-    { img: "slider/slide1.png", htmlFor: "s1", id: "slide1", checked: true },
-    { img: "slider/slide2.png", htmlFor: "s2", id: "slide2", checked: false },
-    { img: "slider/slide3.png", htmlFor: "s3", id: "slide3", checked: false },
-    { img: "slider/slide4.png", htmlFor: "s4", id: "slide4", checked: false },
-    { img: "slider/slide5.png", htmlFor: "s5", id: "slide5", checked: false },
+    { img: "assets/slider/slide1.png", htmlFor: "s1", id: "slide1", checked: true },
+    { img: "assets/slider/slide2.png", htmlFor: "s2", id: "slide2", checked: false },
+    { img: "assets/slider/slide3.png", htmlFor: "s3", id: "slide3", checked: false },
+    { img: "assets/slider/slide4.png", htmlFor: "s4", id: "slide4", checked: false },
+    { img: "assets/slider/slide5.png", htmlFor: "s5", id: "slide5", checked: false },
   ]);
 
   const GoNext = () => {
@@ -63,13 +63,13 @@ function Slider() {
         className="next absolute top-[20%] md:top-[50%]  md:-left-44 -left-20 "
         onClick={GoNext}
       >
-        <img src="slider/next.png" />
+        <img src="assets/slider/next.png" />
       </button>
       <button
         className="prev absolute top-[20%] md:top-[50%] md:-right-44 -right-20 "
         onClick={GoPrev}
       >
-        <img src="slider/prev.png" />
+        <img src="assets/slider/prev.png" />
       </button>
       {slides.map((slide) => (
         <input

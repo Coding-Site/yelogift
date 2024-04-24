@@ -14,22 +14,22 @@ function Shuffle() {
   const [leisureProducts, setLeisureProducts] = useState<IProduct[]>([]);
   const [active, setActive] = useState<Item>("all");
   const [items, setItems] = useState([
-    { img: "shuffle/all.png", title: "All", slug: "all", active: true },
+    { img: "assets/shuffle/all.png", title: "All", slug: "all", active: true },
     {
-      img: "shuffle/ent.png",
+      img: "assets/shuffle/ent.png",
       title: "Entertainment",
       slug: "entertainment",
       active: false,
     },
-    { img: "shuffle/game.png", title: "Games", slug: "games", active: false },
+    { img: "assets/shuffle/game.png", title: "Games", slug: "games", active: false },
     {
-      img: "shuffle/market.png",
+      img: "assets/shuffle/market.png",
       title: "Market",
       slug: "market",
       active: false,
     },
     {
-      img: "shuffle/leisure.png",
+      img: "assets/shuffle/leisure.png",
       title: "Leisure",
       slug: "leisure",
       active: false,

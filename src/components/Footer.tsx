@@ -6,12 +6,12 @@ function Footer() {
       <div className="flex w-full flex-col gap-y-3 sm:flex-row justify-between container border-b border-gray-700 pb-10">
 
         <div className="flex flex-col gap-3 ">
-          <img className="w-[150px]" src="/logo.png" alt="logo" />
+          <img className="w-[150px]" src="assets/logo.png" alt="logo" />
           <p className="w-[340px] text-sm">Experience seamless access to leading entertainment platforms through our convenient gift card purchase portal.</p>
             <ul className="flex gap-2">
-                <li><Link to="/"><img src="/social/facebook.png" alt="facebook" /></Link></li>
-                <li><Link to="/"><img src="/social/youtube.png" alt="youtube" /></Link></li>
-                <li><Link to="/"><img src="/social/linkedin.png" alt="linkedin" /></Link></li>
+                <li><Link to="/"><img src="assets/social/facebook.png" alt="facebook" /></Link></li>
+                <li><Link to="/"><img src="assets/social/youtube.png" alt="youtube" /></Link></li>
+                <li><Link to="/"><img src="assets/social/linkedin.png" alt="linkedin" /></Link></li>
             </ul>
         </div>
         <div className="flex flex-col uppercase">

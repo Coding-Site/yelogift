@@ -30,8 +30,8 @@ function SiteSetting() {
         <div className="flex gap-2">
           <div className="bg-white rounded-2xl p-4 ">
             <div className="flex items-center flex-col gap-4 text-mainLightBlack ">
-              <span>Defauly Logo</span>
-              <img src="/logo.png" alt="default logo" />
+              <span>Default Logo</span>
+              <img src="/assets/logo.png" alt="default logo" />
               <label
                 htmlFor="defaultlogo"
                 className="bg-mainLightColor cursor-pointer text-xs p-3 rounded-md flex justify-between items-center gap-3"
@@ -45,7 +45,7 @@ function SiteSetting() {
           <div className="bg-white rounded-2xl p-4 ">
             <div className="flex items-center flex-col gap-4 text-mainLightBlack ">
               <span>Defauly Logo</span>
-              <img src="/logo.png" alt="default logo" />
+              <img src="/assets/logo.png" alt="default logo" />
               <label
                 htmlFor="darklogo"
                 className="bg-mainLightColor cursor-pointer text-xs p-3  rounded-md flex justify-between items-center gap-3"

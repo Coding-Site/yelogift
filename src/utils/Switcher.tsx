@@ -23,7 +23,7 @@ useEffect(() => {
     <>
     
       <img
-        src="/navbar/light_mode.png"
+        src="assets/navbar/light_mode.png"
         className="cursor-pointer"
         alt="Lightmode"
       />
@@ -34,7 +34,7 @@ useEffect(() => {
         className="toggle toggle-primar checked:!bg-main  border-none"
       />
       <img
-        src="/navbar/dark_mode.png"
+        src="assets/navbar/dark_mode.png"
         className="cursor-pointer"
         alt="Lightmode"
       />

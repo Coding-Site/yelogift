@@ -60,7 +60,7 @@ const Cart = () => {
         </div>
 
         <span className="text-gray-500 uppercase my-2">Email Devlivery</span>
-        <img src="cards/card2.png" alt="card" className="rounded-md" />
+        <img src="assets/cards/card2.png" alt="card" className="rounded-md" />
       </div>
 
       <div className="flex justify-between w-full py-2 font-semibold">

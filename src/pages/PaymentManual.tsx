@@ -56,7 +56,7 @@ function PaymentManual() {
 
           <div className="flex flex-col gap-y-7 items-center ">
             <p>Scan this QR code in the Binance app</p>
-            <img src="/payment/qrcode.png" alt="QR code" />
+            <img src="assets/payment/qrcode.png" alt="QR code" />
             <button className="btn -mb-[200px] flex gap-x-2 items-center !rounded-full py-5 !h-auto !bg-mainLightColor">
               <RiShareBoxLine />
               Pay on binance.com

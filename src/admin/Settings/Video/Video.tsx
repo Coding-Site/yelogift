@@ -29,7 +29,7 @@ function Video() {
           >
             <img
               className="size-12 mx-auto"
-              src="/settings/video.png"
+              src="/assets/settings/video.png"
               alt="upload image"
             />
             <span className="text-xs px-5 text-center pb-4">
