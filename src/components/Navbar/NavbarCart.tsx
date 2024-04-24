@@ -26,7 +26,7 @@ function NavbarCart() {
               <span className="text-xl text-black ">{cart.description.length > 10 ? cart.description.slice(0, 10) + '...' : cart.description}</span>
               <span className="text-sm text-gray-500">AED {cart.price}</span>
             </div>
-            <div className="flex basis-24 h-8 min-w-[100px] px-3 items-center ms-auto w-auto  justify-between rounded-full border border-gray-300">
+            <div className="flex basis-24  h-8 min-w-[100px] px-3 items-center ms-auto w-auto  justify-between rounded-full border border-gray-300">
                 <span>-</span>
                 <span>{cart.quantity}</span>
                 <span>+</span>
@@ -34,7 +34,7 @@ function NavbarCart() {
           </div>
         ))}
 
-        <div className="flex justify-between ">
+        <div className="flex justify-between text-base">
             <button className="!rounded-full shadow-md px-5">keep shopping</button>
             <button onClick={() => { navigate('/checkout'); }}  className="btn !rounded-full  shadow-md">checkout</button>
         </div>

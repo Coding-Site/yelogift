@@ -7,6 +7,10 @@ const Home = lazy(() => import("../pages/Home/Home"));
 const Categories = lazy(() => import("../pages/Categories"));
 const SingleProduct = lazy(() => import("../pages/SingleProduct"));
 const Checkout = lazy(() => import("../pages/Checkout"));
+const PaymentManual = lazy(() => import("../pages/PaymentManual"));
+const PaymentAuto = lazy(() => import("../pages/PaymentAuto"));
+const UserOrderDetails = lazy(() => import("../pages/UserOrderDetails"));
+const UserOrders = lazy(() => import("../pages/UserOrders"));
 const AdminHome = lazy(() => import("../admin/AdminHome/AdminHome"));
 const AdminLogin = lazy(() => import("../admin/AdminLogin"));
 
@@ -73,6 +77,38 @@ export const router = createBrowserRouter([
         element: (
           <Suspense fallback={<div>Loading...</div>}>
             <Checkout />
+          </Suspense>
+        ),
+      },
+      {
+        path: "paymentmanual",
+        element: (
+          <Suspense fallback={<div>Loading...</div>}>
+            <PaymentManual />
+          </Suspense>
+        ),
+      },
+      {
+        path: "paymentauto",
+        element: (
+          <Suspense fallback={<div>Loading...</div>}>
+            <PaymentAuto />
+          </Suspense>
+        ),
+      },
+      {
+        path: "userorderdetails",
+        element: (
+          <Suspense fallback={<div>Loading...</div>}>
+            <UserOrderDetails />
+          </Suspense>
+        ),
+      },
+      {
+        path: "userorders",
+        element: (
+          <Suspense fallback={<div>Loading...</div>}>
+            <UserOrders />
           </Suspense>
         ),
       },

@@ -12,7 +12,7 @@
 }
 
 input[type="radio"] {
-  /* display: none; */
+  display: none;
 }
 
 input[type="radio"]:nth-child(5) {

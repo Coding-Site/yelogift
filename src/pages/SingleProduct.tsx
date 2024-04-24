@@ -159,8 +159,7 @@ export default SingleProduct;
 
 const Rating = ({ rating }: { rating: number }) => {
   const end = 5;
-  const start = 1;
-  const [rt, setRt] = useState(rating);
+  const [rt,] = useState(rating);
   return (
     <div className="rating flex items-end gap-1">
       {Array.from({ length: end }, (_, idx) => (

@@ -1,4 +1,9 @@
 import themes from "daisyui/src/theming/themes"
+import type { Config } from  'tailwindcss';
+import daisyui from "daisyui";
+// import tailwind-scrollbar from 'tailwind-scrollbar';
+
+
 const mainLightColor = '#FCD535';
 const mainColor = '#F0B90B';
 const mainBlack = '#0B0E11';
@@ -40,7 +45,8 @@ export default {
       }
     }
   },
-  plugins: [require("daisyui"), require('tailwind-scrollbar')],
+  // eslint-disable-next-line no-undef
+  plugins: [daisyui, require('tailwind-scrollbar')],
   daisyui: {
     // colors: 
     themes: [
@@ -70,7 +76,7 @@ export default {
       }
     ]
   },
-}
+} satisfies Config;
 
 
 

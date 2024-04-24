@@ -14,7 +14,7 @@ interface Props {
 
 function App() {
   return (
-    <div className="bg-mainBlack dark:bg-mainWhite text-mainWhite">
+    <div className="bg-mainBlack text-mainWhite  dark:bg-white dark:text-mainLightBlack ">
       <NonAdminLayout />
 
     </div>

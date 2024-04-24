@@ -3,6 +3,7 @@ import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 import { FaStar } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { IProduct } from "../models/IProduct";
 
 function Categories() {
   const [loading, setLoading] = useState<boolean>(false);
@@ -31,7 +32,7 @@ function Categories() {
         {loading ? (
           <div>Loading ...</div>
         ) : (
-          Products.map((pro, idx) => (
+          Products.map((pro:IProduct, idx) => (
             <Link
               key={idx}
               to={`/product/${pro.id}`}
