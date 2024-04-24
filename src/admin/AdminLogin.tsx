@@ -7,6 +7,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import axios from "axios";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { useState } from "react";
+// import { useToken } from "../hooks/useToken";
 type Inputs = {
   email: string;
   password: string;
@@ -15,7 +16,8 @@ type Inputs = {
 function AdminLogin() {
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
-  const { user, setUser } = useAuth();
+  // const { token} = useToken();
+  const {  setUser } = useAuth();
   const { setItem } = useLocalStorage();
 
   const {
@@ -38,7 +40,7 @@ function AdminLogin() {
       });
   };
 
-  if (!user) return <Navigate to="/admin" />;
+  // if (token) return <Navigate to="/admin" />;
   return (
     <div className="flex flex-col text-mainWhite">
       <div className="flex">

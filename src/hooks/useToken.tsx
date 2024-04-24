@@ -6,7 +6,7 @@ export const useToken = () => {
   const [token, setToken] = useState("");
 
   useEffect(() => {
-    const t: string = getItem("userData").token.token;
+    const t : string = getItem("userData").token.token as string;
     setToken(t);
   }, []);
 
