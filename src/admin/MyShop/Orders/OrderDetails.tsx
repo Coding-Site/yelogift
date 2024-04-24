@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { FaChevronLeft } from "react-icons/fa6";
 import { SubmitHandler, useForm } from "react-hook-form";
-import axios from "axios";
-import { useToken } from "../../../hooks/useToken";
 import { FaTrashAlt } from "react-icons/fa";
+import { IProduct } from "../../../models/IProduct";
 
 type Inputs = {
   order_product_id: number;
@@ -13,16 +13,11 @@ type Inputs = {
 
 function OrderDetails() {
   const { id } = useParams();
-  const { token } = useToken();
-  const [order, setOrder] = useState();
-  const [orderProducts, setOrderProducts] = useState([]);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [order] = useState();
+  const [orderProducts] = useState<IProduct[]>([]);
+  const [, setLoading] = useState<boolean>(false);
   const {
-    register,
     handleSubmit,
-    unregister,
-    watch,
-    formState: { errors },
   } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
@@ -33,24 +28,24 @@ function OrderDetails() {
   };
 
   useEffect(() => {
-    axios
-      .get(`${import.meta.env.VITE_BASEURL}/api/admin/orders`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((d) => {
-        const orders = d.data.data;
-        orders.map((order) => {
-          if (order.id == id) {
-            setOrder(order);
-            setOrderProducts(order.order_products);
-          } else {
-            setOrder(null);
-            setOrderProducts([]);
-          }
-        });
-      });
+    // axios
+    //   .get(`${import.meta.env.VITE_BASEURL}/api/admin/orders`, {
+    //     headers: {
+    //       Authorization: `Bearer ${token}`,
+    //     },
+    //   })
+    //   .then((d) => {
+    //     const orders = d.data.data;
+    //     orders.map((order) => {
+    //       if (order.id == id) {
+    //         setOrder(order);
+    //         setOrderProducts(order.order_products);
+    //       } else {
+    //         setOrder(null);
+    //         setOrderProducts([]);
+    //       }
+    //     });
+    //   });
   }, [order]);
 
   return (
@@ -94,9 +89,9 @@ function OrderDetails() {
           <tbody>
             {orderProducts.map((product) => (
               <tr className="h-[100px]">
-                <td>{product.product.name}</td>
+                <td>{product.name}</td>
                 <td>${product.price}</td>
-                <td>{product.quantity}</td>
+                <td>{product.discount}</td>
                 <td>
                   <input
                     type="text"

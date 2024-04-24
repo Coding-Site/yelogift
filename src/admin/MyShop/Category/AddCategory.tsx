@@ -1,15 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { FaChevronLeft } from "react-icons/fa6";
 import { SubmitHandler, useForm } from "react-hook-form";
-import axios from "axios";
-import { ICategory } from "../../../models/ICategory";
-import { useToken } from "../../../hooks/useToken";
 import { FaRegCircleStop } from "react-icons/fa6";
 import { PiArrowsCounterClockwise } from "react-icons/pi";
 import { FaRegTrashAlt } from "react-icons/fa";
-import { BiDollar } from "react-icons/bi";
-import { CiCircleInfo } from "react-icons/ci";
 
 type Inputs = {
   name: string;
@@ -19,18 +13,14 @@ type Inputs = {
 
 function AddCategory() {
 
-  const [loading, setLoading] = useState<boolean>(false);
-  const { token } = useToken();
   const {
     register,
     handleSubmit,
     unregister,
     watch,
-    formState: { errors },
   } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    setLoading(true);
 
     console.log(data);
   };

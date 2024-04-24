@@ -1,19 +1,23 @@
-import React, {  useState } from "react";
-import useDarkSide from "../hooks/useDarkSide";
+import  {  useEffect, useState } from "react";
 
 export default function Switcher() {
-  const [colorTheme, setTheme] = useDarkSide();
-  const [darkSide, setDarkSide] = useState(
-    colorTheme === "light" ? false : true
-  );
+  const [colorTheme, setColortheme] = useState("dark");
+  const [dark, setDark] = useState(colorTheme === "dark" ? false : true);
+  const toggleDarkMode = (e:any) => {
+    setColortheme(old => old === "dark" ? "light": "dark");
 
-  const toggleDarkMode = (
-    checked: boolean
-  ) => {
-    setTheme(colorTheme);
-    setDarkSide(checked);
-  };
+  } 
+useEffect(() => {
+  
+  console.log(colorTheme)
+  const root = window.document.documentElement;
+  root.classList.remove(colorTheme as string);
+  root.classList.add(colorTheme);
+  
 
+  }, [colorTheme]);
+
+  
   return (
     <>
     
@@ -24,7 +28,7 @@ export default function Switcher() {
       />
       <input
         type="checkbox"
-        defaultChecked={darkSide}
+        defaultChecked={dark}
         onChange={toggleDarkMode}
         className="toggle toggle-primar checked:!bg-main  border-none"
       />

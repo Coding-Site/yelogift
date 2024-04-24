@@ -1,13 +1,10 @@
-import React, { useEffect, useState } from "react";
 import Slider from "../../components/Slider/Slider";
 import PopularCards from "./components/PopularCards";
 import Shuffle from "./components/Shuffle";
-import axios from "axios";
-import { ICard } from "../../models/ICard";
 
 
 function Home() {
-  const [products, setProducts] = useState<ICard>([]);
+  // const [products, setProducts] = useState<ICard>([]);
 
  
 

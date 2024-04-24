@@ -12,7 +12,7 @@ const PaymentAuto = lazy(() => import("../pages/PaymentAuto"));
 const UserOrderDetails = lazy(() => import("../pages/UserOrderDetails"));
 const UserOrders = lazy(() => import("../pages/UserOrders"));
 const AdminHome = lazy(() => import("../admin/AdminHome/AdminHome"));
-const AdminLogin = lazy(() => import("../admin/AdminLogin"));
+// const AdminLogin = lazy(() => import("../admin/AdminLogin"));
 
 // Setting Pages
 const Settings = lazy(() => import("../admin/Settings/Settings"));
@@ -289,7 +289,7 @@ export const router = createBrowserRouter([
     path: "admin/login",
     element: (
       <Suspense fallback={<div>Loading...</div>}>
-        <AdminLogin />
+        {/* <AdminLogin /> */}
       </Suspense>
     ),
   },

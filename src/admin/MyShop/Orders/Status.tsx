@@ -1,6 +1,5 @@
-import React, { useState } from 'react'
 
-function Status({status}: {status: string}) {
+function Status({status}: {status: string | number}) {
   return (
     <>
             { status == '0' ? <Pending /> : ( status == "1") ? <Confirmed /> : <Cancelled />}

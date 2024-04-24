@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 function DateFormat({date}: any) {
     const dateObj = new Date(date);

@@ -13,8 +13,8 @@ function Currency() {
   const targetDialoug: HTMLDialogElement = document.getElementById(
     "my_modal_2"
   ) as HTMLDialogElement;
-  const editDialoug: HTMLDialogElement = document.getElementById('my_modal_3') as HTMLDialogElement;
-  const [currenceies, setCurrencies] = useState<ICurrency[]>([]);
+  // const editDialoug: HTMLDialogElement = document.getElementById('my_modal_3') as HTMLDialogElement;
+  const [currenceies] = useState<ICurrency[]>([]);
   const { register, handleSubmit, reset } = useForm<ICurrency>();
 
   const onSubmit: SubmitHandler<ICurrency> = (data: ICurrency) => {
@@ -37,8 +37,7 @@ function Currency() {
           Authorization: `Bearer ${token}}`,
         },
       })
-      .then((d) => {
-          const currencies = d.data.data;
+      .then(() => {
 
           console.log(currenceies)
       });

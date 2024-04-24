@@ -1,5 +1,3 @@
-import { RiShareBoxLine } from "react-icons/ri";
-import { MdContentCopy } from "react-icons/md";
 import OrderDetalisCard from "../components/OrderDetalisCard";
 
 

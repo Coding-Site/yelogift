@@ -7,9 +7,6 @@ import MobileMenu from "./MobileMenu.tsx";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { FaRegHeart } from "react-icons/fa";
 import { LiaShoppingBagSolid } from "react-icons/lia";
-import { CiHeart } from "react-icons/ci";
-
-
 function Navbar() {
   const [openCart, setOpenCart] = useState<boolean>(false);
   const [openMenu, setOpenMenu] = useState<boolean>(false);
@@ -68,7 +65,6 @@ function Navbar() {
 
         <div className="flex justify-between items-center grow-0 sm:grow">
           <div className="flex justify-center gap-3 text-3xl">
-            
             <IoMdNotificationsOutline />
             <FaRegHeart />
 
@@ -77,7 +73,7 @@ function Navbar() {
                 className="cursor-pointer"
                 onClick={() => setOpenCart(!openCart)}
               />
-        
+
               <div
                 className={`${
                   openCart ? "flex" : "hidden"

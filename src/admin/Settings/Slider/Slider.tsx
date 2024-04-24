@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect } from "react";
+import  { useEffect } from "react";
 import { useToken } from "../../../hooks/useToken";
 import { FaTrashAlt } from "react-icons/fa";
 import { GoPencil } from "react-icons/go";

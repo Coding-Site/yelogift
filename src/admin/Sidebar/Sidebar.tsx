@@ -1,4 +1,3 @@
-import React from "react";
 import { CiSearch } from "react-icons/ci";
 import { NavLink } from "react-router-dom";
 import { FiCircle } from "react-icons/fi";

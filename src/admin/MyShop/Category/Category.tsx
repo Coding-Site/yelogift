@@ -1,17 +1,14 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
-import { FiSearch } from "react-icons/fi";
 import { useToken } from "../../../hooks/useToken";
-import { PiEye } from "react-icons/pi";
 import { Link } from "react-router-dom";
-import { ICard } from "../../../models/ICard";
-import { GoPencil } from "react-icons/go";
 
 function Category() {
   const { token } = useToken();
 
-  const [categories, setCategories] = useState([]);
+  const [, setCategories] = useState([]);
 
   useEffect(() => {
     axios
