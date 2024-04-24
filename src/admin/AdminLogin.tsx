@@ -1,4 +1,4 @@
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link,  useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import { useAuth } from "../hooks/useAuth";
 import { IoIosLock } from "react-icons/io";
