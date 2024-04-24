@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import { useAuth } from "../hooks/useAuth";
 import { IoIosLock } from "react-icons/io";
@@ -38,13 +38,13 @@ function AdminLogin() {
       });
   };
 
-  if (user) return navigate("/admin");
+  if (!user) return <Navigate to="/admin" />;
   return (
     <div className="flex flex-col text-mainWhite">
       <div className="flex">
         <div className="bg-mainLightBlack p-4  flex flex-col w-1/2">
           <div className="p-5 h-1/5 flex flex-col gap-3">
-            <img className="w-28" src="/logo.png" alt="logo" />
+            <img className="w-28" src="/assets/logo.png" alt="logo" />
             <h2>Login as Admin</h2>
           </div>
           <div className="relative">
@@ -96,7 +96,7 @@ function AdminLogin() {
             </button>
           </form>
         </div>
-        <img className="w-1/2" src="/admin/login-hero.jpg" alt="admin hero" />
+        <img className="w-1/2" src="/assets/admin/login-hero.jpg" alt="admin hero" />
       </div>
       <Footer />
     </div>
