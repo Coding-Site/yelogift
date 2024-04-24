@@ -1,22 +1,19 @@
-import  {  useEffect, useState } from "react";
+import  {   useState } from "react";
 
 export default function Switcher() {
   const [colorTheme, setColortheme] = useState("dark");
-  const [dark,] = useState(colorTheme === "dark" ? false : true);
+  const [dark] = useState(colorTheme === "dark" ? false : true);
+
+
   const toggleDarkMode = () => {
+    localStorage.setItem('theme', JSON.stringify(colorTheme))
+    console.log(localStorage.getItem('theme'));
     setColortheme(old => old === "dark" ? "light": "dark");
-
-  } 
-useEffect(() => {
+    const root = window.document.documentElement;
+     root.classList.toggle('dark')
   
-  console.log(colorTheme)
-  console.log(dark)
-  const root = window.document.documentElement;
-  root.classList.remove(colorTheme as string);
-  root.classList.add(colorTheme);
-  
+  }   
 
-  }, [colorTheme]);
 
   
   return (
