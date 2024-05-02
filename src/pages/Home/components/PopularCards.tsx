@@ -21,9 +21,9 @@ function PopularCards() {
         </Link>
       </div>
 
-      <div className="flex overflow-x-scroll scrollbar-none">
+      <div className="flex  overflow-x-auto scrollbar-none gap-x-2 mt-5">
         {popularProducts.map((card: IProduct, idx) => (
-          <Link to={`/product/${card.id}`}  key={idx}>
+          <Link to={`/product/${card.id}`}  key={idx} className="min-w-[200px]">
             <img
               className="w-[300px]"
               src={`${import.meta.env.VITE_BASEURL}/public/storage/${

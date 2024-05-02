@@ -1,14 +1,17 @@
 import { useEffect, useState } from "react";
 import { useLocalStorage } from "./useLocalStorage";
-
+type Token = string | null;
 export const useToken = () => {
   const { getItem } = useLocalStorage();
-  const [token, setToken] = useState("");
+  const [adminToken, setAdminToken] = useState<Token>();
+  const [userToken, setUserToken] = useState<Token>();
 
-  useEffect(() => {
-    const t : string = getItem("userData").token.token as string;
-    setToken(t);
-  }, []);
+  // useEffect(() => {
+  //   const  adminToken = getItem("adminData")?.adminToken;
+  //   const  userToken = getItem("userData")?.userToken;
+  //   setAdminToken(() => adminToken);
+  //   setUserToken(() => userToken);
+  // }, []);
 
-  return { token };
+  return { adminToken, userToken };
 };

@@ -1,21 +1,25 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import { useSelector } from "react-redux";
+import { RootState } from "../store";
+
 
 function OrderDetalisCard() {
-    const carts = [
-        {
-          img: "/cards/card1.png",
-          description: "avsfvsgd",
-          price: 125,
-          quantity: 1,
-        },
-        {
-          img: "/cards/card1.png",
-          description: "avsfvsgadfvasdvafvdd",
-          price: 125,
-          quantity: 1,
-        },
-      ];
+  const carts = useSelector((state: RootState )=> state.cartSlice.items)
+    // const carts = [
+    //     {
+    //       img: "/cards/card1.png",
+    //       description: "avsfvsgd",
+    //       price: 125,
+    //       quantity: 1,
+    //     },
+    //     {
+    //       img: "/cards/card1.png",
+    //       description: "avsfvsgadfvasdvafvdd",
+    //       price: 125,
+    //       quantity: 1,
+    //     },
+    //   ];
   return (
     <>
       <span className="text-2xl font-semibold mb-5">Order Details</span>
@@ -40,15 +44,17 @@ function OrderDetalisCard() {
             className="flex border-t border-gray-300 justify-start items-start gap-x-3 gap-y-3 py-4"
           >
             <img
-              src={car.img}
+               src={`${import.meta.env.VITE_BASEURL}/public/storage/${
+                car.product?.image
+              }`}
               className="aspect-video w-20"
               alt=" cart product"
             />
             <div className="flex flex-col gap-0">
-              <span className="font-semibold">{car.description}</span>
-              <span className="text-gray-400 uppercase">{car.price} SAR</span>
+              {/* <span className="font-semibold">{car.description}</span> */}
+              <span className="text-gray-400 uppercase">{car.product?.price} SAR</span>
               <span>
-                Code: <span className="font-bold"> {car.description}</span>
+                Code: <span className="font-bold"> {car.productPartId}</span>
               </span>
             </div>
           </div>

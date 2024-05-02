@@ -10,7 +10,7 @@ function CardsFeed(data: { title: string; link: string; products: IProduct[] }) 
         <Link to={data.link} className="text-main flex gap-6">
           {" "}
           view more{" "}
-          <img className="w-6" src="assets/slider/prev.png" alt="view more" />{" "}
+          <img className="w-6" src="/assets/slider/prev.png" alt="view more" />{" "}
         </Link>
       </div>
 

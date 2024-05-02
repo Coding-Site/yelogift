@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export interface ISlide {
-  img: string;
+  id: any;
+  image: string;
+  title?: string;
   htmlFor: string;
-  id: string;
   checked: boolean;
 }

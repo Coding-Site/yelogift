@@ -6,30 +6,41 @@ import { FiCircle } from "react-icons/fi";
 import { FaRegCircleStop } from "react-icons/fa6";
 import { IProduct } from "../models/IProduct";
 import { IProductPart } from "../models/IProductPart";
+import { useDispatch } from "react-redux";
+import { addNewItem } from "../store/CartSlice/CartSlice";
+// import { useLocalStorage } from "../hooks/useLocalStorage";
 
 function SingleProduct() {
   const [Product, setProduct] = useState<IProduct>();
   const [selecedPart, setSelectedPart] = useState(1);
   const [q, setQ] = useState(1);
   const { id } = useParams();
+
+  const dispatch = useDispatch();
   useEffect(() => {
     axios
       .get(`${import.meta.env.VITE_BASEURL}/api/home/products/${id}`)
       .then((d) => {
         const prod = d.data.data;
-        console.log(prod)
         setProduct(prod);
       });
   }, []);
 
 
   const AddtoCart = () => {
+    const newItem = {
+      product: Product,
+      productPartId:selecedPart,  
+      quantity: q,
+    };
 
+    dispatch(addNewItem(newItem))
   }
   return (
     <>
       <div className="py-10 flex flex-col sm:flex-row justify-between container ">
-        <div className="flex w-1/2 p-10 justify-center  items-start pt-0">
+        
+        <div className="flex w-full sm:w-1/2 p-10 justify-center  items-start pt-0">
           <div className="bg-white  rounded-md flex flex-col justify-stretch items-center w-[350px]">
             <div className="bg-white  flex flex-col justify-stretch items-center  p-6 w-full rounded-md">
               <div className="relative w-1/3 rounded-full bg-black h-[15px]">
@@ -47,17 +58,17 @@ function SingleProduct() {
             <img
               src={`https://yelogift.coding-site.com/public/storage/${(Product as IProduct)?.image}`}
               alt="product card"
-              className="mx-auto"
+              className="mx-auto min-w-full"
             />
           </div>
         </div>
 
-        <div className="flex flex-col justify-start items-start gap-5 w-1/2">
+        <div className="flex w-full sm:w-1/2 flex-col justify-start items-start gap-5">
           <span className="capitalize text-white text-3xl font-semibold">
             {(Product as IProduct)?.name}
           </span>
           <Rating rating={2} />
-          <span className="p-2 border border-gray-200 rounded-md text-sm">
+          <span className="p-2 border w-full border-gray-200 rounded-md text-sm">
             {(Product as IProduct)?.description}
           </span>
 

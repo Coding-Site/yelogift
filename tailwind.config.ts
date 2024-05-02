@@ -45,7 +45,6 @@ export default {
       }
     }
   },
-  // eslint-disable-next-line no-undef
   plugins: [daisyui, require('tailwind-scrollbar')],
   daisyui: {
     // colors: 

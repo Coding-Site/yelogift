@@ -4,7 +4,6 @@ import Shuffle from "./components/Shuffle";
 
 
 function Home() {
-  // const [products, setProducts] = useState<ICard>([]);
 
  
 

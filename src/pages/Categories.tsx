@@ -21,7 +21,7 @@ function Categories() {
   return (
     <div className="flex flex-col gap-4 w-full py-5 container ps-12">
       <div className="flex items-center justify-start w-full relative ">
-        <Link to="/admin/products">
+        <Link to="/">
           <FaChevronLeft className="text-main text-2xl absolute -left-7 font-semibold top-[50%] -translate-y-[50%]" />
         </Link>
         <span className="text-3xl text-white font-semibold">

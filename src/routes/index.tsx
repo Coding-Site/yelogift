@@ -1,6 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createBrowserRouter } from "react-router-dom";
 import { Suspense, lazy } from "react";
+import Spinner from "../utils/Spinner";
 
 const App = lazy(() => import("../App"));
 const AdminLayout = lazy(() => import("../admin/AdminLayout"));
@@ -12,6 +13,9 @@ const PaymentManual = lazy(() => import("../pages/PaymentManual"));
 const PaymentAuto = lazy(() => import("../pages/PaymentAuto"));
 const UserOrderDetails = lazy(() => import("../pages/UserOrderDetails"));
 const UserOrders = lazy(() => import("../pages/UserOrders"));
+const OrdersHistory = lazy(() => import("../pages/OrdersHistory"));
+const Signin = lazy(() => import("../pages/Signin"));
+const Signup = lazy(() => import("../pages/SignUp"));
 const AdminHome = lazy(() => import("../admin/AdminHome/AdminHome"));
 const AdminLogin = lazy(() => import("../admin/AdminLogin"));
 
@@ -19,6 +23,7 @@ const AdminLogin = lazy(() => import("../admin/AdminLogin"));
 const Settings = lazy(() => import("../admin/Settings/Settings"));
 const Products = lazy(() => import("../admin/MyShop/Products/Products"));
 const AddProduct = lazy(() => import("../admin/MyShop/Products/AddProduct"));
+const EditProduct = lazy(() => import("../admin/MyShop/Products/EditProduct"));
 const Codes = lazy(() => import("../admin/MyShop/Products/Codes"));
 const Orders = lazy(() => import("../admin/MyShop/Orders/Orders"));
 const OrderDetails = lazy(() => import("../admin/MyShop/Orders/OrderDetails"));
@@ -31,20 +36,28 @@ const SiteSetting = lazy(
   () => import("../admin/Settings/SiteSetting/SiteSetting")
 );
 const Social = lazy(() => import("../admin/Settings/Social/Social"));
+const AddSocial = lazy(() => import("../admin/Settings/Social/AddSocial"));
+const EditSocial = lazy(() => import("../admin/Settings/Social/EditSocial"));
 const Slider = lazy(() => import("../admin/Settings/Slider/Slider"));
+const AddSlider = lazy(() => import("../admin/Settings/Slider/AddSlider"));
+const EditSlider = lazy(() => import("../admin/Settings/Slider/EditSlider"));
 const Video = lazy(() => import("../admin/Settings/Video/Video"));
 const Footer = lazy(() => import("../admin/Settings/Footer/Footer"));
 
 // Other Pages
 const Currency = lazy(() => import("../admin/Currency/Currency"));
 const Notification = lazy(() => import("../admin/Notification/Notification"));
+const AddNotification = lazy(
+  () => import("../admin/Notification/AddNotification")
+);
 const CustomPage = lazy(() => import("../admin/CustomPage/CustomPage"));
+const AddPage = lazy(() => import("../admin/CustomPage/AddPage"));
 
 export const router = createBrowserRouter([
   {
     path: "",
     element: (
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<Spinner />}>
         <App />
       </Suspense>
     ),
@@ -52,7 +65,7 @@ export const router = createBrowserRouter([
       {
         path: "",
         element: (
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<Spinner />}>
             <Home />
           </Suspense>
         ),
@@ -60,7 +73,7 @@ export const router = createBrowserRouter([
       {
         path: "category",
         element: (
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<Spinner />}>
             <Categories />
           </Suspense>
         ),
@@ -68,7 +81,7 @@ export const router = createBrowserRouter([
       {
         path: "product/:id",
         element: (
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<Spinner />}>
             <SingleProduct />
           </Suspense>
         ),
@@ -76,7 +89,7 @@ export const router = createBrowserRouter([
       {
         path: "checkout",
         element: (
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<Spinner />}>
             <Checkout />
           </Suspense>
         ),
@@ -84,7 +97,7 @@ export const router = createBrowserRouter([
       {
         path: "paymentmanual",
         element: (
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<Spinner />}>
             <PaymentManual />
           </Suspense>
         ),
@@ -92,7 +105,7 @@ export const router = createBrowserRouter([
       {
         path: "paymentauto",
         element: (
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<Spinner />}>
             <PaymentAuto />
           </Suspense>
         ),
@@ -100,7 +113,7 @@ export const router = createBrowserRouter([
       {
         path: "userorderdetails",
         element: (
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<Spinner />}>
             <UserOrderDetails />
           </Suspense>
         ),
@@ -108,8 +121,16 @@ export const router = createBrowserRouter([
       {
         path: "userorders",
         element: (
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<Spinner />}>
             <UserOrders />
+          </Suspense>
+        ),
+      },
+      {
+        path: "ordershistory",
+        element: (
+          <Suspense fallback={<Spinner />}>
+            <OrdersHistory />
           </Suspense>
         ),
       },
@@ -118,7 +139,7 @@ export const router = createBrowserRouter([
   {
     path: "/admin",
     element: (
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<Spinner />}>
         <AdminLayout />
       </Suspense>
     ),
@@ -126,7 +147,7 @@ export const router = createBrowserRouter([
       {
         path: "",
         element: (
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<Spinner />}>
             <AdminHome />
           </Suspense>
         ),
@@ -137,7 +158,7 @@ export const router = createBrowserRouter([
           {
             path: "",
             element: (
-              <Suspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={<Spinner />}>
                 <Products />
               </Suspense>
             ),
@@ -145,15 +166,23 @@ export const router = createBrowserRouter([
           {
             path: "add",
             element: (
-              <Suspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={<Spinner />}>
                 <AddProduct />
+              </Suspense>
+            ),
+          },
+          {
+            path: "edit/:id",
+            element: (
+              <Suspense fallback={<Spinner />}>
+                <EditProduct />
               </Suspense>
             ),
           },
           {
             path: "codes",
             element: (
-              <Suspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={<Spinner />}>
                 <Codes />
               </Suspense>
             ),
@@ -166,7 +195,7 @@ export const router = createBrowserRouter([
           {
             path: "",
             element: (
-              <Suspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={<Spinner />}>
                 <Orders />
               </Suspense>
             ),
@@ -174,7 +203,7 @@ export const router = createBrowserRouter([
           {
             path: ":id",
             element: (
-              <Suspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={<Spinner />}>
                 <OrderDetails />
               </Suspense>
             ),
@@ -184,7 +213,7 @@ export const router = createBrowserRouter([
       {
         path: "customers",
         element: (
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<Spinner />}>
             <Customers />
           </Suspense>
         ),
@@ -195,7 +224,7 @@ export const router = createBrowserRouter([
           {
             path: "",
             element: (
-              <Suspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={<Spinner />}>
                 <Category />
               </Suspense>
             ),
@@ -203,7 +232,7 @@ export const router = createBrowserRouter([
           {
             path: "add",
             element: (
-              <Suspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={<Spinner />}>
                 <AddCategory />
               </Suspense>
             ),
@@ -213,7 +242,7 @@ export const router = createBrowserRouter([
       {
         path: "",
         element: (
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<Spinner />}>
             <Settings />
           </Suspense>
         ),
@@ -221,31 +250,73 @@ export const router = createBrowserRouter([
           {
             path: "site-setting",
             element: (
-              <Suspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={<Spinner />}>
                 <SiteSetting />
               </Suspense>
             ),
           },
           {
             path: "social",
-            element: (
-              <Suspense fallback={<div>Loading...</div>}>
-                <Social />
-              </Suspense>
-            ),
+            children: [
+              {
+                path: "",
+                element: (
+                  <Suspense fallback={<Spinner />}>
+                    <Social />
+                  </Suspense>
+                ),
+              },
+              {
+                path: "add",
+                element: (
+                  <Suspense fallback={<Spinner />}>
+                    <AddSocial />
+                  </Suspense>
+                ),
+              },
+              {
+                path: "edit/:id",
+                element: (
+                  <Suspense fallback={<Spinner />}>
+                    <EditSocial />
+                  </Suspense>
+                ),
+              },
+            ],
           },
           {
             path: "slider",
-            element: (
-              <Suspense fallback={<div>Loading...</div>}>
-                <Slider />
-              </Suspense>
-            ),
+            children: [
+              {
+                path: "",
+                element: (
+                  <Suspense fallback={<Spinner />}>
+                    <Slider />
+                  </Suspense>
+                ),
+              },
+              {
+                path: "add",
+                element: (
+                  <Suspense fallback={<Spinner />}>
+                    <AddSlider />
+                  </Suspense>
+                ),
+              },
+              {
+                path: "edit/:id",
+                element: (
+                  <Suspense fallback={<Spinner />}>
+                    <EditSlider />
+                  </Suspense>
+                ),
+              },
+            ],
           },
           {
             path: "video",
             element: (
-              <Suspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={<Spinner />}>
                 <Video />
               </Suspense>
             ),
@@ -253,7 +324,7 @@ export const router = createBrowserRouter([
           {
             path: "footer",
             element: (
-              <Suspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={<Spinner />}>
                 <Footer />
               </Suspense>
             ),
@@ -263,34 +334,76 @@ export const router = createBrowserRouter([
       {
         path: "currency",
         element: (
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<Spinner />}>
             <Currency />
           </Suspense>
         ),
       },
       {
         path: "custom-page",
-        element: (
-          <Suspense fallback={<div>Loading...</div>}>
-            <CustomPage />
-          </Suspense>
-        ),
+        children: [
+          {
+            path: "",
+            element: (
+              <Suspense fallback={<Spinner />}>
+                <CustomPage />
+              </Suspense>
+            ),
+          },
+          {
+            path: "add",
+            element: (
+              <Suspense fallback={<Spinner />}>
+                <AddPage />
+              </Suspense>
+            ),
+          },
+        ],
       },
       {
         path: "notification",
-        element: (
-          <Suspense fallback={<div>Loading...</div>}>
-            <Notification />
-          </Suspense>
-        ),
+        children: [
+          {
+            path: "",
+            element: (
+              <Suspense fallback={<Spinner />}>
+                <Notification />
+              </Suspense>
+            ),
+          },
+          {
+            path: "add",
+            element: (
+              <Suspense fallback={<Spinner />}>
+                <AddNotification />
+              </Suspense>
+            ),
+          },
+        ],
       },
     ],
   },
   {
-    path: "admin/login",
+    path: "adminlogin",
     element: (
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<Spinner />}>
         <AdminLogin />
+      </Suspense>
+    ),
+  },
+  {
+    path: "signin",
+    element: (
+      <Suspense fallback={<Spinner />}>
+        <Signin />
+      </Suspense>
+    ),
+  },
+  {
+    path: "signup",
+    element: (
+      <Suspense fallback={<Spinner />}>
+        <Signup />
       </Suspense>
     ),
   },

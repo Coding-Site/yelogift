@@ -3,38 +3,47 @@ import CardsFeed from "./CardsFeed";
 import { ICategory } from "../../../models/ICategory";
 import axios from "axios";
 import { IProduct } from "../../../models/IProduct";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store";
 
-type Item = "all" | "entertainment" | "games" | "market" | "leisure";
+type Item = "all" | "entertainment" | "games" | "market" | "gift";
 
 function Shuffle() {
-  // const [allProducts, setAllProducts] = useState<IProduct[]>([]);
+
   const [entProducts, setEntProducts] = useState<IProduct[]>([]);
   const [gameProducts, setGameProducts] = useState<IProduct[]>([]);
   const [marketProducts, setMarketProducts] = useState<IProduct[]>([]);
   const [leisureProducts, setLeisureProducts] = useState<IProduct[]>([]);
   const [active, setActive] = useState<Item>("all");
+  const isDark : boolean = useSelector((state: RootState) => state.themeSlice.isDark);
   const [items, setItems] = useState([
-    { img: "assets/shuffle/all.png", title: "All", slug: "all", active: true },
+    { img: `assets/shuffle/${isDark ? 'dark' :'light'}/all.png`, title: "All", slug: "all", active: true },
     {
-      img: "assets/shuffle/ent.png",
+      img: `assets/shuffle/${isDark ? 'dark' :'light'}/entertainment.png`,
       title: "Entertainment",
       slug: "entertainment",
       active: false,
     },
-    { img: "assets/shuffle/game.png", title: "Games", slug: "games", active: false },
     {
-      img: "assets/shuffle/market.png",
+      img: `assets/shuffle/${isDark ? 'dark' :'light'}/game.png`,
+      title: "Games",
+      slug: "games",
+      active: false,
+    },
+    {
+      img: `assets/shuffle/${isDark ? 'dark' :'light'}/ecommerce.png`,
       title: "Market",
       slug: "market",
       active: false,
     },
     {
-      img: "assets/shuffle/leisure.png",
-      title: "Leisure",
-      slug: "leisure",
+      img: `assets/shuffle/${isDark ? 'dark' :'light'}/gift.png`,
+      title: "Gift",
+      slug: "gift",
       active: false,
     },
   ]);
+
 
   const handleActiveItem = (slug: Item) => {
     setActive(slug);
@@ -49,19 +58,20 @@ function Shuffle() {
       .then((categories) => {
         const all: ICategory[] = categories.data.data;
 
+        console.log(all)
         // all.map((cat:ICategory) => setAllProducts((old:IProduct[]) => [...old, ...cat?.products]) )
 
         all.forEach((ca: ICategory) => {
-          if (ca.name == "entertainment") {
+          if (ca.name == "Entertainment") {
             setEntProducts(ca.products as IProduct[]);
           }
-          if (ca.name == "games") {
+          if (ca.name == "Game") {
             setGameProducts(ca.products as IProduct[]);
           }
-          if (ca.name == "market") {
+          if (ca.name == "Ecommerce") {
             setMarketProducts(ca.products as IProduct[]);
           }
-          if (ca.name == "leisure") {
+          if (ca.name == "Gift") {
             setLeisureProducts(ca.products as IProduct[]);
           }
         });
@@ -73,13 +83,18 @@ function Shuffle() {
   return (
     <div className="flex flex-col gap-6">
       <div className="flex justify-center gap-5 w-full container">
+  
         {items.map((item) => (
           <div
             key={item.slug}
             className="flex flex-col items-center w-24 justify-between cursor-pointer"
             onClick={() => handleActiveItem(item.slug as Item)}
           >
-            <img className="aspect-square size-12 md:size-20" src={item.img} alt="all" />
+            <img
+              className="aspect-square size-12 mb-2 md:size-20"
+              src={item.img}
+              alt="all"
+            />
             <span
               className={`${
                 item.slug == active ? "bg-main text-mainBlack" : "text-main"
@@ -101,8 +116,8 @@ function Shuffle() {
         {(active == "all" || active == "market") && (
           <CardsFeed title="Market" link="/" products={marketProducts} />
         )}
-        {(active == "all" || active == "leisure") && (
-          <CardsFeed title="Leisure" link="/" products={leisureProducts} />
+        {(active == "all" || active == "gift") && (
+          <CardsFeed title="Gift" link="/" products={leisureProducts} />
         )}
         <CardsFeed title="Explore more" link="/" products={leisureProducts} />
       </div>
