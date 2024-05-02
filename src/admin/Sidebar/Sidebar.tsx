@@ -32,9 +32,9 @@ function Sidebar() {
   // ];
 
   return (
-    <div className="flex flex-col gap-4 bg-mainBlack p-4 ">
-      <img className="w-[60%] me-auto" src="assets/logo.png" alt="logo" />
-      <div className="flex relative">
+    <div className="flex flex-col gap-4 bg-mainBlack p-4 w-[250px] ">
+      <img className="w-[60%] me-auto" src="/assets/logo.png" alt="logo" />
+      <div className=" relative hidden">
         <input
           type="text"
           className="border peer rounded-lg bg-transparent text-mainWhite p-1 w-full"
@@ -97,10 +97,10 @@ function Sidebar() {
       </ul>
 
       <div className="flex mt-auto gap-2">
-        <img src="assets/admin/admin.png" alt="admin"  className="rounded-full aspect-square"/>
-        <div className="flex flex-col gap-0 ">
-          <span className="font-bold">Jonathon Treat</span>
-          <span>Admin.com</span>
+        <img src="/assets/admin/admin.png" alt="admin"  className="rounded-full size-12"/>
+        <div className="flex flex-col justify-center gap-0 ">
+          <span className="font-bold text-sm">Jonathon Treat</span>
+          <span className="text-xs">Admin.com</span>
         </div>
       </div>
     </div>

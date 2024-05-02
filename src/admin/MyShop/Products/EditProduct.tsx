@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { FaChevronLeft } from "react-icons/fa6";
 import { SubmitHandler, useForm } from "react-hook-form";
 import axios from "axios";
@@ -8,8 +8,10 @@ import { ICategory } from "../../../models/ICategory";
 import { PiArrowsCounterClockwise } from "react-icons/pi";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { BiDollar } from "react-icons/bi";
+import { IProduct } from "../../../models/IProduct";
 
 type Inputs = {
+  product_id: string;
   name: string;
   description: string;
   category_id: string;
@@ -18,41 +20,26 @@ type Inputs = {
   discount: number;
 };
 
-function AddProduct() {
-  const navigate = useNavigate();
+function EditProduct() {
+  const [product, setProduct] = useState<IProduct>();
+  const { id } = useParams();
   const [categories, setCategories] = useState<ICategory[]>([]);
-  const [imgChanged, setImgChanged] = useState(false)
   const localstorage = JSON.parse(localStorage.getItem("adminData") as string);
   const adminToken = localstorage?.adminToken;
-  const { register, handleSubmit, unregister } = useForm<Inputs>();
-
-  const onSubmit: SubmitHandler<Inputs> = (data: any) => {
-    const fd = new FormData();
-
-    console.log(data)
-
-    if(imgChanged){
-
-      for (const i in data) {
-        fd.append(i, i != "image" ? data[i] : data.image[0]);
-      }
-    }else{
-      
-      for (const i in data) {
-        fd.append(i, i != "image" ? data[i] : data.image);
-      }
-    }
-
-    axios
-      .post(`${import.meta.env.VITE_BASEURL}/api/admin/product/store`, fd, {
-        headers: {
-          Authorization: `Bearer ${adminToken}`,
-        },
-      })
-      .then((d) => navigate("/admin/products"))
-      .catch((err) => console.log(err));
-  };
-
+  const { register, handleSubmit, unregister, reset } = useForm<Inputs>();
+  const navigate = useNavigate();
+  useEffect(() => {
+    const defaultValues = {
+      product_id: product?.id.toString(),
+      name: product?.name,
+      description: product?.description,
+      category_id: product?.category_id,
+      image: product?.image,
+      price: product?.price,
+      discount: product?.discount,
+    };
+    reset((defaultValues as any));
+  }, [product]);
   useEffect(() => {
     axios
       .get(`${import.meta.env.VITE_BASEURL}/api/admin/category`, {
@@ -61,7 +48,41 @@ function AddProduct() {
         },
       })
       .then((data) => setCategories(data.data.data));
+    axios
+      .get(`${import.meta.env.VITE_BASEURL}/api/admin/product`, {
+        headers: {
+          Authorization: `Bearer ${adminToken}`,
+        },
+      })
+      .then((data) => {
+        const products: IProduct[] = data.data.data;
+        products.forEach((pr) => {
+          if (pr.id.toString() == id) {
+            setProduct(pr);
+            console.log(pr);
+          }
+        });
+      });
   }, []);
+  const onSubmit: SubmitHandler<Inputs> = (data) => {
+    const fd = new FormData();
+
+    console.log(data.image)
+    // fd.append("image", );
+
+    for (const i in data) {
+        fd.append(i, (i != "image") ?  data[i] : data.image[0]);
+      }
+
+    axios
+      .post(`${import.meta.env.VITE_BASEURL}/api/admin/product/update`, fd, {
+        headers: {
+          Authorization: `Bearer ${adminToken}`,
+        },
+      })
+      .then(() => navigate("/admin/products"))
+      .catch((err) => console.log(err));
+  };
 
   return (
     <div className="flex flex-col gap-4 w-full py-5 container ps-12">
@@ -70,15 +91,11 @@ function AddProduct() {
           <FaChevronLeft className="text-main text-2xl absolute -left-7 font-semibold top-[50%] -translate-y-[50%]" />
         </Link>
         <span className="text-3xl text-white font-semibold">
-          Add new product
+          Edit new product
         </span>
       </div>
 
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col "
-      
-      >
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col ">
         <div className="flex  w-full gap-10">
           <div className="w-full sm:w-1/2 flex flex-col gap-5">
             <div className="flex flex-col gap-2">
@@ -209,7 +226,6 @@ function AddProduct() {
                 type="file"
                 id="image"
                 className="hidden"
-                onChange={() => setImgChanged(!imgChanged)}
               />
 
               <div className="flex justify-between items-end gap-3 border border-gray-600 rounded-md bg-transparent p-3 w-full">
@@ -316,7 +332,7 @@ function AddProduct() {
           </div>
         </div>
 
-        <div className="w-full text-end mt-5">
+        <div className="w-full text-end">
           <button type="submit" className="btn !rounded !w-[150px] !h-[50px] ">
             {" "}
             Add product
@@ -327,4 +343,4 @@ function AddProduct() {
   );
 }
 
-export default AddProduct;
+export default EditProduct;

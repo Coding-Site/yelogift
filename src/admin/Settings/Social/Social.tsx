@@ -1,20 +1,27 @@
 import axios from "axios";
-import  { useEffect } from "react";
-import { useToken } from "../../../hooks/useToken";
+import { useEffect, useState } from "react";
 import { FaTrashAlt } from "react-icons/fa";
 import { GoPencil } from "react-icons/go";
-
+import { Link } from "react-router-dom";
+import { FaPlus } from "react-icons/fa6";
+type Socail = {
+    name: string,
+    icon: string,
+    url: string
+}
 function Social() {
-  // const [sliders, setSliders] = useState([]);
-  const { token } = useToken();
+  const [socials, setSocials] = useState<Socail[]>([]);
+  const { adminToken } = JSON.parse(localStorage.getItem("userData") as string);
 
   useEffect(() => {
-    axios
-      .get(`${import.meta.env.VITE_BASEURL}/api/admin/slider`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+    axios.get(`${import.meta.env.VITE_BASEURL}/api/admin/slider`, {
+      headers: {
+        Authorization: `Bearer ${adminToken}`,
+      },
+    })
+    .then(d => {
+      setSocials(d.data.data);
+    });
   }, []);
 
   return (
@@ -23,6 +30,12 @@ function Social() {
         <span className="ps-3 border-mainLightColor border-s-4 font-medium">
           Social Media
         </span>
+        <Link
+          to="/admin/social/add"
+          className="bg-main rounded-md flex justify-center items-center text-mainLightBlack size-11"
+        >
+          <FaPlus />
+        </Link>
       </div>
 
       <table className="w-full text-center">
@@ -36,13 +49,18 @@ function Social() {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>ttile 1</td>
-            <td>descripton 1</td>
-            <td>img 1</td>
-            <td><FaTrashAlt  /></td>
-            <td><GoPencil /></td>
-          </tr>
+          {socials.map((social, idx) => (
+            <tr key={idx}>
+              <td>{social.name}</td>
+              <td>{social.icon}</td>
+              <td>
+                <FaTrashAlt />
+              </td>
+              <td>
+                <GoPencil />
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>

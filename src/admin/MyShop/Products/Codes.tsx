@@ -1,11 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
-import { useToken } from "../../../hooks/useToken";
 import { Link } from "react-router-dom";
 
 function Codes() {
-  const { token } = useToken();
+  const  localstorage  = JSON.parse((localStorage.getItem("adminData")) as string);
+  const adminToken = localstorage?.adminToken
 
   const [, setCodes] = useState([]);
 
@@ -13,7 +13,7 @@ function Codes() {
     axios
       .get(`${import.meta.env.VITE_BASEURL}/api/admin/product`, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${adminToken}`,
         },
       })
       .then((data) => {

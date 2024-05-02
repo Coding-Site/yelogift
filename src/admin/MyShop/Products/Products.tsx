@@ -2,14 +2,14 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 import { FiSearch } from "react-icons/fi";
-import { useToken } from "../../../hooks/useToken";
 import { PiEye } from "react-icons/pi";
 import { Link } from "react-router-dom";
 import { ICard } from "../../../models/ICard";
 import { GoPencil } from "react-icons/go";
 
 function Products() {
-  const { token } = useToken();
+  const  localstorage  = JSON.parse((localStorage.getItem("adminData")) as string);
+  const adminToken = localstorage?.adminToken
 
   const [products, setProducts] = useState([]);
 
@@ -17,7 +17,7 @@ function Products() {
     axios
       .get(`${import.meta.env.VITE_BASEURL}/api/admin/product`, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${adminToken}`,
         },
       })
       .then((data) => {
@@ -86,7 +86,7 @@ function Products() {
                     <PiEye className="mx-auto text-3xl" />
                   </Link>
                 </td>
-                <td> <Link to="/"><GoPencil /></Link></td>
+                <td> <Link to={`/admin/products/edit/${pro.id}`}><GoPencil /></Link></td>
               </tr>
             ))}
           </tbody>

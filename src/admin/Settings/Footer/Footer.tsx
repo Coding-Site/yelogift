@@ -1,19 +1,5 @@
-import axios from "axios";
-import  { useEffect } from "react";
-import { useToken } from "../../../hooks/useToken";
-
 function Footer() {
-  // const [sliders, setSliders] = useState([]);
-  const { token } = useToken();
-
-  useEffect(() => {
-    axios
-      .get(`${import.meta.env.VITE_BASEURL}/api/admin/slider`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-  }, []);
+  
 
   return (
     <div className="flex flex-col container py-5 px-2 bg-[#1F1F1F]">

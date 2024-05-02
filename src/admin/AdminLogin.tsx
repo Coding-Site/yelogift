@@ -1,13 +1,12 @@
-import { Link,  useNavigate } from "react-router-dom";
+import { Link,  Navigate,  useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
-import { useAuth } from "../hooks/useAuth";
 import { IoIosLock } from "react-icons/io";
 import { FaEnvelope } from "react-icons/fa";
 import { SubmitHandler, useForm } from "react-hook-form";
 import axios from "axios";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { useState } from "react";
-// import { useToken } from "../hooks/useToken";
+
 type Inputs = {
   email: string;
   password: string;
@@ -16,9 +15,9 @@ type Inputs = {
 function AdminLogin() {
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
-  // const { token} = useToken();
-  const {  setUser } = useAuth();
   const { setItem } = useLocalStorage();
+  const  localstorage  = JSON.parse((localStorage.getItem("adminData")) as string);
+  const adminToken = localstorage?.adminToken
 
   const {
     register,
@@ -32,17 +31,23 @@ function AdminLogin() {
       .post(`${import.meta.env.VITE_BASEURL}/api/admin/auth/login`, data)
       .then((d) => {
         if (d.status == 200) {
-          setUser(d.data.data);
-          setItem("userData", d.data.data);
+          const data = {
+            adminToken: d.data.data.token.token,
+            adminName: d.data.data.admin.name
+          }
+          
+          setItem("adminData",JSON.stringify(data));
           setLoading(false);
           navigate("/admin");
         }
       });
   };
 
-  // if (token) return <Navigate to="/admin" />;
+  // console.log(adminToken)
+  if (adminToken !== undefined && adminToken !==  null) return (<Navigate to="/admin" />);
   return (
     <div className="flex flex-col text-mainWhite">
+      {/* <pre>{JSON.stringify(adminToken, null, 2)}</pre> */}
       <div className="flex">
         <div className="bg-mainLightBlack p-4  flex flex-col w-1/2">
           <div className="p-5 h-1/5 flex flex-col gap-3">

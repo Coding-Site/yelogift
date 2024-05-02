@@ -2,14 +2,14 @@ import { AiOutlinePlus } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { ICurrency } from "../../models/ICurrency";
-import { useToken } from "../../hooks/useToken";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { GoPencil } from "react-icons/go";
 
 
 function Currency() {
-  const { token } = useToken();
+  const  localstorage  = JSON.parse((localStorage.getItem("adminData")) as string);
+  const adminToken = localstorage?.adminToken
   const targetDialoug: HTMLDialogElement = document.getElementById(
     "my_modal_2"
   ) as HTMLDialogElement;
@@ -21,7 +21,7 @@ function Currency() {
     axios
       .post(`${import.meta.env.VITE_BASEURL}/api/admin/currency/store`, data, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${adminToken}`,
         },
       })
       .then(() => {
@@ -34,7 +34,7 @@ function Currency() {
     axios
       .get(`${import.meta.env.VITE_BASEURL}/api/admin/currency/`, {
         headers: {
-          Authorization: `Bearer ${token}}`,
+          Authorization: `Bearer ${adminToken}}`,
         },
       })
       .then(() => {

@@ -2,15 +2,14 @@ import { AuthContext } from '../contexts/AuthContext'
 import AdminLayout from './AdminLayout'
 import { useUser } from '../hooks/useUser'
 // import { useToken } from '../hooks/useToken'
-import { Navigate } from 'react-router-dom'
+// import { Navigate } from 'react-router-dom'
 
 function Admin() {
   const {user, setUser } = useUser()
-  // const { token} = useToken();
-
-  if(!user) return <Navigate to="/admin/login" />
+ 
   return (
     <div className='flex '>
+      
       <AuthContext.Provider value={{user, setUser}} >
 
         <AdminLayout />
