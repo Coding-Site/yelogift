@@ -18,7 +18,7 @@ function AdminLogin() {
   const { setItem } = useLocalStorage();
   const  localstorage  = JSON.parse((localStorage.getItem("adminData")) as string);
   const adminToken = localstorage?.adminToken
-
+  const [backError, setBackError] = useState('');
   const {
     register,
     handleSubmit,
@@ -40,7 +40,14 @@ function AdminLogin() {
           setLoading(false);
           navigate("/admin");
         }
-      });
+      })
+      .catch(err => {
+        const msg = err.response.data.message;
+        if(msg){
+          setLoading(false)
+          setBackError(msg)
+        }
+      })
   };
 
   // console.log(adminToken)
@@ -74,7 +81,7 @@ function AdminLogin() {
               />
               <FaEnvelope className="absolute left-4 top-[50%] -translate-y-[50%]" />
             </div>
-            {errors.email && <span>This field is required</span>}
+            {errors.email && <span className="text-red-600 w-full text-center">This field is required</span>}
             <div className="relative w-full">
               <input
                 {...register("password", { required: true })}
@@ -84,7 +91,8 @@ function AdminLogin() {
               />
               <IoIosLock className="absolute left-4 top-[50%] -translate-y-[50%]" />
             </div>
-            {errors.password && <span>This field is required</span>}
+            {errors.password && <span className="text-red-600 w-full text-center">This field is required</span>}
+            {backError. length > 1 ? (<span className="text-red-600 w-full text-center">{backError}</span>) : ''}
             <div className="flex justify-between w-full items-center">
               <label className="cursor-pointer label p-0">
                 <input
