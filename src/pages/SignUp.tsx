@@ -1,12 +1,14 @@
-import {  Navigate, useNavigate } from "react-router-dom";
+import {  Link, Navigate, useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
-import { IoIosLock } from "react-icons/io";
 import { FaEnvelope } from "react-icons/fa";
 import { SubmitHandler, useForm } from "react-hook-form";
 import axios from "axios";
-import { useLocalStorage } from "../hooks/useLocalStorage";
 import { useState } from "react";
 import { useToken } from "../hooks/useToken";
+import { FaUser } from "react-icons/fa";
+import { IoPhonePortrait } from "react-icons/io5";
+import { RiLockPasswordFill } from "react-icons/ri";
+
 type Inputs = {
   name: string;
   email: string;
@@ -18,7 +20,7 @@ function Signup() {
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
   const { userToken } = useToken();
-  const { setItem } = useLocalStorage();
+  const [backError, setBackError] = useState('');
 
   const {
     register,
@@ -32,12 +34,18 @@ function Signup() {
       .post(`${import.meta.env.VITE_BASEURL}/api/user/auth/register`, data)
       .then((d) => {
         if (d.status == 200) {
-          setItem("userData", JSON.stringify(d.data.data));
           setLoading(false);
           navigate("/");
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        const msg = err.response.data.message;
+        if(msg){
+          setLoading(false)
+          setBackError(msg)
+        }
+        
+      });
   };
 
   if (userToken) return <Navigate to="/" />;
@@ -85,11 +93,11 @@ function Signup() {
                 type="text"
                 {...register("name", { required: true })}
                 className="bg-transparent border rounded-lg w-full ps-12 py-2 placeholder:text-white placeholder:text-xs "
-                placeholder="Email or phone number"
+                placeholder="Name"
               />
-              <FaEnvelope className="absolute left-4 top-[50%] -translate-y-[50%]" />
+              <FaUser className="absolute left-4 top-[50%] -translate-y-[50%]" />
             </div>
-            {errors.name && <span>This field is required</span>}
+            {errors.name && <span className="text-red-600 w-full text-center">This field is required</span>}
             
             
             
@@ -98,11 +106,11 @@ function Signup() {
                 type="email"
                 {...register("email", { required: true })}
                 className="bg-transparent border rounded-lg w-full ps-12 py-2 placeholder:text-white placeholder:text-xs "
-                placeholder="Email or phone number"
+                placeholder="Email"
               />
               <FaEnvelope className="absolute left-4 top-[50%] -translate-y-[50%]" />
             </div>
-            {errors.email && <span>This field is required</span>}
+            {errors.email && <span className="text-red-600 w-full text-center">This field is required</span>}
             
             
             <div className="relative w-full">
@@ -110,23 +118,24 @@ function Signup() {
                 type="text"
                 {...register("phone", { required: true })}
                 className="bg-transparent border rounded-lg w-full ps-12 py-2 placeholder:text-white placeholder:text-xs "
-                placeholder="Email or phone number"
+                placeholder="Phone number"
               />
-              <FaEnvelope className="absolute left-4 top-[50%] -translate-y-[50%]" />
+              <IoPhonePortrait className="absolute left-4 top-[50%] -translate-y-[50%]" />
             </div>
-            {errors.phone && <span>This field is required</span>}
+            {errors.phone && <span className="text-red-600 w-full text-center">This field is required</span>}
             
             <div className="relative w-full">
               <input
                 {...register("password", { required: true })}
                 type="password"
                 className="bg-transparent border w-full rounded-lg ps-12 py-2 placeholder:text-white placeholder:text-xs placeholder:font-light"
-                placeholder="Enter password"
+                placeholder="Password"
               />
-              <IoIosLock className="absolute left-4 top-[50%] -translate-y-[50%]" />
+              <RiLockPasswordFill className="absolute left-4 top-[50%] -translate-y-[50%]" />
             </div>
-            {errors.password && <span>This field is required</span>}
+            {errors.password && <span className="text-red-600 w-full text-center">This field is required</span>}
             
+            {backError.length > 1 ? ( <span className="text-red-600 w-full text-center">{backError}</span>): ''}
             <div className="flex justify-between w-full items-center">
               <label className="cursor-pointer label p-0">
                 <input
@@ -141,6 +150,7 @@ function Signup() {
             <button className="btn !w-[80%] !rounded-md mt-12 mx-auto">
               {loading ? "loading..." : "Signup"}
             </button>
+            <Link className="text-xs" to="/signin" >Sign In</Link>
           </form>
         </div>
         <div className="w-full sm:w-1/2 bg-black">

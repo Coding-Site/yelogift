@@ -18,7 +18,7 @@ function Signin() {
   const { setItem } = useLocalStorage();
   const  localstorage  = JSON.parse((localStorage.getItem("userData")) as string);
   const userToken = localstorage?.adminToken
-
+  const [backError, setBackError] = useState('');
   const {
     register,
     handleSubmit,
@@ -41,7 +41,14 @@ function Signin() {
           navigate("/");
         
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        const msg = err.response.data.message;
+        if(msg){
+          setLoading(false)
+          setBackError(msg)
+        }
+    
+      });
   };
 
   // console.log(userToken)
@@ -94,7 +101,7 @@ function Signin() {
               />
               <FaEnvelope className="absolute left-4 top-[50%] -translate-y-[50%]" />
             </div>
-            {errors.login && <span>This field is required</span>}
+            {errors.login && <span className="text-red-600 w-full text-center">This field is required</span>}
             <div className="relative w-full">
               <input
                 {...register("password", { required: true })}
@@ -104,7 +111,8 @@ function Signin() {
               />
               <IoIosLock className="absolute left-4 top-[50%] -translate-y-[50%]" />
             </div>
-            {errors.password && <span>This field is required</span>}
+            {errors.password && <span className="text-red-600 w-full text-center" >This field is required</span>}
+            {backError. length > 1 ? (<span className="text-red-600 w-full text-center">{backError}</span>) : ''}
             <div className="flex justify-between w-full items-center">
               <label className="cursor-pointer label p-0">
                 <input
@@ -121,6 +129,7 @@ function Signin() {
             <button className="btn !w-[80%] !rounded-md mt-12 mx-auto">
               {loading ? "loading..." : "login"}
             </button>
+            <Link  className="text-xs" to="/signup" >Sign Up</Link>
           </form>
         </div>
         <div className="w-full sm:w-1/2 bg-black">

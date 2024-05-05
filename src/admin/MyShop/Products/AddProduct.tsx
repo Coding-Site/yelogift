@@ -49,7 +49,7 @@ function AddProduct() {
           Authorization: `Bearer ${adminToken}`,
         },
       })
-      .then((d) => navigate("/admin/products"))
+      .then(() => navigate("/admin/products"))
       .catch((err) => console.log(err));
   };
 
