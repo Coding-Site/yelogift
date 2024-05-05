@@ -9,14 +9,12 @@ import { FaRegHeart } from "react-icons/fa";
 import { LiaShoppingBagSolid } from "react-icons/lia";
 import { useLocalStorage } from "../../hooks/useLocalStorage.tsx";
 
-
-
 function Navbar() {
   const [openCart, setOpenCart] = useState<boolean>(false);
   const [openMenu, setOpenMenu] = useState<boolean>(false);
   const navigate = useNavigate();
-  const  localstorage  = JSON.parse((localStorage.getItem("userData")) as string);
-  const userToken = localstorage?.userToken
+  const localstorage = JSON.parse(localStorage.getItem("userData") as string);
+  const userToken = localstorage?.userToken;
   const { removeItem } = useLocalStorage();
 
   const Signout = () => {
@@ -86,10 +84,13 @@ function Navbar() {
             <FaRegHeart />
 
             <div className="relative">
-              <LiaShoppingBagSolid
-                className="cursor-pointer"
-                onClick={() => setOpenCart(!openCart)}
-              />
+              <label className="flex" htmlFor="cartInput">
+                <input type="checkbox" id='cartInput' className="size-0" onFocus={() => setOpenCart(!openCart)} onBlur={() => setOpenCart(!openCart)} />
+                <LiaShoppingBagSolid
+                  className="cursor-pointer"
+                  // onClick={() => setOpenCart(!openCart)}
+                />
+              </label>
 
               <div
                 className={`${
