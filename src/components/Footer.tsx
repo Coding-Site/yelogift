@@ -42,7 +42,7 @@ function Footer() {
       </div>
 
       <div className="flex justify-end container py-5 text-gray-500">
-        &copy; 2024 yelogift all rights reserved
+        &copy; 2024 yelogift all rights reserved - made by  <a  className="inline-block mx-2" href="https://coding-site.com">coding site</a>
       </div>
     </footer>
   );
