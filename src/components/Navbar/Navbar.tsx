@@ -1,18 +1,24 @@
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import Switcher from "../../utils/Switcher.tsx";
 import { useState } from "react";
-import NavbarCart from "./NavbarCart.tsx";
 import { GiHamburgerMenu } from "react-icons/gi";
 import MobileMenu from "./MobileMenu.tsx";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { FaRegHeart } from "react-icons/fa";
 import { LiaShoppingBagSolid } from "react-icons/lia";
 import { useLocalStorage } from "../../hooks/useLocalStorage.tsx";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../store/index.ts";
+import {
+  decreaseOneItem,
+  increaseOneItem,
+} from "../../store/CartSlice/CartSlice.tsx";
 
 function Navbar() {
-  const [openCart, setOpenCart] = useState<boolean>(false);
   const [openMenu, setOpenMenu] = useState<boolean>(false);
   const navigate = useNavigate();
+  const carts = useSelector((state: RootState) => state.cartSlice.items);
+  const dispatch = useDispatch();
   const localstorage = JSON.parse(localStorage.getItem("userData") as string);
   const userToken = localstorage?.userToken;
   const { removeItem } = useLocalStorage();
@@ -82,23 +88,59 @@ function Navbar() {
           <div className="flex justify-center gap-3 text-3xl">
             <IoMdNotificationsOutline />
             <FaRegHeart />
-
-            <div className="relative">
-              <label className="flex" htmlFor="cartInput">
-                <input type="checkbox" id='cartInput' className="size-0" onFocus={() => setOpenCart(!openCart)} onBlur={() => setOpenCart(!openCart)} />
-                <LiaShoppingBagSolid
-                  className="cursor-pointer"
-                  // onClick={() => setOpenCart(!openCart)}
-                />
-              </label>
-
-              <div
-                className={`${
-                  openCart ? "flex" : "hidden"
-                } absolute z-30 top-3 flex flex-col right-4  bg-white rounded-md p-2 w-[400px] text-mainLightBlack`}
-              >
-                <NavbarCart setOpenCart={setOpenCart} openCart={openCart} />
+            <div className="dropdown dropdown-end bg-transparent text-3xl">
+              <div tabIndex={0} role="button">
+                <LiaShoppingBagSolid className="cursor-pointer" />
               </div>
+              <ul
+                tabIndex={0}
+                className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded w-96 text-mainLightBlack"
+              >
+
+                {carts.length ? carts.map((cart, idx) => (
+                  <div className="flex justify-start items-center gap-3 w-full " key={idx}>
+                    <img
+                      className="w-20 h-12"
+                      src={`${import.meta.env.VITE_BASEURL}/public/storage/${
+                        cart.product?.image
+                      }`}
+                      alt="cart"
+                    />
+                    <div className="flex flex-col gap-0">
+                      <span className="text-sm text-gray-500">
+                        AED {cart.product?.price}
+                      </span>
+                    </div>
+                    <div className="flex basis-24 text-base h-8 min-w-[100px] px-3 items-center ms-auto w-auto  justify-between rounded-full border border-gray-300">
+                      <span
+                        onClick={() =>
+                          dispatch(decreaseOneItem(cart.product?.id as number))
+                        }
+                        className="cursor-pointer"
+                      >
+                        -
+                      </span>
+                      <span>{cart.quantity}</span>
+                      <span
+                        onClick={() =>
+                          dispatch(increaseOneItem(cart.product?.id as number))
+                        }
+                        className="cursor-pointer"
+                      >
+                        +
+                      </span>
+                    </div>
+                  </div>
+                )): (<div className="flex justify-center tex-2xl">No Products in the Cart</div>)}
+                <div className="flex justify-between text-base mt-6">
+                  <button className="!rounded-full shadow-md px-5">
+                    keep shopping
+                  </button>
+                  <Link to="checkout" className="btn !rounded-full  shadow-md">
+                    checkout
+                  </Link>
+                </div>
+              </ul>
             </div>
           </div>
 

@@ -46,17 +46,17 @@ function SingleProduct() {
               <div className="relative w-1/3 rounded-full bg-black h-[15px]">
                 <div className="size-5 rounded-full bg-black absolute -top-[50%] left-[50%] -translate-x-[50%]"></div>
                 <span className="absolute text-gray-500 font-semibold -right-[80px] -top-[4px]">
-                  ${(Product as IProduct)?.price}
+                  ${Product?.price}
                 </span>
               </div>
               <div className="flex flex-col text-gray-500 justify-center items-center mt-5">
-                <span className="text-2xl"> {(Product as IProduct)?.category.name}</span>
-                <span className="text-xs"> {(Product as IProduct)?.name}</span>
+                <span className="text-2xl"> {Product?.category?.name}</span>
+                <span className="text-xs"> {Product?.name}</span>
               </div>
             </div>
 
             <img
-              src={`https://yelogift.coding-site.com/public/storage/${(Product as IProduct)?.image}`}
+              src={`https://yelogift.coding-site.com/public/storage/${Product?.image}`}
               alt="product card"
               className="mx-auto min-w-full"
             />
@@ -65,16 +65,16 @@ function SingleProduct() {
 
         <div className="flex w-full sm:w-1/2 flex-col justify-start items-start gap-5">
           <span className="capitalize text-white text-3xl font-semibold">
-            {(Product as IProduct)?.name}
+            {Product?.name}
           </span>
           <Rating rating={2} />
           <span className="p-2 border w-full border-gray-200 rounded-md text-sm">
-            {(Product as IProduct)?.description}
+            {Product?.description}
           </span>
 
           <span className="text-main">choose product</span>
           <div className="flex flex-col gap-2 w-full pe-4">
-            {(Product as IProduct)?.product_parts?.map((pp, idx) => (
+            {Product?.product_parts?.map((pp, idx) => (
               <div
                 key={idx}
                 className={`rounded p-2 cursor-pointer flex items-start gap-2 w-full ${
@@ -91,10 +91,10 @@ function SingleProduct() {
                 <div className="flex flex-col gap-3">
                   <span>{(pp as IProductPart)?.title}</span>
                   <span className="text-gray-500  ">
-                    Price: USD <span className="line-through"> {(pp as IProductPart)?.discount}</span>
+                    Price: USD <span className="line-through"> {pp?.discount}</span>
                   </span>
                 </div>
-                <span className="ms-auto">{(pp as IProductPart)?.price}</span>
+                <span className="ms-auto">{pp?.price}</span>
               </div>
             ))}
           </div>
@@ -147,7 +147,7 @@ function SingleProduct() {
             Description
           </div>
           <div className="collapse-content ">
-            {(Product as IProduct)?.description}
+            {Product?.description}
           </div>
         </div>
         <div
