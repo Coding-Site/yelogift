@@ -7,6 +7,7 @@ const App = lazy(() => import("../App"));
 const AdminLayout = lazy(() => import("../admin/AdminLayout"));
 const Home = lazy(() => import("../pages/Home/Home"));
 const Categories = lazy(() => import("../pages/Categories"));
+const CategoryFeed = lazy(() => import("../pages/Category/Category"));
 const SingleProduct = lazy(() => import("../pages/SingleProduct"));
 const Checkout = lazy(() => import("../pages/Checkout"));
 const PaymentManual = lazy(() => import("../pages/PaymentManual"));
@@ -71,12 +72,25 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "category",
-        element: (
-          <Suspense fallback={<Spinner />}>
-            <Categories />
-          </Suspense>
-        ),
+        path: "categories",
+        children: [
+          {
+            path: "",
+            element: (
+              <Suspense fallback={<Spinner />}>
+                <Categories />
+              </Suspense>
+            ),
+          },
+          {
+            path: ":categoryId",
+            element: (
+              <Suspense fallback={<Spinner />}>
+                <CategoryFeed />
+              </Suspense>
+            ),
+          },
+        ],
       },
       {
         path: "product/:id",

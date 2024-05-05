@@ -1,5 +1,7 @@
 import axios from "axios";
+import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 type Inputs = {
   title: string;
@@ -9,21 +11,35 @@ type Inputs = {
 
 function AddSlider() {
   const { register, handleSubmit } = useForm<Inputs>();
-  const  localstorage  = JSON.parse((localStorage.getItem("adminData")) as string);
-  const adminToken = localstorage?.adminToken
+  const [backError, setBackError] = useState("");
+  const navigate = useNavigate();
+  const localstorage = JSON.parse(localStorage.getItem("adminData") as string);
+  const adminToken = localstorage?.adminToken;
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    axios.post(`${import.meta.env.VITE_BASEURL}/api/admin/slider/store`, data, {
-      headers: {
-        Authorization: `Bearer ${adminToken}`
-      }
-    })
-    .then(d => console.log(d))
-    .catch(err => console.log(err))
+    const fd = new FormData();
+
+    for (const i in data) {
+      fd.append(i, i != "image" ? data[i] : data.image[0]);
+    }
+
+    axios
+      .post(`${import.meta.env.VITE_BASEURL}/api/admin/slider/store`, fd, {
+        headers: {
+          Authorization: `Bearer ${adminToken}`,
+        },
+      })
+      .then((d) => {
+        navigate('/admin/slider')
+      })
+      .catch((err) => {
+        const msg = err.response.data.message;
+        setBackError(msg);
+      });
   };
   return (
     <div className="flex flex-col container py-5 px-2 bg-[#1F1F1F]">
-      <div className="flex justify-between mb-6">
+      <div className="flex justify-between items-center mb-6">
         <span className="ps-3 border-mainLightColor border-s-4 font-medium">
           Add Slider
         </span>
@@ -90,7 +106,13 @@ function AddSlider() {
             </div>
           </div>
         </div>
-          <button type="submit" className="btn mt-5 mx-auto my-3 !rounded px-5 "> Add</button>
+        {backError && (
+          <span className="text-red-600 w-full text-center my-3">{backError}</span>
+        )}
+        <button type="submit" className="btn mt-5 mx-auto my-3 !rounded px-5 ">
+          {" "}
+          Add
+        </button>
       </form>
     </div>
   );

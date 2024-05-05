@@ -11,7 +11,7 @@ type Socail = {
 }
 function Social() {
   const [socials, setSocials] = useState<Socail[]>([]);
-  const { adminToken } = JSON.parse(localStorage.getItem("userData") as string);
+  const { adminToken } = JSON.parse(localStorage.getItem("adminData") as string);
 
   useEffect(() => {
     axios.get(`${import.meta.env.VITE_BASEURL}/api/admin/slider`, {

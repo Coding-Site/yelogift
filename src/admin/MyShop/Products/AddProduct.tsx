@@ -29,8 +29,6 @@ function AddProduct() {
   const onSubmit: SubmitHandler<Inputs> = (data: any) => {
     const fd = new FormData();
 
-    console.log(data)
-
     if(imgChanged){
 
       for (const i in data) {

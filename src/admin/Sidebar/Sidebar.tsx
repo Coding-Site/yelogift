@@ -4,32 +4,6 @@ import { FiCircle } from "react-icons/fi";
 import { FaRegCircleStop } from "react-icons/fa6";
 
 function Sidebar() {
-  // const navItems = [
-  //   {
-  //     item: "My Shop",
-  //     to: "",
-  //     children: [
-  //       { item: "Products", to: "/admin/products" },
-  //       { item: "Category", to: "/admin/category" },
-  //       { item: "Orders", to: "/admin/orders" },
-  //       { item: "Customers", to: "/admin/customers" },
-  //     ],
-  //   },
-  //   {
-  //     item: "Settings",
-  //     to: "",
-  //     children: [
-  //       { item: "Site Settings", to: "/admin/products" },
-  //       { item: "Slider", to: "/admin/category" },
-  //       { item: "Social", to: "/admin/orders" },
-  //       { item: "Footer", to: "/admin/customers" },
-  //       { item: "Video", to: "/admin/customers" },
-  //     ],
-  //   },
-  //   { item: "Currency ", to: "" },
-  //   { item: "Custom Page", to: "" },
-  //   { item: "Notification", to: "" },
-  // ];
 
   return (
     <div className="flex flex-col gap-4 bg-mainBlack p-4 w-[250px] ">
@@ -56,9 +30,9 @@ function Sidebar() {
               <li>
                 <NavItem item="Orders" to="/admin/orders" />
               </li>
-              <li>
+              {/* <li>
                 <NavItem item="Customers" to="/admin/customers" />
-              </li>
+              </li> */}
             </ul>
           </details>
         </li>

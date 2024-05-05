@@ -59,7 +59,7 @@ function Navbar() {
                 ? "text-main font-semibold"
                 : "dark:text-gray-600 text-mainWhite"
             }
-            to="/category"
+            to="/categories"
           >
             Categories
           </NavLink>

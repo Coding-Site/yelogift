@@ -6,14 +6,15 @@ import { IProduct } from "../../../models/IProduct";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store";
 
-type Item = "all" | "entertainment" | "games" | "market" | "gift";
+type Item = "all" | "entertainment" | "games" | "market" | "gift" | "telecom";
 
 function Shuffle() {
 
   const [entProducts, setEntProducts] = useState<IProduct[]>([]);
   const [gameProducts, setGameProducts] = useState<IProduct[]>([]);
   const [marketProducts, setMarketProducts] = useState<IProduct[]>([]);
-  const [leisureProducts, setLeisureProducts] = useState<IProduct[]>([]);
+  const [giftProducts, setGiftProducts] = useState<IProduct[]>([]);
+  const [telecomProducts, setTelecomProducts] = useState<IProduct[]>([]);
   const [active, setActive] = useState<Item>("all");
   const isDark : boolean = useSelector((state: RootState) => state.themeSlice.isDark);
   const [items, setItems] = useState([
@@ -42,6 +43,12 @@ function Shuffle() {
       slug: "gift",
       active: false,
     },
+    {
+      img: `assets/shuffle/${isDark ? 'dark' :'light'}/telecom.png`,
+      title: "Telecom",
+      slug: "telecom",
+      active: false,
+    },
   ]);
 
 
@@ -58,9 +65,6 @@ function Shuffle() {
       .then((categories) => {
         const all: ICategory[] = categories.data.data;
 
-        console.log(all)
-        // all.map((cat:ICategory) => setAllProducts((old:IProduct[]) => [...old, ...cat?.products]) )
-
         all.forEach((ca: ICategory) => {
           if (ca.name == "Entertainment") {
             setEntProducts(ca.products as IProduct[]);
@@ -68,15 +72,17 @@ function Shuffle() {
           if (ca.name == "Game") {
             setGameProducts(ca.products as IProduct[]);
           }
-          if (ca.name == "Ecommerce") {
+          if (ca.name == "Telecom") {
+            setTelecomProducts(ca.products as IProduct[]);
+          }
+          if (ca.name == "Market") {
             setMarketProducts(ca.products as IProduct[]);
           }
           if (ca.name == "Gift") {
-            setLeisureProducts(ca.products as IProduct[]);
+            setGiftProducts(ca.products as IProduct[]);
           }
         });
 
-        // setAllProducts(categories.data.data);
       });
   }, []);
 
@@ -108,18 +114,20 @@ function Shuffle() {
 
       <div className="felx flex-col">
         {(active == "all" || active == "entertainment") && (
-          <CardsFeed title="Entertainment" link="/" products={entProducts} />
+          <CardsFeed title="Entertainment" link="categories/2" products={entProducts} />
         )}
         {(active == "all" || active == "games") && (
-          <CardsFeed title="Games" link="/" products={gameProducts} />
+          <CardsFeed title="Games" link="categories/7" products={gameProducts} />
         )}
         {(active == "all" || active == "market") && (
-          <CardsFeed title="Market" link="/" products={marketProducts} />
+          <CardsFeed title="Market" link="categories/3" products={marketProducts} />
         )}
         {(active == "all" || active == "gift") && (
-          <CardsFeed title="Gift" link="/" products={leisureProducts} />
+          <CardsFeed title="Gift" link="categories/4" products={giftProducts} />
         )}
-        <CardsFeed title="Explore more" link="/" products={leisureProducts} />
+        {(active == "all" || active == "telecom") && (
+          <CardsFeed title="Telecom" link="categories/6" products={telecomProducts} />
+        )}
       </div>
     </div>
   );

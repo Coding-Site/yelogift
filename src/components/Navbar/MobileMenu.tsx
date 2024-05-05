@@ -32,7 +32,7 @@ function MobileMenu({
           className={({ isActive }) =>
             isActive ? "text-main font-semibold" : "text-mainWhite"
           }
-          to="/category"
+          to="/categories"
         >
           Categories
         </NavLink>

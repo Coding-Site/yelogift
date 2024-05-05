@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../../store";
@@ -28,9 +28,6 @@ function NavbarCart({ setOpenCart, openCart }: Props) {
   //   },
   // ];
 
-  useEffect(() => {
-    console.log(carts);
-  }, [carts]);
 
   return (
     <div className="bg-white flex flex-col gap-2 rounded-md p-3 ">

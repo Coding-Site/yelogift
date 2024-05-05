@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
-import { FiSearch } from "react-icons/fi";
 import { PiEye } from "react-icons/pi";
 import { Link } from "react-router-dom";
 import { ICard } from "../../../models/ICard";
@@ -36,22 +35,22 @@ function Products() {
       </div>
 
       <div className="flex flex-col gap-2 rounded-t-xl p-4  bg-white text-mainLightBlack">
-        <div className="flex justify-between w-full">
-          <p className="font-medium">you have 325 card in total </p>
+        <div className="flex justify-between w-full py-5">
+          <p className="font-medium text-xl">you have 325 card in total </p>
           <div className="flex relative">
-            <input
+            {/* <input
               type="text"
               className="rounded-full shadow-md border-2 border-gray-400 p-1 ps-7"
               placeholder="Search product"
             />
-            <FiSearch className="absolute left-2 text-lg text-gray-400 top-[50%] -translate-y-[50%]" />
-            <button className="bg-white px-4 py-2 rounded-md shadow-md">
+            <FiSearch className="absolute left-2 text-lg text-gray-400 top-[50%] -translate-y-[50%]" /> */}
+            {/* <button className="bg-white px-4 py-2 rounded-md shadow-md">
               Filter
-            </button>
+            </button> */}
           </div>
         </div>
 
-        <table className="text-center table-auto">
+        <table className="text-center table-auto border-separate">
           <thead>
             <tr>
               <th>ID</th>
@@ -67,7 +66,7 @@ function Products() {
           </thead>
           <tbody>
             {products.map((pro: ICard, idx) => (
-              <tr key={idx}>
+              <tr key={idx} className="table-row py-5">
                 <td className="font-semibold">{pro.id}</td>
                 <td>{pro.name}</td>
                 <td>{pro.name}</td>

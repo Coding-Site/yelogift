@@ -11,7 +11,7 @@ type Props = {
 
 function Notification() {
   const [pages, setPages] = useState<Props[]>([]);
-  const { adminToken } = JSON.parse(localStorage.getItem("userData") as string);
+  const { adminToken } = JSON.parse(localStorage.getItem("adminData") as string);
   const deletePage = (id: number) => {
     console.log(id);
   };

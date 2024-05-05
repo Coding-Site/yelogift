@@ -13,7 +13,7 @@ type Props = {
 
 function Notification() {
   const [notifications, setNotifications] = useState<Props[]>([]);
-  const { adminToken } = JSON.parse(localStorage.getItem("userData") as string);
+  const { adminToken } = JSON.parse(localStorage.getItem("adminData") as string);
   const deleteNotification = (id: number) => {
     console.log(id);
   };

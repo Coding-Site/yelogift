@@ -16,7 +16,7 @@ function EditSlider() {
 
     }
   });
-  const { adminToken } = JSON.parse(localStorage.getItem("userData") as string);
+  const { adminToken } = JSON.parse(localStorage.getItem("adminData") as string);
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     console.log(data);

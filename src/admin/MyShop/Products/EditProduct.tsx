@@ -67,8 +67,6 @@ function EditProduct() {
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     const fd = new FormData();
 
-    console.log(data.image)
-    // fd.append("image", );
 
     for (const i in data) {
         fd.append(i, (i != "image") ?  data[i] : data.image[0]);

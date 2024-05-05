@@ -16,7 +16,7 @@ function PopularCards() {
     <div className="flex flex-col w-full container py-5">
       <div className="w-full flex justify-between border-b border-mainWhite border-opacity-65 pb-5">
         <span className="text-mainWhite ">Popular Cards</span>
-        <Link to="/" className="text-main flex gap-6">
+        <Link to="/categories" className="text-main flex gap-6">
           view more <img className="w-6" src="slider/prev.png" alt="" />
         </Link>
       </div>
