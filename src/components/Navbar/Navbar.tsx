@@ -1,10 +1,10 @@
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-import Switcher from '../../utils/Switcher.tsx';
+// import Switcher from '../../utils/Switcher.tsx';
 import { useEffect, useState } from 'react';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import MobileMenu from './MobileMenu.tsx';
-import { IoMdNotificationsOutline } from 'react-icons/io';
-import { FaRegHeart } from 'react-icons/fa';
+// import { IoMdNotificationsOutline } from 'react-icons/io';
+// import { FaRegHeart } from 'react-icons/fa';
 import { LiaShoppingBagSolid } from 'react-icons/lia';
 import { useLocalStorage } from '../../hooks/useLocalStorage.tsx';
 import { useDispatch, useSelector } from 'react-redux';
@@ -96,7 +96,7 @@ function Navbar() {
                 </div>
 
                 {/* Search input  */}
-                <div className="hidden sm:flex grow relative">
+                {/* <div className="hidden sm:flex grow relative">
                     <input
                         type="text"
                         placeholder="Search"
@@ -107,13 +107,13 @@ function Navbar() {
                         className="absolute right-5 top-[50%] -translate-y-[50%]"
                         alt=""
                     />
-                </div>
+                </div> */}
 
                 {/* Actions */}
-                <div className="flex justify-between items-center grow-0 sm:grow">
-                    <div className="flex justify-center gap-3 text-3xl">
-                        <IoMdNotificationsOutline />
-                        <FaRegHeart />
+                <div className="flex justify-between items-center grow-0  sm:grow">
+                    <div className="flex justify-center ms-auto me-3 gap-3 text-3xl">
+                        {/* <IoMdNotificationsOutline />
+                        <FaRegHeart /> */}
                         <div className="dropdown dropdown-end bg-transparent text-3xl">
                             <div tabIndex={0} role="button">
                                 <LiaShoppingBagSolid className="cursor-pointer" />
@@ -223,9 +223,9 @@ function Navbar() {
                         </div>
                     </div>
 
-                    <div className="hidden sm:flex justify-center gap-3">
+                    {/* <div className="hidden sm:flex justify-center gap-3">
                         <Switcher />
-                    </div>
+                    </div> */}
 
                     <div className="hidden sm:flex justify-center gap-3">
                         {userToken ? (

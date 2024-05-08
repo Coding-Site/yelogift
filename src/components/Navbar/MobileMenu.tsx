@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import Switcher from "../../utils/Switcher";
+// import Switcher from "../../utils/Switcher";
 import { IoClose } from "react-icons/io5";
 import { Dispatch, SetStateAction } from "react";
 
@@ -36,10 +36,10 @@ function MobileMenu({
         >
           Categories
         </NavLink>
-
+{/* 
         <div className="flex sm:hidden justify-center gap-3">
           <Switcher />
-        </div>
+        </div> */}
       </div>
     </>
   );

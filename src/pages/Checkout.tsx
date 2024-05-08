@@ -88,69 +88,73 @@ function Checkout() {
                     </span>
                     <div className="flex flex-col gap-3">
                         {carts.length ? (
-                            carts.map((cart, idx) => (
-                                <div
-                                    className="flex  justify-start gap-3 w-full "
-                                    key={idx}
-                                >
-                                    <img
-                                        className="w-20 h-12"
-                                        src={`${
-                                            import.meta.env.VITE_BASEURL
-                                        }/public/storage/${
-                                            cart.product?.image
-                                        }`}
-                                        alt="cart"
-                                    />
-                                    <div className="flex flex-col gap-0">
-                                        {/* <span className="text-xl text-black ">
-                    {cart.description.length > 10
-                      ? cart.description.slice(0, 10) + "..."
-                      : cart.description}
-                  </span> */}
-                                        <span className="text-sm text-gray-500">
-                                            AED {cart.product?.price}
-                                        </span>
+                            carts.map((cart, idx) => {
+                                if(cart.quantity){
+                                    return (
+                                        <div
+                                        className="flex  justify-start gap-3 w-full "
+                                        key={idx}
+                                    >
+                                        <img
+                                            className="w-20 h-12"
+                                            src={`${
+                                                import.meta.env.VITE_BASEURL
+                                            }/public/storage/${
+                                                cart.product?.image
+                                            }`}
+                                            alt="cart"
+                                        />
+                                        <div className="flex flex-col gap-0">
+                                            {/* <span className="text-xl text-black ">
+                        {cart.description.length > 10
+                          ? cart.description.slice(0, 10) + "..."
+                          : cart.description}
+                      </span> */}
+                                            <span className="text-sm text-gray-500">
+                                                AED {cart.product?.price}
+                                            </span>
+                                        </div>
+                                        <div className="flex basis-24 h-8 min-w-[100px] px-3 items-center ms-auto w-auto  justify-between rounded-full border border-gray-300">
+                                            <span
+                                                className=" cursor-pointer"
+                                                onClick={() => {
+                                                    dispatch(
+                                                        updateCartItem({
+                                                            cart_id:
+                                                                cart.id as number,
+                                                            quantity:
+                                                                cart.quantity - 1,
+                                                        })
+                                                    ).then(() => {
+                                                        dispatch(getCartData());
+                                                    });
+                                                }}
+                                            >
+                                                -
+                                            </span>
+                                            <span>{cart.quantity}</span>
+                                            <span
+                                                className=" cursor-pointer"
+                                                onClick={() => {
+                                                    dispatch(
+                                                        updateCartItem({
+                                                            cart_id:
+                                                                cart.id as number,
+                                                            quantity:
+                                                                cart.quantity + 1,
+                                                        })
+                                                    ).then(() => {
+                                                        dispatch(getCartData());
+                                                    });
+                                                }}
+                                            >
+                                                +
+                                            </span>
+                                        </div>
                                     </div>
-                                    <div className="flex basis-24 h-8 min-w-[100px] px-3 items-center ms-auto w-auto  justify-between rounded-full border border-gray-300">
-                                        <span
-                                            className=" cursor-pointer"
-                                            onClick={() => {
-                                                dispatch(
-                                                    updateCartItem({
-                                                        cart_id:
-                                                            cart.id as number,
-                                                        quantity:
-                                                            cart.quantity - 1,
-                                                    })
-                                                ).then(() => {
-                                                    dispatch(getCartData());
-                                                });
-                                            }}
-                                        >
-                                            -
-                                        </span>
-                                        <span>{cart.quantity}</span>
-                                        <span
-                                            className=" cursor-pointer"
-                                            onClick={() => {
-                                                dispatch(
-                                                    updateCartItem({
-                                                        cart_id:
-                                                            cart.id as number,
-                                                        quantity:
-                                                            cart.quantity + 1,
-                                                    })
-                                                ).then(() => {
-                                                    dispatch(getCartData());
-                                                });
-                                            }}
-                                        >
-                                            +
-                                        </span>
-                                    </div>
-                                </div>
-                            ))
+                                    )
+                                }
+                            })
                         ) : (
                             <span>No Items in the Cart</span>
                         )}
@@ -165,7 +169,7 @@ function Checkout() {
                             <input
                                 type="radio"
                                 onClick={() => setPayMethod('binance')}
-                                className="flex"
+                                className="!flex"
                                 name="method"
                                 id="binance"
                             />
@@ -175,7 +179,7 @@ function Checkout() {
                             <input
                                 type="radio"
                                 onClick={() => setPayMethod('crypto')}
-                                className="flex"
+                                className="!flex"
                                 defaultChecked
                                 name="method"
                                 id="pay"
@@ -185,9 +189,7 @@ function Checkout() {
                     </div>
                     {payMethod == 'crypto' && (
                         <div className="flex justify-evenly flex-wrap gap-x-2 gap-y-8">
-                            {/* <pre>
-                            {JSON.stringify(methods, null, 2)}
-                          </pre> */}
+                           
                             {methods.map((method: any, idx: any) => (
                                 <div
                                     className="flex rounded-full !w-1/6 !h-10 flex-col  cursor-pointer justify-start items-center gap-y-1  "

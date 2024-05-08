@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { IOrder } from "../../../models/IOrder";
@@ -8,9 +9,9 @@ import { GoPencil } from "react-icons/go";
 
 function Orders() {
   const [orders, setOrders] = useState<IOrder[]>([])
-  const [pendingOrders, setPendingOrders] = useState([])
-  const [confirmedOrders, setConfirmedOrders] = useState([])
-  const [cancelledOrders, setCancelledOrders] = useState([])
+  const [, setPendingOrders] = useState([])
+  const [, setConfirmedOrders] = useState([])
+  const [, setCancelledOrders] = useState([])
   const [filterTap, setFilterTap] = useState("all");
   const localstorage = JSON.parse(localStorage.getItem("adminData") as string);
   const adminToken = localstorage?.adminToken;
@@ -23,13 +24,13 @@ function Orders() {
     })
     .then(d => {
       const orders = d.data.data;
-      const pendings = orders.map(order => {
-        return order.status == "1"
-      })
-      const confirmed = orders.map(order => {
+      const pendings = orders.map((order:any) => {
         return order.status == "0"
       })
-      const cancelled = orders.map(order => {
+      const confirmed = orders.map((order:any) => {
+        return order.status == "1"
+      })
+      const cancelled = orders.map((order:any) => {
         return order.status == "-1"
       })
 

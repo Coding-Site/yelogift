@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { IProduct } from '../../models/IProduct';
@@ -17,7 +18,7 @@ export const getCartData = createAsyncThunk('carts/getAll', async () => {
                     },
                 }
             );
-            return res;
+            return res.data.data;
         } else {
             return [];
         }
@@ -180,8 +181,8 @@ const cartSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(getCartData.fulfilled, (state, action) => {
-            const data = action?.payload?.data?.data;
-            const newITems = [];
+            const data = action?.payload;
+            const newITems: { id: any; product: any; productPartId: any; quantity: any; }[] = [];
 
             data.forEach((element: any) => {
                 newITems.push({
