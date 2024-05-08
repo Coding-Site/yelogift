@@ -1,7 +1,6 @@
 import themes from "daisyui/src/theming/themes"
 import type { Config } from  'tailwindcss';
 import daisyui from "daisyui";
-// import tailwind-scrollbar from 'tailwind-scrollbar';
 
 
 const mainLightColor = '#FCD535';
@@ -9,6 +8,10 @@ const mainColor = '#F0B90B';
 const mainBlack = '#0B0E11';
 const mainLightBlack = '#1E2329';
 const mainWhite = '#EAECEF';
+
+
+// axios.get(`https://yelogift.coding-site.com/api/user/setting/data`)
+// .then((d) => console.log('from config', d))
 
 /** @type {import('tailwindcss').Config} */
 export default {

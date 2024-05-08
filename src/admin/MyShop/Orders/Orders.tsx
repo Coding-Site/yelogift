@@ -1,37 +1,58 @@
-import { useState } from "react";
-// import { Link } from "react-router-dom";
-// import { GoPencil } from "react-icons/go";
-// import DateFormat from "../../../utils/Date";
-// import Status from "./Status";
-// import { IOrder } from "../../../models/IOrder";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { IOrder } from "../../../models/IOrder";
+import DateFormat from "../../../utils/Date";
+import Status from "./Status";
+import { Link } from "react-router-dom";
+import { GoPencil } from "react-icons/go";
 
 function Orders() {
-  // const [orders] = useState<IOrder[]>([])
-  // const [pendingOrders, setPendingOrders] = useState([])
-  // const [confirmedOrders, setConfirmedOrders] = useState([])
-  // const [cancelledOrders, setCancelledOrders] = useState([])
+  const [orders, setOrders] = useState<IOrder[]>([])
+  const [pendingOrders, setPendingOrders] = useState([])
+  const [confirmedOrders, setConfirmedOrders] = useState([])
+  const [cancelledOrders, setCancelledOrders] = useState([])
   const [filterTap, setFilterTap] = useState("all");
+  const localstorage = JSON.parse(localStorage.getItem("adminData") as string);
+  const adminToken = localstorage?.adminToken;
 
-  // useEffect(() => {
-  // axios
-  //   .get(`${import.meta.env.VITE_BASEURL}/api/admin/orders`, {
-  //     headers: {
-  //       Authorization: `Bearer ${token}`,
-  //     },
-  //   })
-  //   .then((data) => {
-  //     const orders = data.data.data;
-  //     orders.map((order) => {
-  //      if( order.status == "0") setPendingOrders(old => [...old, order])
-  //      if( order.status == "1") setConfirmedOrders(old => [...old, order])
-  //      if( order.status == "-1") setCancelledOrders(old => [...old, order])
-  //     })
-  //     setOrders(orders);
-  //     console.log(orders)
-  //     console.log(orders)
-  //     console.log(orders)
-  //   });
-  // }, []);
+  useEffect(() => {
+    axios.get(`${import.meta.env.VITE_BASEURL}/api/admin/orders`, {
+      headers: {
+        Authorization: `Bearer ${adminToken}`
+      }
+    })
+    .then(d => {
+      const orders = d.data.data;
+      const pendings = orders.map(order => {
+        return order.status == "1"
+      })
+      const confirmed = orders.map(order => {
+        return order.status == "0"
+      })
+      const cancelled = orders.map(order => {
+        return order.status == "-1"
+      })
+
+      setPendingOrders(pendings)
+      setConfirmedOrders(confirmed)
+      setCancelledOrders(cancelled)
+      setFilterTap('all')
+      setOrders(orders)
+    })
+  }, [])
+
+
+  useEffect(() => {
+    setOrders(() => {
+      if(filterTap == 'all'){
+        return orders;
+      }else if(filterTap == 'pending'){
+        setPendingOrders()
+        return orders
+      }
+    })
+  }, [filterTap])
+ 
 
   return (
     <div className="flex flex-col gap-8 w-full py-10 container">
@@ -45,11 +66,11 @@ function Orders() {
           <span className="text-center text-3xl text-[#234168]">264</span>
         </div>
         <div className="flex bg-[#FFF3BA] h-full rounded px-4 py-3 flex-col justify-between grow">
-          <span>New Orders</span>
+          <span>Pending Orders</span>
           <span className="text-center text-3xl text-[#C19712]">264</span>
         </div>
         <div className="flex bg-[#FFD2C4] h-full rounded px-4 py-3 flex-col justify-between grow">
-          <span>New Orders</span>
+          <span>Delievered Orders</span>
           <span className="text-center text-3xl text-[#D64E23]">264</span>
         </div>
       </div>
@@ -102,7 +123,7 @@ function Orders() {
             </tr>
           </thead>
           <tbody>
-            {/* {orders.map((order, idx) => (
+            {orders.map((order, idx) => (
               <tr key={idx}>
                 <td className="font-semibold">{order.id}</td>
                 <td>  <DateFormat date={order.create_at} /></td>
@@ -114,7 +135,7 @@ function Orders() {
                 
                 <td> <Link to={`/orders/${order.id}`}><GoPencil  /></Link></td>
               </tr>
-            ))} */}
+            ))}
           </tbody>
         </table>
       </div>

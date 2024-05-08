@@ -7,8 +7,8 @@ import { FaRegCircleStop } from 'react-icons/fa6';
 import { IProduct } from '../models/IProduct';
 import { IProductPart } from '../models/IProductPart';
 import { useDispatch } from 'react-redux';
-import { addNewItem } from '../store/CartSlice/CartSlice';
-// import { useLocalStorage } from "../hooks/useLocalStorage";
+import { addNewItem, getCartData } from '../store/CartSlice/CartSlice';
+import { AppDispatch } from '../store';
 
 function SingleProduct() {
     const [Product, setProduct] = useState<IProduct>();
@@ -16,7 +16,10 @@ function SingleProduct() {
     const [q, setQ] = useState(1);
     const { id } = useParams();
 
-    const dispatch = useDispatch();
+    const localstorage = JSON.parse(localStorage.getItem('userData') as string);
+    const userToken = localstorage?.userToken;
+
+    const dispatch = useDispatch<AppDispatch>();
     useEffect(() => {
         axios
             .get(`${import.meta.env.VITE_BASEURL}/api/home/products/${id}`)
@@ -27,13 +30,21 @@ function SingleProduct() {
     }, []);
 
     const AddtoCart = () => {
-        const newItem = {
-            product: Product,
-            productPartId: selecedPart,
-            quantity: q,
-        };
-
-        dispatch(addNewItem(newItem));
+        if (userToken) {
+            dispatch(
+                addNewItem({
+                    product_id: Product?.id as number,
+                    product_part_id: selecedPart,
+                    quantity: q,
+                })
+            ).then(() => {
+                dispatch(
+                    getCartData()
+                );
+            })
+        } else {
+            alert('you should sign in to add products');
+        }
     };
     return (
         <>

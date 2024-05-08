@@ -23,6 +23,9 @@ const themeSlice = createSlice({
       return state;
     }
   },
+  selectors: {
+    isDark: (state) => state.isDark
+  }
 });
 
 export const { setTheme } = themeSlice.actions;

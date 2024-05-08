@@ -4,5 +4,6 @@ export interface ISlide {
   image: string;
   title?: string;
   htmlFor: string;
+  description? :string;
   checked: boolean;
 }
