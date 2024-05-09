@@ -28,55 +28,58 @@ function Checkout() {
     }, []);
 
     const SendToDB = () => {
-        const orderId = JSON.parse(localStorage.getItem('orderId') as string);
-
-        axios.get(`${import.meta.env.VITE_BASEURL}/api/user/carts/delete/all`,{
-          headers: {
-            Authorization: `Bearer ${userToken}`
-          }
-        })
-        .then(() => {
-          if (payMethod == 'binance') {
-              axios
-                  .post(
-                      `${
-                          import.meta.env.VITE_BASEURL
-                      }/api/user/order/binance/pay`,
-                      {
-                          order_id: orderId,
-                      },
-                      {
-                          headers: {
-                              Authorization: `Bearer ${userToken}`,
-                          },
-                      }
-                  )
-                  .then((d) => {
-                    const binancePayData = d.data.data;
-                    localStorage.setItem('binancePayData', JSON.stringify(binancePayData));
-                    navigate('/paymentauto')
-                  })
-                  .catch((err) => console.log(err));
-          } else {
-              axios
-                  .post(
-                      `${
-                          import.meta.env.VITE_BASEURL
-                      }/api/user/order/pay/currancy`,
-                      {
-                          order_id: orderId,
-                          currency_id: currencyId,
-                      },
-                      {
-                          headers: {
-                              Authorization: `Bearer ${userToken}`,
-                          },
-                      }
-                  )
-                  .then((d) => console.log(d))
-                  .catch((err) => console.log(err));
-          }
-        })
+        if(payMethod == 'binance') {
+            navigate('/paymentauto')
+        }else{
+            navigate('/paymentmanual')
+        }
+        // axios.get(`${import.meta.env.VITE_BASEURL}/api/user/carts/delete/all`,{
+        //   headers: {
+        //     Authorization: `Bearer ${userToken}`
+        //   }
+        // })
+        // .then(() => {
+        //   if (payMethod == 'binance') {
+        //       axios
+        //           .post(
+        //               `${
+        //                   import.meta.env.VITE_BASEURL
+        //               }/api/user/order/binance/pay`,
+        //               {
+        //                   order_id: orderId,
+        //               },
+        //               {
+        //                   headers: {
+        //                       Authorization: `Bearer ${userToken}`,
+        //                   },
+        //               }
+        //           )
+        //           .then((d) => {
+        //             const binancePayData = d.data.data;
+        //             localStorage.setItem('binancePayData', JSON.stringify(binancePayData));
+        //             navigate('/paymentauto')
+        //           })
+        //           .catch((err) => console.log(err));
+        //   } else {
+        //       axios
+        //           .post(
+        //               `${
+        //                   import.meta.env.VITE_BASEURL
+        //               }/api/user/order/pay/currancy`,
+        //               {
+        //                   order_id: orderId,
+        //                   currency_id: currencyId,
+        //               },
+        //               {
+        //                   headers: {
+        //                       Authorization: `Bearer ${userToken}`,
+        //                   },
+        //               }
+        //           )
+        //           .then((d) => console.log(d))
+        //           .catch((err) => console.log(err));
+        //   }
+        // })
     };
 
     return (
@@ -200,7 +203,7 @@ function Checkout() {
                                                 ? '1px solid #ccc'
                                                 : '',
                                     }}
-                                    onClick={() => setCurrencyId(method?.id)}
+                                    onClick={() => {setCurrencyId(method?.id); localStorage.setItem('currencyId', JSON.stringify(method?.id))}}
                                 >
                                     <img
                                         className="size-10 rounded-full"

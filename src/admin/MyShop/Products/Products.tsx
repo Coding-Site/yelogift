@@ -73,7 +73,7 @@ function Products() {
                 <td>
                   <img
                     className="size-10 mx-auto"
-                    src={`https://yelogift.coding-site.com/public/storage/${pro.image}`}
+                    src={`${import.meta.env.VITE_BASEURL}/public/storage/${pro.image}`}
                     alt=""
                   />
                 </td>

@@ -1,24 +1,25 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from 'axios';
-import { SetStateAction, useEffect, useState } from 'react';
+import {  useEffect, useState } from 'react';
 import { IOrder } from '../../../models/IOrder';
 import DateFormat from '../../../utils/Date';
 import Status from './Status';
 import { Link } from 'react-router-dom';
 import { GoPencil } from 'react-icons/go';
 
+
+
 function Orders() {
+    const [allOrdersLength, setallOrdersLength] = useState<number>();
     const [orders, setOrders] = useState<IOrder[]>([]);
     const [pendingOrders, setPendingOrders] = useState<IOrder[]>([]);
     const [confirmedOrders, setConfirmedOrders] = useState<IOrder[]>([]);
     const [cancelledOrders, setCancelledOrders] = useState<IOrder[]>([]);
-
     const [filterTap, setFilterTap] = useState('all');
-    const localstorage = JSON.parse(
-        localStorage.getItem('adminData') as string
-    );
+    const localstorage = JSON.parse(localStorage.getItem('adminData') as string);
     const adminToken = localstorage?.adminToken;
+
 
     useEffect(() => {
         axios
@@ -29,7 +30,7 @@ function Orders() {
             })
             .then((d) => {
                 const orders : IOrder[] = d.data.data;
-
+                setallOrdersLength(orders.length)
 
                 orders.map((order: any) => {
                     if (order.status == '0') {
@@ -72,7 +73,7 @@ function Orders() {
                 <div className="flex bg-[#E2F1FF] h-full rounded px-4 py-3 flex-col justify-between grow">
                     <span>All Orders</span>
                     <span className="text-center text-3xl text-[#234168]">
-                        {orders.length}
+                        {allOrdersLength}
                     </span>
                 </div>
                 <div className="flex bg-[#FFF3BA] h-full rounded px-4 py-3 flex-col justify-between grow">
@@ -142,7 +143,8 @@ function Orders() {
                                 <td className="font-semibold">{order.id}</td>
                                 <td>
                                     {' '}
-                                    <DateFormat date={order.create_at} />
+                                    {order.create_at}
+                                    {/* <DateFormat date={order.create_at} /> */}
                                 </td>
                                 <td> {order.name}</td>
 
@@ -154,7 +156,7 @@ function Orders() {
                                     {' '}
                                     slling type
                                 </td>
-                                <td>
+                                <td className='text-xs'> 
                                     {' '}
                                     <Status
                                         status={order.status as string}

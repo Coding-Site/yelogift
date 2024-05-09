@@ -21,6 +21,8 @@ type Inputs = {
 };
 
 function EditProduct() {
+
+
   const [product, setProduct] = useState<IProduct>();
   const { id } = useParams();
   const [categories, setCategories] = useState<ICategory[]>([]);
@@ -28,7 +30,11 @@ function EditProduct() {
   const adminToken = localstorage?.adminToken;
   const { register, handleSubmit, unregister, reset } = useForm<Inputs>();
   const navigate = useNavigate();
+  
+  
+  
   useEffect(() => {
+
     const defaultValues = {
       product_id: product?.id.toString(),
       name: product?.name,
@@ -38,8 +44,12 @@ function EditProduct() {
       price: product?.price,
       discount: product?.discount,
     };
+    
     reset((defaultValues as any));
+  
   }, [product]);
+  
+  
   useEffect(() => {
     axios
       .get(`${import.meta.env.VITE_BASEURL}/api/admin/category`, {

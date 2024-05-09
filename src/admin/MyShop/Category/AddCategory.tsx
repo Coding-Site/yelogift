@@ -1,13 +1,15 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Link } from "react-router-dom";
 import { FaChevronLeft } from "react-icons/fa6";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { FaRegCircleStop } from "react-icons/fa6";
 import { PiArrowsCounterClockwise } from "react-icons/pi";
 import { FaRegTrashAlt } from "react-icons/fa";
+import axios from "axios";
 
 type Inputs = {
   name: string;
-  icon: string;
+  icon: any;
   addToHome: boolean;
 };
 
@@ -20,9 +22,21 @@ function AddCategory() {
     watch,
   } = useForm<Inputs>();
 
+  const localstorage = JSON.parse(localStorage.getItem("adminData") as string);
+  const adminToken = localstorage?.adminToken;
+  
   const onSubmit: SubmitHandler<Inputs> = (data) => {
 
-    console.log(data);
+    const fd = new FormData();
+    for (const i in data) {
+      fd.append(i, i != "icon" ? (data as any)[i] : data.icon[0]);
+    }
+    console.log(fd);
+    axios.post(`${import.meta.env.VITE_BASEURL}/api/admin/category/store`, fd , {
+      headers: {
+        Authorization: `Bearer ${adminToken}`
+      }
+    })
   };
 
   return (
@@ -69,7 +83,7 @@ function AddCategory() {
               >
                 <img
                   className="size-12 mx-auto"
-                  src="/products/upload.png"
+                  src="/assets/products/upload.png"
                   alt="upload icon"
                 />
                 <span className="text-xs px-5 text-center pb-4">

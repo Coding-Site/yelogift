@@ -1,10 +1,7 @@
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-// import Switcher from '../../utils/Switcher.tsx';
 import { useEffect, useState } from 'react';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import MobileMenu from './MobileMenu.tsx';
-// import { IoMdNotificationsOutline } from 'react-icons/io';
-// import { FaRegHeart } from 'react-icons/fa';
 import { LiaShoppingBagSolid } from 'react-icons/lia';
 import { useLocalStorage } from '../../hooks/useLocalStorage.tsx';
 import { useDispatch, useSelector } from 'react-redux';

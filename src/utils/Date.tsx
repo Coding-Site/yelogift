@@ -9,6 +9,7 @@ function DateFormat({date}: any) {
   
     return (
       <div>
+       
         <span>{day} </span>
         <span>{month} </span>
         <span>{year}</span>

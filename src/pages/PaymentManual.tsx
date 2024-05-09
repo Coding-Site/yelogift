@@ -1,10 +1,43 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { RiShareBoxLine } from "react-icons/ri";
 import { MdContentCopy } from "react-icons/md";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 function PaymentManual() {
+  const localstorage = JSON.parse(localStorage.getItem('userData') as string);
+  const [invoice, setInvoice] = useState<any>(null);
+  const userToken = localstorage?.userToken;
+  const [cryptoPayData,  setCryptoPayData] = useState<any>({})
+ 
+
+  useEffect(() => {
+      const orderId = JSON.parse(localStorage.getItem('orderId') as string);
+      const currencyId = JSON.parse(localStorage.getItem('currencyId') as string);
+      axios
+          .post(
+              `${import.meta.env.VITE_BASEURL}/api/user/order/pay/currancy`,
+              {
+                  order_id: orderId,
+                  currency_id: currencyId,
+                  invoice: invoice
+              },
+              {
+                  headers: {
+                      Authorization: `Bearer  ${userToken}`,
+                  },
+              }
+          )
+          .then((d) => {
+              const data = d.data.data;
+              setCryptoPayData(data)
+          })
+          .catch((err) => console.log(err));
+  }, []);
   return (
     <div className="flex py-10 w-full container text-mainLightBlack">
       <div className="flex justify-between w-full gap-3">
+        <pre>{JSON.stringify(cryptoPayData, null, 2)}</pre>
         <div className="flex justify-start flex-col px-10 py-10 bg-white grow w-1/2">
           <div className="flex flex-col gap-y-5">
             <span className="text-2xl font-semibold mb-5">Wallet Connect</span>
@@ -47,7 +80,7 @@ function PaymentManual() {
               className="w-full py-3 px-4 bg-[#CBD3FF] rounded-md border-dashed border-gray-400 text-center text-gray-700 "
             >
               Drop your PDF or PNG file here or  <span className="font-bold">choose file</span>
-              <input type="file" id="file" className="hidden" />
+              <input type="file" id="file" onChange={(e) => setInvoice((e?.target?.files[0] as any)) } className="hidden" />
             </label>
           </div>
         </div>

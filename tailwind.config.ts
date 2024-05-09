@@ -10,9 +10,6 @@ const mainLightBlack = '#1E2329';
 const mainWhite = '#EAECEF';
 
 
-// axios.get(`https://yelogift.coding-site.com/api/user/setting/data`)
-// .then((d) => console.log('from config', d))
-
 /** @type {import('tailwindcss').Config} */
 export default {
   darkMode: 'class',

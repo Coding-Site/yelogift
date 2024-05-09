@@ -71,7 +71,7 @@ function SingleProduct() {
                         </div>
 
                         <img
-                            src={`https://yelogift.coding-site.com/public/storage/${Product?.image}`}
+                            src={`${import.meta.env.VITE_BASEURL}/public/storage/${Product?.image}`}
                             alt="product card"
                             className="mx-auto min-w-full"
                         />

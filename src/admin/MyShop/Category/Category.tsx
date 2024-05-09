@@ -1,18 +1,26 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ICategory } from "../../../models/ICategory";
-import { PiEye } from "react-icons/pi";
-import { GoPencil } from "react-icons/go";
+import { FaRegTrashAlt } from "react-icons/fa";
 
 function Category() {
   const localstorage = JSON.parse(localStorage.getItem("adminData") as string);
   const adminToken = localstorage?.adminToken;
-
+  const navigate = useNavigate()
   const [categories, setCategories] = useState([]);
 
+  const handleDelete = (id: any) => {
+    axios.get(`${import.meta.env.VITE_BASEURL}/api/admin/category/delete/${id}`, {
+      headers: {
+        Authorization: `Bearer ${adminToken}`,
+      },
+    })
+    .then(() => navigate(0))
+  }
   useEffect(() => {
     axios
       .get(`${import.meta.env.VITE_BASEURL}/api/admin/category`, {
@@ -48,28 +56,24 @@ function Category() {
             </tr>
           </thead>
           <tbody>
-            {categories.map((pro: ICategory, idx) => (
+            {categories.map((cat: ICategory, idx) => (
               <tr key={idx}>
-                <td className="font-semibold">{pro.id}</td>
-                <td>{pro.name}</td>
+                <td className="font-semibold">{cat.id}</td>
+                <td>{cat.name}</td>
                 <td>
                   <img
                     className="size-10 mx-auto"
-                    src={`https://yelogift.coding-site.com/public/storage/${pro.icon}`}
+                    src={`${import.meta.env.VITE_BASEURL}/public/storage/${cat.icon}`}
                     alt=""
                   />
                 </td>
                
                 <td>
-                  <Link to="/">
-                    <PiEye className="mx-auto text-3xl" />
-                  </Link>
+                  
+                    <FaRegTrashAlt className="mx-auto text-3xl cursor-pointer"  onClick={() => handleDelete(cat.id)}/>
+                 
                 </td>
-                <td>
-                  <Link to="/">
-                    <GoPencil />
-                  </Link>
-                </td>
+                
               </tr>
             ))}
           </tbody>
