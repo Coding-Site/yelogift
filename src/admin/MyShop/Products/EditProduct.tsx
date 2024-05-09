@@ -79,7 +79,7 @@ function EditProduct() {
 
 
     for (const i in data) {
-        fd.append(i, (i != "image") ?  data[i] : data.image[0]);
+        fd.append(i, (i != "image") ?  (data as any)[i] : data.image[0]);
       }
 
     axios

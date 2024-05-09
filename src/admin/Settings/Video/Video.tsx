@@ -1,15 +1,14 @@
 import axios from "axios";
 import  { useEffect } from "react";
-import { useToken } from "../../../hooks/useToken";
 
 function Video() {
-  // const [sliders, setSliders] = useState([]);
-  const { token } = useToken();
+  const  localstorage  = JSON.parse((localStorage.getItem("adminData")) as string);
+  const adminToken = localstorage?.adminToken
 
   useEffect(() => {
     axios.get(`${import.meta.env.VITE_BASEURL}/api/admin/slider`, {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${adminToken}`,
       },
     });
   }, []);

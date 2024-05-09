@@ -1,10 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-// import { useSelector } from "react-redux";
-// import { RootState } from "../store";
 
 function OrderDetalisCard({ order }: { order: any }) {
-    // const carts = useSelector((state: RootState )=> state.cartSlice.items)
 
     return (
         <>

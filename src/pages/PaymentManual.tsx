@@ -80,7 +80,7 @@ function PaymentManual() {
               className="w-full py-3 px-4 bg-[#CBD3FF] rounded-md border-dashed border-gray-400 text-center text-gray-700 "
             >
               Drop your PDF or PNG file here or  <span className="font-bold">choose file</span>
-              <input type="file" id="file" onChange={(e) => setInvoice((e?.target?.files[0] as any)) } className="hidden" />
+              <input type="file" id="file" onChange={(e) => setInvoice((e?.target && e?.target?.files && e?.target?.files[0] as any)) } className="hidden" />
             </label>
           </div>
         </div>

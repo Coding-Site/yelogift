@@ -10,6 +10,8 @@ function Category() {
   const [loading, setLoading] = useState<boolean>(false);
   const [category, setCategory] = useState<ICategory>();
   const { categoryId } = useParams();
+
+
   useEffect(() => {
     setLoading(true);
     axios.get(`${import.meta.env.VITE_BASEURL}/api/home/categories`).then((d) => {
@@ -17,7 +19,6 @@ function Category() {
       for(const i in cats){
         if(categoryId == cats[i]['id']){
             setCategory(cats[i])
-            
         }
       }
 

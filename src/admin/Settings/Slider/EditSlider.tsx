@@ -10,7 +10,7 @@ type Inputs = {
 };
 
 function EditSlider() {
-  const [slider, setSlider] = useState<ISlide>();
+  const [, setSlider] = useState<ISlide>();
   const { register, handleSubmit } = useForm<Inputs>({
     defaultValues: {
 

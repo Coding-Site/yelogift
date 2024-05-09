@@ -197,16 +197,7 @@ const cartSlice = createSlice({
 
             return state;
         });
-        builder.addCase(addNewItem.fulfilled, (state, action) => {
-            console.log(state,  action);
-        });
-
-        builder.addCase(updateCartItem.fulfilled, (state, action) => {
-            // console.log('update,', action);
-        });
-        builder.addCase(deleteCartProduct.fulfilled, (state, action) => {
-            // console.log('delete', action);
-        });
+        
     },
 });
 

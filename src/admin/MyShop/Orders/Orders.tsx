@@ -3,7 +3,6 @@
 import axios from 'axios';
 import {  useEffect, useState } from 'react';
 import { IOrder } from '../../../models/IOrder';
-import DateFormat from '../../../utils/Date';
 import Status from './Status';
 import { Link } from 'react-router-dom';
 import { GoPencil } from 'react-icons/go';
@@ -129,7 +128,7 @@ function Orders() {
                     <thead className=" !font-normal">
                         <tr>
                             <th>Order ID</th>
-                            <th>Order Date</th>
+                            {/* <th>Order Date</th> */}
                             <th>Buyer Name</th>
                             <th>Price</th>
                             <th>Selling type</th>
@@ -141,11 +140,11 @@ function Orders() {
                         {orders.map((order, idx) => (
                             <tr key={idx} className='border-b-8 border-transparent '>
                                 <td className="font-semibold">{order.id}</td>
-                                <td>
+                                {/* <td>
                                     {' '}
                                     {order.create_at}
-                                    {/* <DateFormat date={order.create_at} /> */}
-                                </td>
+                                    <DateFormat date={order.create_at} />
+                                </td> */}
                                 <td> {order.name}</td>
 
                                 <td className="text-green-600 font-semibold">

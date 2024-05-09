@@ -41,7 +41,7 @@ function EditSocial() {
             >
               Title
               <input
-                {...register("title")}
+                {...register("name")}
                 type="text"
                 className="border border-gray-400 rounded-md bg-transparent p-1"
               />
@@ -52,7 +52,7 @@ function EditSocial() {
             >
               Link
               <input
-                {...register("link")}
+                {...register("url")}
                 type="text"
                 className="border border-gray-400 rounded-md bg-transparent p-1"
               />

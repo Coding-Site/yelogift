@@ -11,7 +11,7 @@ type Code = {
 };
 function OrderDetails() {
     const { id } = useParams();
-    const [order, setOrder] = useState<any>();
+    const [ setOrder] = useState<any>();
     const [orderProducts, setOrderProducts] = useState<any[]>([]);
     const [orderCodes, setOrderCodes] = useState<Code[]>([]);
     const [code, setCode] = useState('');

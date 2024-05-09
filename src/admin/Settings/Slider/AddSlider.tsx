@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -20,7 +21,7 @@ function AddSlider() {
     const fd = new FormData();
 
     for (const i in data) {
-      fd.append(i, i != "image" ? data[i] : data.image[0]);
+      fd.append(i, i != "image" ? (data as any)[i] : data.image[0]);
     }
 
     axios
@@ -29,7 +30,7 @@ function AddSlider() {
           Authorization: `Bearer ${adminToken}`,
         },
       })
-      .then((d) => {
+      .then(() => {
         navigate('/admin/slider')
       })
       .catch((err) => {
