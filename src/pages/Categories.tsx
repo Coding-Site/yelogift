@@ -47,7 +47,7 @@ function Categories() {
                     More cards for you
                 </span>
             </div>
-            <div className="flex container flex-wrap min-h-screen">
+            <div className="flex flex-wrap  justify-between sm:justify-start min-h-screen">
                 {loading ? (
                     <Spinner />
                 ) : (
@@ -55,7 +55,7 @@ function Categories() {
                         <Link
                             key={idx}
                             to={`/product/${pro.id}`}
-                            className="flex flex-col items-center sm:px-4 py-5 w-full  sm:w-1/2 lg:w-1/4 px-12"
+                            className="flex flex-col items-center sm:px-4 py-5 w-[45%] lg:w-1/4 "
                         >
                             <Cart product={pro} />
                         </Link>
@@ -111,11 +111,11 @@ const Cart = ({product} : {product: IProduct}) => {
     return (
         <>
             <div className="bg-white rounded-md p-3 pt-6  flex flex-col items-center w-full ">
-                <div className="relative w-1/3 rounded-full bg-black h-[20px]">
+                <div className="relative w-2/3 sm:w-1/3 rounded-full bg-black h-[20px]">
                     <div className="size-7 rounded-full bg-black absolute -top-[50%] left-[50%] -translate-x-[50%]"></div>
                 </div>
 
-                <span className="text-gray-500 uppercase my-2">
+                <span className="text-gray-500 uppercase my-2 text-xs sm:text-base">
                     {product.name}
                 </span>
                 <img

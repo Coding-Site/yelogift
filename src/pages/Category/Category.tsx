@@ -16,9 +16,9 @@ function Category() {
     setLoading(true);
     axios.get(`${import.meta.env.VITE_BASEURL}/api/home/categories`).then((d) => {
       const cats = d.data.data;
-      for(const i in cats){
-        if(categoryId == cats[i]['id']){
-            setCategory(cats[i])
+      for (const i in cats) {
+        if (categoryId == cats[i]['id']) {
+          setCategory(cats[i])
         }
       }
 
@@ -28,7 +28,7 @@ function Category() {
 
   return (
     <div className="flex flex-col gap-4 w-full py-5 container ps-12">
-        {/* <pre>
+      {/* <pre>
             {JSON.stringify(category, null, 2)}
         </pre> */}
       <div className="flex items-center justify-start w-full relative ">
@@ -39,17 +39,17 @@ function Category() {
           {category?.name}
         </span>
       </div>
-      <div className="flex container flex-wrap">
+      <div className="flex flex-wrap justify-between sm:justify-start min-h-screen">
         {loading ? (
           <div>Loading ...</div>
         ) : (
-            category?.products?.map((pro: IProduct, idx) => (
+          category?.products?.map((pro: IProduct, idx) => (
             <Link
               key={idx}
               to={`/product/${pro.id}`}
-              className="flex flex-col items-center sm:px-4 py-5 w-full  sm:w-1/2 lg:w-1/4 px-12"
+              className="flex flex-col items-center sm:px-4 py-5 w-[45%] lg:w-1/4"
             >
-              <Cart product={pro}/>
+              <Cart product={pro} />
             </Link>
           ))
         )}
@@ -62,16 +62,16 @@ function Category() {
 
 export default Category;
 
-const Cart = ({product}: {product: IProduct}) => {
+const Cart = ({ product }: { product: IProduct }) => {
   return (
     <>
       <div className="bg-white rounded-md p-3 pt-6  flex flex-col items-center w-full ">
-        <div className="relative w-1/3 rounded-full bg-black h-[20px]">
+        <div className="relative w-2/3 sm:w-1/3 rounded-full bg-black h-[20px]">
           <div className="size-7 rounded-full bg-black absolute -top-[50%] left-[50%] -translate-x-[50%]"></div>
         </div>
 
-        <span className="text-gray-500 uppercase my-2">{product.name}</span>
-        <img src={import.meta.env.VITE_BASEURL+'/storage/'+product.image} alt="card" className="rounded-md" />
+        <span className="text-gray-500 uppercase my-2 text-xs sm:text-base">{product.name}</span>
+        <img src={import.meta.env.VITE_BASEURL + '/storage/' + product.image} alt="card" className="rounded-md" />
       </div>
 
       <div className="flex justify-between w-full py-2 font-semibold">
@@ -113,9 +113,8 @@ const Pagination = ({ pages, active }: { pages: number; active: number }) => {
         {arr.map((p) => (
           <span
             key={p}
-            className={` border size-10  rounded flex justify-center items-center border-main ${
-              p == actv ? "bg-main text-mainLightBlack" : ""
-            } `}
+            className={` border size-10  rounded flex justify-center items-center border-main ${p == actv ? "bg-main text-mainLightBlack" : ""
+              } `}
             onClick={() => setActv(p)}
           >
             {p}
