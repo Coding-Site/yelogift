@@ -28,7 +28,7 @@ function Shuffle() {
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex justify-center gap-5 w-full container">
+      <div className="flex justify-center gap-5 w-full container overflow-x-auto scrollbar-none">
   
         <div
           className="flex flex-col items-center w-24 justify-between cursor-pointer"
@@ -54,7 +54,7 @@ function Shuffle() {
             onClick={() => handleActiveItem(item.name.toLocaleLowerCase())}
           >
             <img
-              className="aspect-square size-12 mb-2 md:size-20"
+              className="aspect-square size-12 max-w-12 mb-2 md:size-20"
               src={import.meta.env.VITE_BASEURL + '/storage/' +item.icon}
               alt="all"
             />

@@ -130,40 +130,24 @@ function Navbar() {
                                                 >
                                                     <img
                                                         className="w-20 h-12"
-                                                        src={`${
-                                                            import.meta.env
+                                                        src={`${import.meta.env
                                                                 .VITE_BASEURL
-                                                        }/storage/${
-                                                            cart.product?.image
-                                                        }`}
+                                                            }/storage/${cart.product?.image
+                                                            }`}
                                                         alt="cart"
                                                     />
                                                     <div className="flex flex-col gap-0">
                                                         <span className="text-sm text-gray-500">
                                                             AED{' '}
-                                                            {
-                                                                cart.product
-                                                                    ?.price
-                                                            }
+                                                            { cart.product?.price}
                                                         </span>
                                                     </div>
                                                     <div className="flex basis-24 text-base h-8 min-w-[100px] px-3 items-center ms-auto w-auto  justify-between rounded-full border border-gray-300">
                                                         <span
                                                             onClick={() => {
                                                                 dispatch(
-                                                                    updateCartItem(
-                                                                        {
-                                                                            cart_id:
-                                                                                cart.id as number,
-                                                                            quantity:
-                                                                                cart.quantity -
-                                                                                1,
-                                                                        }
-                                                                    )
-                                                                ).then(() => {
-                                                                    dispatch(
-                                                                        getCartData()
-                                                                    );
+                                                                    updateCartItem(  { cart_id:  cart.id as number,  quantity:  cart.quantity - 1, })
+                                                                ).then(() => { dispatch( getCartData());
                                                                 });
                                                             }}
                                                             className="cursor-pointer"
@@ -178,11 +162,8 @@ function Navbar() {
                                                                 dispatch(
                                                                     updateCartItem(
                                                                         {
-                                                                            cart_id:
-                                                                                cart.id as number,
-                                                                            quantity:
-                                                                                cart.quantity +
-                                                                                1,
+                                                                            cart_id: cart.id as number,
+                                                                            quantity: cart.quantity + 1,
                                                                         }
                                                                     )
                                                                 ).then(() => {
