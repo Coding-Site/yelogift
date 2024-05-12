@@ -35,7 +35,7 @@ function Shuffle() {
           onClick={() => handleActiveItem('all')}
         >
           <img
-            className="aspect-square size-12 mb-2 md:size-20"
+            className="aspect-square size-12 max-w-20 mb-2 md:size-20"
             src="/assets/shuffle/dark/all.png"
             alt="all"
           />
@@ -54,7 +54,7 @@ function Shuffle() {
             onClick={() => handleActiveItem(item.name.toLocaleLowerCase())}
           >
             <img
-              className="aspect-square size-12 max-w-12 mb-2 md:size-20"
+              className="aspect-square size-12 max-w-20 mb-2 md:size-20"
               src={import.meta.env.VITE_BASEURL + '/storage/' +item.icon}
               alt="all"
             />

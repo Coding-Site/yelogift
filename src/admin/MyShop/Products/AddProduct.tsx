@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useEffect, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaChevronLeft } from "react-icons/fa6";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -8,6 +8,7 @@ import { ICategory } from "../../../models/ICategory";
 import { PiArrowsCounterClockwise } from "react-icons/pi";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { BiDollar } from "react-icons/bi";
+import { Dispatch } from "@reduxjs/toolkit";
 
 type Inputs = {
   name: string;
@@ -21,7 +22,7 @@ type Inputs = {
 function AddProduct() {
   const navigate = useNavigate();
   const [categories, setCategories] = useState<ICategory[]>([]);
-  const [image, setImage] = useState<File>()
+  const [image, setImage] = useState<any>()
   const localstorage = JSON.parse(localStorage.getItem("adminData") as string);
   const adminToken = localstorage?.adminToken;
   const { register, handleSubmit, unregister } = useForm<Inputs>();
@@ -150,7 +151,7 @@ function AddProduct() {
                 type="file"
                 id="image"
                 className="hidden"
-                onChange={(e) => setImage(e?.target?.files[0] as File)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setImage(e?.target?.files?[0] as File | null)}
               />
 
               <div className="flex justify-between items-end gap-3 border border-gray-600 rounded-md bg-transparent p-3 w-full">
