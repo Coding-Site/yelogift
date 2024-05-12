@@ -14,14 +14,10 @@ function Category() {
 
   useEffect(() => {
     setLoading(true);
-    axios.get(`${import.meta.env.VITE_BASEURL}/api/home/categories`).then((d) => {
-      const cats = d.data.data;
-      for (const i in cats) {
-        if (categoryId == cats[i]['id']) {
-          setCategory(cats[i])
-        }
-      }
-
+    axios.get(`${import.meta.env.VITE_BASEURL}/api/home/categories/${categoryId}`).then((d) => {
+      const cat = d.data.data;
+    
+      setCategory(cat)
       setLoading(false)
     });
   }, []);
