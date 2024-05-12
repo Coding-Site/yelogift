@@ -33,7 +33,7 @@ function OrderDetalisCard({ order }: { order: any }) {
                         <img
                             src={`${
                                 import.meta.env.VITE_BASEURL
-                            }/public/storage/${pro.product?.image}`}
+                            }/storage/${pro.product?.image}`}
                             className="aspect-video w-20"
                             alt=" cart product"
                         />

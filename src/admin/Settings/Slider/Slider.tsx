@@ -90,7 +90,7 @@ function Slider() {
                     {" "}
                     <img
                       className="h-[50px] mx-auto"
-                      src={`${import.meta.env.VITE_BASEURL}/public/storage/${slider.image}`}
+                      src={`${import.meta.env.VITE_BASEURL}/storage/${slider.image}`}
                       alt="img"
                     />
                   </td>

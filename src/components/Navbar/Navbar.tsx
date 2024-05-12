@@ -133,7 +133,7 @@ function Navbar() {
                                                         src={`${
                                                             import.meta.env
                                                                 .VITE_BASEURL
-                                                        }/public/storage/${
+                                                        }/storage/${
                                                             cart.product?.image
                                                         }`}
                                                         alt="cart"

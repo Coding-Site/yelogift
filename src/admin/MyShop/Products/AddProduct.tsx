@@ -13,7 +13,7 @@ type Inputs = {
   name: string;
   description: string;
   category_id: string;
-  image: string;
+  image: any;
   price: number;
   discount: number;
 };
@@ -21,7 +21,7 @@ type Inputs = {
 function AddProduct() {
   const navigate = useNavigate();
   const [categories, setCategories] = useState<ICategory[]>([]);
-  const [imgChanged, setImgChanged] = useState(false)
+  const [image, setImage] = useState<File>()
   const localstorage = JSON.parse(localStorage.getItem("adminData") as string);
   const adminToken = localstorage?.adminToken;
   const { register, handleSubmit, unregister } = useForm<Inputs>();
@@ -29,17 +29,11 @@ function AddProduct() {
   const onSubmit: SubmitHandler<Inputs> = (data: any) => {
     const fd = new FormData();
 
-    if(imgChanged){
 
       for (const i in data) {
-        fd.append(i, i != "image" ? data[i] : data.image[0]);
+        fd.append(i, i != "image" ? data[i] : image);
       }
-    }else{
-      
-      for (const i in data) {
-        fd.append(i, i != "image" ? data[i] : data.image);
-      }
-    }
+    
 
     axios
       .post(`${import.meta.env.VITE_BASEURL}/api/admin/product/store`, fd, {
@@ -123,79 +117,28 @@ function AddProduct() {
               </select>
             </div>
 
-            {/* <div className="flex gap-2 items-center">
-              <input
-                {...register("addToHome")}
-                type="checkbox"
-                id="addToHome"
-                className="hidden"
-              />
-              <FaRegCircleStop
-                className={
-                  watch("addToHome") ? "text-mainLightColor" : "text-mainWhite"
-                }
-              />
-              <label
-                htmlFor="addToHome"
-                className="text-mainWhite font-semibold"
-              >
-                Add to home
-              </label>
-            </div> */}
+         
           </div>
 
           <div className="w-full sm:w-1/2 flex flex-col gap-5">
             <div
               className="flex gap-2 items-center 
-            w-full 
-            justify-end
-            [&>*]:w-[120px] 
-            [&>*]:h-[50px] 
-            [&>*]:rounded-md  
-            [&>*]:px-3 
-            [&>*]:py-2 
-            [&>*]:border 
-            [&>*]:flex 
-            [&>*]:cursor-pointer 
-            [&>*]:justify-center 
-            [&>*]:items-center 
-            [&>*]:border-gray-400 
-            "
-            >
-              {/* <label
-                htmlFor="arabic"
-                className={
-                  watch("lang") === "english"
-                    ? "bg-main text-mainLightBlack"
-                    : ""
-                }
-              >
-                Arabic
-                <input
-                  {...register("lang")}
-                  type="radio"
-                  value="english"
-                  id="arabic"
-                  className="hidden"
-                />
-              </label>
-              <label
-                htmlFor="english"
-                className={
-                  watch("lang") === "arabic"
-                    ? "bg-main text-mainLightBlack"
-                    : ""
-                }
-              >
-                English
-                <input
-                  {...register("lang")}
-                  type="radio"
-                  id="english"
-                  value="arabic"
-                  className="hidden"
-                />
-              </label> */}
+                        w-full 
+                        justify-end
+                        [&>*]:w-[120px] 
+                        [&>*]:h-[50px] 
+                        [&>*]:rounded-md  
+                        [&>*]:px-3 
+                        [&>*]:py-2 
+                        [&>*]:border 
+                        [&>*]:flex 
+                        [&>*]:cursor-pointer 
+                        [&>*]:justify-center 
+                        [&>*]:items-center 
+                        [&>*]:border-gray-400 
+                        "
+                    >
+              
             </div>
 
             <div className="flex flex-col  gap-2 items-start">
@@ -207,7 +150,7 @@ function AddProduct() {
                 type="file"
                 id="image"
                 className="hidden"
-                onChange={() => setImgChanged(!imgChanged)}
+                onChange={(e) => setImage(e?.target?.files[0] as File)}
               />
 
               <div className="flex justify-between items-end gap-3 border border-gray-600 rounded-md bg-transparent p-3 w-full">

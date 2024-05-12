@@ -71,7 +71,7 @@ const Cart = ({product}: {product: IProduct}) => {
         </div>
 
         <span className="text-gray-500 uppercase my-2">{product.name}</span>
-        <img src={import.meta.env.VITE_BASEURL+'/public/storage/'+product.image} alt="card" className="rounded-md" />
+        <img src={import.meta.env.VITE_BASEURL+'/storage/'+product.image} alt="card" className="rounded-md" />
       </div>
 
       <div className="flex justify-between w-full py-2 font-semibold">

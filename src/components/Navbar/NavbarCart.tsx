@@ -37,7 +37,7 @@ function NavbarCart({ setOpenCart, openCart }: Props) {
             <div className="flex justify-start gap-3 w-full " key={idx}>
               <img
                 className="w-20 h-12"
-                src={`${import.meta.env.VITE_BASEURL}/public/storage/${
+                src={`${import.meta.env.VITE_BASEURL}/storage/${
                   cart.product?.image
                 }`}
                 alt="cart"

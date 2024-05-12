@@ -9,7 +9,7 @@ function Card( {data}: {data: IProduct} ) {
           from card com
           {JSON.stringify(data, null, 2)}
         </pre> */}
-        <img className="w-[242px] h-[135px]" src={`${import.meta.env.VITE_BASEURL}/public/storage/${data.image}`} alt="image for card" /> 
+        <img className="w-[242px] h-[135px]" src={`${import.meta.env.VITE_BASEURL}/storage/${data.image}`} alt="image for card" /> 
         <span className="text-zinc-800 font-bold font-arial ">{data.name}</span>
         <span className="text-zinc-500 font-extralight font-arial">{data?.category?.name}</span>
     </Link>

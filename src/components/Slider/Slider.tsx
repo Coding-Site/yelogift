@@ -139,7 +139,7 @@ function Slider() {
             {slides.map((slide) => (
                 <label key={slide.id} htmlFor={slide.htmlFor} id={slide.id}>
                     <img
-                        src={import.meta.env.VITE_BASEURL + '/public/storage/' + slide.image}
+                        src={import.meta.env.VITE_BASEURL + '/storage/' + slide.image}
                         className="w-[100px] sm:w-[300px] lg:w-full h-[150px] sm:h-[500px] lg:h-full"
                         alt={slide.id}
                     />

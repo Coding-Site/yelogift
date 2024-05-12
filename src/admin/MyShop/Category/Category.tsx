@@ -63,7 +63,7 @@ function Category() {
                 <td>
                   <img
                     className="size-10 mx-auto"
-                    src={`${import.meta.env.VITE_BASEURL}/public/storage/${cat.icon}`}
+                    src={`${import.meta.env.VITE_BASEURL}/storage/${cat.icon}`}
                     alt=""
                   />
                 </td>

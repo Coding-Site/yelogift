@@ -102,7 +102,7 @@ function Checkout() {
                                             className="w-20 h-12"
                                             src={`${
                                                 import.meta.env.VITE_BASEURL
-                                            }/public/storage/${
+                                            }/storage/${
                                                 cart.product?.image
                                             }`}
                                             alt="cart"
@@ -209,7 +209,7 @@ function Checkout() {
                                         className="size-10 rounded-full"
                                         src={
                                             import.meta.env.VITE_BASEURL +
-                                            '/public/storage/' +
+                                            '/storage/' +
                                             method?.icon
                                         }
                                         alt="cart"

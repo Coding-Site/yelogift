@@ -8,7 +8,11 @@ function PopularCards() {
 
   useEffect(() => {
     axios
-      .get(`${import.meta.env.VITE_BASEURL}/api/home/products/popular`)
+      .get(`${import.meta.env.VITE_BASEURL}/api/home/products/popular`,{
+        headers: {
+          "ngrok-skip-browser-warning": false
+        }
+      })
       .then((populars) => setPopularProducts(populars.data.data));
   }, []);
 
@@ -26,7 +30,7 @@ function PopularCards() {
           <Link to={`/product/${card.id}`}  key={idx} className="min-w-[200px]">
             <img
               className="w-[300px]"
-              src={`${import.meta.env.VITE_BASEURL}/public/storage/${
+              src={`${import.meta.env.VITE_BASEURL}/storage/${
                 card.image
               }`}
              
