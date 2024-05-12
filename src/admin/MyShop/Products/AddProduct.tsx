@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { SetStateAction, useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaChevronLeft } from "react-icons/fa6";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -8,7 +8,6 @@ import { ICategory } from "../../../models/ICategory";
 import { PiArrowsCounterClockwise } from "react-icons/pi";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { BiDollar } from "react-icons/bi";
-import { Dispatch } from "@reduxjs/toolkit";
 
 type Inputs = {
   name: string;
@@ -27,6 +26,9 @@ function AddProduct() {
   const adminToken = localstorage?.adminToken;
   const { register, handleSubmit, unregister } = useForm<Inputs>();
 
+  const handleImage = (image: any) => {
+    setImage(image.target.files[0])
+  }
   const onSubmit: SubmitHandler<Inputs> = (data: any) => {
     const fd = new FormData();
 
@@ -151,7 +153,7 @@ function AddProduct() {
                 type="file"
                 id="image"
                 className="hidden"
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setImage(e?.target?.files?[0] as File | null)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleImage(e)}
               />
 
               <div className="flex justify-between items-end gap-3 border border-gray-600 rounded-md bg-transparent p-3 w-full">
