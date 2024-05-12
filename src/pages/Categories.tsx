@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Link } from 'react-router-dom';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa6';
-import { FaStar } from 'react-icons/fa';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import axios from 'axios';
 import { IProduct } from '../models/IProduct';
+import Spinner from '../utils/Spinner';
 
 function Categories() {
     const [loading, setLoading] = useState<boolean>(false);
@@ -49,7 +49,7 @@ function Categories() {
             </div>
             <div className="flex container flex-wrap min-h-screen">
                 {loading ? (
-                    <div>Loading ...</div>
+                    <Spinner />
                 ) : (
                     Products.map((pro: IProduct, idx) => (
                         <Link
@@ -57,7 +57,7 @@ function Categories() {
                             to={`/product/${pro.id}`}
                             className="flex flex-col items-center sm:px-4 py-5 w-full  sm:w-1/2 lg:w-1/4 px-12"
                         >
-                            <Cart />
+                            <Cart product={pro} />
                         </Link>
                     ))
                 )}
@@ -81,16 +81,9 @@ const Pagination = ({
     setPage: Dispatch<SetStateAction<number>>
 }) => {
 
+    const Prev = () => { !loading ? setPage(old => old != 1 ?  --old : 1) : '' };
+    const Next = () => { !loading ? setPage(old => old != pages  ? ++old : pages) : ''};
 
-  
-
-    const Prev = () => {
-
-        !loading ? setPage(old => old != 1 ?  --old : 1) : ''
-    };
-    const Next = () => {
-        !loading ?  setPage(old => old != pages  ? ++old : pages) : ''
-    };
     return (
         <div className="flex justify-center items-center w-[350px] mx-auto [&>*]:cursor-pointer">
             <FaChevronLeft className="text-main text-3xl " onClick={Prev} />
@@ -114,7 +107,7 @@ const Pagination = ({
     );
 };
 
-const Cart = () => {
+const Cart = ({product} : {product: IProduct}) => {
     return (
         <>
             <div className="bg-white rounded-md p-3 pt-6  flex flex-col items-center w-full ">
@@ -123,23 +116,21 @@ const Cart = () => {
                 </div>
 
                 <span className="text-gray-500 uppercase my-2">
-                    Email Devlivery
+                    {product.name}
                 </span>
                 <img
-                    src="assets/cards/card2.png"
+                    src={`${import.meta.env.VITE_BASEURL}/storage/${product.image}`}
                     alt="card"
                     className="rounded-md"
                 />
             </div>
 
-            <div className="flex justify-between w-full py-2 font-semibold">
+            <div className="flex justify-start w-full py-2 font-semibold">
                 <div className="flex flex-col ">
                     <span>ebay</span>
-                    <span>20 SAR</span>
+                    <span>{product.price} SAR</span>
                 </div>
-                <div className="flex">
-                    5.0 <FaStar className="ms-1 text-main" />
-                </div>
+               
             </div>
         </>
     );
