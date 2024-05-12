@@ -92,7 +92,7 @@ function Footer() {
             <li className="flex justify-between gap-x-3 w-full" ><Link to="/">Terms & Conditions</Link> <img className="w-4" src="/assets/slider/prev.png" alt="" /></li>
             <li className="flex justify-center gap-x-3 w-full capitalize mt-5 " >Follow us</li>
             <li className="flex gap-x-2 ">
-              {socials.map((social) => <img className="size-10 mx-auto" src={iconObj[social.icon]} alt="" />)}
+              {socials.map((social, idx) => <img key={idx} className="size-10 mx-auto" src={iconObj[social.icon]} alt="" />)}
             </li>
           </ul>
             <p className="text-center normal-case text-sm mt-5 text-gray-400">

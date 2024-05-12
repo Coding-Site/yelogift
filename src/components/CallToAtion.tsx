@@ -1,7 +1,7 @@
 function CallToAtion() {
     return (
         <div className="flex py-5 container">
-            <div className="flex border-2 border-main w-full py-10 px-10 ">
+            <div className="flex border-4 border-main w-full py-10 px-10 ">
                 <div className="left w-1/2 flex flex-col items-center gap-y-2">
                     <div className="text-base sm:text-2xl font-semibold uppercase">Stay</div>
                     <div className="text-xs sm:text-xl uppercase">informed on our</div>
