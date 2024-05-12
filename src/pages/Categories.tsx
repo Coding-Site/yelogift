@@ -10,20 +10,32 @@ function Categories() {
     const [loading, setLoading] = useState<boolean>(false);
     const [Products, setProducts] = useState([]);
     const [page, setPage] = useState<number>(1);
-    const [perPage] = useState(7);
+    const [pages, setPages] = useState<number>(0);
+    const [, setPerPage] = useState(10);
 
 
-    useEffect(() => {
-        setLoading(true);
+    const getProducts = (page:number) => {
         axios
-            .get(`${import.meta.env.VITE_BASEURL}/api/home/products`)
+            .get(`${import.meta.env.VITE_BASEURL}/api/home/products?page=${page}`)
             .then((d) => {
-                const prods = d.data.data;
+                const prods = d.data.data.data;
+                const data = d.data.data;
+                console.log(data)
+                setPerPage(data.per_page)
                 setProducts(prods);
-                setPage(1)
+                setPages( Math.ceil(data.total / data.per_page) as number)
+                setPage(page)
                 setLoading(false);
             });
-    }, []);
+
+    }
+
+    useEffect(() => {
+
+        setLoading(true);
+
+        getProducts(page)
+    }, [page]);
 
     return (
         <div className="flex flex-col gap-4 w-full py-5 container ps-12">
@@ -35,7 +47,7 @@ function Categories() {
                     More cards for you
                 </span>
             </div>
-            <div className="flex container flex-wrap">
+            <div className="flex container flex-wrap min-h-screen">
                 {loading ? (
                     <div>Loading ...</div>
                 ) : (
@@ -50,8 +62,7 @@ function Categories() {
                     ))
                 )}
             </div>
-            {page}
-            <Pagination items={Products.length/perPage} page={page} setPage={setPage} />
+            <Pagination pages={pages} page={page} setPage={setPage} loading={loading} />
         </div>
     );
 }
@@ -59,30 +70,26 @@ function Categories() {
 export default Categories;
 
 const Pagination = ({
-    items,
+    pages,
     page,
+    loading,
     setPage,
 }: {
-    items: number,
+    pages: number,
     page: number,
+    loading:boolean,
     setPage: Dispatch<SetStateAction<number>>
 }) => {
 
 
-    const [actv, setActv] = useState<number>(page);
   
 
     const Prev = () => {
-        setActv((old) => {
-            const ac = actv == items ? actv : --old;
-            setPage(ac);
-            return ac;
-        });
+
+        !loading ? setPage(old => old != 1 ?  --old : 1) : ''
     };
     const Next = () => {
-        setActv((old) => {
-            return actv == items ? actv : ++old;
-        });
+        !loading ?  setPage(old => old != pages  ? ++old : pages) : ''
     };
     return (
         <div className="flex justify-center items-center w-[350px] mx-auto [&>*]:cursor-pointer">
@@ -90,13 +97,13 @@ const Pagination = ({
             <div
                 className={`gap-5 flex justify-center items-center w-[250px] `}
             >
-                {Array.from({length: items}, (_, idx) => idx ).map((p) => (
+                {Array.from({length: pages}, (_, idx) => idx + 1 ).map((p, idx) => (
                     <span
-                      
+                        key={idx}
                         className={` border size-10  rounded flex justify-center items-center border-main ${
-                            p == actv ? 'bg-main text-mainLightBlack' : ''
+                            p == page ? 'bg-main text-mainLightBlack' : ''
                         } `}
-                        onClick={() => setActv(p)}
+                        onClick={() => !loading ?  setPage(p) : ''}
                     >
                         {p}
                     </span>

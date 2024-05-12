@@ -50,7 +50,7 @@ function Footer() {
         </div>
         <div className="flex flex-col uppercase">
           <ul className="text-mainWhite">
-            <li className="text-main capitalize ">Company</li>
+            <li className="text-main capitalize font-semibold text-xl mb-2">Company</li>
             <li ><Link to="/">Privact Policy</Link></li>
             <li ><Link to="/"></Link>Services</li>
             <li ><Link to="/">Term and Conditions</Link></li>
@@ -60,7 +60,7 @@ function Footer() {
         </div>
         <div className="flex flex-col">
           <ul className="text-mainWhite">
-            <li className="text-main capitalize ">Contact Us</li>
+            <li className="text-main capitalize font-semibold text-xl mb-2">Contact Us</li>
             <li className="text-main"><Link to="/">Based in IRAQ</Link></li>
             <li ><Link to="/"></Link>hello@yourdomain.com</li>
             <li ><Link to="/">(078) 12345 12112</Link></li>
@@ -68,7 +68,7 @@ function Footer() {
         </div>
         <div className="flex flex-col">
           <ul className="text-mainWhite">
-            <li className="text-main  capitalize">Subscribe</li>
+            <li className="text-main capitalize font-semibold text-xl mb-2">Subscribe</li>
             <li className="w-[340px]">Enter your email to get notified about iur news and offers</li>
           </ul>
         </div>

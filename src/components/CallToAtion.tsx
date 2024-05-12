@@ -7,7 +7,7 @@ function CallToAtion() {
                     <div className="text-xs sm:text-xl uppercase">informed on our</div>
                     <div className="text-xs sm:text-xl font-extralight uppercase">latest news!</div>
                     <input type="text"
-                        className="bg-mainWhite rounded-full text-gray-700 sm:p-5 p-2 w-[80%] sm:w-auto outline-none placeholder:sm:text-base placeholder:text-xs"
+                        className="bg-mainWhite rounded-full text-gray-700 sm:p-5 p-2  sm:w-auto outline-none placeholder:sm:text-base placeholder:text-xs"
                         placeholder="Enter your Email" />
                 </div>
                 <div className="flex flex-col-reverse items-center gap-y-2  w-1/2">
