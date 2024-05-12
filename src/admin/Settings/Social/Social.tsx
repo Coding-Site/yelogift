@@ -1,27 +1,49 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { FaTrashAlt } from "react-icons/fa";
 import { GoPencil } from "react-icons/go";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaPlus } from "react-icons/fa6";
-type Socail = {
-    name: string,
-    icon: string,
-    url: string
+type Social = {
+  id: number;
+  name: string;
+  link: string;
+  icon: string;
 }
+
 function Social() {
-  const [socials, setSocials] = useState<Socail[]>([]);
+  const [socials, setSocials] = useState<Social[]>([]);
   const { adminToken } = JSON.parse(localStorage.getItem("adminData") as string);
+  const navigate = useNavigate();
+
+  const iconObj: any = {
+    'facebook': "/assets/social/facebook.png",
+    'twitter': "/assets/social/twitter.png",
+    'linkedin': "/assets/social/linkedin.png",
+    'youtube': "/assets/social/youtube.png",
+  };
+
+  const deleteSocial = (id:number) => {
+
+    axios.get(`${import.meta.env.VITE_BASEURL}/api/admin/social/delete/${id}`, {
+      headers: {
+        Authorization: `Bearer ${adminToken}`,
+      },
+    }).then(() => navigate(0))
+  }
+
+
 
   useEffect(() => {
-    axios.get(`${import.meta.env.VITE_BASEURL}/api/admin/slider`, {
+    axios.get(`${import.meta.env.VITE_BASEURL}/api/admin/social`, {
       headers: {
         Authorization: `Bearer ${adminToken}`,
       },
     })
-    .then(d => {
-      setSocials(d.data.data);
-    });
+      .then(d => {
+        setSocials(d.data.data);
+      });
   }, []);
 
   return (
@@ -42,22 +64,21 @@ function Social() {
         <thead className="text-main">
           <tr>
             <th>Title</th>
-            <th>Link</th>
-            <th>Select Icon</th>
-            <th></th>
-            <th></th>
+            <th> Image</th>
+            <th>delete</th>
+            <th>update</th>
           </tr>
         </thead>
         <tbody>
           {socials.map((social, idx) => (
-            <tr key={idx}>
-              <td>{social.name}</td>
-              <td>{social.icon}</td>
-              <td>
-                <FaTrashAlt />
+            <tr key={idx} className="border-b-4 border-transparent">
+              <td>{social?.icon}</td>
+              <td> <img className="mx-auto" src={iconObj[social.icon]} alt="" /></td>
+              <td >
+                <FaTrashAlt onClick={() =>deleteSocial(social.id)}  className="mx-auto cursor-pointer" />
               </td>
               <td>
-                <GoPencil />
+                <GoPencil onClick={() =>navigate(`/admin/social/update/${social.id}`)} className="mx-auto cursor-pointer" />
               </td>
             </tr>
           ))}
@@ -66,5 +87,6 @@ function Social() {
     </div>
   );
 }
+
 
 export default Social;

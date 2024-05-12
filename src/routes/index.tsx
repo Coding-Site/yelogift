@@ -289,7 +289,7 @@ export const router = createBrowserRouter([
                 ),
               },
               {
-                path: "edit/:id",
+                path: "update/:id",
                 element: (
                   <Suspense fallback={<Spinner />}>
                     <EditSocial />

@@ -9,6 +9,7 @@ import { PiArrowsCounterClockwise } from "react-icons/pi";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { BiDollar } from "react-icons/bi";
 import { IProduct } from "../../../models/IProduct";
+import Spinner from "../../../utils/Spinner";
 
 type Inputs = {
   product_id: string;
@@ -22,7 +23,7 @@ type Inputs = {
 
 function EditProduct() {
 
-
+  const [loading, setLoading] = useState(false)
   const [product, setProduct] = useState<IProduct>();
   const { id } = useParams();
   const [categories, setCategories] = useState<ICategory[]>([]);
@@ -51,6 +52,7 @@ function EditProduct() {
   
   
   useEffect(() => {
+    setLoading(true)
     axios
       .get(`${import.meta.env.VITE_BASEURL}/api/admin/category`, {
         headers: {
@@ -72,6 +74,8 @@ function EditProduct() {
             console.log(pr);
           }
         });
+
+        setLoading(false)
       });
   }, []);
   const onSubmit: SubmitHandler<Inputs> = (data) => {
@@ -102,6 +106,8 @@ function EditProduct() {
           Edit new product
         </span>
       </div>
+
+{loading ?  (<Spinner />) : (
 
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col ">
         <div className="flex  w-full gap-10">
@@ -347,6 +353,7 @@ function EditProduct() {
           </button>
         </div>
       </form>
+)}
     </div>
   );
 }
