@@ -28,7 +28,7 @@ function Shuffle() {
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex justify-center gap-5 w-full container overflow-x-auto scrollbar-none">
+      <div className="flex justify-start sm:justify-center gap-x-3 w-full container overflow-x-auto scrollbar-none">
   
         <div
           className="flex flex-col items-center w-24 justify-between cursor-pointer"

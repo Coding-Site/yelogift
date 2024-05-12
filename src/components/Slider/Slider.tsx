@@ -113,7 +113,7 @@ function Slider() {
 
     }, []);
     return (
-        <section id="slider" className="relative h-auto">
+        <section id="slider" className="relative h-[300px] sm:h-[400px]">
             <button
                 className="next absolute top-[20%] md:top-[50%]  md:-left-44 -left-20 "
                 onClick={GoNext}

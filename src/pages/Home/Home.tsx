@@ -11,7 +11,7 @@ function Home() {
     <div className="py-10">
       <Slider />
 
-      <div className="flex flex-col gap-7 relative">
+      <div className=" hidden sm:flex flex-col gap-7 relative">
         <div className="text-lg text-main font-semibold text-center">
           Unlock Endless Gaming Adventures with Steam Gift Cards!
         </div>

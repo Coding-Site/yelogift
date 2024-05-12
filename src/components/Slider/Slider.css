@@ -5,7 +5,7 @@
 #slider {
   position: relative;
   width: 50%;
-  height: 400px;
+  /* height: 400px; */
   margin: 20px auto;
   perspective: 1400px;
   transform-style: preserve-3d;
