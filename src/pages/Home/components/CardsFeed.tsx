@@ -14,12 +14,20 @@ function CardsFeed(data: { title: string; link: string; products: IProduct[] }) 
         </Link>
       </div>
 
-      <div className="flex  justify-start overflow-x-auto scrollbar-none gap-12 mt-10">
-        {data.products.slice(0, data.products.length / 2).map((card, idx) =>  <Card key={idx} data={card} /> )}
+      <div className="hidden sm:flex justify-start overflow-x-auto scrollbar-none gap-12 mt-10">
+        {data.products.slice(0, Math.ceil(data.products.length / 2)).map((card, idx) =>  <Card key={idx} data={card} /> )}
       </div>
-      <div className="flex justify-start overflow-x-scroll scrollbar-none gap-12 mt-10">
+      <div className="hidden sm:flex justify-start overflow-x-scroll scrollbar-none gap-12 mt-10">
         {data.products.slice( data.products.length / 2, data.products.length).map((product, idx) => <Card key={idx} data={product} /> )}
       </div>
+
+
+      <div className="flex sm:hidden justify-start overflow-x-scroll scrollbar-none gap-12 mt-10">
+        {data.products.map((product, idx) => <Card key={idx} data={product} /> )}
+      </div>
+
+
+
     </div>
   );
 }
