@@ -5,9 +5,9 @@ import { IProduct } from "../../../models/IProduct";
 function CardsFeed(data: { title: string; link: string; products: IProduct[] }) {
   return (
     <div className="flex flex-col w-full container py-5">
-      <div className="w-full flex justify-between border-b border-mainWhite border-opacity-65 pb-5">
-        <span className="text-mainWhite ">{data.title} </span>
-        <Link to={data.link} className="text-main flex gap-6">
+      <div className="w-full flex justify-between sm:border-b border-0  border-mainWhite border-opacity-65 pb-5">
+        <span className="text-mainWhite font-medium">{data.title} </span>
+        <Link to={data.link} className="text-main flex sm:gap-6 gap-3">
           {" "}
           view more{" "}
           <img className="w-6" src="/assets/slider/prev.png" alt="view more" />{" "}
@@ -22,7 +22,7 @@ function CardsFeed(data: { title: string; link: string; products: IProduct[] }) 
       </div>
 
 
-      <div className="flex sm:hidden justify-start overflow-x-scroll scrollbar-none gap-12 mt-10">
+      <div className="flex sm:hidden justify-start overflow-x-scroll scrollbar-none sm:gap-12 gap-x-4 mt-3 sm:mt-10">
         {data.products.map((product, idx) => <Card key={idx} data={product} /> )}
       </div>
 
