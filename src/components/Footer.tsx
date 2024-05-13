@@ -14,7 +14,8 @@ function Footer() {
 
 
   const [socials, setSocials] = useState<Social[]>([]);
-  const { adminToken } = JSON.parse(localStorage.getItem("adminData") as string);
+  const localstorage = JSON.parse(localStorage.getItem('userData') as string);
+  const userToken = localstorage?.userToken;
 
   const iconObj: any = {
     'facebook': "/assets/social/facebook.png",
@@ -26,7 +27,7 @@ function Footer() {
   useEffect(() => {
     axios.get(`${import.meta.env.VITE_BASEURL}/api/admin/social`, {
       headers: {
-        Authorization: `Bearer ${adminToken}`,
+        Authorization: `Bearer ${userToken}`,
       },
     })
       .then(d => {

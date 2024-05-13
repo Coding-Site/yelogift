@@ -15,6 +15,7 @@ function Categories() {
 
 
     const getProducts = (page:number) => {
+        setLoading(true)
         axios
             .get(`${import.meta.env.VITE_BASEURL}/api/home/products?page=${page}`)
             .then((d) => {

@@ -1,5 +1,6 @@
 :root{
-  --shift: 30;
+  --shiftx: 50;
+  --shifty: 5;
 }
 
 #slider {
@@ -41,7 +42,7 @@ input[type="radio"]:checked {
 #s3:checked ~ #slide3,
 #s4:checked ~ #slide4,
 #s5:checked ~ #slide5 {
-  transform: translate3d(0%, 0, 0px);
+  transform: translate3d(0%, calc(var(--shifty) * 1%), 0px);
 }
 
 /* Next Slide */
@@ -50,7 +51,7 @@ input[type="radio"]:checked {
 #s3:checked ~ #slide4,
 #s4:checked ~ #slide5,
 #s5:checked ~ #slide1 {
-  transform: translate3d(calc(var(--shift) * 1%) , 0, -100px);
+  transform: translate3d(calc(var(--shiftx) * 1%) , 0, -100px);
 }
 
 /* Next to Next Slide */
@@ -59,7 +60,7 @@ input[type="radio"]:checked {
 #s3:checked ~ #slide5,
 #s4:checked ~ #slide1,
 #s5:checked ~ #slide2 {
-  transform: translate3d(calc(var(--shift) * 2%) , 0, -250px);
+  transform: translate3d(calc(var(--shiftx) * 2%) , calc(var(--shifty) * -1%), -250px);
 }
 
 /* Previous to Previous Slide */
@@ -68,7 +69,7 @@ input[type="radio"]:checked {
 #s3:checked ~ #slide1,
 #s4:checked ~ #slide2,
 #s5:checked ~ #slide3 {
-  transform: translate3d(calc(var(--shift) * -2%) , 0, -250px);
+  transform: translate3d(calc(var(--shiftx) * -2%) , calc(var(--shifty) * -1%), -250px);
 }
 
 /* Previous Slide */
@@ -77,5 +78,5 @@ input[type="radio"]:checked {
 #s3:checked ~ #slide2,
 #s4:checked ~ #slide3,
 #s5:checked ~ #slide4 {
-  transform: translate3d(calc(var(--shift) * -1%)  , 0, -100px);
+  transform: translate3d(calc(var(--shiftx) * -1%)  , 0, -100px);
 }

@@ -61,6 +61,7 @@ function Products() {
               <th>Price</th>
               <th>Descount</th>
               <th>Codes</th>
+              <th>Parts</th>
               <th></th>
             </tr>
           </thead>
@@ -82,6 +83,11 @@ function Products() {
                 <td className="text-red-600">{pro.discount}</td>
                 <td>
                   <Link   to="/">
+                    <PiEye className="mx-auto text-3xl" />
+                  </Link>
+                </td>
+                <td>
+                  <Link   to={`/admin/products/${pro.id}/parts/`}>
                     <PiEye className="mx-auto text-3xl" />
                   </Link>
                 </td>

@@ -23,6 +23,9 @@ const AdminLogin = lazy(() => import("../admin/AdminLogin"));
 // Setting Pages
 const Settings = lazy(() => import("../admin/Settings/Settings"));
 const Products = lazy(() => import("../admin/MyShop/Products/Products"));
+const Parts = lazy(() => import("../admin/MyShop/Parts/Parts"));
+const AddPart = lazy(() => import("../admin/MyShop/Parts/AddPart"));
+const EditPart = lazy(() => import("../admin/MyShop/Parts/EditPart"));
 const AddProduct = lazy(() => import("../admin/MyShop/Products/AddProduct"));
 const EditProduct = lazy(() => import("../admin/MyShop/Products/EditProduct"));
 const Codes = lazy(() => import("../admin/MyShop/Products/Codes"));
@@ -201,8 +204,38 @@ export const router = createBrowserRouter([
               </Suspense>
             ),
           },
+          {
+            path: ":productId/parts",
+            children: [
+              {
+                path: "",
+                element: (
+                  <Suspense fallback={<Spinner />}>
+                    <Parts />
+                  </Suspense>
+                ),
+              },
+              {
+                path: "add",
+                element: (
+                  <Suspense fallback={<Spinner />}>
+                    <AddPart />
+                  </Suspense>
+                ),
+              },
+              {
+                path: ":partId/edit",
+                element: (
+                  <Suspense fallback={<Spinner />}>
+                    <EditPart />
+                  </Suspense>
+                ),
+              }
+            ]
+          },
         ],
       },
+     
       {
         path: "orders",
         children: [

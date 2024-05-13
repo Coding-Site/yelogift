@@ -1,22 +1,34 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Link, useParams } from "react-router-dom";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 import { FaStar } from "react-icons/fa";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import axios from "axios";
 import { IProduct } from "../../models/IProduct";
-import { ICategory } from "../../models/ICategory";
+
+
 
 function Category() {
   const [loading, setLoading] = useState<boolean>(false);
-  const [category, setCategory] = useState<ICategory>();
+  const [category, setCategory] = useState<any>();
   const { categoryId } = useParams();
+  const [Products, setProducts] = useState([]);
+  const [page, setPage] = useState<number>(1);
+  const [pages, setPages] = useState<number>(0);
+  const [, setPerPage] = useState(10);
 
 
   useEffect(() => {
     setLoading(true);
     axios.get(`${import.meta.env.VITE_BASEURL}/api/home/categories/${categoryId}`).then((d) => {
       const cat = d.data.data;
-    
+      const data = cat.products;
+      const prods = data.data;
+      setPerPage(data.per_page)
+      setProducts(prods);
+      setPages(Math.ceil(data.total / data.per_page) as number)
+      setPage(page)
+      setLoading(false);
       setCategory(cat)
       setLoading(false)
     });
@@ -39,7 +51,7 @@ function Category() {
         {loading ? (
           <div>Loading ...</div>
         ) : (
-          category?.products?.map((pro: IProduct, idx) => (
+          Products.map((pro: IProduct, idx: any) => (
             <Link
               key={idx}
               to={`/product/${pro.id}`}
@@ -49,9 +61,10 @@ function Category() {
             </Link>
           ))
         )}
+
       </div>
 
-      <Pagination pages={5} active={1} />
+      <Pagination pages={pages} page={page} setPage={setPage} loading={loading} />
     </div>
   );
 }
@@ -83,41 +96,38 @@ const Cart = ({ product }: { product: IProduct }) => {
   );
 };
 
-const Pagination = ({ pages, active }: { pages: number; active: number }) => {
-  const [actv, setActv] = useState<number>(active);
-  const [arr, setArr] = useState<number[]>([]);
-  useEffect(() => {
-    for (let i = 1; i < pages; i++) {
-      setArr((old: number[]) => [...old, i]);
-    }
-  }, [pages]);
+const Pagination = ({
+  pages,
+  page,
+  loading,
+  setPage, }: {
+    pages: number,
+    page: number,
+    loading: boolean,
+    setPage: Dispatch<SetStateAction<number>>
+  }) => {
+    const Prev = () => { !loading ? setPage(old => old != 1 ?  --old : 1) : '' };
+    const Next = () => { !loading ? setPage(old => old != pages  ? ++old : pages) : ''};
 
-  const Prev = () => {
-    setActv((old) => {
-      return actv == arr[0] ? actv : --old;
-    });
-  };
-  const Next = () => {
-    setActv((old) => {
-      return actv == arr.length ? actv : ++old;
-    });
-  };
-  return (
-    <div className="flex justify-center items-center w-[350px] mx-auto [&>*]:cursor-pointer">
-      <FaChevronLeft className="text-main text-3xl " onClick={Prev} />
-      <div className={`gap-5 flex justify-center items-center w-[250px] `}>
-        {arr.map((p) => (
-          <span
-            key={p}
-            className={` border size-10  rounded flex justify-center items-center border-main ${p == actv ? "bg-main text-mainLightBlack" : ""
-              } `}
-            onClick={() => setActv(p)}
-          >
-            {p}
-          </span>
-        ))}
-      </div>
-      <FaChevronRight className="text-main text-3xl" onClick={Next} />
-    </div>
-  );
+    return (
+        <div className="flex justify-center items-center w-[350px] mx-auto [&>*]:cursor-pointer">
+            <FaChevronLeft className="text-main text-3xl " onClick={Prev} />
+            <div
+                className={`gap-5 flex justify-center items-center w-[250px] `}
+            >
+                {Array.from({length: pages}, (_, idx) => idx + 1 ).map((p, idx) => (
+                    <span
+                        key={idx}
+                        className={` border size-10  rounded flex justify-center items-center border-main ${
+                            p == page ? 'bg-main text-mainLightBlack' : ''
+                        } `}
+                        onClick={() => !loading ?  setPage(p) : ''}
+                    >
+                        {p}
+                    </span>
+                ))}
+            </div>
+            <FaChevronRight className="text-main text-3xl" onClick={Next} />
+        </div>
+    );
 };

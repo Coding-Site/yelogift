@@ -113,18 +113,18 @@ function Slider() {
 
     }, []);
     return (
-        <section id="slider" className="relative h-[300px] sm:h-[400px]">
+        <section id="slider" className="relative h-[180px] sm:h-[400px] mb-10">
             <button
-                className="next absolute top-[20%] md:top-[50%]  md:-left-44 -left-20 "
+                className="next absolute top-[40%] sm:top-[20%] md:top-[50%]  md:-left-44 -left-20 "
                 onClick={GoNext}
             >
-                <img src="assets/slider/next.png" />
+                <img className='w-5 sm:w-10' src="assets/slider/next.png" />
             </button>
             <button
-                className="prev absolute top-[20%] md:top-[50%] md:-right-44 -right-20 "
+                className="prev absolute top-[40%] sm:top-[20%] md:top-[50%] md:-right-44 -right-20 "
                 onClick={GoPrev}
             >
-                <img src="assets/slider/prev.png" />
+                <img className='w-5 sm:w-10' src="assets/slider/prev.png" />
             </button>
             {slides.map((slide) => (
                 <input
