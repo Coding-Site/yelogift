@@ -2,18 +2,27 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
-import { GoPencil } from "react-icons/go";
-// import { PiEye } from "react-icons/pi";
-import { Link, useParams } from "react-router-dom";
-// import { ICard } from "../../../models/ICard";
 // import { GoPencil } from "react-icons/go";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { FaTrash } from "react-icons/fa6";
+
 
 function Parts() {
     const localstorage = JSON.parse((localStorage.getItem("adminData")) as string);
     const adminToken = localstorage?.adminToken
     const { productId } = useParams();
+    const navigate = useNavigate();
     const [parts, setParts] = useState([]);
 
+    const DeletePart = (id: any) => {
+        axios.get(`${import.meta.env.VITE_BASEURL}/api/admin/product/parts/delete/${id}`, {
+            headers: {
+                Authorization: `Bearer ${adminToken}`,
+            },
+        })
+            .then(() => navigate(0))
+            .catch((e) => console.log(e))
+    }
     useEffect(() => {
         axios
             .get(`${import.meta.env.VITE_BASEURL}/api/admin/product/parts/get/${productId}`, {
@@ -37,7 +46,7 @@ function Parts() {
             </div>
 
             <div className="flex flex-col gap-2 rounded-t-xl p-4  bg-white text-mainLightBlack">
-                
+
 
                 <table className="text-center table-auto border-separate">
                     <thead>
@@ -46,7 +55,8 @@ function Parts() {
                             <th>Title</th>
                             <th>Price</th>
                             <th>Product Id</th>
-                            <th>Edit</th>
+                            <th>Delete</th>
+                            {/* <th>Edit</th> */}
                         </tr>
                     </thead>
                     <tbody>
@@ -56,7 +66,8 @@ function Parts() {
                                 <td>{part.title}</td>
                                 <td>{part.price}</td>
                                 <td>{part.product_id}</td>
-                                <td> <Link to={`/admin/products/${productId}/parts/${part.id}/edit`}><GoPencil /></Link></td>
+                                <td className="flex justify-center"> <FaTrash className=" cursor-pointer" onClick={() => DeletePart(part.id)} /></td>
+                                {/* <td> <Link to={`/admin/products/${productId}/parts/${part.id}/edit`} className="flex justify-center"><GoPencil /></Link></td> */}
                             </tr>
                         ))}
                     </tbody>

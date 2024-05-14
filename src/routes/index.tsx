@@ -59,286 +59,127 @@ const AddPage = lazy(() => import("../admin/CustomPage/AddPage"));
 
 export const router = createBrowserRouter([
   {
-    path: "",
-    element: (
-      <Suspense fallback={<Spinner />}>
-        <App />
-      </Suspense>
-    ),
+    path: "/",
     children: [
       {
         path: "",
         element: (
           <Suspense fallback={<Spinner />}>
-            <Home />
+            <App />
           </Suspense>
         ),
-      },
-      {
-        path: "categories",
         children: [
           {
             path: "",
             element: (
               <Suspense fallback={<Spinner />}>
-                <Categories />
+                <Home />
               </Suspense>
             ),
           },
           {
-            path: ":categoryId",
-            element: (
-              <Suspense fallback={<Spinner />}>
-                <CategoryFeed />
-              </Suspense>
-            ),
-          },
-        ],
-      },
-      {
-        path: "product/:id",
-        element: (
-          <Suspense fallback={<Spinner />}>
-            <SingleProduct />
-          </Suspense>
-        ),
-      },
-      {
-        path: "checkout",
-        element: (
-          <Suspense fallback={<Spinner />}>
-            <Checkout />
-          </Suspense>
-        ),
-      },
-      {
-        path: "paymentmanual",
-        element: (
-          <Suspense fallback={<Spinner />}>
-            <PaymentManual />
-          </Suspense>
-        ),
-      },
-      {
-        path: "paymentauto",
-        element: (
-          <Suspense fallback={<Spinner />}>
-            <PaymentAuto />
-          </Suspense>
-        ),
-      },
-      {
-        path: "userorderdetails",
-        element: (
-          <Suspense fallback={<Spinner />}>
-            <UserOrderDetails />
-          </Suspense>
-        ),
-      },
-      {
-        path: "userorders",
-        element: (
-          <Suspense fallback={<Spinner />}>
-            <UserOrders />
-          </Suspense>
-        ),
-      },
-      {
-        path: "ordershistory",
-        element: (
-          <Suspense fallback={<Spinner />}>
-            <OrdersHistory />
-          </Suspense>
-        ),
-      },
-    ],
-  },
-  {
-    path: "admin",
-    element: (
-      <Suspense fallback={<Spinner />}>
-        <AdminLayout />
-      </Suspense>
-    ),
-    children: [
-      {
-        path: "",
-        element: (
-          <Suspense fallback={<Spinner />}>
-            <AdminHome />
-          </Suspense>
-        ),
-      },
-      {
-        path: "products",
-        children: [
-          {
-            path: "",
-            element: (
-              <Suspense fallback={<Spinner />}>
-                <Products />
-              </Suspense>
-            ),
-          },
-          {
-            path: "add",
-            element: (
-              <Suspense fallback={<Spinner />}>
-                <AddProduct />
-              </Suspense>
-            ),
-          },
-          {
-            path: "edit/:id",
-            element: (
-              <Suspense fallback={<Spinner />}>
-                <EditProduct />
-              </Suspense>
-            ),
-          },
-          {
-            path: "codes",
-            element: (
-              <Suspense fallback={<Spinner />}>
-                <Codes />
-              </Suspense>
-            ),
-          },
-          {
-            path: ":productId/parts",
+            path: "categories",
             children: [
               {
                 path: "",
                 element: (
                   <Suspense fallback={<Spinner />}>
-                    <Parts />
+                    <Categories />
                   </Suspense>
                 ),
               },
               {
-                path: "add",
+                path: ":categoryId",
                 element: (
                   <Suspense fallback={<Spinner />}>
-                    <AddPart />
-                  </Suspense>
-                ),
-              },
-              {
-                path: ":partId/edit",
-                element: (
-                  <Suspense fallback={<Spinner />}>
-                    <EditPart />
-                  </Suspense>
-                ),
-              }
-            ]
-          },
-        ],
-      },
-     
-      {
-        path: "orders",
-        children: [
-          {
-            path: "",
-            element: (
-              <Suspense fallback={<Spinner />}>
-                <Orders />
-              </Suspense>
-            ),
-          },
-          {
-            path: ":id",
-            element: (
-              <Suspense fallback={<Spinner />}>
-                <OrderDetails />
-              </Suspense>
-            ),
-          },
-        ],
-      },
-      {
-        path: "customers",
-        element: (
-          <Suspense fallback={<Spinner />}>
-            <Customers />
-          </Suspense>
-        ),
-      },
-      {
-        path: "category",
-        children: [
-          {
-            path: "",
-            element: (
-              <Suspense fallback={<Spinner />}>
-                <Category />
-              </Suspense>
-            ),
-          },
-          {
-            path: "add",
-            element: (
-              <Suspense fallback={<Spinner />}>
-                <AddCategory />
-              </Suspense>
-            ),
-          },
-        ],
-      },
-      {
-        path: "",
-        element: (
-          <Suspense fallback={<Spinner />}>
-            <Settings />
-          </Suspense>
-        ),
-        children: [
-          {
-            path: "site-setting",
-            element: (
-              <Suspense fallback={<Spinner />}>
-                <SiteSetting />
-              </Suspense>
-            ),
-          },
-          {
-            path: "social",
-            children: [
-              {
-                path: "",
-                element: (
-                  <Suspense fallback={<Spinner />}>
-                    <Social />
-                  </Suspense>
-                ),
-              },
-              {
-                path: "add",
-                element: (
-                  <Suspense fallback={<Spinner />}>
-                    <AddSocial />
-                  </Suspense>
-                ),
-              },
-              {
-                path: "update/:id",
-                element: (
-                  <Suspense fallback={<Spinner />}>
-                    <EditSocial />
+                    <CategoryFeed />
                   </Suspense>
                 ),
               },
             ],
           },
           {
-            path: "slider",
+            path: "product/:id",
+            element: (
+              <Suspense fallback={<Spinner />}>
+                <SingleProduct />
+              </Suspense>
+            ),
+          },
+          {
+            path: "checkout",
+            element: (
+              <Suspense fallback={<Spinner />}>
+                <Checkout />
+              </Suspense>
+            ),
+          },
+          {
+            path: "paymentmanual",
+            element: (
+              <Suspense fallback={<Spinner />}>
+                <PaymentManual />
+              </Suspense>
+            ),
+          },
+          {
+            path: "paymentauto",
+            element: (
+              <Suspense fallback={<Spinner />}>
+                <PaymentAuto />
+              </Suspense>
+            ),
+          },
+          {
+            path: "userorderdetails",
+            element: (
+              <Suspense fallback={<Spinner />}>
+                <UserOrderDetails />
+              </Suspense>
+            ),
+          },
+          {
+            path: "userorders",
+            element: (
+              <Suspense fallback={<Spinner />}>
+                <UserOrders />
+              </Suspense>
+            ),
+          },
+          {
+            path: "ordershistory",
+            element: (
+              <Suspense fallback={<Spinner />}>
+                <OrdersHistory />
+              </Suspense>
+            ),
+          },
+        ],
+      },
+      {
+        path: "admin",
+        element: (
+          <Suspense fallback={<Spinner />}>
+            <AdminLayout />
+          </Suspense>
+        ),
+        children: [
+          {
+            path: "",
+            element: (
+              <Suspense fallback={<Spinner />}>
+                <AdminHome />
+              </Suspense>
+            ),
+          },
+          {
+            path: "products",
             children: [
               {
                 path: "",
                 element: (
                   <Suspense fallback={<Spinner />}>
-                    <Slider />
+                    <Products />
                   </Suspense>
                 ),
               },
@@ -346,7 +187,7 @@ export const router = createBrowserRouter([
                 path: "add",
                 element: (
                   <Suspense fallback={<Spinner />}>
-                    <AddSlider />
+                    <AddProduct />
                   </Suspense>
                 ),
               },
@@ -354,104 +195,269 @@ export const router = createBrowserRouter([
                 path: "edit/:id",
                 element: (
                   <Suspense fallback={<Spinner />}>
-                    <EditSlider />
+                    <EditProduct />
+                  </Suspense>
+                ),
+              },
+              {
+                path: "codes",
+                element: (
+                  <Suspense fallback={<Spinner />}>
+                    <Codes />
+                  </Suspense>
+                ),
+              },
+              {
+                path: ":productId/parts",
+                children: [
+                  {
+                    path: "",
+                    element: (
+                      <Suspense fallback={<Spinner />}>
+                        <Parts />
+                      </Suspense>
+                    ),
+                  },
+                  {
+                    path: "add",
+                    element: (
+                      <Suspense fallback={<Spinner />}>
+                        <AddPart />
+                      </Suspense>
+                    ),
+                  },
+                  {
+                    path: ":partId/edit",
+                    element: (
+                      <Suspense fallback={<Spinner />}>
+                        <EditPart />
+                      </Suspense>
+                    ),
+                  }
+                ]
+              },
+            ],
+          },
+
+          {
+            path: "orders",
+            children: [
+              {
+                path: "",
+                element: (
+                  <Suspense fallback={<Spinner />}>
+                    <Orders />
+                  </Suspense>
+                ),
+              },
+              {
+                path: ":id",
+                element: (
+                  <Suspense fallback={<Spinner />}>
+                    <OrderDetails />
                   </Suspense>
                 ),
               },
             ],
           },
           {
-            path: "video",
+            path: "customers",
             element: (
               <Suspense fallback={<Spinner />}>
-                <Video />
+                <Customers />
               </Suspense>
             ),
           },
           {
-            path: "footer",
+            path: "category",
+            children: [
+              {
+                path: "",
+                element: (
+                  <Suspense fallback={<Spinner />}>
+                    <Category />
+                  </Suspense>
+                ),
+              },
+              {
+                path: "add",
+                element: (
+                  <Suspense fallback={<Spinner />}>
+                    <AddCategory />
+                  </Suspense>
+                ),
+              },
+            ],
+          },
+          {
+            path: "",
             element: (
               <Suspense fallback={<Spinner />}>
-                <Footer />
+                <Settings />
               </Suspense>
             ),
+            children: [
+              {
+                path: "site-setting",
+                element: (
+                  <Suspense fallback={<Spinner />}>
+                    <SiteSetting />
+                  </Suspense>
+                ),
+              },
+              {
+                path: "social",
+                children: [
+                  {
+                    path: "",
+                    element: (
+                      <Suspense fallback={<Spinner />}>
+                        <Social />
+                      </Suspense>
+                    ),
+                  },
+                  {
+                    path: "add",
+                    element: (
+                      <Suspense fallback={<Spinner />}>
+                        <AddSocial />
+                      </Suspense>
+                    ),
+                  },
+                  {
+                    path: "update/:id",
+                    element: (
+                      <Suspense fallback={<Spinner />}>
+                        <EditSocial />
+                      </Suspense>
+                    ),
+                  },
+                ],
+              },
+              {
+                path: "slider",
+                children: [
+                  {
+                    path: "",
+                    element: (
+                      <Suspense fallback={<Spinner />}>
+                        <Slider />
+                      </Suspense>
+                    ),
+                  },
+                  {
+                    path: "add",
+                    element: (
+                      <Suspense fallback={<Spinner />}>
+                        <AddSlider />
+                      </Suspense>
+                    ),
+                  },
+                  {
+                    path: "edit/:id",
+                    element: (
+                      <Suspense fallback={<Spinner />}>
+                        <EditSlider />
+                      </Suspense>
+                    ),
+                  },
+                ],
+              },
+              {
+                path: "video",
+                element: (
+                  <Suspense fallback={<Spinner />}>
+                    <Video />
+                  </Suspense>
+                ),
+              },
+              {
+                path: "footer",
+                element: (
+                  <Suspense fallback={<Spinner />}>
+                    <Footer />
+                  </Suspense>
+                ),
+              },
+            ],
+          },
+          {
+            path: "currency",
+            element: (
+              <Suspense fallback={<Spinner />}>
+                <Currency />
+              </Suspense>
+            ),
+          },
+          {
+            path: "custom-page",
+            children: [
+              {
+                path: "",
+                element: (
+                  <Suspense fallback={<Spinner />}>
+                    <CustomPage />
+                  </Suspense>
+                ),
+              },
+              {
+                path: "add",
+                element: (
+                  <Suspense fallback={<Spinner />}>
+                    <AddPage />
+                  </Suspense>
+                ),
+              },
+            ],
+          },
+          {
+            path: "notification",
+            children: [
+              {
+                path: "",
+                element: (
+                  <Suspense fallback={<Spinner />}>
+                    <Notification />
+                  </Suspense>
+                ),
+              },
+              {
+                path: "add",
+                element: (
+                  <Suspense fallback={<Spinner />}>
+                    <AddNotification />
+                  </Suspense>
+                ),
+              },
+            ],
           },
         ],
       },
       {
-        path: "currency",
+        path: "adminlogin",
         element: (
           <Suspense fallback={<Spinner />}>
-            <Currency />
+            <AdminLogin />
           </Suspense>
         ),
       },
       {
-        path: "custom-page",
-        children: [
-          {
-            path: "",
-            element: (
-              <Suspense fallback={<Spinner />}>
-                <CustomPage />
-              </Suspense>
-            ),
-          },
-          {
-            path: "add",
-            element: (
-              <Suspense fallback={<Spinner />}>
-                <AddPage />
-              </Suspense>
-            ),
-          },
-        ],
+        path: "signin",
+        element: (
+          <Suspense fallback={<Spinner />}>
+            <Signin />
+          </Suspense>
+        ),
       },
       {
-        path: "notification",
-        children: [
-          {
-            path: "",
-            element: (
-              <Suspense fallback={<Spinner />}>
-                <Notification />
-              </Suspense>
-            ),
-          },
-          {
-            path: "add",
-            element: (
-              <Suspense fallback={<Spinner />}>
-                <AddNotification />
-              </Suspense>
-            ),
-          },
-        ],
-      },
-    ],
-  },
-  {
-    path: "adminlogin",
-    element: (
-      <Suspense fallback={<Spinner />}>
-        <AdminLogin />
-      </Suspense>
-    ),
-  },
-  {
-    path: "signin",
-    element: (
-      <Suspense fallback={<Spinner />}>
-        <Signin />
-      </Suspense>
-    ),
-  },
-  {
-    path: "signup",
-    element: (
-      <Suspense fallback={<Spinner />}>
-        <Signup />
-      </Suspense>
-    ),
-  },
+        path: "signup",
+        element: (
+          <Suspense fallback={<Spinner />}>
+            <Signup />
+          </Suspense>
+        ),
+      }
+    ]
+  }
+
 ]);

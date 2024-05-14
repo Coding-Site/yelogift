@@ -19,6 +19,7 @@ function Navbar() {
     const dispatch = useDispatch<AppDispatch>();
     const localstorage = JSON.parse(localStorage.getItem('userData') as string);
     const userToken = localstorage?.userToken;
+    // const userName = localstorage?.userName;
     const { removeItem } = useLocalStorage();
 
     const Signout = () => {
@@ -27,20 +28,20 @@ function Navbar() {
     };
 
     const onCheckout = () => {
-        if (carts.length) {
-            axios
-                .post(
-                    `${import.meta.env.VITE_BASEURL}/api/user/order/checkout`,
-                    {},
-                    {
-                        headers: {
-                            Authorization: `Bearer ${userToken}`,
-                        },
-                    }
-                )
+       
+        if (carts.length > 0) {
+            axios.post(`${import.meta.env.VITE_BASEURL}/api/user/order/checkout`,{
+                name: "mohamemd"
+             },
+                {
+                    headers: {
+                        Authorization: `Bearer ${userToken}`,
+                    },
+                }
+            )
                 .then((d) => {
                     const orderId = d.data.data.id;
-
+                    console.log(d.data.data)
                     localStorage.setItem('orderId', JSON.stringify(orderId));
                 })
                 .then(() => navigate('/checkout'))
@@ -131,7 +132,7 @@ function Navbar() {
                                                     <img
                                                         className="w-20 h-12"
                                                         src={`${import.meta.env
-                                                                .VITE_BASEURL
+                                                            .VITE_BASEURL
                                                             }/storage/${cart.product?.image
                                                             }`}
                                                         alt="cart"
@@ -139,15 +140,16 @@ function Navbar() {
                                                     <div className="flex flex-col gap-0">
                                                         <span className="text-sm text-gray-500">
                                                             AED{' '}
-                                                            { cart.product?.price}
+                                                            {cart.product?.price}
                                                         </span>
                                                     </div>
                                                     <div className="flex basis-24 text-base h-8 min-w-[100px] px-3 items-center ms-auto w-auto  justify-between rounded-full border border-gray-300">
                                                         <span
                                                             onClick={() => {
                                                                 dispatch(
-                                                                    updateCartItem(  { cart_id:  cart.id as number,  quantity:  cart.quantity - 1, })
-                                                                ).then(() => { dispatch( getCartData());
+                                                                    updateCartItem({ cart_id: cart.id as number, quantity: cart.quantity - 1, })
+                                                                ).then(() => {
+                                                                    dispatch(getCartData());
                                                                 });
                                                             }}
                                                             className="cursor-pointer"

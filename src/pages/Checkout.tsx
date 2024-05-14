@@ -28,9 +28,54 @@ function Checkout() {
     }, []);
 
     const SendToDB = () => {
-        if(payMethod == 'binance') {
+        if (payMethod == 'binance') {
+            // axios.post(`${import.meta.env.VITE_BASEURL}/api/user/order/binance/pay`, {
+            //     headers: {
+            //         Authorization: `Bearer ${userToken}`
+            //     }
+            // })
+            //     .then(() => {
+            //         if (payMethod == 'binance') {
+            //             axios
+            //                 .post(
+            //                     `${import.meta.env.VITE_BASEURL
+            //                     }/api/user/order/binance/pay`,
+            //                     {
+            //                         order_id: orderId,
+            //                     },
+            //                     {
+            //                         headers: {
+            //                             Authorization: `Bearer ${userToken}`,
+            //                         },
+            //                     }
+            //                 )
+            //                 .then((d) => {
+            //                     const binancePayData = d.data.data;
+            //                     localStorage.setItem('binancePayData', JSON.stringify(binancePayData));
+            //                     navigate('/paymentauto')
+            //                 })
+            //                 .catch((err) => console.log(err));
+            //         } else {
+            //             axios
+            //                 .post(
+            //                     `${import.meta.env.VITE_BASEURL
+            //                     }/api/user/order/pay/currancy`,
+            //                     {
+            //                         order_id: orderId,
+            //                         currency_id: currencyId,
+            //                     },
+            //                     {
+            //                         headers: {
+            //                             Authorization: `Bearer ${userToken}`,
+            //                         },
+            //                     }
+            //                 )
+            //                 .then((d) => console.log(d))
+            //                 .catch((err) => console.log(err));
+            //         }
+            //     })
             navigate('/paymentauto')
-        }else{
+        } else {
             navigate('/paymentmanual')
         }
         // axios.get(`${import.meta.env.VITE_BASEURL}/api/user/carts/delete/all`,{
@@ -92,69 +137,67 @@ function Checkout() {
                     <div className="flex flex-col gap-3">
                         {carts.length ? (
                             carts.map((cart, idx) => {
-                                if(cart.quantity){
+                                if (cart.quantity) {
                                     return (
                                         <div
-                                        className="flex  justify-start gap-3 w-full "
-                                        key={idx}
-                                    >
-                                        <img
-                                            className="w-20 h-12"
-                                            src={`${
-                                                import.meta.env.VITE_BASEURL
-                                            }/storage/${
-                                                cart.product?.image
-                                            }`}
-                                            alt="cart"
-                                        />
-                                        <div className="flex flex-col gap-0">
-                                            {/* <span className="text-xl text-black ">
+                                            className="flex  justify-start gap-3 w-full "
+                                            key={idx}
+                                        >
+                                            <img
+                                                className="w-20 h-12"
+                                                src={`${import.meta.env.VITE_BASEURL
+                                                    }/storage/${cart.product?.image
+                                                    }`}
+                                                alt="cart"
+                                            />
+                                            <div className="flex flex-col gap-0">
+                                                {/* <span className="text-xl text-black ">
                         {cart.description.length > 10
                           ? cart.description.slice(0, 10) + "..."
                           : cart.description}
                       </span> */}
-                                            <span className="text-sm text-gray-500">
-                                                AED {cart.product?.price}
-                                            </span>
+                                                <span className="text-sm text-gray-500">
+                                                    AED {cart.product?.price}
+                                                </span>
+                                            </div>
+                                            <div className="flex basis-24 h-8 min-w-[100px] px-3 items-center ms-auto w-auto  justify-between rounded-full border border-gray-300">
+                                                <span
+                                                    className=" cursor-pointer"
+                                                    onClick={() => {
+                                                        dispatch(
+                                                            updateCartItem({
+                                                                cart_id:
+                                                                    cart.id as number,
+                                                                quantity:
+                                                                    cart.quantity - 1,
+                                                            })
+                                                        ).then(() => {
+                                                            dispatch(getCartData());
+                                                        });
+                                                    }}
+                                                >
+                                                    -
+                                                </span>
+                                                <span>{cart.quantity}</span>
+                                                <span
+                                                    className=" cursor-pointer"
+                                                    onClick={() => {
+                                                        dispatch(
+                                                            updateCartItem({
+                                                                cart_id:
+                                                                    cart.id as number,
+                                                                quantity:
+                                                                    cart.quantity + 1,
+                                                            })
+                                                        ).then(() => {
+                                                            dispatch(getCartData());
+                                                        });
+                                                    }}
+                                                >
+                                                    +
+                                                </span>
+                                            </div>
                                         </div>
-                                        <div className="flex basis-24 h-8 min-w-[100px] px-3 items-center ms-auto w-auto  justify-between rounded-full border border-gray-300">
-                                            <span
-                                                className=" cursor-pointer"
-                                                onClick={() => {
-                                                    dispatch(
-                                                        updateCartItem({
-                                                            cart_id:
-                                                                cart.id as number,
-                                                            quantity:
-                                                                cart.quantity - 1,
-                                                        })
-                                                    ).then(() => {
-                                                        dispatch(getCartData());
-                                                    });
-                                                }}
-                                            >
-                                                -
-                                            </span>
-                                            <span>{cart.quantity}</span>
-                                            <span
-                                                className=" cursor-pointer"
-                                                onClick={() => {
-                                                    dispatch(
-                                                        updateCartItem({
-                                                            cart_id:
-                                                                cart.id as number,
-                                                            quantity:
-                                                                cart.quantity + 1,
-                                                        })
-                                                    ).then(() => {
-                                                        dispatch(getCartData());
-                                                    });
-                                                }}
-                                            >
-                                                +
-                                            </span>
-                                        </div>
-                                    </div>
                                     )
                                 }
                             })
@@ -192,7 +235,7 @@ function Checkout() {
                     </div>
                     {payMethod == 'crypto' && (
                         <div className="flex justify-evenly flex-wrap gap-x-2 gap-y-8">
-                           
+
                             {methods.map((method: any, idx: any) => (
                                 <div
                                     className="flex rounded-full !w-1/6 !h-10 flex-col  cursor-pointer justify-start items-center gap-y-1  "
@@ -203,7 +246,7 @@ function Checkout() {
                                                 ? '1px solid #ccc'
                                                 : '',
                                     }}
-                                    onClick={() => {setCurrencyId(method?.id); localStorage.setItem('currencyId', JSON.stringify(method?.id))}}
+                                    onClick={() => { setCurrencyId(method?.id); localStorage.setItem('currencyId', JSON.stringify(method?.id)) }}
                                 >
                                     <img
                                         className="size-10 rounded-full"

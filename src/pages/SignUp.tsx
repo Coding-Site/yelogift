@@ -35,7 +35,7 @@ function Signup() {
       .then((d) => {
         if (d.status == 200) {
           setLoading(false);
-          navigate("/");
+          navigate("/signin");
         }
       })
       .catch((err) => {

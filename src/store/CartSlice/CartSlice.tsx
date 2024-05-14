@@ -36,6 +36,9 @@ export const addNewItem = createAsyncThunk('carts/addItemProduct', async ({
         product_part_id: number;
         quantity: number;
     }) => {
+
+
+        console.log('add new to cart');
         try {
             if (userToken) {
                 const res = await axios.post(

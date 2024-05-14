@@ -27,6 +27,7 @@ function PaymentAuto() {
             )
             .then((d) => {
                 const data = d.data.data;
+                console.log(data);
                 setBinancePayData(data)
             })
             .catch((err) => console.log(err));

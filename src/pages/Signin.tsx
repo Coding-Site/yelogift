@@ -35,7 +35,6 @@ function Signin() {
             userToken: d.data.data.token.token,
             userName: d.data.data.user.name
           }
-          console.log(data)
           setItem("userData",JSON.stringify(data));
           setLoading(false);
           navigate("/");
