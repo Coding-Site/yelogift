@@ -6,7 +6,7 @@ function AdminLayout() {
   const adminToken = localstorage?.adminToken
 
   // console.log(adminToken)
-  if (adminToken === null || adminToken ===  undefined) return (<Navigate to="/adminlogin" />);
+  if (adminToken === null || adminToken ===  undefined) return (<Navigate to="/signin" />);
   return (
     <div className="flex bg-mainLightBlack text-mainWhite w-full min-h-screen ">
       {/* <pre>{JSON.stringify(adminToken, null, 2)}</pre> */}

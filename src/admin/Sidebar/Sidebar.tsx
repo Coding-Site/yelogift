@@ -1,5 +1,5 @@
 import { CiSearch } from "react-icons/ci";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { FiCircle } from "react-icons/fi";
 import { FaRegCircleStop } from "react-icons/fa6";
 
@@ -7,7 +7,9 @@ function Sidebar() {
 
   return (
     <div className="flex flex-col gap-4 bg-mainBlack p-4 w-[250px] ">
-      <img className="w-[60%] me-auto" src="/assets/logo.png" alt="logo" />
+      <Link to="/">
+        <img className="w-[60%] me-auto" src="/assets/logo.png" alt="logo" />
+      </Link>
       <div className=" relative hidden">
         <input
           type="text"
@@ -66,15 +68,15 @@ function Sidebar() {
           <NavItem item="Currency" to="/admin/currency" />
         </li>
         <li>
-        <NavItem item="Custom Page" to="/admin/custom-page" />
+          <NavItem item="Custom Page" to="/admin/custom-page" />
         </li>
         <li>
-        <NavItem item="Notification" to="/admin/notification" />
+          <NavItem item="Notification" to="/admin/notification" />
         </li>
       </ul>
 
       <div className="flex mt-auto gap-2">
-        <img src="/assets/admin/admin.png" alt="admin"  className="rounded-full size-12"/>
+        <img src="/assets/admin/admin.png" alt="admin" className="rounded-full size-12" />
         <div className="flex flex-col justify-center gap-0 ">
           <span className="font-bold text-sm">Jonathon Treat</span>
           <span className="text-xs">Admin.com</span>

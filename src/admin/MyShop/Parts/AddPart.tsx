@@ -5,13 +5,15 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import axios from "axios";
 import { useState } from "react";
 import Spinner from "../../../utils/Spinner";
-
+import { FiCircle } from "react-icons/fi";
+import { FaRegCircleStop } from "react-icons/fa6";
 
 type Inputs = {
     product_id: string;
     title: string;
     discount: string,
     price: string;
+    selling_type: any
 };
 
 function AddPart() {
@@ -20,7 +22,11 @@ function AddPart() {
     const localstorage = JSON.parse(localStorage.getItem("adminData") as string);
     const adminToken = localstorage?.adminToken;
     const { productId } = useParams();
-    const { register, handleSubmit } = useForm<Inputs>();
+    const { register, handleSubmit, watch } = useForm<Inputs>({
+        defaultValues: {
+            selling_type: "auto"
+        }
+    });
 
 
     const onSubmit: SubmitHandler<Inputs> = (data: any) => {
@@ -89,6 +95,42 @@ function AddPart() {
                                 />
 
                             </div>
+                            <div className="flex flex-col gap-2 relative">
+                                <label className="text-main font-semibold">
+                                    Selling Type
+                                </label>
+
+                                <label htmlFor="auto" className="flex items-center gap-x-2">
+                                    <span className="text-main">
+
+                                        {watch("selling_type") == "auto" ? <FaRegCircleStop /> : <FiCircle />}
+                                    </span>
+                                    <input
+                                        {...register("selling_type")}
+                                        type="radio"
+                                        defaultChecked
+                                        id="auto"
+                                        value="auto"
+                                        className="border hidden border-gray-400 rounded-md bg-transparent p-1"
+                                    />
+                                    Auto
+                                </label>
+                                <label htmlFor="manual" className="flex items-center gap-x-2">
+                                    <span className="text-main">
+
+                                        {watch("selling_type") == "manual" ? <FaRegCircleStop /> : <FiCircle />}
+                                    </span>
+                                    <input
+                                        {...register("selling_type")}
+                                        type="radio"
+                                        value="manual"
+                                        id="manual"
+                                        className="border hidden border-gray-400 rounded-md bg-transparent p-1"
+                                    />
+                                    Manual
+                                </label>
+
+                            </div>
 
                         </div>
 
@@ -106,3 +148,4 @@ function AddPart() {
 }
 
 export default AddPart;
+

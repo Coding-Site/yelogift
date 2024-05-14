@@ -16,8 +16,8 @@ function Signin() {
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
   const { setItem } = useLocalStorage();
-  const  localstorage  = JSON.parse((localStorage.getItem("userData")) as string);
-  const userToken = localstorage?.adminToken
+  const localstorage = JSON.parse((localStorage.getItem("userData")) as string);
+  const userToken = localstorage?.userToken
   const [backError, setBackError] = useState('');
   const {
     register,
@@ -25,33 +25,46 @@ function Signin() {
     formState: { errors },
   } = useForm<Inputs>();
 
+
+
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     setLoading(true);
     axios
-      .post(`${import.meta.env.VITE_BASEURL}/api/user/auth/login`, data)
+      .post(`${import.meta.env.VITE_BASEURL}/api/login`, data)
       .then((d) => {
-      
+        console.log('data', d);
+        if( d.data.data.role  == 'user') {
           const data = {
             userToken: d.data.data.token.token,
-            userName: d.data.data.user.name
+            userName: d.data.data.user.name,
+            role: d.data.data.role
           }
-          setItem("userData",JSON.stringify(data));
-          setLoading(false);
+          setItem("userData", JSON.stringify(data));
           navigate("/");
-        
+        }else{
+        const data = {
+          adminToken: d.data.data.token.token,
+          adminName: d.data.data.user.name,
+          role: d.data.data.role
+        }
+        setItem("adminData", JSON.stringify(data));
+        navigate("/admin");
+      }
+      
+      setLoading(false);
       })
       .catch((err) => {
         const msg = err.response.data.message;
-        if(msg){
+        if (msg) {
           setLoading(false)
           setBackError(msg)
         }
-    
+
       });
   };
 
   // console.log(userToken)
-  if (userToken !== undefined && userToken !==  null) return (<Navigate to="/" />);
+  if (userToken !== undefined && userToken !== null) return (<Navigate to="/" />);
   return (
     <div className="flex flex-col text-mainWhite">
       <div className="flex flex-col-reverse sm:flex-row bg-black sm:bg-mainLightBlack pt-5 sm:pt-0">
@@ -111,7 +124,7 @@ function Signin() {
               <IoIosLock className="absolute left-4 top-[50%] -translate-y-[50%]" />
             </div>
             {errors.password && <span className="text-red-600 w-full text-center" >This field is required</span>}
-            {backError. length > 1 ? (<span className="text-red-600 w-full text-center">{backError}</span>) : ''}
+            {backError.length > 1 ? (<span className="text-red-600 w-full text-center">{backError}</span>) : ''}
             <div className="flex justify-between w-full items-center">
               <label className="cursor-pointer label p-0">
                 <input
@@ -128,7 +141,7 @@ function Signin() {
             <button className="btn !w-[80%] !rounded-md mt-12 mx-auto">
               {loading ? "loading..." : "login"}
             </button>
-            <Link  className="text-xs" to="/signup" >Sign Up</Link>
+            <Link className="text-xs" to="/signup" >Sign Up</Link>
           </form>
         </div>
         <div className="w-full sm:w-1/2 bg-black">

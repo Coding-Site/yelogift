@@ -17,22 +17,26 @@ function Navbar() {
     const navigate = useNavigate();
     const carts = useSelector((state: RootState) => state.cartSlice.items);
     const dispatch = useDispatch<AppDispatch>();
-    const localstorage = JSON.parse(localStorage.getItem('userData') as string);
-    const userToken = localstorage?.userToken;
+    const localstorageUser = JSON.parse(localStorage.getItem('userData') as string);
+    const localstorageAdmin = JSON.parse(localStorage.getItem('adminData') as string);
+    const userToken = localstorageUser?.userToken;
+    const adminRole = localstorageAdmin?.role;
+    const adminToken = localstorageAdmin?.adminToken;
     // const userName = localstorage?.userName;
     const { removeItem } = useLocalStorage();
 
     const Signout = () => {
         removeItem('userData');
+        removeItem('adminData');
         navigate(0);
     };
 
     const onCheckout = () => {
-       
+
         if (carts.length > 0) {
-            axios.post(`${import.meta.env.VITE_BASEURL}/api/user/order/checkout`,{
+            axios.post(`${import.meta.env.VITE_BASEURL}/api/user/order/checkout`, {
                 name: "mohamemd"
-             },
+            },
                 {
                     headers: {
                         Authorization: `Bearer ${userToken}`,
@@ -203,15 +207,21 @@ function Navbar() {
                         </div>
                     </div>
 
-                    {/* <div className="hidden sm:flex justify-center gap-3">
-                        <Switcher />
-                    </div> */}
 
                     <div className="hidden sm:flex justify-center gap-3">
-                        {userToken ? (
+                        {adminRole == "admin" ? (
+                            <Link to="/admin" className="btn">
+                                Admin Panel
+                            </Link>
+                        ) : ""}
+
+                        {userToken || adminToken ? (
                             <button onClick={() => Signout()} className="btn">
                                 sign out
                             </button>
+
+
+
                         ) : (
                             <>
                                 <Link to="/signup" className="btn">

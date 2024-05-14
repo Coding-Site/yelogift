@@ -56,10 +56,12 @@ const AddNotification = lazy(
 );
 const CustomPage = lazy(() => import("../admin/CustomPage/CustomPage"));
 const AddPage = lazy(() => import("../admin/CustomPage/AddPage"));
+const Main = lazy(() => import("./Main"));
 
 export const router = createBrowserRouter([
   {
-    path: "/",
+    path: "",
+    element: <Main />,
     children: [
       {
         path: "",
