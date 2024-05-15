@@ -1,5 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { IProduct } from "./IProduct";
 
 export interface IOrder {
   id: number;
@@ -8,12 +8,12 @@ export interface IOrder {
   email: string;
   phone: number;
   country: string;
-  create_at: string,
+  created_at: string,
   price: number;
   payment_status: number;
   payment_method: string;
   payment_id: number;
   currency: string;
   status: number | string;
-  order_products: IProduct[];
+  order_product: any[];
 }
