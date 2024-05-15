@@ -48,7 +48,8 @@ function EditSocial() {
         let social;
         d.data.data.map((i: any) => {
           if (i.id == id) {
-            social = i
+            social = i;
+            return i;
           }
         })
 

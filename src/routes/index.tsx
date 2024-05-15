@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-refresh/only-export-components */
-import { createBrowserRouter } from "react-router-dom";
+import {  createHashRouter } from "react-router-dom";
 import { Suspense, lazy } from "react";
 import Spinner from "../utils/Spinner";
 
@@ -58,7 +59,7 @@ const CustomPage = lazy(() => import("../admin/CustomPage/CustomPage"));
 const AddPage = lazy(() => import("../admin/CustomPage/AddPage"));
 const Main = lazy(() => import("./Main"));
 
-export const router = createBrowserRouter([
+export const router = createHashRouter([
   {
     path: "",
     element: <Main />,

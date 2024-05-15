@@ -35,7 +35,7 @@ function Category() {
 
   return (
     <div className="flex flex-col gap-4 w-full py-5 container">
-      <div className="flex items-center justify-between w-full ">
+      <div className="flex items-center justify-between w-full pt-10 pb-5">
         <span className="text-3xl text-white font-semibold">
           All Categories
         </span>
@@ -48,7 +48,7 @@ function Category() {
       <div className="flex flex-col gap-2 rounded-t-xl p-4  bg-white text-mainLightBlack">
         <table className="text-center table-auto">
           <thead>
-            <tr>
+            <tr className="border-y-4 border-transparent">
               <th>ID</th>
               <th>Name</th>
               <th>Icon</th>

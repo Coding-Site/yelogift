@@ -1,5 +1,3 @@
-import { AiOutlinePlus } from "react-icons/ai";
-import { Link } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { ICurrency } from "../../models/ICurrency";
 import axios from "axios";
@@ -13,7 +11,6 @@ function Currency() {
   const targetDialoug: HTMLDialogElement = document.getElementById(
     "my_modal_2"
   ) as HTMLDialogElement;
-  // const editDialoug: HTMLDialogElement = document.getElementById('my_modal_3') as HTMLDialogElement;
   const [currenceies] = useState<ICurrency[]>([]);
   const { register, handleSubmit, reset } = useForm<ICurrency>();
 
@@ -48,14 +45,11 @@ function Currency() {
       <div className="flex items-center justify-between w-full ">
         <span className="text-3xl text-white font-semibold">Currency</span>
 
-        <Link to="/admin/category/add" className="btn !rounded-md !h-14">
-          <AiOutlinePlus /> Add Category
-        </Link>
       </div>
 
       <div className="flex justify-center items-center py-12">
         <button
-          className="btn !rounded-md "
+          className="btn !rounded-md  !w-48"
           onClick={() => targetDialoug.showModal()}
         >
           Add
