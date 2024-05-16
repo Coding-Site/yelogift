@@ -108,6 +108,12 @@ function AddProduct() {
                 id="category"
                 className="border  border-gray-400 rounded-md bg-transparent p-1"
               >
+                  <option
+                    className="bg-mainLightBlack text-mainWhite"
+                   
+                  >
+                  Select Categorty
+                  </option>
                 {categories.map((cat, idx) => (
                   <option
                     className="bg-mainLightBlack text-mainWhite"
