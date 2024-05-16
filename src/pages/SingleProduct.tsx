@@ -123,11 +123,11 @@ function SingleProduct() {
                         </span>
                         <div
                             className="flex justify-between w-full 
-                [&>*]:border 
-                [&>*]:border-gray-300 
-                [&>*]:grow 
-                [&>*]:py-2
-            "
+                                        [&>*]:border 
+                                        [&>*]:border-gray-300 
+                                        [&>*]:grow 
+                                        [&>*]:py-2
+                                        "
                         >
                             <button
                                 onClick={() => setQ((old) => ++old)}

@@ -33,7 +33,7 @@ function Signin() {
       .post(`${import.meta.env.VITE_BASEURL}/api/login`, data)
       .then((d) => {
         console.log('data', d);
-        if( d.data.data.role  == 'user') {
+        if (d.data.data.role == 'user') {
           const data = {
             userToken: d.data.data.token.token,
             userName: d.data.data.user.name,
@@ -41,17 +41,17 @@ function Signin() {
           }
           setItem("userData", JSON.stringify(data));
           navigate("/");
-        }else{
-        const data = {
-          adminToken: d.data.data.token.token,
-          adminName: d.data.data.user.name,
-          role: d.data.data.role
+        } else {
+          const data = {
+            adminToken: d.data.data.token.token,
+            adminName: d.data.data.user.name,
+            role: d.data.data.role
+          }
+          setItem("adminData", JSON.stringify(data));
+          navigate("/admin");
         }
-        setItem("adminData", JSON.stringify(data));
-        navigate("/admin");
-      }
-      
-      setLoading(false);
+
+        setLoading(false);
       })
       .catch((err) => {
         const msg = err.response.data.message;
@@ -69,29 +69,38 @@ function Signin() {
     <div className="flex flex-col text-mainWhite">
       <div className="flex flex-col-reverse sm:flex-row bg-black sm:bg-mainLightBlack pt-5 sm:pt-0">
         <div className=" p-4  flex flex-col w-full sm:w-1/2 gap-y-10">
-          <div className="p-5 h-1/5 flex flex-col gap-y-10">
+          <div className="p-0 sm:p-5 h-1/5 flex flex-col gap-y-10">
             <img className="w-28 hidden sm:flex" src="/assets/logo.png" alt="logo" />
-           
-           
+
+
             <h2 className="text-3xl font-semibold">Login to your account</h2>
-            <div className="flex justify-around w-full [&>*]:border [&>*]:border-gray-300 [&>*]:text-sm [&>*]:rounded-md [&>*]:py-2 sm:[&>*]:px-4 [&>*]:px-2 gap-x-2">
-              
-              <button className="flex gap-x-4 ">
+            <div className="flex justify-around w-full 
+            [&>*]:border 
+            [&>*]:border-gray-300 
+            [&>*]:text-xs 
+            [&>*]:rounded-md 
+            [&>*]:py-2 
+            sm:[&>*]:px-4 
+            [&>*]:px-1
+            gap-x-2
+            ">
+
+              <button className="flex gap-x-1 sm:gap-x-2 ">
                 <img src="assets/signin/google.png" alt="singin with google" />
                 Google
               </button>
-              <button className="flex gap-x-2 ">
+              <button className="flex gap-x-1 sm:gap-x-2 ">
                 <img
                   src="assets/signin/facebook.png"
                   alt="singin with google"
                 />
                 Facebook
               </button>
-              <button className="flex gap-x-2 ">
+              <button className="flex gap-x-1 sm:gap-x-2  ">
                 <img src="assets/signin/binance.png" alt="singin with google" />
                 Binanace
               </button>
-            
+
             </div>
           </div>
           <div className="relative mt-10">

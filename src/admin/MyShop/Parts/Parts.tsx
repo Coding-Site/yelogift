@@ -56,6 +56,7 @@ function Parts() {
                             <th>Title</th>
                             <th>Price</th>
                             <th>Product Id</th>
+                            <th>Selling Type</th>
                             <th>Codes</th>
                             <th>Delete</th>
                             {/* <th>Edit</th> */}
@@ -68,6 +69,7 @@ function Parts() {
                                 <td>{part.title}</td>
                                 <td>{part.price}</td>
                                 <td>{part.product_id}</td>
+                                <td>{part.selling_type}</td>
                                 <td>
                                     <Link to={`/admin/products/${productId}/parts/${part.id}/codes`}>
                                         <PiEye className="mx-auto text-3xl" />

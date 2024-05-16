@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import Card from "./Card";
+// import Card from "./Card";
 import { IProduct } from "../../../models/IProduct";
 
 function CardsFeed(data: { title: string; link: string; products: IProduct[] }) {
@@ -16,35 +16,37 @@ function CardsFeed(data: { title: string; link: string; products: IProduct[] }) 
 
 
 
-      <div className="flex  overflow-x-auto scrollbar-none gap-x-2 mt-5 mb-8 sm:mb-0">
-        {data.products.slice(0, 6).map((card: IProduct, idx) => (
-          <Link to={`/product/${card.id}`}  key={idx} className="min-w-[130px] sm:min-w-[200px]">
-            <img
-              className="w-[200px] max-w-[200px]"
-              src={`${import.meta.env.VITE_BASEURL}/storage/${
-                card.image
-              }`}
-             
-            />
-          </Link>
-        ))}
-      </div>
-      <div className="flex  overflow-x-auto scrollbar-none gap-x-2 mt-5 mb-8 sm:mb-0">
-        {data.products.slice( 7, data.products.length).map((card: IProduct, idx) => (
-          <Link to={`/product/${card.id}`}  key={idx} className="min-w-[130px] sm:miax]">
-            <img
-              className="w-[200px] max-w-[200px]"
-              src={`${import.meta.env.VITE_BASEURL}/storage/${
-                card.image
-              }`}
-             
-            />
+      <div className="hidden sm:flex overflow-x-auto scrollbar-none gap-x-2 mt-5 mb-8 sm:mb-0">
+        {data.products.slice(0, 6).map((product: IProduct, idx) => (
+          <Link to={`/product/${product.id}`} key={idx} className="min-w-[130px] sm:min-w-[200px]">
+            <img className="w-[300px]" src={`${import.meta.env.VITE_BASEURL}/storage/${product.image}`} />
           </Link>
         ))}
       </div>
 
 
-{/* 
+      <div className="hidden sm:flex overflow-x-auto scrollbar-none gap-x-2 mt-5 mb-8 sm:mb-0">
+        {data.products.slice(7, data.products.length).map((product: IProduct, idx) => (
+          <Link to={`/product/${product.id}`} key={idx} className="min-w-[130px] sm:min-w-[200px]">
+            <img className="w-[300px] " src={`${import.meta.env.VITE_BASEURL}/storage/${product.image }`} />
+          </Link>
+        ))}
+      </div>
+
+
+      <div className="flex sm:hidden justify-start overflow-x-scroll scrollbar-none sm:gap-12 gap-x-4 mt-3 sm:mt-10">
+        {data.products.map((product: IProduct, idx) => (
+          <Link to={`/product/${product.id}`} key={idx} className="min-w-[130px] sm:min-w-[200px]">
+            <img className="w-[300px]" src={`${import.meta.env.VITE_BASEURL}/storage/${product.image }`} />
+          </Link>
+        ))}
+      </div>
+
+
+
+
+
+      {/* 
       <div className="hidden sm:flex justify-start overflow-x-auto scrollbar-none gap-12 mt-10">
         {data.products.slice(0, 6).map((card, idx) =>  <Card key={idx} data={card} /> )}
       </div>
@@ -52,10 +54,10 @@ function CardsFeed(data: { title: string; link: string; products: IProduct[] }) 
         {data.products.slice( 7, data.products.length).map((product, idx) => <Card key={idx} data={product} /> )}
       </div> */}
 
-
+      {/* 
       <div className="flex sm:hidden justify-start overflow-x-scroll scrollbar-none sm:gap-12 gap-x-4 mt-3 sm:mt-10">
         {data.products.map((product, idx) => <Card key={idx} data={product} /> )}
-      </div>
+      </div> */}
 
 
 

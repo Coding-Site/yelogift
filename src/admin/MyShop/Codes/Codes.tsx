@@ -2,8 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import axios from "axios";
 import { useState } from "react";
-import { AiOutlinePlus } from "react-icons/ai";
-import { Link, useParams } from "react-router-dom";
+import {  useParams } from "react-router-dom";
 import Spinner from "../../../utils/Spinner";
 import { useForm } from "react-hook-form";
 
@@ -42,10 +41,6 @@ function Codes() {
     <div className="flex flex-col gap-4 w-full py-5 container">
       <div className="flex items-center justify-between w-full pt-10 pb-5 ">
         <span className="text-3xl text-white font-semibold">All Codes</span>
-
-        <Link to="/admin/products/add" className="btn !rounded-md !h-12">
-          <AiOutlinePlus /> Add new product
-        </Link>
       </div>
 
       

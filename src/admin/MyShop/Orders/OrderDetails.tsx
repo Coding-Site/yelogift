@@ -45,6 +45,8 @@ function OrderDetails() {
             .then((d) => console.log(d))
             .catch((err) => console.log(err));
     };
+
+
     useEffect(() => {
         axios
             .get(`${import.meta.env.VITE_BASEURL}/api/admin/orders/get/${id}`, {
@@ -85,9 +87,9 @@ function OrderDetails() {
                         Manual
                     </div>
                 </div>
-                <pre>
+                {/* <pre>
                     {JSON.stringify(order, null, 2)}
-                </pre>
+                </pre> */}
                 <table className="table-auto text-center">
                     <thead className="py-5">
                         <tr className="rounded-t-md bg-[#3D3D3D] ">
@@ -122,21 +124,23 @@ function OrderDetails() {
                                             );
                                     })}
 
+                                    
                                     <dialog id="my_modal_1" className="modal">
                                         <div className="modal-box">
-                                            <div className="modal-action">
-                                                <form method="dialog" className='modal-backdrop'>
+                                            <div className="modal-action w-full">
+                                                <form method="dialog" className=' w-full flex flex-col gap-y-3 '>
+                                                <button className="btn btn-sm btn-circle !bg-transparent btn-ghost absolute right-2 top-2">✕</button>
                                                     <input
                                                         type="text"
                                                         onChange={(e) =>
                                                             setCode(e.target.value)
                                                         }
-                                                        value={code}
+                                                        // value={code}
                                                         className="rounded outline-none py-3 text-mainLightBlack border-gray-500 border-2 w-full px-4 "
                                                         placeholder="Code here"
                                                     />
                                                     <button
-                                                        className="btn"
+                                                        className="btn ms-auto"
                                                         onClick={() =>
                                                             addNewCode(
                                                                 product.product

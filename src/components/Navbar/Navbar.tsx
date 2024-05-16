@@ -45,6 +45,7 @@ function Navbar() {
             )
                 .then((d) => {
                     const orderId = d.data.data.id;
+                    console.log(d)
                     localStorage.setItem('orderId', JSON.stringify(orderId));
                 })
                 .then(() => navigate('/checkout'))
