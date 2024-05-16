@@ -3,9 +3,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
-import { PiEye } from "react-icons/pi";
 import { Link, useParams } from "react-router-dom";
-import { GoPencil } from "react-icons/go";
 import Spinner from "../../../utils/Spinner";
 import { useForm } from "react-hook-form";
 
@@ -22,7 +20,7 @@ function Codes() {
   const onSubmit = (data: any) => {
     setLoading(true)
     axios
-      .post(`${import.meta.env.VITE_BASEURL}/api/admin/admin/product/parts/codes/`,
+      .post(`${import.meta.env.VITE_BASEURL}/api/admin/product/parts/codes/`,
         { ...data, part_id: partId },
         {
           headers: {
