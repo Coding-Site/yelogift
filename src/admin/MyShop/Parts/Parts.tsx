@@ -5,6 +5,7 @@ import { AiOutlinePlus } from "react-icons/ai";
 // import { GoPencil } from "react-icons/go";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { FaTrash } from "react-icons/fa6";
+import { PiEye } from "react-icons/pi";
 
 
 function Parts() {
@@ -55,6 +56,7 @@ function Parts() {
                             <th>Title</th>
                             <th>Price</th>
                             <th>Product Id</th>
+                            <th>Codes</th>
                             <th>Delete</th>
                             {/* <th>Edit</th> */}
                         </tr>
@@ -66,8 +68,12 @@ function Parts() {
                                 <td>{part.title}</td>
                                 <td>{part.price}</td>
                                 <td>{part.product_id}</td>
+                                <td>
+                                    <Link to={`/admin/products/${productId}/parts/${part.id}/codes`}>
+                                        <PiEye className="mx-auto text-3xl" />
+                                    </Link>
+                                </td>
                                 <td className="flex justify-center"> <FaTrash className=" cursor-pointer" onClick={() => DeletePart(part.id)} /></td>
-                                {/* <td> <Link to={`/admin/products/${productId}/parts/${part.id}/edit`} className="flex justify-center"><GoPencil /></Link></td> */}
                             </tr>
                         ))}
                     </tbody>

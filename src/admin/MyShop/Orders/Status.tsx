@@ -1,8 +1,16 @@
+import { useEffect, useState } from "react"
 
-function Status({status}: {status: string | number}) {
+function Status({status, paymentstatus}: {status: string , paymentstatus: string}) {
+    const [fstatus, setFStats] = useState('');
+
+    useEffect(() => {
+        setFStats(() => {
+           return  paymentstatus == "0" ? "Pending" : status == "0" ? "in-Progress" : "Confirmed"
+        })
+    }, [])
   return (
     <>
-            { status == '0' ? <Pending /> : ( status == "1") ? <Confirmed /> : <Cancelled />}
+            { fstatus == 'Pending' ? <Pending /> : ( fstatus == "in-Progress") ? <InProgrss /> : <Confirmed />}
     </>
   
   )
@@ -25,10 +33,10 @@ function Confirmed() {
         </span>
     )
 }
-function Cancelled() {
+function InProgrss() {
     return (
-        <span className='px-4  rounded-full py-0.5  border bg-red-800 border-red-900 text-red-900' >
-            Cancelled
+        <span className='px-4  rounded-full py-0.5  border bg-yellow-800 border-yellow-900 text-yellow-900' >
+            In Progress
         </span>
     )
 }

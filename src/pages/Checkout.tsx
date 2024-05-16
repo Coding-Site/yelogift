@@ -14,8 +14,9 @@ function Checkout() {
     const [currencyId, setCurrencyId] = useState(null);
     const localstorage = JSON.parse(localStorage.getItem('userData') as string);
     const userToken = localstorage?.userToken;
-
     const [payMethod, setPayMethod] = useState<'binance' | 'crypto'>('crypto');
+
+
 
     useEffect(() => {
         axios
@@ -29,112 +30,23 @@ function Checkout() {
 
     const SendToDB = () => {
         if (payMethod == 'binance') {
-            // axios.post(`${import.meta.env.VITE_BASEURL}/api/user/order/binance/pay`, {
-            //     headers: {
-            //         Authorization: `Bearer ${userToken}`
-            //     }
-            // })
-            //     .then(() => {
-            //         if (payMethod == 'binance') {
-            //             axios
-            //                 .post(
-            //                     `${import.meta.env.VITE_BASEURL
-            //                     }/api/user/order/binance/pay`,
-            //                     {
-            //                         order_id: orderId,
-            //                     },
-            //                     {
-            //                         headers: {
-            //                             Authorization: `Bearer ${userToken}`,
-            //                         },
-            //                     }
-            //                 )
-            //                 .then((d) => {
-            //                     const binancePayData = d.data.data;
-            //                     localStorage.setItem('binancePayData', JSON.stringify(binancePayData));
-            //                     navigate('/paymentauto')
-            //                 })
-            //                 .catch((err) => console.log(err));
-            //         } else {
-            //             axios
-            //                 .post(
-            //                     `${import.meta.env.VITE_BASEURL
-            //                     }/api/user/order/pay/currancy`,
-            //                     {
-            //                         order_id: orderId,
-            //                         currency_id: currencyId,
-            //                     },
-            //                     {
-            //                         headers: {
-            //                             Authorization: `Bearer ${userToken}`,
-            //                         },
-            //                     }
-            //                 )
-            //                 .then((d) => console.log(d))
-            //                 .catch((err) => console.log(err));
-            //         }
-            //     })
             navigate('/paymentauto')
         } else {
             navigate('/paymentmanual')
         }
-        // axios.get(`${import.meta.env.VITE_BASEURL}/api/user/carts/delete/all`,{
-        //   headers: {
-        //     Authorization: `Bearer ${userToken}`
-        //   }
-        // })
-        // .then(() => {
-        //   if (payMethod == 'binance') {
-        //       axios
-        //           .post(
-        //               `${
-        //                   import.meta.env.VITE_BASEURL
-        //               }/api/user/order/binance/pay`,
-        //               {
-        //                   order_id: orderId,
-        //               },
-        //               {
-        //                   headers: {
-        //                       Authorization: `Bearer ${userToken}`,
-        //                   },
-        //               }
-        //           )
-        //           .then((d) => {
-        //             const binancePayData = d.data.data;
-        //             localStorage.setItem('binancePayData', JSON.stringify(binancePayData));
-        //             navigate('/paymentauto')
-        //           })
-        //           .catch((err) => console.log(err));
-        //   } else {
-        //       axios
-        //           .post(
-        //               `${
-        //                   import.meta.env.VITE_BASEURL
-        //               }/api/user/order/pay/currancy`,
-        //               {
-        //                   order_id: orderId,
-        //                   currency_id: currencyId,
-        //               },
-        //               {
-        //                   headers: {
-        //                       Authorization: `Bearer ${userToken}`,
-        //                   },
-        //               }
-        //           )
-        //           .then((d) => console.log(d))
-        //           .catch((err) => console.log(err));
-        //   }
-        // })
     };
 
     return (
         <div className="flex flex-col py-10 w-full container text-mainLightBlack">
             <div className="flex justify-between flex-col sm:flex-row w-full gap-3">
-                <div className="flex justify-start flex-col gap-y-10  px-10 py-10 bg-white grow">
-                    <span className="text-2xl font-semibold  ">
+                <div className="flex justify-start flex-col gap-y-10 sm:text-black text-white px-10 py-10 sm:bg-white grow">
+                    <span className="sm:flex hidden text-2xl font-semibold  ">
                         Order Summary
                     </span>
-                    <div className="flex flex-col gap-3">
+                    <span className="sm:hidden flex text-2xl font-semibold gap-x-2">
+                        <img className='w-8' src="assets/checkout/cart.png" /> Cart
+                    </span>
+                    <div className="flex flex-col gap-3 sm:text-black text-white">
                         {carts.length ? (
                             carts.map((cart, idx) => {
                                 if (cart.quantity) {
@@ -151,11 +63,7 @@ function Checkout() {
                                                 alt="cart"
                                             />
                                             <div className="flex flex-col gap-0">
-                                                {/* <span className="text-xl text-black ">
-                        {cart.description.length > 10
-                          ? cart.description.slice(0, 10) + "..."
-                          : cart.description}
-                      </span> */}
+
                                                 <span className="text-sm text-gray-500">
                                                     AED {cart.product?.price}
                                                 </span>
@@ -206,7 +114,7 @@ function Checkout() {
                         )}
                     </div>
                 </div>
-                <div className="flex justify-start flex-col gap-y-10 px-10 py-10 bg-white grow">
+                <div className="flex justify-start flex-col sm:text-black text-white gap-y-10 px-10 py-10 sm:bg-white grow">
                     <span className="text-2xl font-semibold  ">
                         Select Payment method{' '}
                     </span>

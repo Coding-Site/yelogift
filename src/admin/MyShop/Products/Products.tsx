@@ -7,7 +7,7 @@ import { PiEye } from "react-icons/pi";
 import { Link } from "react-router-dom";
 import { ICard } from "../../../models/ICard";
 import { GoPencil } from "react-icons/go";
-import { FiSearch } from "react-icons/fi";
+// import { FiSearch } from "react-icons/fi";
 import { IProduct } from "../../../models/IProduct";
 import Spinner from "../../../utils/Spinner";
 
@@ -66,7 +66,7 @@ function Products() {
               onChange={(e) => setTerm(e.target.value)}
             />
           </div>
-          <FiSearch className="absolute left-2 text-lg text-gray-400 top-[50%] -translate-y-[50%]" />
+          {/* <FiSearch className="absolute left-2 text-lg text-gray-400 top-[50%] -translate-y-[50%]" /> */}
           {/*<button className="bg-white px-4 py-2 rounded-md shadow-md">
               Filter
             </button>

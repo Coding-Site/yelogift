@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import {  useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { FaChevronLeft } from 'react-icons/fa6';
 import axios from 'axios';
@@ -11,7 +11,7 @@ type Code = {
 };
 function OrderDetails() {
     const { id } = useParams();
-    const [ setOrder] = useState<any>();
+    const [order, setOrder] = useState<any>();
     const [orderProducts, setOrderProducts] = useState<any[]>([]);
     const [orderCodes, setOrderCodes] = useState<Code[]>([]);
     const [code, setCode] = useState('');
@@ -31,36 +31,33 @@ function OrderDetails() {
 
     const confirmOrderCodes = () => {
         axios.post(
-                `${
-                    import.meta.env.VITE_BASEURL
-                }/api/admin/orders/delivery/code`,
-                {
-                    order_id: id,
-                    order_codes: orderCodes,
-                },{
-                  headers: {
-                    Authorization: `Bearer ${adminToken}`
-                  }
-                }
-            )
+            `${import.meta.env.VITE_BASEURL
+            }/api/admin/orders/delivery/code`,
+            {
+                order_id: id,
+                order_codes: orderCodes,
+            }, {
+            headers: {
+                Authorization: `Bearer ${adminToken}`
+            }
+        }
+        )
             .then((d) => console.log(d))
             .catch((err) => console.log(err));
     };
     useEffect(() => {
         axios
-            .get(`${import.meta.env.VITE_BASEURL}/api/admin/orders`, {
+            .get(`${import.meta.env.VITE_BASEURL}/api/admin/orders/get/${id}`, {
                 headers: {
                     Authorization: `Bearer ${adminToken}`,
                 },
             })
             .then((d) => {
-                const orders = d.data.data;
-                orders.forEach((or: any) => {
-                    if (or.id == id) {
-                        setOrder(or);
-                        setOrderProducts(or.order_product);
-                    }
-                });
+                console.log(d);
+                const order = d.data.data;
+                setOrder(order);
+                setOrderProducts(order.order_product);
+
             });
     }, []);
 
@@ -75,35 +72,39 @@ function OrderDetails() {
                 </span>
             </div>
 
-            {/* <pre>{JSON.stringify(order, null, 2)}</pre> */}
 
             <form className="flex flex-col text-white">
                 <div className="flex  my-5 justify-between pe-5">
                     <span className="font-semibold text-xl"> Add Codes</span>
                     <div className="flex gap-3 ">
-                        {/* Auto
+                        Auto
                         <input
                             type="checkbox"
                             className="toggle toggle-primar checked:!bg-main  border-none"
                         />
-                        Manual */}
+                        Manual
                     </div>
                 </div>
-
+                <pre>
+                    {JSON.stringify(order, null, 2)}
+                </pre>
                 <table className="table-auto text-center">
                     <thead className="py-5">
                         <tr className="rounded-t-md bg-[#3D3D3D] ">
-                            <th className="py-2">Product</th>
-                            <th>Price</th>
-                            <th>Quantity</th>
-                            <th>Code</th>
-                            <th>Total</th>
+                            <td className="py-2 font-bold">Product</td>
+                            <td>PartId</td>
+                            <td>Price</td>
+                            <td>Quantity</td>
+                            <td>Code</td>
+                            <td>Total</td>
+                            <td></td>
                         </tr>
                     </thead>
                     <tbody>
                         {orderProducts?.map((product) => (
                             <tr className="h-[100px]">
                                 <td>{product?.product?.name}</td>
+                                <td>{product?.product_part_id}</td>
                                 <td>${product.price}</td>
                                 <td>{product?.quantity}</td>
                                 <td>
@@ -123,17 +124,17 @@ function OrderDetails() {
 
                                     <dialog id="my_modal_1" className="modal">
                                         <div className="modal-box">
-                                            <input
-                                                type="text"
-                                                onChange={(e) =>
-                                                    setCode(e.target.value)
-                                                }
-                                                value={code}
-                                                className="rounded outline-none py-3 text-mainLightBlack border-gray-500 border-2 w-full px-4 "
-                                                placeholder="Code here"
-                                            />
                                             <div className="modal-action">
-                                                <form method="dialog">
+                                                <form method="dialog" className='modal-backdrop'>
+                                                    <input
+                                                        type="text"
+                                                        onChange={(e) =>
+                                                            setCode(e.target.value)
+                                                        }
+                                                        value={code}
+                                                        className="rounded outline-none py-3 text-mainLightBlack border-gray-500 border-2 w-full px-4 "
+                                                        placeholder="Code here"
+                                                    />
                                                     <button
                                                         className="btn"
                                                         onClick={() =>

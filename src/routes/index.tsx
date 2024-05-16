@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-refresh/only-export-components */
-import {  createHashRouter } from "react-router-dom";
+import { createHashRouter } from "react-router-dom";
 import { Suspense, lazy } from "react";
 import Spinner from "../utils/Spinner";
 
@@ -25,11 +25,12 @@ const AdminLogin = lazy(() => import("../admin/AdminLogin"));
 const Settings = lazy(() => import("../admin/Settings/Settings"));
 const Products = lazy(() => import("../admin/MyShop/Products/Products"));
 const Parts = lazy(() => import("../admin/MyShop/Parts/Parts"));
+const Codes = lazy(() => import("../admin/MyShop/Codes/Codes"));
 const AddPart = lazy(() => import("../admin/MyShop/Parts/AddPart"));
 const EditPart = lazy(() => import("../admin/MyShop/Parts/EditPart"));
 const AddProduct = lazy(() => import("../admin/MyShop/Products/AddProduct"));
 const EditProduct = lazy(() => import("../admin/MyShop/Products/EditProduct"));
-const Codes = lazy(() => import("../admin/MyShop/Products/Codes"));
+// const Codes = lazy(() => import("../admin/MyShop/Products/Codes"));
 const Orders = lazy(() => import("../admin/MyShop/Orders/Orders"));
 const OrderDetails = lazy(() => import("../admin/MyShop/Orders/OrderDetails"));
 const Customers = lazy(() => import("../admin/MyShop/Customers/Customers"));
@@ -203,14 +204,6 @@ export const router = createHashRouter([
                 ),
               },
               {
-                path: "codes",
-                element: (
-                  <Suspense fallback={<Spinner />}>
-                    <Codes />
-                  </Suspense>
-                ),
-              },
-              {
                 path: ":productId/parts",
                 children: [
                   {
@@ -236,12 +229,19 @@ export const router = createHashRouter([
                         <EditPart />
                       </Suspense>
                     ),
+                  },
+                  {
+                    path: ":partId/codes",
+                    element: (
+                      <Suspense fallback={<Spinner />}>
+                        <Codes />
+                      </Suspense>
+                    ),
                   }
                 ]
               },
             ],
           },
-
           {
             path: "orders",
             children: [
@@ -434,6 +434,7 @@ export const router = createHashRouter([
               },
             ],
           },
+
         ],
       },
       {

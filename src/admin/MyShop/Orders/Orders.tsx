@@ -131,7 +131,6 @@ function Orders() {
                     </span>
                 </div>
 
-                        
                 {loading ? (<Spinner />) : (
 
                     <table className="text-center table-auto border-collapse">
@@ -141,46 +140,49 @@ function Orders() {
                                 <td>Order Date</td>
                                 <td>Product Name</td>
                                 <td>Product Price</td>
-                                <td>Selling type</td>
+                                {/* <td>Selling type</td> */}
                                 <td>Status</td>
                                 <td></td>
                             </tr>
                         </thead>
                         <tbody>
-                            {orders.map((order, idx) => (
-                                <tr key={idx} className='border-b-[20px] border-transparent  even:bg-gray-50'>
-                                    <td className="font-semibold">#{order.id}</td>
-                                    <td>
-                                    {' '}
-                                    {order.created_at.slice(0, order.created_at.indexOf('T')).replace('-', '/')}
-                                    {/* <DateFormat date={order.create_at} /> */}
-                                </td>
-                                    <td> {order?.order_product[0]?.product?.name}</td>
+                            {orders.map((order, idx) => {
+                                // return order.payment_status == 0  ?  null :
+                                return <tr key={idx} className='border-b-[20px] border-transparent  even:bg-gray-50'>
+                                        <td className="font-semibold">#{order.id}</td>
+                                        <td>
+                                            {' '}
+                                            {order.created_at.slice(0, order.created_at.indexOf('T')).replace(/-/g, '/')}
+                                        </td>
+                                        <td> {order?.order_product[0]?.product?.name}</td>
 
-                                    <td className="text-green-600 font-semibold">
-                                        {' '}
-                                        $ {order.price}
-                                    </td>
-                                    <td className="text-green-600 font-semibold">
-                                        {' '}
-                                        slling type
-                                    </td>
-                                    <td className='text-xs'>
-                                        {' '}
-                                        <Status
-                                            status={order.status as string}
-                                        />{' '}
+                                        <td className="text-green-600 font-semibold">
+                                            {' '}
+                                            ${order.price}
+                                        </td>
+                                        {/* <td className="text-green-600 font-semibold">
+                                           {' '}
+                                           {JSON.stringify(order, null, 2)}
+                                       </td> */}
+                                        <td className='text-xs'>
+                                            'ps' = {order.payment_status}
+                                            's' = {order.status}
+                                            <Status
+                                                paymentstatus={order.payment_status.toString()}
+                                                status={order.status.toString()}
+                                            />{' '}
 
-                                    </td>
+                                        </td>
 
-                                    <td>
-                                        {' '}
-                                        <Link to={`/admin/orders/${order.id}`}>
-                                            <GoPencil />
-                                        </Link>
-                                    </td>
-                                </tr>
-                            ))}
+                                        <td>
+                                            {' '}
+                                            <Link to={`/admin/orders/${order.id}`}>
+                                                <GoPencil />
+                                            </Link>
+                                        </td>
+                                    </tr>
+                                
+                            })}
                         </tbody>
                     </table>
                 )}

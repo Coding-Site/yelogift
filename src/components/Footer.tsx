@@ -1,39 +1,39 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Link } from "react-router-dom";
 import { FaEnvelope } from "react-icons/fa6";
-import { useEffect, useState } from "react";
-import axios from "axios";
+// import { useEffect, useState } from "react";
+// import axios from "axios";
 
-type Social = {
-  id: number;
-  name: string;
-  link: string;
-  icon: string;
-}
+// type Social = {
+//   id: number;
+//   name: string;
+//   link: string;
+//   icon: string;
+// }
 function Footer() {
 
 
-  const [socials, setSocials] = useState<Social[]>([]);
-  const localstorage = JSON.parse(localStorage.getItem('userData') as string);
-  const userToken = localstorage?.userToken;
+  // const [socials, setSocials] = useState<Social[]>([]);
+  // const localstorage = JSON.parse(localStorage.getItem('userData') as string);
+  // const userToken = localstorage?.userToken;
 
-  const iconObj: any = {
-    'facebook': "/assets/social/facebook.png",
-    'twitter': "/assets/social/twitter.png",
-    'linkedin': "/assets/social/linkedin.png",
-    'youtube': "/assets/social/youtube.png",
-  };
+  // const iconObj: any = {
+  //   'facebook': "/assets/social/facebook.png",
+  //   'twitter': "/assets/social/twitter.png",
+  //   'linkedin': "/assets/social/linkedin.png",
+  //   'youtube': "/assets/social/youtube.png",
+  // };
 
-  useEffect(() => {
-    axios.get(`${import.meta.env.VITE_BASEURL}/api/admin/social`, {
-      headers: {
-        Authorization: `Bearer ${userToken}`,
-      },
-    })
-      .then(d => {
-        setSocials(d.data.data);
-      });
-  }, []);
+  // useEffect(() => {
+  //   axios.get(`${import.meta.env.VITE_BASEURL}/api/admin/social`, {
+  //     headers: {
+  //       Authorization: `Bearer ${userToken}`,
+  //     },
+  //   })
+  //     .then(d => {
+  //       setSocials(d.data.data);
+  //     });
+  // }, []);
 
 
   return (
@@ -93,7 +93,10 @@ function Footer() {
             <li className="flex justify-between gap-x-3 w-full" ><Link to="/">Terms & Conditions</Link> <img className="w-4" src="/assets/slider/prev.png" alt="" /></li>
             <li className="flex justify-center gap-x-3 w-full capitalize mt-5 " >Follow us</li>
             <li className="flex gap-x-2 ">
-              {socials.map((social, idx) => <img key={idx} className="size-10 mx-auto" src={iconObj[social.icon]} alt="" />)}
+              {/* {socials.map((social, idx) => <img key={idx} className="size-10 mx-auto" src={iconObj[social.icon]} alt="" />)} */}
+               <img className="size-10 mx-auto" src="/assets/social/facebook.png" alt="" />
+               <img className="size-10 mx-auto" src="/assets/social/twitter.png" alt="" />
+               <img className="size-10 mx-auto" src="/assets/social/youtube.png" alt="" />
             </li>
           </ul>
             <p className="text-center normal-case text-sm mt-5 text-gray-400">

@@ -87,7 +87,7 @@ function SingleProduct() {
                         {Product?.description}
                     </span>
 
-                    <span className="text-main">choose product</span>
+                    <span className="text-main">choose product part</span>
                     <div className="flex flex-col gap-2 w-full pe-4">
                         {Product?.product_parts?.map((pp, idx) => (
                             <div

@@ -17,8 +17,13 @@ function Shuffle() {
 
   useEffect(() => {
     axios
-      .get(`${import.meta.env.VITE_BASEURL}/api/home/categories`)
+      .get(`${import.meta.env.VITE_BASEURL}/api/home/categories`, {
+        headers: {
+          'Content-Type': "application/json"
+        }
+      })
       .then((categories) =>{
+        console.log('cats', categories)
         const all: ICategory[] = categories.data.data;
         setCats(all)
       })
