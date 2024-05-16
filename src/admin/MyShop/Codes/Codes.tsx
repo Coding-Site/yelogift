@@ -19,7 +19,7 @@ function Codes() {
   const onSubmit = (data: any) => {
     setLoading(true)
     axios
-      .post(`${import.meta.env.VITE_BASEURL}/api/admin/product/parts/codes/`,
+      .post(`${import.meta.env.VITE_BASEURL}/api/admin/product/parts/codes`,
         { ...data, part_id: partId },
         {
           headers: {
