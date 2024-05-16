@@ -8,15 +8,15 @@ function OrderDetalisCard({ order }: { order: any }) {
             <span className="text-2xl font-semibold mb-5">Order Details</span>
             <div className="flex flex-col gap-3">
                 <div className="felx flex-col gap-1">
-                    <span>Email Address</span>
+                    <span className="text-main sm:text-black">Email Address</span>
                     <p className="font-semibold">{order?.email} </p>
                 </div>
                 <div className="felx flex-col gap-1">
-                    <span>Payment method</span>
+                    <span className="text-main sm:text-black">Payment method</span>
                     <p className="font-semibold">Binance Pay </p>
                 </div>
                 <div className="felx flex-col gap-1">
-                    <span>Invioce id</span>
+                    <span className="text-main sm:text-black">Invioce id</span>
                     <p className="font-semibold">
                         {order?.invioce?.id || 'no invioce id'}{' '}
                     </p>

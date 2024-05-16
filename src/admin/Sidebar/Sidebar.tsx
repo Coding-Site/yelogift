@@ -26,9 +26,9 @@ function Sidebar() {
               <li>
                 <NavItem item="Products" to="/admin/products" />
               </li>
-              <li>
+              {/* <li>
                 <NavItem item="Codes" to="/admin/codes" />
-              </li>
+              </li> */}
               <li>
                 <NavItem item="Category" to="/admin/category" />
               </li>

@@ -119,10 +119,16 @@ function Navbar() {
                             <div tabIndex={0} role="button">
                                 <LiaShoppingBagSolid className="cursor-pointer" />
                             </div>
+                                {carts.length > 0 && (
+
+                                    <span className='absolute size-4  z-10 text-xs flex justify-center items-center font-semibold top-0 right-0 text-black rounded-full'>
+                                    {carts.length}
+                                </span>
+                                 )} 
 
                             <ul
                                 tabIndex={0}
-                                className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded w-96 text-mainLightBlack"
+                                className="dropdown-content z-[1] menu p-2 shadow bg-white rounded sm:w-96 w-80 text-mainLightBlack"
                             >
                                 {userToken && carts.length ? (
                                     carts.map((cart, idx) => {
@@ -141,12 +147,13 @@ function Navbar() {
                                                         alt="cart"
                                                     />
                                                     <div className="flex flex-col gap-0">
-                                                        <span className="text-sm text-gray-500">
+                                                        <span className='text-black sm:text-base text-sm whitespace-nowrap'>{cart.product?.name}</span>    
+                                                        <span className="sm:text-sm text-xs text-gray-500">
                                                             AED{' '}
                                                             {cart.product?.price}
                                                         </span>
                                                     </div>
-                                                    <div className="flex basis-24 text-base h-8 min-w-[100px] px-3 items-center ms-auto w-auto  justify-between rounded-full border border-gray-300">
+                                                    <div className="flex sm:basis-24 basis-16 text-base h-8 min-w-[80px] sm:min-w-[100px] px-2 sm:px-3 items-center ms-auto w-auto  justify-between rounded-full border border-gray-300">
                                                         <span
                                                             onClick={() => {
                                                                 dispatch(
@@ -191,7 +198,7 @@ function Navbar() {
                                         No Products in the Cart
                                     </div>
                                 )}
-                                <div className="flex justify-between text-base mt-6">
+                                <div className="flex justify-between text-base mt-6 border-t border-gray-200 pt-2">
                                     <button className="!rounded-full shadow-md px-5">
                                         keep shopping
                                     </button>

@@ -38,18 +38,18 @@ function Parts() {
 
     return (
         <div className="flex flex-col gap-4 w-full py-5 container">
-            <div className="flex items-center justify-between w-full ">
-                <span className="text-3xl text-white font-semibold">Parts of product with id {productId}</span>
+            <div className="flex items-center justify-between w-full pt-10 pb-5 ">
+                <span className="text-3xl text-white font-semibold">All Parts</span>
 
-                <Link to={`/admin/products/${productId}/parts/add`} className="btn !rounded-md !h-14">
-                    <AiOutlinePlus />   Add Part
+                <Link to={`/admin/products/${productId}/parts/add`}  className="btn !rounded-md !h-12">
+                    <AiOutlinePlus /> Add Part
                 </Link>
             </div>
-
+        
             <div className="flex flex-col gap-2 rounded-t-xl p-4  bg-white text-mainLightBlack">
 
 
-                <table className="text-center table-auto border-separate">
+                <table className="text-center table-auto">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -61,9 +61,9 @@ function Parts() {
                             {/* <th>Edit</th> */}
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody className="border-t-[20px] border-transparent">
                         {parts.map((part: any, idx: any) => (
-                            <tr key={idx} className="table-row py-5">
+                            <tr key={idx} className="table-row py-5 border-t-8 border-transparent">
                                 <td className="font-semibold">{part.id}</td>
                                 <td>{part.title}</td>
                                 <td>{part.price}</td>

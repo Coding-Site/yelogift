@@ -71,11 +71,11 @@ function Signin() {
         <div className=" p-4  flex flex-col w-full sm:w-1/2 gap-y-10">
           <div className="p-5 h-1/5 flex flex-col gap-y-10">
             <img className="w-28 hidden sm:flex" src="/assets/logo.png" alt="logo" />
+           
+           
             <h2 className="text-3xl font-semibold">Login to your account</h2>
-            <div
-              className="flex justify-around w-full
-          [&>*]:border [&>*]:border-gray-300 [&>*]:rounded-md [&>*]:py-2 [&>*]:px-4"
-            >
+            <div className="flex justify-around w-full [&>*]:border [&>*]:border-gray-300 [&>*]:text-sm [&>*]:rounded-md [&>*]:py-2 sm:[&>*]:px-4 [&>*]:px-2 gap-x-2">
+              
               <button className="flex gap-x-4 ">
                 <img src="assets/signin/google.png" alt="singin with google" />
                 Google
@@ -91,6 +91,7 @@ function Signin() {
                 <img src="assets/signin/binance.png" alt="singin with google" />
                 Binanace
               </button>
+            
             </div>
           </div>
           <div className="relative mt-10">
@@ -100,10 +101,7 @@ function Signin() {
             </span>
           </div>
 
-          <form
-            onSubmit={handleSubmit(onSubmit)}
-            className="py-10 flex flex-col justify-center mx-auto items-center gap-5 w-[65%]"
-          >
+          <form onSubmit={handleSubmit(onSubmit)} className="py-10 flex flex-col justify-center mx-auto items-center gap-5 w-[65%]">
             <div className="relative w-full">
               <input
                 type="text"
@@ -126,11 +124,11 @@ function Signin() {
             {errors.password && <span className="text-red-600 w-full text-center" >This field is required</span>}
             {backError.length > 1 ? (<span className="text-red-600 w-full text-center">{backError}</span>) : ''}
             <div className="flex justify-between w-full items-center">
-              <label className="cursor-pointer label p-0">
+              <label className="cursor-pointer label text-xs p-0">
                 <input
                   type="checkbox"
                   defaultChecked
-                  className="checkbox checkbox-warning checkbox-sm me-4 rounded-md"
+                  className="checkbox checkbox-warning checkbox-sm me-4  rounded-md"
                 />
                 remember me
               </label>
@@ -144,7 +142,7 @@ function Signin() {
             <Link className="text-xs" to="/signup" >Sign Up</Link>
           </form>
         </div>
-        <div className="w-full sm:w-1/2 bg-black">
+        <div className="w-full px-9 sm:px-0 sm:w-1/2 bg-black">
           <img
             className="flex sm:hidden"
             src="/assets/login.png"

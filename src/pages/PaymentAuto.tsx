@@ -8,8 +8,8 @@ import axios from 'axios';
 function PaymentAuto() {
     const localstorage = JSON.parse(localStorage.getItem('userData') as string);
     const userToken = localstorage?.userToken;
-    const [binancePayData,  setBinancePayData] = useState<any>({})
-   
+    const [binancePayData, setBinancePayData] = useState<any>({})
+
 
     useEffect(() => {
         const orderId = JSON.parse(localStorage.getItem('orderId') as string);
@@ -32,34 +32,33 @@ function PaymentAuto() {
             .catch((err) => console.log(err));
     }, []);
     return (
-        <div className="flex py-10 w-full container text-mainLightBlack">
-            <div className="flex justify-between w-full gap-3">
-                <div className="flex justify-start flex-col px-10 py-10 bg-white grow w-1/2">
+        <div className="flex flex-col py-10  w-full container text-mainLightBlack">
+            <div className="flex flex-col sm:flex-row justify-between w-full gap-x-12 gap-y-4">
+
+                <div className="flex justify-start flex-col px-10 py-10 sm:bg-white bg-[#222222] text-white sm:text-black grow w-full ">
                     <OrderDetalisCard order={binancePayData?.order} />
                 </div>
-                <div className="flex justify-start flex-col px-10 py-10 bg-white grow w-1/2">
+                <div className="flex justify-start flex-col px-10 py-10 sm:bg-white bg-[#222222] text-white sm:text-black grow w-full h-[600px]">
                     <span className="text-2xl font-semibold mb-5">
                         {' '}
                         Payment{' '}
                     </span>
 
-                    <div className="flex flex-col gap-y-2 items-center ">
+                    <div className="flex flex-col gap-y-7 items-center ">
                         <p>Scan this QR code in the Binance app</p>
-                        <img
-                            className="w-60"
-                            src={binancePayData?.pay_data?.qrcodeLink}
-                            alt="QR code"
-                        />
+                        <img src="assets/payment/qrcode.png" alt="QR code" />
                         <Link
                             to={binancePayData?.pay_data?.checkoutUrl}
-                            className="btn -mb-[200px] flex gap-x-2 items-center !rounded-full py-5 !h-auto !bg-mainLightColor"
+                            className="btn -mb-[200px] flex gap-x-2 items-center w-[600%] !rounded  sm:!rounded-full py-5 !h-auto !bg-mainLightColor"
                         >
                             <RiShareBoxLine />
                             Pay on binance.com
                         </Link>
                     </div>
+
                 </div>
             </div>
+
         </div>
     );
 }
