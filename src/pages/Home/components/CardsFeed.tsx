@@ -18,7 +18,7 @@ function CardsFeed(data: { title: string; link: string; products: IProduct[] }) 
 
       <div className="hidden sm:flex overflow-x-auto scrollbar-none gap-x-2 mt-5 mb-8 sm:mb-0">
         {data.products.slice(0, 6).map((product: IProduct, idx) => (
-          <Link to={`/product/${product.id}`} key={idx} className="min-w-[130px] sm:min-w-[200px]">
+          <Link to={`/product/${product.id}`} key={idx} className="sm:min-w-[200px]">
             <img className="w-[300px]" src={`${import.meta.env.VITE_BASEURL}/storage/${product.image}`} />
           </Link>
         ))}
@@ -27,7 +27,7 @@ function CardsFeed(data: { title: string; link: string; products: IProduct[] }) 
 
       <div className="hidden sm:flex overflow-x-auto scrollbar-none gap-x-2 mt-5 mb-8 sm:mb-0">
         {data.products.slice(7, data.products.length).map((product: IProduct, idx) => (
-          <Link to={`/product/${product.id}`} key={idx} className="min-w-[130px] sm:min-w-[200px]">
+          <Link to={`/product/${product.id}`} key={idx} className="sm:min-w-[200px]">
             <img className="w-[300px] " src={`${import.meta.env.VITE_BASEURL}/storage/${product.image }`} />
           </Link>
         ))}

@@ -7,6 +7,7 @@ import Status from './Status';
 import { Link } from 'react-router-dom';
 import { GoPencil } from 'react-icons/go';
 import Spinner from '../../../utils/Spinner';
+import instance from '../../../axios';
 
 
 
@@ -24,8 +25,8 @@ function Orders() {
 
     useEffect(() => {
         setLoading(true);
-        axios
-            .get(`${import.meta.env.VITE_BASEURL}/api/admin/orders`, {
+        instance
+            .get(`/api/admin/orders`, {
                 headers: {
                     Authorization: `Bearer ${adminToken}`,
                 },

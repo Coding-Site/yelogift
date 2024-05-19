@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { FaChevronLeft } from 'react-icons/fa6';
 import axios from 'axios';
+import instance from '../../../axios';
 
 type Code = {
     order_product_id: number;
@@ -30,9 +31,8 @@ function OrderDetails() {
     };
 
     const confirmOrderCodes = () => {
-        axios.post(
-            `${import.meta.env.VITE_BASEURL
-            }/api/admin/orders/delivery/code`,
+        instance.post(
+            `/api/admin/orders/delivery/code`,
             {
                 order_id: id,
                 order_codes: orderCodes,
@@ -48,8 +48,8 @@ function OrderDetails() {
 
 
     useEffect(() => {
-        axios
-            .get(`${import.meta.env.VITE_BASEURL}/api/admin/orders/get/${id}`, {
+        instance
+            .get(`/api/admin/orders/get/${id}`, {
                 headers: {
                     Authorization: `Bearer ${adminToken}`,
                 },

@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { FaStar } from 'react-icons/fa';
@@ -9,6 +8,7 @@ import { IProductPart } from '../models/IProductPart';
 import { useDispatch } from 'react-redux';
 import { addNewItem, getCartData } from '../store/CartSlice/CartSlice';
 import { AppDispatch } from '../store';
+import instance from '../axios';
 
 function SingleProduct() {
     const [Product, setProduct] = useState<IProduct>();
@@ -21,8 +21,8 @@ function SingleProduct() {
 
     const dispatch = useDispatch<AppDispatch>();
     useEffect(() => {
-        axios
-            .get(`${import.meta.env.VITE_BASEURL}/api/home/products/${id}`)
+        instance
+            .get(`/api/home/products/${id}`)
             .then((d) => {
                 const prod = d.data.data;
                 setProduct(prod);

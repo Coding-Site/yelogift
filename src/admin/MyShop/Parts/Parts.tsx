@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 // import { GoPencil } from "react-icons/go";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { FaTrash } from "react-icons/fa6";
 import { PiEye } from "react-icons/pi";
+import instance from "../../../axios";
 
 
 function Parts() {
@@ -16,7 +16,7 @@ function Parts() {
     const [parts, setParts] = useState([]);
 
     const DeletePart = (id: any) => {
-        axios.get(`${import.meta.env.VITE_BASEURL}/api/admin/product/parts/delete/${id}`, {
+        instance.get(`/api/admin/product/parts/delete/${id}`, {
             headers: {
                 Authorization: `Bearer ${adminToken}`,
             },
@@ -25,8 +25,8 @@ function Parts() {
             .catch((e) => console.log(e))
     }
     useEffect(() => {
-        axios
-            .get(`${import.meta.env.VITE_BASEURL}/api/admin/product/parts/get/${productId}`, {
+        instance
+            .get(`/api/admin/product/parts/get/${productId}`, {
                 headers: {
                     Authorization: `Bearer ${adminToken}`,
                 },

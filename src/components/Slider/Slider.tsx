@@ -3,52 +3,15 @@ import { ISlide } from '../../models/ISlide';
 import './Slider.css';
 import axios from 'axios';
 function Slider() {
-//   [
-//     {
-//         image: 'assets/slider/slide1.png',
-//         htmlFor: 's1',
-//         id: 'slide1',
-//         checked: true,
-//     },
-//     {
-//         image: 'assets/slider/slide2.png',
-//         htmlFor: 's2',
-//         id: 'slide2',
-//         checked: true,
-//     },
-//     {
-//         image: 'assets/slider/slide3.png',
-//         htmlFor: 's3',
-//         id: 'slide3',
-//         checked: true,
-//     },
-//     {
-//         image: 'assets/slider/slide4.png',
-//         htmlFor: 's4',
-//         id: 'slide4',
-//         checked: true,
-//     },
-//     {
-//         image: 'assets/slider/slide5.png',
-//         htmlFor: 's5',
-//         id: 'slide5',
-//         checked: true,
-//     },
-// ]
 
     const [slides, setSliedes] = useState<ISlide[]>([]);
 
     const GoNext = () => {
-    
         let activeIndex = slides.findIndex((s) => s.checked);
         const lastIndex = slides.length;
         const modified: ISlide[] = slides.map((sl, idx) => {
-            if (idx == activeIndex) {
-                return { ...sl, checked: false };
-            }
-            if (idx == activeIndex + 1) {
-                return { ...sl, checked: true };
-            }
+            if (idx == activeIndex) { return { ...sl, checked: false }; }
+            if (idx == activeIndex + 1) {  return { ...sl, checked: true };}
             return sl;
         });
 

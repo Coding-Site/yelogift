@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 
-function OrderDetalisCard({ order }: { order: any }) {
+function OrderDetalisCard({ orderDetails , order}: { orderDetails: any , order: any}) {
 
     return (
         <>
@@ -9,7 +9,7 @@ function OrderDetalisCard({ order }: { order: any }) {
             <div className="flex flex-col gap-3">
                 <div className="felx flex-col gap-1">
                     <span className="text-main sm:text-black">Email Address</span>
-                    <p className="font-semibold">{order?.email} </p>
+                    <p className="font-semibold">{orderDetails?.email} </p>
                 </div>
                 <div className="felx flex-col gap-1">
                     <span className="text-main sm:text-black">Payment method</span>
@@ -18,14 +18,17 @@ function OrderDetalisCard({ order }: { order: any }) {
                 <div className="felx flex-col gap-1">
                     <span className="text-main sm:text-black">Invioce id</span>
                     <p className="font-semibold">
-                        {order?.invioce?.id || 'no invioce id'}{' '}
+                        {orderDetails?.prepayId || 'no invioce id'}{' '}
                     </p>
                 </div>
             </div>
             {/* <pre>{JSON.stringify(order, null, 2)}</pre> */}
             <div className="flex flex-col gap-3 mt-5 ">
              
-                {order?.order_product.map((pro: any, idx: any) => (
+             <pre>
+                {JSON.stringify(order, null, 2)}
+             </pre>
+                {/* {order?.order_product.map((pro: any, idx: any) => (
                     <div
                         key={idx}
                         className="flex border-t border-gray-300 justify-start items-start gap-x-3 gap-y-3 py-4"
@@ -43,7 +46,7 @@ function OrderDetalisCard({ order }: { order: any }) {
                             </span>
                         </div>
                     </div>
-                ))}
+                ))} */}
                 <hr className="bg-gray-400" />
                 <div className="flex w-full justify-between">
                     <span className="font-semibold">Total</span>

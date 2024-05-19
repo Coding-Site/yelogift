@@ -4,7 +4,7 @@ import { AppDispatch, RootState } from '../store';
 import { getCartData, updateCartItem } from '../store/CartSlice/CartSlice';
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import instance from '../axios';
 
 function Checkout() {
     const carts = useSelector((state: RootState) => state.cartSlice.items);
@@ -19,8 +19,8 @@ function Checkout() {
 
 
     useEffect(() => {
-        axios
-            .get(`${import.meta.env.VITE_BASEURL}/api/user/order/currancy`, {
+        instance
+            .get(`/api/user/order/currancy`, {
                 headers: {
                     Authorization: `Bearer ${userToken}`,
                 },
