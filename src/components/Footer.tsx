@@ -49,7 +49,7 @@ function Footer() {
             <li><Link to="/"><img src="/assets/social/linkedin.png" alt="linkedin" /></Link></li>
           </ul>
         </div>
-        <div className="flex flex-col uppercase">
+        <div className="flex flex-col uppercase  ">
           <ul className="text-mainWhite">
             <li className="text-main capitalize font-semibold text-xl mb-2">Company</li>
             <li ><Link to="/">Privact Policy</Link></li>
