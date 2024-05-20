@@ -12,10 +12,10 @@ function Codes() {
   const adminToken = localstorage?.adminToken
   const [loading, setLoading] = useState(false);
   const [safe, setSafe] = useState(false);
-  const { partId } = useParams();
   const [password, setPassword] = useState('');
   const [newCode, setNewCode] = useState('');
   const [codes, setCodes] = useState<any[]>([]);
+  const { partId } = useParams();
 
   const { register, handleSubmit } = useForm();
 
@@ -35,15 +35,15 @@ function Codes() {
       const status = d.data.status;
       if(status){
         setNewCode('');
-        getAllCodes(password)
+        getAllCodes({password})
       }
 
-      setLoading(false)
     })
   }
 
 
   const getAllCodes =  (data:any) => {
+    setLoading(true)
     axios
       .post(`${import.meta.env.VITE_BASEURL}/api/admin/product/parts/codes`,
         { ...data, part_id: partId },
@@ -65,7 +65,6 @@ function Codes() {
   }
   const onSubmit = (data: any) => {
     getAllCodes(data)
-    setLoading(true)
   }
 
   return (
@@ -123,7 +122,7 @@ function Codes() {
 
 
             <tbody>
-              {codes.map((code: any, idx: any) => (
+              {codes?.map((code: any, idx: any) => (
                 <tr key={idx} className="table-row border-b-2 border-transparent font-medium">
                   <td className="font-bold">#{code.id}</td>
                   <td className="w-36">{code.code}</td>

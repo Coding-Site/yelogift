@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from 'axios';
@@ -157,25 +158,16 @@ function Orders() {
                                         <td> {order?.order_product[0]?.product?.name}</td>
 
                                         <td className="text-green-600 font-semibold">
-                                            {' '}
                                             ${order.price}
                                         </td>
-                                        {/* <td className="text-green-600 font-semibold">
-                                           {' '}
-                                           {JSON.stringify(order, null, 2)}
-                                       </td> */}
                                         <td className='text-xs'>
-                                            'ps' = {order.payment_status}
-                                            's' = {order.status}
                                             <Status
                                                 paymentstatus={order.payment_status.toString()}
                                                 status={order.status.toString()}
-                                            />{' '}
-
+                                            />
                                         </td>
 
                                         <td>
-                                            {' '}
                                             <Link to={`/admin/orders/${order.id}`}>
                                                 <GoPencil />
                                             </Link>
