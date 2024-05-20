@@ -7,10 +7,10 @@ import { useLocalStorage } from '../../hooks/useLocalStorage.tsx';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store/index.ts';
 import {
-    getCartData,
+     getCartData,
     updateCartItem,
 } from '../../store/CartSlice/CartSlice.tsx';
-import axios from 'axios';
+import instance from '../../axios/index.ts';
 
 function Navbar() {
     const [openMenu, setOpenMenu] = useState<boolean>(false);
@@ -34,7 +34,7 @@ function Navbar() {
     const onCheckout = () => {
 
         if (carts.length > 0) {
-            axios.post(`${import.meta.env.VITE_BASEURL}/api/user/order/checkout`, {
+            instance.post(`/api/user/order/checkout`, {
                 name: "mohamemd"
             },
                 {

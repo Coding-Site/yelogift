@@ -10,6 +10,7 @@ import { GoPencil } from "react-icons/go";
 // import { FiSearch } from "react-icons/fi";
 import { IProduct } from "../../../models/IProduct";
 import Spinner from "../../../utils/Spinner";
+import instance from "../../../axios";
 
 function Products() {
   const localstorage = JSON.parse((localStorage.getItem("adminData")) as string);
@@ -32,8 +33,8 @@ function Products() {
 
   useEffect(() => {
     setLoading(true)
-    axios
-      .get(`${import.meta.env.VITE_BASEURL}/api/admin/product`, {
+    instance
+      .get(`/api/admin/product`, {
         headers: {
           Authorization: `Bearer ${adminToken}`,
         },

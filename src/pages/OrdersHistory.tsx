@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import axios from "axios";
 import { useEffect, useState } from "react";
 import Spinner from "../utils/Spinner";
+import instance from "../axios";
 
 function OrdersHistory() {
   const [orders, setOrders] = useState<any>([]);
@@ -12,7 +12,7 @@ function OrdersHistory() {
     const localstorage = JSON.parse(localStorage.getItem('userData') as string);
     const userToken = localstorage?.userToken;
 
-    axios.get(`${import.meta.env.VITE_BASEURL}/api/user/order`, {
+    instance.get(`/api/user/order`, {
       headers: {
         Authorization: `Bearer ${userToken}`
       }

@@ -2,9 +2,9 @@
 import { Link } from 'react-router-dom';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa6';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import axios from 'axios';
 import { IProduct } from '../models/IProduct';
 import Spinner from '../utils/Spinner';
+import instance from '../axios';
 
 function Categories() {
     const [loading, setLoading] = useState<boolean>(false);
@@ -16,8 +16,8 @@ function Categories() {
 
     const getProducts = (page:number) => {
         setLoading(true)
-        axios
-            .get(`${import.meta.env.VITE_BASEURL}/api/home/products?page=${page}`)
+        instance
+            .get(`/api/home/products?page=${page}`)
             .then((d) => {
                 const prods = d.data.data.data;
                 const data = d.data.data;

@@ -8,6 +8,7 @@ import { ICategory } from "../../../models/ICategory";
 import { PiArrowsCounterClockwise } from "react-icons/pi";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { BiDollar } from "react-icons/bi";
+import instance from "../../../axios";
 
 type Inputs = {
   name: string;
@@ -49,8 +50,8 @@ function AddProduct() {
   };
 
   useEffect(() => {
-    axios
-      .get(`${import.meta.env.VITE_BASEURL}/api/admin/category`, {
+    instance
+      .get(`/api/admin/category`, {
         headers: {
           Authorization: `Bearer ${adminToken}`,
         },

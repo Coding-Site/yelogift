@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import CardsFeed from "./CardsFeed";
 import { ICategory } from "../../../models/ICategory";
-import axios from "axios";
 import { IProduct } from "../../../models/IProduct";
+import instance from "../../../axios";
 
 function Shuffle() {
 
@@ -16,14 +16,9 @@ function Shuffle() {
   };
 
   useEffect(() => {
-    axios
-      .get(`${import.meta.env.VITE_BASEURL}/api/home/categories`, {
-        headers: {
-          'Content-Type': "application/json"
-        }
-      })
+    instance
+      .get(`/api/home/categories`)
       .then((categories) =>{
-        console.log('cats', categories)
         const all: ICategory[] = categories.data.data;
         setCats(all)
       })

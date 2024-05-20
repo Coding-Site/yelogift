@@ -1,22 +1,15 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { IProduct } from "../../../models/IProduct";
+import instance from "../../../axios";
 
 function PopularCards() {
   const [popularProducts, setPopularProducts] = useState<IProduct[]>([]);
 
   useEffect(() => {
-    axios
-      .get(`${import.meta.env.VITE_BASEURL}/api/home/products/popular`, {
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json",
-          "Host" : import.meta.env.VITE_BASEURL
-        }
-      })
+    instance
+      .get(`/api/home/products/popular`)
       .then((populars) => { 
-        console.log(populars); 
         setPopularProducts(populars.data.data) 
       });
   }, []);

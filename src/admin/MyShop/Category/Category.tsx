@@ -7,6 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { ICategory } from "../../../models/ICategory";
 import { FaRegTrashAlt } from "react-icons/fa";
 import Spinner from "../../../utils/Spinner";
+import instance from "../../../axios";
 
 function Category() {
   const [loading, setLoading] = useState(false);
@@ -26,8 +27,8 @@ function Category() {
   }
   useEffect(() => {
     setLoading(true);
-    axios
-      .get(`${import.meta.env.VITE_BASEURL}/api/admin/category`, {
+    instance
+      .get(`/api/admin/category`, {
         headers: {
           Authorization: `Bearer ${adminToken}`,
         },

@@ -3,6 +3,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { IProduct } from '../../models/IProduct';
 import axios from 'axios';
+import instance from '../../axios';
 
 const localstorage = JSON.parse(localStorage.getItem('userData') as string);
 const userToken = localstorage?.userToken;
@@ -10,8 +11,8 @@ const userToken = localstorage?.userToken;
 export const getCartData = createAsyncThunk('carts/getAll', async () => {
     try {
         if (userToken) {
-            const res = await axios.get<any>(
-                `${import.meta.env.VITE_BASEURL}/api/user/carts`,
+            const res = await instance.get<any>(
+                `/api/user/carts`,
                 {
                     headers: {
                         Authorization: `Bearer ${userToken}`,
@@ -41,8 +42,8 @@ export const addNewItem = createAsyncThunk('carts/addItemProduct', async ({
         console.log('add new to cart');
         try {
             if (userToken) {
-                const res = await axios.post(
-                    `${import.meta.env.VITE_BASEURL}/api/user/carts/store`,
+                const res = await instance.post(
+                    `/api/user/carts/store`,
                     { product_id, product_part_id, quantity },
                     {
                         headers: {
