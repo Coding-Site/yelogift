@@ -3,8 +3,8 @@ import { Link, useParams } from "react-router-dom";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 import { FaStar } from "react-icons/fa";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import axios from "axios";
 import { IProduct } from "../../models/IProduct";
+import instance from "../../axios";
 
 
 
@@ -20,7 +20,7 @@ function Category() {
 
   useEffect(() => {
     setLoading(true);
-    axios.get(`${import.meta.env.VITE_BASEURL}/api/home/categories/${categoryId}`).then((d) => {
+    instance.get(`/api/home/categories/${categoryId}`).then((d) => {
       const cat = d.data.data;
       const data = cat.products;
       const prods = data.data;
