@@ -5,7 +5,6 @@ function App() {
   return (
     <div className="bg-mainBlack text-mainWhite  dark:bg-white dark:text-mainLightBlack ">
       <Provider store={store}>
-
         <NonAdminLayout />
       </Provider>
     </div>

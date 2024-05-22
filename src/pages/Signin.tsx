@@ -67,8 +67,13 @@ function Signin() {
     setLoading(true);
     instance
       .post(`/api/login`, data)
+    axios.post(`${import.meta.env.VITE_BASEURL}/api/login`, data,{
+      headers: {
+        'ngrok-skip-browser-warning':true
+      },
+    })
       .then((d) => {
-        console.log('data', d);
+        console.log( d);
         if (d.data.data.role == 'user') {
           const data = {
             userToken: d.data.data.token.token,
@@ -86,11 +91,11 @@ function Signin() {
           setItem("adminData", JSON.stringify(data));
           navigate("/admin");
         }
-
         setLoading(false);
       })
       .catch((err) => {
         const msg = err.response.data.message;
+        console.log(err)
         if (msg) {
           setLoading(false)
           setBackError(msg)
@@ -99,7 +104,7 @@ function Signin() {
       });
   };
 
-  // console.log(userToken)
+  console.log(userToken)
   if (userToken !== undefined && userToken !== null) return (<Navigate to="/" />);
   return (
     <div className="flex flex-col text-mainWhite">

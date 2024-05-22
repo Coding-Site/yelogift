@@ -66,10 +66,10 @@ function Codes() {
     getAllCodes(data)
   }
   function onSubmitFilecodes(){
-    const file  = document.getElementById('codesfile')?.files[0];
+    const file  = (document.getElementById('codesfile') as any)?.files[0];
     const fd = new FormData();
     fd.append('codes', file)
-    fd.append('part_id', partId);
+    fd.append('part_id', (partId as any));
 
 
     instance.post('/api/admin/product/parts/codes/upload', fd, {headers: { Authorization: `Bearer ${adminToken}` }})

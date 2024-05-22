@@ -12,23 +12,41 @@ type Props = {
 };
 
 function Notification() {
-  const [notifications, setNotifications] = useState<Props[]>([]);
+
   const { adminToken } = JSON.parse(localStorage.getItem("adminData") as string);
+  const [notifications, setNotifications] = useState<Props[]>([]);
+
   const deleteNotification = (id: number) => {
-    console.log(id);
+    axios.delete(`${import.meta.env.VITE_BASEURL}/api/admin/notification/delete/${id}`, {
+      headers: {
+        Authorization: `Bearer ${adminToken}`,
+        'ngrok-skip-browser-warning':true
+
+      },
+    }).then(() => {
+      setNotifications(notifications.filter(not => not.id !== id));
+    }).catch(error => {
+      console.error("Failed to delete notification", error);
+    });
   };
+  
   const getNotifications = () => {
+<<<<<<< HEAD
     instance
       .get(`/api/admin/notification`, {
+=======
+    axios.get(`${import.meta.env.VITE_BASEURL}/api/admin/notification`, {
+>>>>>>> origin/ACE
         headers: {
+          "Content-Type": "application/json",
           Authorization: `Bearer ${adminToken}`,
+          'ngrok-skip-browser-warning':true
         },
       })
       .then((d) => {
         setNotifications(d.data.data);
       });
   };
-
   useEffect(() => {
     getNotifications();
   }, []);
@@ -57,19 +75,16 @@ function Notification() {
             </tr>
           </thead>
           <tbody>
-            {notifications.map((not, idx) => (
+            {notifications && notifications.map((not, idx) => (
               <tr key={idx} className="text-center">
-                <td>title</td>
-                <td>message</td>
+                <td>{not.title}</td>
+                <td>{not.message}</td>
 
                 <td
                   className="cursor-pointer flex justify-center gap-x-3"
                   onClick={() => deleteNotification(not?.id)}
                 >
                   <FaTrashAlt />
-                  <Link to={`notification`}>
-                    <GoPencil />
-                  </Link>
                 </td>
               </tr>
             ))}
