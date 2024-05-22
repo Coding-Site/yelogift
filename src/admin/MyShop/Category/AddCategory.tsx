@@ -4,9 +4,9 @@ import { FaChevronLeft } from 'react-icons/fa6';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { PiArrowsCounterClockwise } from 'react-icons/pi';
 import { FaRegTrashAlt } from 'react-icons/fa';
-import axios from 'axios';
 import { useState } from 'react';
 import Spinner from '../../../utils/Spinner';
+import instance from '../../../axios';
 
 type Inputs = {
     name: string;
@@ -31,9 +31,9 @@ function AddCategory() {
             fd.append(i, i != 'icon' ? (data as any)[i] : data.icon[0]);
         }
 
-        axios
+        instance
             .post(
-                `${import.meta.env.VITE_BASEURL}/api/admin/category/store`,
+                `/api/admin/category/store`,
                 fd,
                 {
                     headers: {

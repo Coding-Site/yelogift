@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FiPlus } from "react-icons/fi";
@@ -6,6 +5,7 @@ import { LuTrash2 } from "react-icons/lu";
 
 import { GoPencil } from "react-icons/go";
 import Spinner from "../../../utils/Spinner";
+import instance from "../../../axios";
 
 type Props = {
   title: string;
@@ -21,8 +21,8 @@ function Slider() {
 
   const deleteSlider = (id: number) => {
     setLoading(true);
-    axios
-      .get(`${import.meta.env.VITE_BASEURL}/api/admin/slider/delete/${id}`, {
+    instance
+      .get(`/api/admin/slider/delete/${id}`, {
         headers: {
           Authorization: `Bearer ${adminToken}`,
         },
@@ -38,8 +38,8 @@ function Slider() {
 
   const getSldiers = () => {
     setLoading(true);
-    axios
-      .get(`${import.meta.env.VITE_BASEURL}/api/admin/slider`, {
+    instance
+      .get(`/api/admin/slider`, {
         headers: {
           Authorization: `Bearer ${adminToken}`,
         },

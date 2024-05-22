@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 import { PiEye } from "react-icons/pi";
@@ -67,11 +66,6 @@ function Products() {
               onChange={(e) => setTerm(e.target.value)}
             />
           </div>
-          {/* <FiSearch className="absolute left-2 text-lg text-gray-400 top-[50%] -translate-y-[50%]" /> */}
-          {/*<button className="bg-white px-4 py-2 rounded-md shadow-md">
-              Filter
-            </button>
-          </div> */}
         </div>
 
         {loading ? (<Spinner />) : (
@@ -86,7 +80,6 @@ function Products() {
                 <td>Description</td>
                 <td>Price</td>
                 <td>Discount</td>
-                {/* <td>Codes</td> */}
                 <td>Parts</td>
                 <td></td>
               </tr>
@@ -107,11 +100,6 @@ function Products() {
                   <td className="text-xs text-wrap max-w-44 w-44">{pro.description.slice(0, 10)} </td>
                   <td className="text-green-600">${pro.price}</td>
                   <td className="text-red-600">{pro.discount}%</td>
-                  {/* <td>
-                  <Link   to="/">
-                    <PiEye className="mx-auto text-3xl" />
-                  </Link>
-                </td> */}
                   <td>
                     <Link to={`/admin/products/${pro.id}/parts/`}>
                       <PiEye className="mx-auto text-3xl" />

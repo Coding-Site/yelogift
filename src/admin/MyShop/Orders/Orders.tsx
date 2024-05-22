@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { IOrder } from '../../../models/IOrder';
 import Status from './Status';

@@ -1,6 +1,6 @@
-import axios from "axios";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import instance from "../../../axios";
 
 type Inputs = {
     id:number,
@@ -16,7 +16,7 @@ function AddSocial() {
   const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    axios.post(`${import.meta.env.VITE_BASEURL}/api/admin/social/store`, {...data, name: `fa ${data.name}`} , {
+    instance.post(`/api/admin/social/store`, {...data, name: `fa ${data.name}`} , {
       headers: {
         Authorization: `Bearer ${adminToken}`
       }

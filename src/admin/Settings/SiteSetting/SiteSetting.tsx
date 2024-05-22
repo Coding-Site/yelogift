@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { MdOutlineFileUpload } from "react-icons/md";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { useForm } from "react-hook-form";
 import Spinner from "../../../utils/Spinner";
+import instance from "../../../axios";
 
 type Inputs = {
   logo: string;
@@ -45,8 +45,8 @@ function SiteSetting() {
 
   useEffect(() => {
     setLoading(true)
-    axios
-      .get(`${import.meta.env.VITE_BASEURL}/api/admin/setting`, {
+    instance
+      .get(`/api/admin/setting`, {
         headers: {
           Authorization: `Bearer ${adminToken}`,
         },

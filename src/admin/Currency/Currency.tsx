@@ -1,8 +1,8 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { ICurrency } from "../../models/ICurrency";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { GoPencil } from "react-icons/go";
+import instance from "../../axios";
 
 
 function Currency() {
@@ -15,8 +15,8 @@ function Currency() {
   const { register, handleSubmit, reset } = useForm<ICurrency>();
 
   const onSubmit: SubmitHandler<ICurrency> = (data: ICurrency) => {
-    axios
-      .post(`${import.meta.env.VITE_BASEURL}/api/admin/currency/store`, data, {
+    instance
+      .post(`/api/admin/currency/store`, data, {
         headers: {
           Authorization: `Bearer ${adminToken}`,
         },
@@ -28,8 +28,8 @@ function Currency() {
   };
 
   useEffect(() => {
-    axios
-      .get(`${import.meta.env.VITE_BASEURL}/api/admin/currency/`, {
+    instance
+      .get(`/api/admin/currency/`, {
         headers: {
           Authorization: `Bearer ${adminToken}}`,
         },

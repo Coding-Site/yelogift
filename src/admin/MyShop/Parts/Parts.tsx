@@ -6,6 +6,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { FaTrash } from "react-icons/fa6";
 import { PiEye } from "react-icons/pi";
 import instance from "../../../axios";
+import { GoPencil } from "react-icons/go";
 
 
 function Parts() {
@@ -55,7 +56,6 @@ function Parts() {
                             <th>ID</th>
                             <th>Title</th>
                             <th>Price</th>
-                            <th>Product Id</th>
                             <th>Selling Type</th>
                             <th>Codes</th>
                             <th>Delete</th>
@@ -68,7 +68,6 @@ function Parts() {
                                 <td className="font-semibold">{part.id}</td>
                                 <td>{part.title}</td>
                                 <td>{part.price}</td>
-                                <td>{part.product_id}</td>
                                 <td>{part.selling_type}</td>
                                 <td>
                                     <Link to={`/admin/products/${productId}/parts/${part.id}/codes`}>
@@ -76,6 +75,7 @@ function Parts() {
                                     </Link>
                                 </td>
                                 <td className="flex justify-center"> <FaTrash className=" cursor-pointer" onClick={() => DeletePart(part.id)} /></td>
+                                <td> <Link to={`/admin/products/${productId}/parts/${part.id}/edit`}><GoPencil /></Link></td>
                             </tr>
                         ))}
                     </tbody>

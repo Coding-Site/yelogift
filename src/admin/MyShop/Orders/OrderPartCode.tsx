@@ -1,21 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import {  useState } from "react"
+import { useState } from "react"
 
-function OrderPartCode({ part , setSendedCode}: { part: any, setSendedCode: any }) {
+function OrderPartCode({ part , setSendedCode} : { part: any, setSendedCode: any }) {
     const [codes, setCodes] = useState(part.order_code);
     const [newCode, setNewCode] = useState<any>();
 
     return (
-        <tr className="h-[100px]">
+        <tr className="h-[100px] border-b border-gray-600">
             <td>{part?.product?.name}</td>
-            <td>{part?.product_part_id}</td>
             <td>${part.price}</td>
             <td>{part?.quantity}</td>
             <td>
-                <Code codes={codes} partId={part?.id} quantity={part.quantity} />
+                <Codes codes={codes} partId={part?.id} quantity={part.quantity} />
             </td>
-            <td>$ 50</td>
+            <td>$ {part?.price * part?.quantity}</td>
             <dialog id={`my_modal_${part.id}`} className="modal">
                 <div className="modal-box">
                     <div className="modal-action w-full">
@@ -48,7 +47,7 @@ function OrderPartCode({ part , setSendedCode}: { part: any, setSendedCode: any 
 export default OrderPartCode
 
 
-const Code = ({ codes, partId, quantity }: { codes: any, partId: any, quantity: any }) => {
+const Codes = ({ codes, partId, quantity }: { codes: any, partId: any, quantity: any }) => {
 
     return (
         <>

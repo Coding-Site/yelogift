@@ -1,5 +1,5 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
@@ -14,7 +14,9 @@ function OrderDetails() {
     const [sendedCode, setSendedCode] = useState([]);
     const localstorage = JSON.parse(localStorage.getItem('adminData') as string);
     const adminToken = localstorage?.adminToken;
-
+    const [total, setTotal] = useState();
+    const [price, setPrice] = useState();
+    const [discount, setDiscount] = useState();
     const confirmOrderCodes = () => {
         instance.post(
             `/api/admin/orders/delivery/code`,
@@ -43,6 +45,9 @@ function OrderDetails() {
             })
             .then((d) => {
                 const order = d.data.data;
+                setDiscount(order.discount)
+                setPrice(order.order.price)
+                setTotal(order.total_price)
                 setOrder(order);
                 setOrderProducts(order.order_product);
 
@@ -64,23 +69,19 @@ function OrderDetails() {
             <form className="flex flex-col text-white">
                 <div className="flex  my-5 justify-between pe-5">
                     <span className="font-semibold text-xl"> Add Codes</span>
-                    <div className="flex gap-3 ">
+                    {/* <div className="flex gap-3 ">
                         Auto
                         <input
                             type="checkbox"
                             className="toggle toggle-primar checked:!bg-main  border-none"
                         />
                         Manual
-                    </div>
+                    </div> */}
                 </div>
-                {/* <pre>
-                    {JSON.stringify(order, null, 2)}
-                </pre> */}
                 <table className="table-auto text-center">
                     <thead className="py-5">
                         <tr className="rounded-t-md bg-[#3D3D3D] ">
                             <td className="py-2 font-bold">Product</td>
-                            <td>PartId</td>
                             <td>Price</td>
                             <td>Quantity</td>
                             <td>Code</td>
@@ -95,15 +96,15 @@ function OrderDetails() {
                     </tbody>
                 </table>
 
-                <div className="w-full text-end flex justify-between">
+                <div className="w-full text-end flex justify-between items-center px-20">
                     <div className="flex flex-col items-start">
-                        <span>Total : $64</span>
-                        <span>Discount : %10</span>
+                        <span>Total : $ {price}</span>
+                        <span>Discount : % {discount}</span>
                         <span className="mt-6">
                             <span className="text-main font-semibold">
                                 TOTAL{' '}
                             </span>{' '}
-                            : $55
+                            : ${total}
                         </span>
                     </div>
                     <button

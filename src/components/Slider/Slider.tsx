@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ISlide } from '../../models/ISlide';
 import './Slider.css';
-import axios from 'axios';
+import instance from '../../axios';
 function Slider() {
 
     const [slides, setSliedes] = useState<ISlide[]>([]);
@@ -61,8 +61,8 @@ function Slider() {
     };
 
     useEffect(() => {
-        axios
-            .get(`${import.meta.env.VITE_BASEURL}/api/home/sliders`)
+        instance
+            .get(`/api/home/sliders`)
             .then((d) => {
                 const slidesData: ISlide[] = d.data.data;
                 

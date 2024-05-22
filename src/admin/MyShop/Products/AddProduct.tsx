@@ -3,7 +3,6 @@ import {  useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaChevronLeft } from "react-icons/fa6";
 import { SubmitHandler, useForm } from "react-hook-form";
-import axios from "axios";
 import { ICategory } from "../../../models/ICategory";
 import { PiArrowsCounterClockwise } from "react-icons/pi";
 import { FaRegTrashAlt } from "react-icons/fa";
@@ -39,8 +38,8 @@ function AddProduct() {
       }
     
 
-    axios
-      .post(`${import.meta.env.VITE_BASEURL}/api/admin/product/store`, fd, {
+    instance
+      .post(`/api/admin/product/store`, fd, {
         headers: {
           Authorization: `Bearer ${adminToken}`,
         },

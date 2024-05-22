@@ -2,11 +2,11 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { FaChevronLeft } from "react-icons/fa6";
 import { SubmitHandler, useForm } from "react-hook-form";
-import axios from "axios";
 import { useState } from "react";
 import Spinner from "../../../utils/Spinner";
 import { FiCircle } from "react-icons/fi";
 import { FaRegCircleStop } from "react-icons/fa6";
+import instance from "../../../axios";
 
 type Inputs = {
     product_id: string;
@@ -32,8 +32,8 @@ function AddPart() {
     const onSubmit: SubmitHandler<Inputs> = (data: any) => {
         setLoading(true)
 
-        axios
-            .post(`${import.meta.env.VITE_BASEURL}/api/admin/product/parts/store`, { ...data, product_id: productId }, {
+        instance
+            .post(`/api/admin/product/parts/store`, { ...data, product_id: productId }, {
                 headers: {
                     Authorization: `Bearer ${adminToken}`,
                 },

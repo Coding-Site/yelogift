@@ -1,24 +1,60 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import { IoIosLock } from "react-icons/io";
 import { FaEnvelope } from "react-icons/fa";
 import { SubmitHandler, useForm } from "react-hook-form";
-import axios from "axios";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useLocalStorage } from "../hooks/useLocalStorage";
-// import { useToken } from "../hooks/useToken";
+import { LoginSocialGoogle, LoginSocialFacebook, IResolveParams } from 'reactjs-social-login'
+import { FacebookLoginButton, GoogleLoginButton } from 'react-social-login-buttons'
+import instance from "../axios";
+import axios from "axios";
+const REDIRECT_URI = import.meta.env.VITE_BASEURL;
+
+
 type Inputs = {
   login: string;
   password: string;
 };
 
 function Signin() {
+
+
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
   const { setItem } = useLocalStorage();
   const localstorage = JSON.parse((localStorage.getItem("userData")) as string);
   const userToken = localstorage?.userToken
   const [backError, setBackError] = useState('');
+  const [provider, setProvider] = useState('')
+  const [profile, setProfile] = useState<any>()
+
+  const onLoginStart = useCallback(() => {
+    alert('login start')
+  }, [])
+
+
+
+
+  const socialFacebookSignin = (data: any) => {
+    instance.post('/api/user/auth/facebook/callback', data)
+      .then(d => console.log('data after login', d))
+  }
+
+
+  const socialGoogleSignin = (data: any) => {
+    instance.post('/api/user/auth/google/callback', data)
+      .then(d => console.log('data after login', d))
+  }
+
+  const onLogoutSuccess = useCallback(() => {
+    setProfile(null)
+    setProvider('')
+    alert('logout success')
+  }, [])
+
+
   const {
     register,
     handleSubmit,
@@ -29,8 +65,8 @@ function Signin() {
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     setLoading(true);
-    axios
-      .post(`${import.meta.env.VITE_BASEURL}/api/login`, data)
+    instance
+      .post(`/api/login`, data)
       .then((d) => {
         console.log('data', d);
         if (d.data.data.role == 'user') {
@@ -74,21 +110,71 @@ function Signin() {
 
 
             <h2 className="text-3xl font-semibold">Login to your account</h2>
-            <div className="flex justify-around w-full 
-            [&>*]:border 
-            [&>*]:border-gray-300 
-            [&>*]:text-xs 
-            [&>*]:rounded-md 
-            [&>*]:py-2 
-            sm:[&>*]:px-4 
-            [&>*]:px-1
-            gap-x-2
-            ">
+            <div className="flex 
+                  justify-around 
+                  w-full 
+                  [&>*]:border 
+                  [&>*]:border-gray-300 
+                  [&>*]:text-xs 
+                  [&>*]:rounded-md 
+                  [&>*]:py-2 
+                  sm:[&>*]:px-4 
+                  [&>*]:px-1
+                  gap-x-2 ">
+
+
+
+
+              {/* <LoginSocialGoogle
+                isOnlyGetToken
+                client_id="157310444849-dnrecdlu5o6pi5o5crriofipop72kp6c.apps.googleusercontent.com"
+                onLoginStart={onLoginStart}
+                onResolve={ async ({ provider, data }) => {
+
+                  const res = await axios.get(`https://www.googleapis.com/oauth2/v3/userinfo?access_token=ya29.a0AXooCgvlsrWPjZ4qBgMyuAeRfyrLWLvKzeSm2n52mE6aeBDoXcbuQYUezGch47DNf9Nv0aZhVwwxuCCEgc7nY_SEpuKljG-K-1nCpjS55er5L_w4D5Sz1DYxm3KciyEPmgQKGt0L_fTfmRbbT9pGE-6Qtn8nnRS4VAaCgYKAXsSARESFQHGX2Mizai8my2sXyShPFtt3WP6rQ0169`);
+                  console.log('res' , res)
+                  console.log('provider' , provider)
+                  console.log('data' , data)
+                  // socialGoogleSignin(data)
+                  // setProvider(provider)
+                  // setProfile(data)
+                }}
+                onReject={(err) => {
+                  console.log(err)
+                }}
+              >
+                <GoogleLoginButton />
+              </LoginSocialGoogle> */}
 
               <button className="flex gap-x-1 sm:gap-x-2 ">
                 <img src="assets/signin/google.png" alt="singin with google" />
                 Google
               </button>
+
+
+
+              {/* <LoginSocialFacebook
+                isOnlyGetToken
+                redirect_uri={REDIRECT_URI}
+                // appId='1853429178493655'
+                appId='507151123510318'
+                onLoginStart={onLoginStart}
+                onResolve={({ provider, data }: IResolveParams) => {
+                  console.log('data', data)
+                  // socialFacebookSignin(data);
+                  setProvider(provider)
+                  setProfile(data)
+                }}
+                onReject={(err: any) => {
+                  console.log(err)
+                }}
+              >
+                <FacebookLoginButton />
+              </LoginSocialFacebook> */}
+
+
+
+
               <button className="flex gap-x-1 sm:gap-x-2 ">
                 <img
                   src="assets/signin/facebook.png"
@@ -96,6 +182,10 @@ function Signin() {
                 />
                 Facebook
               </button>
+
+
+
+
               <button className="flex gap-x-1 sm:gap-x-2  ">
                 <img src="assets/signin/binance.png" alt="singin with google" />
                 Binanace

@@ -2,9 +2,9 @@
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { ISlide } from "../../../models/ISlide";
-import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import Spinner from "../../../utils/Spinner";
+import instance from "../../../axios";
 
 type Inputs = {
   title: string;
@@ -45,8 +45,8 @@ function EditSlider() {
     for (const i in data) {
       i != "image" ? fd.append(i, data[i]) : fd.append(i, image);
     }
-    axios
-      .post(`${import.meta.env.VITE_BASEURL}/api/admin/slider/update`, fd, {
+    instance
+      .post(`/api/admin/slider/update`, fd, {
         headers: {
           Authorization: `Bearer ${adminToken}`,
         },
@@ -57,8 +57,8 @@ function EditSlider() {
 
   const getSldier = () => {
     setLoading(true)
-    axios
-      .get(`${import.meta.env.VITE_BASEURL}/api/admin/slider/${id}`, {
+    instance
+      .get(`/api/admin/slider/${id}`, {
         headers: {
           Authorization: `Bearer ${adminToken}`,
         },

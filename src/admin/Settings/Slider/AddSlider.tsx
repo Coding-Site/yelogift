@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import axios from "axios";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import Spinner from "../../../utils/Spinner";
+import instance from "../../../axios";
 
 type Inputs = {
   title: string;
@@ -27,8 +27,8 @@ function AddSlider() {
       fd.append(i, i != "image" ? (data as any)[i] : data.image[0]);
     }
 
-    axios
-      .post(`${import.meta.env.VITE_BASEURL}/api/admin/slider/store`, fd, {
+    instance
+      .post(`/api/admin/slider/store`, fd, {
         headers: {
           Authorization: `Bearer ${adminToken}`,
         },

@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { FaTrashAlt } from "react-icons/fa";
 import { GoPencil } from "react-icons/go";
 import { Link, useNavigate } from "react-router-dom";
 import { FaPlus } from "react-icons/fa6";
+import instance from "../../../axios";
 type Social = {
   id: number;
   name: string;
@@ -26,7 +26,7 @@ function Social() {
 
   const deleteSocial = (id:number) => {
 
-    axios.get(`${import.meta.env.VITE_BASEURL}/api/admin/social/delete/${id}`, {
+    instance.get(`/api/admin/social/delete/${id}`, {
       headers: {
         Authorization: `Bearer ${adminToken}`,
       },
@@ -36,7 +36,7 @@ function Social() {
 
 
   useEffect(() => {
-    axios.get(`${import.meta.env.VITE_BASEURL}/api/admin/social`, {
+    instance.get(`/api/admin/social`, {
       headers: {
         Authorization: `Bearer ${adminToken}`,
       },

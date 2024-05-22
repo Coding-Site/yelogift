@@ -1,12 +1,12 @@
-import axios from "axios";
 import  { useEffect } from "react";
+import instance from "../../../axios";
 
 function Video() {
   const  localstorage  = JSON.parse((localStorage.getItem("adminData")) as string);
   const adminToken = localstorage?.adminToken
 
   useEffect(() => {
-    axios.get(`${import.meta.env.VITE_BASEURL}/api/admin/slider`, {
+    instance.get(`/api/admin/slider`, {
       headers: {
         Authorization: `Bearer ${adminToken}`,
       },

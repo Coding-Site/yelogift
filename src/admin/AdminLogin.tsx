@@ -3,9 +3,9 @@ import Footer from "../components/Footer";
 import { IoIosLock } from "react-icons/io";
 import { FaEnvelope } from "react-icons/fa";
 import { SubmitHandler, useForm } from "react-hook-form";
-import axios from "axios";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { useState } from "react";
+import instance from "../axios";
 
 type Inputs = {
   email: string;
@@ -27,8 +27,8 @@ function AdminLogin() {
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     setLoading(true);
-    axios
-      .post(`${import.meta.env.VITE_BASEURL}/api/admin/auth/login`, data)
+    instance
+      .post(`/api/admin/auth/login`, data)
       .then((d) => {
         if (d.status == 200) {
           const data = {

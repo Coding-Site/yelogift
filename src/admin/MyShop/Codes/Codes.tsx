@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import axios from "axios";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import Spinner from "../../../utils/Spinner";
@@ -31,21 +30,21 @@ function Codes() {
         Authorization: `Bearer ${adminToken}`,
       }
     })
-    .then(d => {
-      const status = d.data.status;
-      if(status){
-        setNewCode('');
-        getAllCodes({password})
-      }
+      .then(d => {
+        const status = d.data.status;
+        if (status) {
+          setNewCode('');
+          getAllCodes({ password })
+        }
 
-    })
+      })
   }
 
 
-  const getAllCodes =  (data:any) => {
+  const getAllCodes = (data: any) => {
     setLoading(true)
-    axios
-      .post(`${import.meta.env.VITE_BASEURL}/api/admin/product/parts/codes`,
+    instance
+      .post(`/api/admin/product/parts/codes`,
         { ...data, part_id: partId },
         {
           headers: {
@@ -66,12 +65,25 @@ function Codes() {
   const onSubmit = (data: any) => {
     getAllCodes(data)
   }
+  function onSubmitFilecodes(){
+    const file  = document.getElementById('codesfile')?.files[0];
+    const fd = new FormData();
+    fd.append('codes', file)
+    fd.append('part_id', partId);
+
+
+    instance.post('/api/admin/product/parts/codes/upload', fd, {headers: { Authorization: `Bearer ${adminToken}` }})
+    .then(d =>console.log('after uploading codes fiel' , d))
+  }
 
   return (
     <div className="flex flex-col gap-4 w-full py-5 container">
       <div className="flex items-center justify-between w-full pt-10 pb-5 ">
         <span className="text-3xl text-white font-semibold">All Codes</span>
         <div className="flex">
+
+
+
           <dialog id="my_modal_1" className="modal">
             <div className="modal-box">
               <div className="modal-action w-full">
@@ -85,7 +97,7 @@ function Codes() {
                     placeholder="Code here"
                   />
                   <button
-                    className="btn ms-auto"
+                    className="btn ms-auto !h-12 flex items-center justify-center !rounded px-6"
                     onClick={addNewCode}
                   >
                     Add
@@ -94,15 +106,27 @@ function Codes() {
               </div>
             </div>
           </dialog>
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              (document.getElementById('my_modal_1') as HTMLDialogElement).showModal();
-            }}
-            className="p-2 btn"
-          >
-            + Add Code
-          </button>
+
+
+          <div className="flex gap-x-2 items-center">
+            
+            <form id="codesForm" encType="multipart/form-data" >
+              <label htmlFor="codesfile" className="underline font-normal text-white">Upload file code</label>
+              <input className="hidden" onChange={onSubmitFilecodes} name="codes" accept=".csv,.xlsx"  id="codesfile" type="file" />
+              <button id="submit"></button>
+            </form>
+            
+            
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                (document.getElementById('my_modal_1') as HTMLDialogElement).showModal();
+              }}
+              className="!h-12 flex items-center justify-center !rounded btn px-6 "
+            >
+              + Add Code
+            </button>
+          </div>
         </div>
       </div>
 
@@ -139,7 +163,7 @@ function Codes() {
 
             <span>Enter Code Password</span>
             <input type="text" {...register('password')} onChange={(e) => setPassword(e.target.value)} className="bg-transparent w-full outline-none border px-5 py-3 border-gray-500 rounded-md " />
-            <button type="submit" className="btn ms-auto w-20">Submit</button>
+            <button type="submit" className="ms-auto w-20 !h-12 flex items-center justify-center !rounded-md btn px-6">Submit</button>
           </form>
         )}
       </div>

@@ -1,8 +1,8 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaPlus, FaTrashAlt } from "react-icons/fa";
 import { GoPencil } from "react-icons/go";
+import instance from "../../axios";
 
 type Props = {
   id: number;
@@ -18,8 +18,8 @@ function Notification() {
     console.log(id);
   };
   const getNotifications = () => {
-    axios
-      .get(`${import.meta.env.VITE_BASEURL}/api/admin/notification`, {
+    instance
+      .get(`/api/admin/notification`, {
         headers: {
           Authorization: `Bearer ${adminToken}`,
         },

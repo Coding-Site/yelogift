@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
@@ -18,7 +17,7 @@ function Category() {
 
   const handleDelete = (id: any) => {
     setLoading(true)
-    axios.get(`${import.meta.env.VITE_BASEURL}/api/admin/category/delete/${id}`, {
+    instance.get(`/api/admin/category/delete/${id}`, {
       headers: {
         Authorization: `Bearer ${adminToken}`,
       },

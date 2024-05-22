@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import Spinner from "../../../utils/Spinner";
+import instance from "../../../axios";
 
 type Inputs = {
   id: number,
@@ -39,7 +39,7 @@ function EditSocial() {
   useEffect(() => {
     setLoading(true)
 
-    axios.get(`${import.meta.env.VITE_BASEURL}/api/admin/social`, {
+    instance.get(`/api/admin/social`, {
       headers: {
         Authorization: `Bearer ${adminToken}`
       }
@@ -61,7 +61,7 @@ function EditSocial() {
 
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    axios.post(`${import.meta.env.VITE_BASEURL}/api/admin/social/update`, { ...data, name: `fa ${data.name}` , social_id: id }, {
+    instance.post(`/api/admin/social/update`, { ...data, name: `fa ${data.name}` , social_id: id }, {
       headers: {
         Authorization: `Bearer ${adminToken}`
       }
