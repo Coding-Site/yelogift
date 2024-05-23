@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaPlus, FaTrashAlt } from "react-icons/fa";
-import { GoPencil } from "react-icons/go";
 import instance from "../../axios";
 
 type Props = {
@@ -17,7 +16,7 @@ function Notification() {
   const [notifications, setNotifications] = useState<Props[]>([]);
 
   const deleteNotification = (id: number) => {
-    axios.delete(`${import.meta.env.VITE_BASEURL}/api/admin/notification/delete/${id}`, {
+    instance.delete(`/api/admin/notification/delete/${id}`, {
       headers: {
         Authorization: `Bearer ${adminToken}`,
         'ngrok-skip-browser-warning':true
@@ -25,18 +24,13 @@ function Notification() {
       },
     }).then(() => {
       setNotifications(notifications.filter(not => not.id !== id));
-    }).catch(error => {
+    }).catch(error  => {
       console.error("Failed to delete notification", error);
     });
   };
   
   const getNotifications = () => {
-<<<<<<< HEAD
-    instance
-      .get(`/api/admin/notification`, {
-=======
-    axios.get(`${import.meta.env.VITE_BASEURL}/api/admin/notification`, {
->>>>>>> origin/ACE
+    instance.get(`/api/admin/notification`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${adminToken}`,
