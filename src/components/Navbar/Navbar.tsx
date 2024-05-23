@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import MobileMenu from './MobileMenu.tsx';
 import { LiaShoppingBagSolid } from 'react-icons/lia';
-import { FaCheck } from "react-icons/fa";
+import { FaCheck } from 'react-icons/fa';
 import { IoMdNotificationsOutline } from 'react-icons/io';
 import { useLocalStorage } from '../../hooks/useLocalStorage.tsx';
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,16 +16,28 @@ import instance from '../../axios/index.ts';
 
 function Navbar() {
     const [openMenu, setOpenMenu] = useState<boolean>(false);
-    const [notifications, setNotifications] = useState({ readNotifications: [], unreadNotifications: [], unreadCount: 0 });
+    const [notifications, setNotifications] = useState({
+        readNotifications: [],
+        unreadNotifications: [],
+        unreadCount: 0,
+    });
     const navigate = useNavigate();
     const carts = useSelector((state: RootState) => state.cartSlice.items);
     const dispatch = useDispatch<AppDispatch>();
-    const localstorageUser = JSON.parse(localStorage.getItem('userData') as string);
-    const localstorageAdmin = JSON.parse(localStorage.getItem('adminData') as string);
+    const localstorageUser = JSON.parse(
+        localStorage.getItem('userData') as string
+    );
+    const localstorageAdmin = JSON.parse(
+        localStorage.getItem('adminData') as string
+    );
     const userToken = localstorageUser?.userToken;
     const adminRole = localstorageAdmin?.role;
     const adminToken = localstorageAdmin?.adminToken;
     const { removeItem } = useLocalStorage();
+
+    const [hoveredNotificationId, setHoveredNotificationId] = useState<
+        number | null
+    >(null);
 
     const Signout = () => {
         removeItem('userData');
@@ -35,15 +47,18 @@ function Navbar() {
 
     const onCheckout = () => {
         if (carts.length > 0) {
-            instance.post(`/api/user/order/checkout`, {
-                name: "mohamemd"
-            },
-                {
-                    headers: {
-                        Authorization: `Bearer ${userToken}`,
+            instance
+                .post(
+                    `/api/user/order/checkout`,
+                    {
+                        name: 'mohamemd',
                     },
-                }
-            )
+                    {
+                        headers: {
+                            Authorization: `Bearer ${userToken}`,
+                        },
+                    }
+                )
                 .then((d) => {
                     const orderId = d.data.data.id;
                     console.log(d);
@@ -54,53 +69,60 @@ function Navbar() {
         }
     };
 
-    useEffect(() => {
-        dispatch(getCartData());
-
-        instance.get('/api/user/notification', {
-            headers: {
-                Authorization: `Bearer ${userToken}`,
-                'ngrok-skip-browser-warning':true
-            },
-        })
+    const fetchNotifications = () => {
+        instance
+            .get('/api/user/notification', {
+                headers: {
+                    Authorization: `Bearer ${userToken}`,
+                    'ngrok-skip-browser-warning': true,
+                },
+            })
             .then((response) => {
                 setNotifications(response.data.data);
-                console.log(response.data.data)
+                console.log(response.data.data);
             })
             .catch((error) => {
                 console.log('Error fetching notifications:', error);
             });
+    };
+
+    useEffect(() => {
+        dispatch(getCartData());
+        fetchNotifications();
     }, [dispatch, userToken]);
 
-    const formatDate = (dateString :any) => {
+    const formatDate = (dateString: any) => {
         const options = {
-          year: 'numeric',
-          month: 'short',
-          day: 'numeric',
-          hour: 'numeric',
-          minute: 'numeric',
-          hour12: true,
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+            hour12: true,
         };
         const date = new Date(dateString);
         return date.toLocaleString('en-US', options);
-      }
+    };
 
-
-      const handleRead = (id) => {
-        instance.post(`/api/user/notification/read`, {"notification_id":id} ,{
-            headers: {
-                Authorization: `Bearer ${userToken}`,
-                'ngrok-skip-browser-warning':true
-            },
-        })
+    const handleRead = (id) => {
+        instance
+            .post(
+                `/api/user/notification/read`,
+                { notification_id: id },
+                {
+                    headers: {
+                        Authorization: `Bearer ${userToken}`,
+                        'ngrok-skip-browser-warning': true,
+                    },
+                }
+            )
             .then(() => {
-                dispatch(getNotifications()); 
+                fetchNotifications();
             })
             .catch((error) => {
                 console.log('Error marking notification as read:', error);
             });
-    }
-
+    };
 
     return (
         <>
@@ -148,7 +170,7 @@ function Navbar() {
                                 <IoMdNotificationsOutline className="cursor-pointer" />
                             </div>
                             {notifications.unreadCount > 0 && (
-                                <span className='absolute size-4 z-10 text-xs flex justify-center items-center font-semibold top-0 right-0 text-black bg-white rounded-full'>
+                                <span className="absolute size-4 z-10 text-xs flex justify-center items-center font-semibold top-0 right-0 text-black bg-white rounded-full">
                                     {notifications.unreadCount}
                                 </span>
                             )}
@@ -156,39 +178,109 @@ function Navbar() {
                                 tabIndex={0}
                                 className="dropdown-content z-[1] menu p-2 shadow bg-white rounded sm:w-96 w-80 text-mainLightBlack"
                             >
-                                {notifications.unreadNotifications.length || notifications.readNotifications.length ? (
+                                {notifications.unreadNotifications.length ||
+                                notifications.readNotifications.length ? (
                                     <>
-                                        { notifications.unreadNotifications.map((notification, idx) => (
-                                            <div
-                                                className="flex justify-start items-center gap-3 w-full"
-                                                key={idx}
-                                            >
-                                                <div className="flex flex-col gap-0 mb-3">
-                                                    <div className='w-full	 flex item-center justify-between'>
-                                                    <span className='text-black font-bold sm:text-base text-sm whitespace-nowrap'>{notification.title}</span>
-                                                    <FaCheck color='#888' onClick={() => handleRead(notification.id)} />
+                                        {notifications.unreadNotifications.map(
+                                            (notification, idx) => (
+                                                <div
+                                                    className="flex justify-start items-center gap-3 w-full"
+                                                    key={idx}
+                                                    onMouseEnter={() =>
+                                                        setHoveredNotificationId(
+                                                            notification.id
+                                                        )
+                                                    }
+                                                    onMouseLeave={() =>
+                                                        setHoveredNotificationId(
+                                                            null
+                                                        )
+                                                    }
+                                                >
+                                                    <div className="flex flex-col gap-0 mb-3 w-full">
+                                                        <div className="w-full flex item-center justify-between">
+                                                            <span className="text-black font-bold sm:text-base text-sm w-full break-all overflow-hidden ">
+                                                                {
+                                                                    notification.title
+                                                                }
+                                                            </span>
+                                                            <FaCheck
+                                                                color="#888"
+                                                                onClick={() =>
+                                                                    handleRead(
+                                                                        notification.id
+                                                                    )
+                                                                }
+                                                            />
+                                                        </div>
+                                                        <span
+                                                            className={`text-black sm:text-base text-sm w-full ${
+                                                                hoveredNotificationId ===
+                                                                notification.id
+                                                                    ? 'break-all'
+                                                                    : 'text-ellipsis overflow-hidden'
+                                                            }`}
+                                                        >
+                                                            {
+                                                                notification.message
+                                                            }
+                                                        </span>
+                                                        <span className="font-extralight text-slate-400 text-xs ">
+                                                            {formatDate(
+                                                                notification.updated_at
+                                                            )}
+                                                        </span>
+                                                        <hr />
                                                     </div>
-                                                    <span className='text-black sm:text-base text-sm whitespace-nowrap '>{notification.message}
-                                                    </span><span className='font-extralight text-slate-400 text-xs '> {formatDate(notification.updated_at)}</span>
-                                                    <hr />
                                                 </div>
-                                            </div>
-                                        ))}
-                                        {notifications.readNotifications.map((notification, idx) => (
-                                             <div
-                                             className="flex justify-start items-center gap-3 w-full"
-                                             key={idx}
-                                         >
-                                             <div className="flex flex-col gap-0 ">
-                                             <div className='w-full	 flex item-center justify-between'>
-                                                    <span className='text-slate-400 font-bold sm:text-base text-sm whitespace-nowrap'>{notification.title}</span>
-                                                    <FaCheck color='rgba(240, 185, 11, 1)' />
+                                            )
+                                        )}
+                                        {notifications.readNotifications.map(
+                                            (notification, idx) => (
+                                                <div
+                                                    className="flex justify-start items-center gap-3 w-full"
+                                                    key={idx}
+                                                    onMouseEnter={() =>
+                                                        setHoveredNotificationId(
+                                                            notification.id
+                                                        )
+                                                    }
+                                                    onMouseLeave={() =>
+                                                        setHoveredNotificationId(
+                                                            null
+                                                        )
+                                                    }
+                                                >
+                                                    <div className="flex flex-col gap-0 w-full">
+                                                        <div className="w-full flex item-center justify-between">
+                                                            <span className="text-slate-400 font-bold sm:text-base text-sm w-full break-all overflow-hidden">
+                                                                {
+                                                                    notification.title
+                                                                }
+                                                            </span>
+                                                            <FaCheck color="rgba(240, 185, 11, 1)" />
+                                                        </div>
+                                                        <span
+                                                            className={`text-black sm:text-base text-sm w-full ${
+                                                                hoveredNotificationId ===
+                                                                notification.id
+                                                                    ? 'break-all'
+                                                                    : 'text-ellipsis overflow-hidden'
+                                                            }`}
+                                                        >
+                                                            {
+                                                                notification.message
+                                                            }
+                                                        </span>
+                                                        <span className="font-extralight text-slate-400 text-xs ">
+                                                            {formatDate(
+                                                                notification.updated_at
+                                                            )}
+                                                        </span>
                                                     </div>
-                                                 <span className='text-slate-400 sm:text-base text-sm whitespace-nowrap '>{notification.message}
-                                                 </span><span className='font-extralight text-slate-400 text-xs '> {formatDate(notification.updated_at)}</span>
-                                             </div>
-                                         </div>
-                                        ))}
+                                                </div>
+                                            )
+                                        )}
                                     </>
                                 ) : (
                                     <div className="flex justify-center text-2xl">
@@ -203,92 +295,82 @@ function Navbar() {
                                 <LiaShoppingBagSolid className="cursor-pointer" />
                             </div>
                             {carts.length > 0 && (
-                                <span className='absolute size-4 z-10 text-xs flex justify-center items-center font-semibold top-0 right-0 text-black rounded-full'>
+                                <span className="absolute size-4 z-10 text-xs flex justify-center items-center font-semibold top-0 right-0 text-black bg-white rounded-full">
                                     {carts.length}
                                 </span>
                             )}
-
                             <ul
                                 tabIndex={0}
-                                className="dropdown-content z-[1] menu p-2 shadow bg-white rounded sm:w-96 w-80 text-mainLightBlack"
+                                className="dropdown-content z-[1] menu p-2 shadow bg-white rounded-box sm:w-96 w-80 text-mainLightBlack"
                             >
-                                {userToken && carts.length ? (
+                                {carts.length > 0 ? (
                                     carts.map((cart, idx) => (
-                                        cart.quantity ? (
-                                            <div
-                                                className="flex justify-start items-center gap-3 w-full"
-                                                key={idx}
-                                            >
-                                                <img
-                                                    className="w-20 h-12"
-                                                    src={`${import.meta.env.VITE_BASEURL}/storage/${cart.product?.image}`}
-                                                    alt="cart"
-                                                />
-                                                <div className="flex flex-col gap-0">
-                                                    <span className='text-black sm:text-base text-sm whitespace-nowrap'>{cart.product?.name}</span>
-                                                    <span className="sm:text-sm text-xs text-gray-500">
-                                                        AED {cart.product?.price}
+                                        <li
+                                            key={idx}
+                                            className="flex justify-between items-center gap-3 w-full"
+                                        >
+                                            <img
+                                                src={cart.image}
+                                                alt="cart"
+                                                className="w-[50px]"
+                                            />
+                                            <div className="flex flex-col gap-1 w-full">
+                                                <span className="text-black font-bold sm:text-base text-sm">
+                                                    {cart.name}
+                                                </span>
+                                                <span className="text-black sm:text-base text-sm">
+                                                    {cart.price}$
+                                                </span>
+                                                <div className="flex justify-between items-center gap-3">
+                                                    <span className="text-black sm:text-base text-sm">
+                                                        Qty: {cart.qty}
                                                     </span>
-                                                </div>
-                                                <div className="flex sm:basis-24 basis-16 text-base h-8 min-w-[80px] sm:min-w-[100px] px-2 sm:px-3 items-center ms-auto w-auto justify-between rounded-full border border-gray-300">
-                                                    <span
-                                                        onClick={() => {
+                                                    <button
+                                                        className="text-xs bg-red-500 text-white px-2 py-1 rounded"
+                                                        onClick={() =>
                                                             dispatch(
-                                                                updateCartItem({ cart_id: cart.id as number, quantity: cart.quantity - 1 })
-                                                            ).then(() => {
-                                                                dispatch(getCartData());
-                                                            });
-                                                        }}
-                                                        className="cursor-pointer"
+                                                                updateCartItem(
+                                                                    cart.id,
+                                                                    0
+                                                                )
+                                                            )
+                                                        }
                                                     >
-                                                        -
-                                                    </span>
-                                                    <span>
-                                                        {cart.quantity}
-                                                    </span>
-                                                    <span
-                                                        onClick={() => {
-                                                            dispatch(
-                                                                updateCartItem({ cart_id: cart.id as number, quantity: cart.quantity + 1 })
-                                                            ).then(() => {
-                                                                dispatch(getCartData());
-                                                            });
-                                                        }}
-                                                        className="cursor-pointer"
-                                                    >
-                                                        +
-                                                    </span>
+                                                        Remove
+                                                    </button>
                                                 </div>
                                             </div>
-                                        ) : null
+                                        </li>
                                     ))
                                 ) : (
-                                    <div className="flex justify-center text-2xl">
-                                        No Products in the Cart
-                                    </div>
+                                    <li className="flex justify-center text-2xl">
+                                        No Items
+                                    </li>
                                 )}
-                                <div className="flex justify-between text-base mt-6 border-t border-gray-200 pt-2">
-                                    <button className="!rounded-full shadow-md px-5">
-                                        keep shopping
-                                    </button>
+                                <li>
                                     <button
-                                        onClick={() => onCheckout()}
-                                        className="btn !rounded-full shadow-md"
+                                        className="w-full bg-main text-mainWhite py-2 rounded mt-2"
+                                        onClick={onCheckout}
                                     >
-                                        checkout
+                                        Checkout
                                     </button>
-                                </div>
+                                </li>
                             </ul>
                         </div>
                     </div>
-
                     <div className="hidden sm:flex justify-center gap-3">
-                        {adminRole === "admin" ? (
-                            <Link to="/admin/dashboard" className="btn btn-transparent">
+                        {adminRole === 'admin' ? (
+                            <Link
+                                to="/admin/dashboard"
+                                className="btn btn-transparent"
+                            >
                                 admin
                             </Link>
                         ) : userToken ? (
-                            <button onClick={Signout} className="btn btn-transparent">
+                            <button
+                                onClick={Signout}
+                                className="btn btn-transparent"
+                            >
                                 sign out
                             </button>
                         ) : (
