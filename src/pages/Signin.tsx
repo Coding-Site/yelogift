@@ -4,13 +4,11 @@ import Footer from "../components/Footer";
 import { IoIosLock } from "react-icons/io";
 import { FaEnvelope } from "react-icons/fa";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { useLocalStorage } from "../hooks/useLocalStorage";
-import { LoginSocialGoogle, LoginSocialFacebook, IResolveParams } from 'reactjs-social-login'
-import { FacebookLoginButton, GoogleLoginButton } from 'react-social-login-buttons'
 import instance from "../axios";
 import axios from "axios";
-const REDIRECT_URI = import.meta.env.VITE_BASEURL;
+import FacebookLogin from "./FBlogin";
 
 
 type Inputs = {
@@ -27,33 +25,6 @@ function Signin() {
   const localstorage = JSON.parse((localStorage.getItem("userData")) as string);
   const userToken = localstorage?.userToken
   const [backError, setBackError] = useState('');
-  const [provider, setProvider] = useState('')
-  const [profile, setProfile] = useState<any>()
-
-  const onLoginStart = useCallback(() => {
-    alert('login start')
-  }, [])
-
-
-
-
-  const socialFacebookSignin = (data: any) => {
-    instance.post('/api/user/auth/facebook/callback', data)
-      .then(d => console.log('data after login', d))
-  }
-
-
-  const socialGoogleSignin = (data: any) => {
-    instance.post('/api/user/auth/google/callback', data)
-      .then(d => console.log('data after login', d))
-  }
-
-  const onLogoutSuccess = useCallback(() => {
-    setProfile(null)
-    setProvider('')
-    alert('logout success')
-  }, [])
-
 
   const {
     register,
@@ -63,17 +34,28 @@ function Signin() {
 
 
 
+
+
+  const handleLogin = (userInfo :any) => {
+    console.log(userInfo);
+  };
+
+
+
+
+
+
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     setLoading(true);
     instance
       .post(`/api/login`, data)
-    axios.post(`${import.meta.env.VITE_BASEURL}/api/login`, data,{
+    axios.post(`${import.meta.env.VITE_BASEURL}/api/login`, data, {
       headers: {
-        'ngrok-skip-browser-warning':true
+        'ngrok-skip-browser-warning': true
       },
     })
       .then((d) => {
-        console.log( d);
+        console.log(d);
         if (d.data.data.role == 'user') {
           const data = {
             userToken: d.data.data.token.token,
@@ -104,7 +86,7 @@ function Signin() {
       });
   };
 
-  console.log(userToken)
+
   if (userToken !== undefined && userToken !== null) return (<Navigate to="/" />);
   return (
     <div className="flex flex-col text-mainWhite">
@@ -115,13 +97,7 @@ function Signin() {
 
 
             <h2 className="text-3xl font-semibold">Login to your account</h2>
-            <div className="flex 
-                  justify-around 
-                  w-full 
-                  [&>*]:border 
-                  [&>*]:border-gray-300 
-                  [&>*]:text-xs 
-                  [&>*]:rounded-md 
+            <div className="flex  justify-around  w-full [&>*]:border [&>*]:border-gray-300 [&>*]:text-xs [&>*]:rounded-md 
                   [&>*]:py-2 
                   sm:[&>*]:px-4 
                   [&>*]:px-1
@@ -130,56 +106,14 @@ function Signin() {
 
 
 
-              {/* <LoginSocialGoogle
-                isOnlyGetToken
-                client_id="157310444849-dnrecdlu5o6pi5o5crriofipop72kp6c.apps.googleusercontent.com"
-                onLoginStart={onLoginStart}
-                onResolve={ async ({ provider, data }) => {
-
-                  const res = await axios.get(`https://www.googleapis.com/oauth2/v3/userinfo?access_token=ya29.a0AXooCgvlsrWPjZ4qBgMyuAeRfyrLWLvKzeSm2n52mE6aeBDoXcbuQYUezGch47DNf9Nv0aZhVwwxuCCEgc7nY_SEpuKljG-K-1nCpjS55er5L_w4D5Sz1DYxm3KciyEPmgQKGt0L_fTfmRbbT9pGE-6Qtn8nnRS4VAaCgYKAXsSARESFQHGX2Mizai8my2sXyShPFtt3WP6rQ0169`);
-                  console.log('res' , res)
-                  console.log('provider' , provider)
-                  console.log('data' , data)
-                  // socialGoogleSignin(data)
-                  // setProvider(provider)
-                  // setProfile(data)
-                }}
-                onReject={(err) => {
-                  console.log(err)
-                }}
-              >
-                <GoogleLoginButton />
-              </LoginSocialGoogle> */}
-
-              <button className="flex gap-x-1 sm:gap-x-2 ">
+              <button className="flex gap-x-1 sm:gap-x-2 " >
                 <img src="assets/signin/google.png" alt="singin with google" />
                 Google
               </button>
 
 
 
-              {/* <LoginSocialFacebook
-                isOnlyGetToken
-                redirect_uri={REDIRECT_URI}
-                // appId='1853429178493655'
-                appId='507151123510318'
-                onLoginStart={onLoginStart}
-                onResolve={({ provider, data }: IResolveParams) => {
-                  console.log('data', data)
-                  // socialFacebookSignin(data);
-                  setProvider(provider)
-                  setProfile(data)
-                }}
-                onReject={(err: any) => {
-                  console.log(err)
-                }}
-              >
-                <FacebookLoginButton />
-              </LoginSocialFacebook> */}
-
-
-
-
+              <FacebookLogin onLogin={handleLogin} />
               <button className="flex gap-x-1 sm:gap-x-2 ">
                 <img
                   src="assets/signin/facebook.png"
@@ -191,7 +125,7 @@ function Signin() {
 
 
 
-              <button className="flex gap-x-1 sm:gap-x-2  ">
+              <button className="flex gap-x-1 sm:gap-x-2" >
                 <img src="assets/signin/binance.png" alt="singin with google" />
                 Binanace
               </button>

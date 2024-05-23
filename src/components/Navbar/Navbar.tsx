@@ -227,8 +227,6 @@ function Navbar() {
                                 sign out
                             </button>
 
-
-
                         ) : (
                             <>
                                 <Link to="/signup" className="btn">
