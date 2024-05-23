@@ -359,26 +359,21 @@ function Navbar() {
                         </div>
                     </div>
                     <div className="hidden sm:flex justify-center gap-3">
-                        {adminRole === 'admin' ? (
-                            <Link
-                                to="/admin/dashboard"
-                                className="btn btn-transparent"
-                            >
-                                admin
+                        {adminRole == 'admin' ? (
+                            <Link to="/admin" className="btn">
+                                Admin Panel
                             </Link>
-                        ) : userToken ? (
-                            <button
-                                onClick={Signout}
-                                className="btn btn-transparent"
-                            >
+                        ) : (
+                            ''
+                        )}
+
+                        {userToken || adminToken ? (
+                            <button onClick={() => Signout()} className="btn">
                                 sign out
                             </button>
                         ) : (
                             <>
-                                <Link
-                                    to="/signup"
-                                    className="btn btn-transparent"
-                                >
+                                <Link to="/signup" className="btn">
                                     sign up
                                 </Link>
                                 <Link
