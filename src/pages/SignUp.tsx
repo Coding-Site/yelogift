@@ -57,6 +57,12 @@ function Signup() {
                         'Google sign-in data sent successfully:',
                         response.data
                     );
+                    const userLocal = {
+                        userName: response.data.data.user.name,
+                        userToken: response.data.data.token,
+                        role: 'user',
+                    };
+                    localStorage.setItem('userData', JSON.stringify(userLocal));
                     navigate('/');
                 }
             })
