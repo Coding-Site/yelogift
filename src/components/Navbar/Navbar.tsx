@@ -16,7 +16,7 @@ import instance from '../../axios/index.ts';
 
 function Navbar() {
     const [openMenu, setOpenMenu] = useState<boolean>(false);
-    const [notifications, setNotifications] = useState({
+    const [notifications, setNotifications] = useState<any>({
         readNotifications: [],
         unreadNotifications: [],
         unreadCount: 0,
@@ -92,7 +92,7 @@ function Navbar() {
     }, [dispatch, userToken]);
 
     const formatDate = (dateString: any) => {
-        const options = {
+        const options: any = {
             year: 'numeric',
             month: 'short',
             day: 'numeric',
@@ -104,7 +104,7 @@ function Navbar() {
         return date.toLocaleString('en-US', options);
     };
 
-    const handleRead = (id) => {
+    const handleRead = (id: any) => {
         instance
             .post(
                 `/api/user/notification/read`,
@@ -182,7 +182,7 @@ function Navbar() {
                                 notifications.readNotifications.length ? (
                                     <>
                                         {notifications.unreadNotifications.map(
-                                            (notification, idx) => (
+                                            (notification: any, idx: any) => (
                                                 <div
                                                     className="flex justify-start items-center gap-3 w-full"
                                                     key={idx}
@@ -236,7 +236,7 @@ function Navbar() {
                                             )
                                         )}
                                         {notifications.readNotifications.map(
-                                            (notification, idx) => (
+                                            (notification: any, idx: any) => (
                                                 <div
                                                     className="flex justify-start items-center gap-3 w-full"
                                                     key={idx}
@@ -304,7 +304,7 @@ function Navbar() {
                                 className="dropdown-content z-[1] menu p-2 shadow bg-white rounded-box sm:w-96 w-80 text-mainLightBlack"
                             >
                                 {carts.length > 0 ? (
-                                    carts.map((cart, idx) => (
+                                    carts.map((cart: any, idx: any) => (
                                         <li
                                             key={idx}
                                             className="flex justify-between items-center gap-3 w-full"
@@ -329,10 +329,11 @@ function Navbar() {
                                                         className="text-xs bg-red-500 text-white px-2 py-1 rounded"
                                                         onClick={() =>
                                                             dispatch(
-                                                                updateCartItem(
-                                                                    cart.id,
-                                                                    0
-                                                                )
+                                                                updateCartItem({
+                                                                    cart_id:
+                                                                        cart.id,
+                                                                    quantity: 0,
+                                                                })
                                                             )
                                                         }
                                                     >
