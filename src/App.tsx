@@ -7,7 +7,6 @@ function App() {
             <Provider store={store}>
                 <NonAdminLayout />
             </Provider>
-            ;
         </div>
     );
 }
