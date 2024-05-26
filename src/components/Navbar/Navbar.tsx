@@ -304,7 +304,7 @@ function Navbar() {
                                 tabIndex={0}
                                 className="dropdown-content z-[1] menu p-2 shadow bg-white rounded-box sm:w-96 w-80 text-mainLightBlack"
                             >
-                                {carts.length > 0 ? (
+                                {/* {carts.length > 0 ? (
                                     carts.map((cart: any, idx: any) => (
                                         <li
                                             key={idx}
@@ -348,6 +348,102 @@ function Navbar() {
                                     <li className="flex justify-center text-2xl">
                                         No Items
                                     </li>
+                                )}
+                                <li>
+                                    <button
+                                        className="w-full bg-main text-mainWhite py-2 rounded mt-2"
+                                        onClick={onCheckout}
+                                    >
+                                        Checkout
+                                    </button>
+                                </li> */}
+                                {userToken && carts.length ? (
+                                    carts.map((cart, idx) => {
+                                        if (cart.quantity) {
+                                            return (
+                                                <div
+                                                    className="flex justify-start items-center gap-3 w-full "
+                                                    key={idx}
+                                                >
+                                                    <img
+                                                        className="w-20 h-12"
+                                                        src={`${
+                                                            import.meta.env
+                                                                .VITE_BASEURL
+                                                        }/storage/${
+                                                            cart.product?.image
+                                                        }`}
+                                                        alt="cart"
+                                                    />
+                                                    <div className="flex flex-col gap-0">
+                                                        <span className="text-black sm:text-base text-sm whitespace-nowrap">
+                                                            {cart.product?.name}
+                                                        </span>
+                                                        <span className="sm:text-sm text-xs text-gray-500">
+                                                            AED{' '}
+                                                            {
+                                                                cart.product
+                                                                    ?.price
+                                                            }
+                                                        </span>
+                                                    </div>
+                                                    <div className="flex sm:basis-24 basis-16 text-base h-8 min-w-[80px] sm:min-w-[100px] px-2 sm:px-3 items-center ms-auto w-auto  justify-between rounded-full border border-gray-300">
+                                                        <span
+                                                            onClick={() => {
+                                                                dispatch(
+                                                                    updateCartItem(
+                                                                        {
+                                                                            cart_id:
+                                                                                cart.id as number,
+                                                                            quantity:
+                                                                                cart.quantity -
+                                                                                1,
+                                                                        }
+                                                                    )
+                                                                ).then(() => {
+                                                                    dispatch(
+                                                                        getCartData()
+                                                                    );
+                                                                });
+                                                            }}
+                                                            className="cursor-pointer"
+                                                        >
+                                                            -
+                                                        </span>
+                                                        <span>
+                                                            {cart.quantity}
+                                                        </span>
+                                                        <span
+                                                            onClick={() => {
+                                                                dispatch(
+                                                                    updateCartItem(
+                                                                        {
+                                                                            cart_id:
+                                                                                cart.id as number,
+                                                                            quantity:
+                                                                                cart.quantity +
+                                                                                1,
+                                                                        }
+                                                                    )
+                                                                ).then(() => {
+                                                                    dispatch(
+                                                                        getCartData()
+                                                                    );
+                                                                });
+                                                            }}
+                                                            className="cursor-pointer"
+                                                        >
+                                                            +
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            );
+                                        }
+                                    })
+                                ) : (
+                                    <div className="flex justify-center tex-2xl">
+                                        No Products in the Cart
+                                    </div>
                                 )}
                                 <li>
                                     <button
