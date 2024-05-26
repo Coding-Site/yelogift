@@ -304,59 +304,6 @@ function Navbar() {
                                 tabIndex={0}
                                 className="dropdown-content z-[1] menu p-2 shadow bg-white rounded-box sm:w-96 w-80 text-mainLightBlack"
                             >
-                                {/* {carts.length > 0 ? (
-                                    carts.map((cart: any, idx: any) => (
-                                        <li
-                                            key={idx}
-                                            className="flex justify-between items-center gap-3 w-full"
-                                        >
-                                            <img
-                                                src={cart.image}
-                                                alt="cart"
-                                                className="w-[50px]"
-                                            />
-                                            <div className="flex flex-col gap-1 w-full">
-                                                <span className="text-black font-bold sm:text-base text-sm">
-                                                    {cart.name}
-                                                </span>
-                                                <span className="text-black sm:text-base text-sm">
-                                                    {cart.price}$
-                                                </span>
-                                                <div className="flex justify-between items-center gap-3">
-                                                    <span className="text-black sm:text-base text-sm">
-                                                        Qty: {cart.qty}
-                                                    </span>
-                                                    <button
-                                                        className="text-xs bg-red-500 text-white px-2 py-1 rounded"
-                                                        onClick={() =>
-                                                            dispatch(
-                                                                updateCartItem({
-                                                                    cart_id:
-                                                                        cart.id,
-                                                                    quantity: 0,
-                                                                })
-                                                            )
-                                                        }
-                                                    >
-                                                        Remove
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    ))
-                                ) : (
-                                    <li className="flex justify-center text-2xl">
-                                        No Items
-                                    </li>
-                                )}
-                                <li>
-                                    <button
-                                        className="w-full bg-main text-mainWhite py-2 rounded mt-2"
-                                        onClick={onCheckout}
-                                    >
-                                        Checkout
-                                    </button>
-                                </li> */}
                                 {userToken && carts.length ? (
                                     carts.map((cart, idx) => {
                                         if (cart.quantity) {
@@ -445,14 +392,17 @@ function Navbar() {
                                         No Products in the Cart
                                     </div>
                                 )}
-                                <li>
-                                    <button
-                                        className="w-full bg-main text-mainWhite py-2 rounded mt-2"
-                                        onClick={onCheckout}
-                                    >
-                                        Checkout
+                                <div className="flex justify-between text-base mt-6 border-t border-gray-200 pt-2">
+                                    <button className="!rounded-full shadow-md px-5">
+                                        keep shopping
                                     </button>
-                                </li>
+                                    <button
+                                        onClick={() => onCheckout()}
+                                        className="btn !rounded-full  shadow-md"
+                                    >
+                                        checkout
+                                    </button>
+                                </div>
                             </ul>
                         </div>
                     </div>
