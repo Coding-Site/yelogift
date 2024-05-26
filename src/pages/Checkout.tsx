@@ -9,14 +9,12 @@ import instance from '../axios';
 function Checkout() {
     const carts = useSelector((state: RootState) => state.cartSlice.items);
     const [methods, setMethods] = useState([]);
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
     const [currencyId, setCurrencyId] = useState(null);
     const localstorage = JSON.parse(localStorage.getItem('userData') as string);
     const userToken = localstorage?.userToken;
     const [payMethod, setPayMethod] = useState<'binance' | 'crypto'>('crypto');
-
-
 
     useEffect(() => {
         instance
@@ -30,9 +28,9 @@ function Checkout() {
 
     const SendToDB = () => {
         if (payMethod == 'binance') {
-            navigate('/paymentauto')
+            navigate('/paymentauto');
         } else {
-            navigate('/paymentmanual')
+            navigate('/paymentmanual');
         }
     };
 
@@ -44,7 +42,8 @@ function Checkout() {
                         Order Summary
                     </span>
                     <span className="sm:hidden flex text-2xl font-semibold gap-x-2">
-                        <img className='w-8' src="assets/checkout/cart.png" /> Cart
+                        <img className="w-8" src="assets/checkout/cart.png" />{' '}
+                        Cart
                     </span>
                     <div className="flex flex-col gap-3 sm:text-black text-white">
                         {carts.length ? (
@@ -57,13 +56,14 @@ function Checkout() {
                                         >
                                             <img
                                                 className="w-20 h-12"
-                                                src={`${import.meta.env.VITE_BASEURL
-                                                    }/storage/${cart.product?.image
-                                                    }`}
+                                                src={`${
+                                                    import.meta.env.VITE_BASEURL
+                                                }/public/storage/${
+                                                    cart.product?.image
+                                                }`}
                                                 alt="cart"
                                             />
                                             <div className="flex flex-col gap-0">
-
                                                 <span className="text-sm text-gray-500">
                                                     AED {cart.product?.price}
                                                 </span>
@@ -77,10 +77,13 @@ function Checkout() {
                                                                 cart_id:
                                                                     cart.id as number,
                                                                 quantity:
-                                                                    cart.quantity - 1,
+                                                                    cart.quantity -
+                                                                    1,
                                                             })
                                                         ).then(() => {
-                                                            dispatch(getCartData());
+                                                            dispatch(
+                                                                getCartData()
+                                                            );
                                                         });
                                                     }}
                                                 >
@@ -95,10 +98,13 @@ function Checkout() {
                                                                 cart_id:
                                                                     cart.id as number,
                                                                 quantity:
-                                                                    cart.quantity + 1,
+                                                                    cart.quantity +
+                                                                    1,
                                                             })
                                                         ).then(() => {
-                                                            dispatch(getCartData());
+                                                            dispatch(
+                                                                getCartData()
+                                                            );
                                                         });
                                                     }}
                                                 >
@@ -106,7 +112,7 @@ function Checkout() {
                                                 </span>
                                             </div>
                                         </div>
-                                    )
+                                    );
                                 }
                             })
                         ) : (
@@ -143,7 +149,6 @@ function Checkout() {
                     </div>
                     {payMethod == 'crypto' && (
                         <div className="flex justify-evenly flex-wrap gap-x-2 gap-y-8">
-
                             {methods.map((method: any, idx: any) => (
                                 <div
                                     className="flex rounded-full !w-1/6 !h-10 flex-col  cursor-pointer justify-start items-center gap-y-1  "
@@ -154,13 +159,19 @@ function Checkout() {
                                                 ? '1px solid #ccc'
                                                 : '',
                                     }}
-                                    onClick={() => { setCurrencyId(method?.id); localStorage.setItem('currencyId', JSON.stringify(method?.id)) }}
+                                    onClick={() => {
+                                        setCurrencyId(method?.id);
+                                        localStorage.setItem(
+                                            'currencyId',
+                                            JSON.stringify(method?.id)
+                                        );
+                                    }}
                                 >
                                     <img
                                         className="size-10 rounded-full"
                                         src={
                                             import.meta.env.VITE_BASEURL +
-                                            '/storage/' +
+                                            '/public/storage/' +
                                             method?.icon
                                         }
                                         alt="cart"

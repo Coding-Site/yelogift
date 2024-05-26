@@ -13,29 +13,24 @@ function Categories() {
     const [pages, setPages] = useState<number>(0);
     const [, setPerPage] = useState(10);
 
-
-    const getProducts = (page:number) => {
-        setLoading(true)
-        instance
-            .get(`/api/home/products?page=${page}`)
-            .then((d) => {
-                const prods = d.data.data.data;
-                const data = d.data.data;
-                console.log(data)
-                setPerPage(data.per_page)
-                setProducts(prods);
-                setPages( Math.ceil(data.total / data.per_page) as number)
-                setPage(page)
-                setLoading(false);
-            });
-
-    }
+    const getProducts = (page: number) => {
+        setLoading(true);
+        instance.get(`/api/home/products?page=${page}`).then((d) => {
+            const prods = d.data.data.data;
+            const data = d.data.data;
+            console.log(data);
+            setPerPage(data.per_page);
+            setProducts(prods);
+            setPages(Math.ceil(data.total / data.per_page) as number);
+            setPage(page);
+            setLoading(false);
+        });
+    };
 
     useEffect(() => {
-
         setLoading(true);
 
-        getProducts(page)
+        getProducts(page);
     }, [page]);
 
     return (
@@ -63,7 +58,12 @@ function Categories() {
                     ))
                 )}
             </div>
-            <Pagination pages={pages} page={page} setPage={setPage} loading={loading} />
+            <Pagination
+                pages={pages}
+                page={page}
+                setPage={setPage}
+                loading={loading}
+            />
         </div>
     );
 }
@@ -76,14 +76,17 @@ const Pagination = ({
     loading,
     setPage,
 }: {
-    pages: number,
-    page: number,
-    loading:boolean,
-    setPage: Dispatch<SetStateAction<number>>
+    pages: number;
+    page: number;
+    loading: boolean;
+    setPage: Dispatch<SetStateAction<number>>;
 }) => {
-
-    const Prev = () => { !loading ? setPage(old => old != 1 ?  --old : 1) : '' };
-    const Next = () => { !loading ? setPage(old => old != pages  ? ++old : pages) : ''};
+    const Prev = () => {
+        !loading ? setPage((old) => (old != 1 ? --old : 1)) : '';
+    };
+    const Next = () => {
+        !loading ? setPage((old) => (old != pages ? ++old : pages)) : '';
+    };
 
     return (
         <div className="flex justify-center items-center w-[350px] mx-auto [&>*]:cursor-pointer">
@@ -91,24 +94,26 @@ const Pagination = ({
             <div
                 className={`gap-5 flex justify-center items-center w-[250px] `}
             >
-                {Array.from({length: pages}, (_, idx) => idx + 1 ).map((p, idx) => (
-                    <span
-                        key={idx}
-                        className={` border size-10  rounded flex justify-center items-center border-main ${
-                            p == page ? 'bg-main text-mainLightBlack' : ''
-                        } `}
-                        onClick={() => !loading ?  setPage(p) : ''}
-                    >
-                        {p}
-                    </span>
-                ))}
+                {Array.from({ length: pages }, (_, idx) => idx + 1).map(
+                    (p, idx) => (
+                        <span
+                            key={idx}
+                            className={` border size-10  rounded flex justify-center items-center border-main ${
+                                p == page ? 'bg-main text-mainLightBlack' : ''
+                            } `}
+                            onClick={() => (!loading ? setPage(p) : '')}
+                        >
+                            {p}
+                        </span>
+                    )
+                )}
             </div>
             <FaChevronRight className="text-main text-3xl" onClick={Next} />
         </div>
     );
 };
 
-const Cart = ({product} : {product: IProduct}) => {
+const Cart = ({ product }: { product: IProduct }) => {
     return (
         <>
             <div className="bg-white rounded-md p-3 pt-6  flex flex-col items-center w-full ">
@@ -120,7 +125,9 @@ const Cart = ({product} : {product: IProduct}) => {
                     {product.name}
                 </span>
                 <img
-                    src={`${import.meta.env.VITE_BASEURL}/storage/${product.image}`}
+                    src={`${import.meta.env.VITE_BASEURL}/public/storage/${
+                        product.image
+                    }`}
                     alt="card"
                     className="rounded-md"
                 />
@@ -131,7 +138,6 @@ const Cart = ({product} : {product: IProduct}) => {
                     <span>ebay</span>
                     <span>{product.price} SAR</span>
                 </div>
-               
             </div>
         </>
     );

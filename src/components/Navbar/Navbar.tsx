@@ -13,6 +13,7 @@ import {
     updateCartItem,
 } from '../../store/CartSlice/CartSlice.tsx';
 import instance from '../../axios/index.ts';
+import styles from '../../utils/styles/navbar.module.css';
 
 function Navbar() {
     const [openMenu, setOpenMenu] = useState<boolean>(false);
@@ -214,18 +215,18 @@ function Navbar() {
                                                             />
                                                         </div>
                                                         <span
-                                                            className={`text-black sm:text-base text-sm w-full ${
+                                                            className={`text-black sm:text-base text-sm w-9/12 ${
                                                                 hoveredNotificationId ===
                                                                 notification.id
                                                                     ? 'break-all'
-                                                                    : 'text-ellipsis overflow-hidden'
+                                                                    : `${styles.line_clamp}`
                                                             }`}
                                                         >
                                                             {
                                                                 notification.message
                                                             }
                                                         </span>
-                                                        <span className="font-extralight text-slate-400 text-xs ">
+                                                        <span className="font-extralight text-slate-400 text-xs ml-auto mt-2">
                                                             {formatDate(
                                                                 notification.updated_at
                                                             )}
@@ -261,18 +262,18 @@ function Navbar() {
                                                             <FaCheck color="rgba(240, 185, 11, 1)" />
                                                         </div>
                                                         <span
-                                                            className={`text-black sm:text-base text-sm w-full ${
+                                                            className={`text-black sm:text-base text-sm w-9/12 ${
                                                                 hoveredNotificationId ===
                                                                 notification.id
                                                                     ? 'break-all'
-                                                                    : 'text-ellipsis overflow-hidden'
+                                                                    : `${styles.line_clamp}`
                                                             }`}
                                                         >
                                                             {
                                                                 notification.message
                                                             }
                                                         </span>
-                                                        <span className="font-extralight text-slate-400 text-xs ">
+                                                        <span className="font-extralight text-slate-400 text-xs ml-auto mt-2">
                                                             {formatDate(
                                                                 notification.updated_at
                                                             )}

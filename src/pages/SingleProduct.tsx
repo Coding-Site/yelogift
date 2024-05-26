@@ -21,12 +21,10 @@ function SingleProduct() {
 
     const dispatch = useDispatch<AppDispatch>();
     useEffect(() => {
-        instance
-            .get(`/api/home/products/${id}`)
-            .then((d) => {
-                const prod = d.data.data;
-                setProduct(prod);
-            });
+        instance.get(`/api/home/products/${id}`).then((d) => {
+            const prod = d.data.data;
+            setProduct(prod);
+        });
     }, []);
 
     const AddtoCart = () => {
@@ -38,10 +36,8 @@ function SingleProduct() {
                     quantity: q,
                 })
             ).then(() => {
-                dispatch(
-                    getCartData()
-                );
-            })
+                dispatch(getCartData());
+            });
         } else {
             alert('you should sign in to add products');
         }
@@ -71,7 +67,9 @@ function SingleProduct() {
                         </div>
 
                         <img
-                            src={`${import.meta.env.VITE_BASEURL}/storage/${Product?.image}`}
+                            src={`${
+                                import.meta.env.VITE_BASEURL
+                            }/public/storage/${Product?.image}`}
                             alt="product card"
                             className="mx-auto min-w-full"
                         />

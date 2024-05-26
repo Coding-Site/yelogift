@@ -23,7 +23,6 @@ function Signup() {
     const navigate = useNavigate();
     const { userToken } = useToken();
     const [backError, setBackError] = useState('');
-    const [userDataa, setUserDataa] = useState(null);
 
     const {
         register,
@@ -40,7 +39,6 @@ function Signup() {
             client_id: cR.clientId,
             provider: 'google',
         };
-        setUserDataa(userData);
         instance
             .post(
                 `${import.meta.env.VITE_BASEURL}/api/user/auth/social`,
