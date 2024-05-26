@@ -1,5 +1,5 @@
 import { SubmitHandler, useForm } from "react-hook-form";
-import axios from "axios";
+import instance from "../../axios";
 
 type Inputs = {
   title: string;
@@ -10,12 +10,17 @@ function AddNotification() {
   const { register, handleSubmit } = useForm<Inputs>();
   const { adminToken } = JSON.parse(localStorage.getItem("adminData") as string);
 
+
+
+  console.log(adminToken)
+
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
-      const response = await axios.post(`${import.meta.env.VITE_BASEURL}/api/admin/notification/store`, data, {
+      const response = await instance.post(`/api/admin/notification/store`, data, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${adminToken}`,
+          'ngrok-skip-browser-warning':true
         },
       });
       console.log("Notification added successfully");
@@ -23,6 +28,7 @@ function AddNotification() {
       console.error("Failed to add notification", error);
     }
   };
+
 
 
   return (
