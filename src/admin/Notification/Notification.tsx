@@ -76,10 +76,10 @@ function Notification() {
                         {notifications &&
                             notifications.map((not, idx) => (
                                 <tr key={idx} className="text-center w-full">
-                                    <td className={`break-all text-left`}>
+                                    <td className={`break-all `}>
                                         {not.title}
                                     </td>
-                                    <td className={`break-all text-left`}>
+                                    <td className={`break-all `}>
                                         {not.message}
                                     </td>
 
