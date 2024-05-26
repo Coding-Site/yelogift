@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useState } from 'react';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { PiEye } from 'react-icons/pi';
@@ -10,6 +8,7 @@ import { GoPencil } from 'react-icons/go';
 import { IProduct } from '../../../models/IProduct';
 import Spinner from '../../../utils/Spinner';
 import instance from '../../../axios';
+import { FaTrashCan } from 'react-icons/fa6';
 
 function Products() {
     const localstorage = JSON.parse(
@@ -45,6 +44,27 @@ function Products() {
                 setLoading(false);
             });
     }, []);
+
+    const deleteProduct = async (id: number) => {
+        setLoading(true);
+        try {
+            await instance.get(`/api/admin/product/delete/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${adminToken}`,
+                },
+            });
+            setProducts((prevProducts) =>
+                prevProducts.filter((product) => product.id !== id)
+            );
+            setAllProducts((prevProducts) =>
+                prevProducts.filter((product) => product.id !== id)
+            );
+            setLoading(false);
+        } catch (error) {
+            console.error('Failed to delete product:', error);
+            setLoading(false);
+        }
+    };
 
     return (
         <div className="flex flex-col gap-4 w-full py-5 container">
@@ -124,16 +144,22 @@ function Products() {
                                         <Link
                                             to={`/admin/products/${pro.id}/parts/`}
                                         >
-                                            <PiEye className="mx-auto text-3xl" />
+                                            <PiEye className="mx-auto mr-5" />
                                         </Link>
                                     </td>
                                     <td>
-                                        {' '}
                                         <Link
                                             to={`/admin/products/edit/${pro.id}`}
                                         >
                                             <GoPencil />
                                         </Link>
+                                    </td>
+                                    <td>
+                                        <FaTrashCan
+                                            onClick={() =>
+                                                deleteProduct(pro.id)
+                                            }
+                                        />
                                     </td>
                                 </tr>
                             ))}
