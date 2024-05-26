@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { GiHamburgerMenu } from 'react-icons/gi';
@@ -104,7 +105,7 @@ function Navbar() {
         return date.toLocaleString('en-US', options);
     };
 
-    const handleRead = (id) => {
+    const handleRead = (id:any) => {
         instance
             .post(
                 `/api/user/notification/read`,
