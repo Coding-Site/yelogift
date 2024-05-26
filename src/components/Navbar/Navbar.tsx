@@ -18,6 +18,7 @@ import styles from '../../utils/styles/navbar.module.css';
 
 function Navbar() {
     const [openMenu, setOpenMenu] = useState<boolean>(false);
+    const [keyword , setKeyword] = useState('');
     const [notifications, setNotifications] = useState<any>({
         readNotifications: [],
         unreadNotifications: [],
@@ -40,7 +41,13 @@ function Navbar() {
     const [hoveredNotificationId, setHoveredNotificationId] = useState<
         number | null
     >(null);
-
+ 
+    const handleKeyPress = (e:any) => {
+        if(keyword != "" && e.key === 'Enter'){
+            navigate(`/search/${keyword}`);
+            setKeyword('')  
+        }
+    }
     const Signout = () => {
         removeItem('userData');
         removeItem('adminData');
@@ -143,7 +150,7 @@ function Navbar() {
                         />
                     </Link>
                 </div>
-                <div className="hidden sm:flex justify-start gap-9 ps-5 py-4 items-center grow">
+                <div className="hidden sm:flex justify-start gap-9 ps-5 py-4 items-center">
                     <NavLink
                         to="/"
                         className={({ isActive }) =>
@@ -164,6 +171,24 @@ function Navbar() {
                     >
                         Categories
                     </NavLink>
+                    <NavLink
+                        className={({ isActive }) =>
+                            isActive
+                                ? 'text-main font-semibold'
+                                : 'dark:text-gray-600 text-mainWhite'
+                        }
+                        to="/ordershistory"
+                    >
+                        My Orders
+                    </NavLink>
+                </div>
+                <div className="flex grow gap-x-1">
+
+                    <input  type="text" 
+                        onChange={(e) => setKeyword(e.target.value)} 
+                        value={keyword}
+                        onKeyPress={handleKeyPress} 
+                        className='w-full bg-transparent flex items-center rounded-full border-gray-400 border px-4 pb-2 pt-1.5 placeholder:text-xs ' placeholder='Search'/>
                 </div>
                 <div className="flex justify-between items-center grow-0 sm:grow">
                     <div className="flex justify-center ms-auto me-3 gap-3 text-3xl">
