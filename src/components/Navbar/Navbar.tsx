@@ -14,10 +14,11 @@ import {
     updateCartItem,
 } from '../../store/CartSlice/CartSlice.tsx';
 import instance from '../../axios/index.ts';
+import styles from '../../utils/styles/navbar.module.css';
 
 function Navbar() {
     const [openMenu, setOpenMenu] = useState<boolean>(false);
-    const [notifications, setNotifications] = useState({
+    const [notifications, setNotifications] = useState<any>({
         readNotifications: [],
         unreadNotifications: [],
         unreadCount: 0,
@@ -93,7 +94,7 @@ function Navbar() {
     }, [dispatch, userToken]);
 
     const formatDate = (dateString: any) => {
-        const options = {
+        const options: any = {
             year: 'numeric',
             month: 'short',
             day: 'numeric',
@@ -105,7 +106,7 @@ function Navbar() {
         return date.toLocaleString('en-US', options);
     };
 
-    const handleRead = (id:any) => {
+    const handleRead = (id: any) => {
         instance
             .post(
                 `/api/user/notification/read`,
@@ -183,7 +184,7 @@ function Navbar() {
                                 notifications.readNotifications.length ? (
                                     <>
                                         {notifications.unreadNotifications.map(
-                                            (notification, idx) => (
+                                            (notification: any, idx: any) => (
                                                 <div
                                                     className="flex justify-start items-center gap-3 w-full"
                                                     key={idx}
@@ -215,18 +216,18 @@ function Navbar() {
                                                             />
                                                         </div>
                                                         <span
-                                                            className={`text-black sm:text-base text-sm w-full ${
+                                                            className={`text-black sm:text-base text-sm w-9/12 ${
                                                                 hoveredNotificationId ===
                                                                 notification.id
                                                                     ? 'break-all'
-                                                                    : 'text-ellipsis overflow-hidden'
+                                                                    : `${styles.line_clamp}`
                                                             }`}
                                                         >
                                                             {
                                                                 notification.message
                                                             }
                                                         </span>
-                                                        <span className="font-extralight text-slate-400 text-xs ">
+                                                        <span className="font-extralight text-slate-400 text-xs ml-auto mt-2">
                                                             {formatDate(
                                                                 notification.updated_at
                                                             )}
@@ -237,7 +238,7 @@ function Navbar() {
                                             )
                                         )}
                                         {notifications.readNotifications.map(
-                                            (notification, idx) => (
+                                            (notification: any, idx: any) => (
                                                 <div
                                                     className="flex justify-start items-center gap-3 w-full"
                                                     key={idx}
@@ -262,18 +263,18 @@ function Navbar() {
                                                             <FaCheck color="rgba(240, 185, 11, 1)" />
                                                         </div>
                                                         <span
-                                                            className={`text-black sm:text-base text-sm w-full ${
+                                                            className={`text-black sm:text-base text-sm w-9/12 ${
                                                                 hoveredNotificationId ===
                                                                 notification.id
                                                                     ? 'break-all'
-                                                                    : 'text-ellipsis overflow-hidden'
+                                                                    : `${styles.line_clamp}`
                                                             }`}
                                                         >
                                                             {
                                                                 notification.message
                                                             }
                                                         </span>
-                                                        <span className="font-extralight text-slate-400 text-xs ">
+                                                        <span className="font-extralight text-slate-400 text-xs ml-auto mt-2">
                                                             {formatDate(
                                                                 notification.updated_at
                                                             )}
@@ -304,58 +305,105 @@ function Navbar() {
                                 tabIndex={0}
                                 className="dropdown-content z-[1] menu p-2 shadow bg-white rounded-box sm:w-96 w-80 text-mainLightBlack"
                             >
-                                {carts.length > 0 ? (
-                                    carts.map((cart, idx) => (
-                                        <li
-                                            key={idx}
-                                            className="flex justify-between items-center gap-3 w-full"
-                                        >
-                                            <img
-                                                src={cart.image}
-                                                alt="cart"
-                                                className="w-[50px]"
-                                            />
-                                            <div className="flex flex-col gap-1 w-full">
-                                                <span className="text-black font-bold sm:text-base text-sm">
-                                                    {cart.name}
-                                                </span>
-                                                <span className="text-black sm:text-base text-sm">
-                                                    {cart.price}$
-                                                </span>
-                                                <div className="flex justify-between items-center gap-3">
-                                                    <span className="text-black sm:text-base text-sm">
-                                                        Qty: {cart.qty}
-                                                    </span>
-                                                    <button
-                                                        className="text-xs bg-red-500 text-white px-2 py-1 rounded"
-                                                        onClick={() =>
-                                                            dispatch(
-                                                                updateCartItem(
-                                                                    cart.id,
-                                                                    0
-                                                                )
-                                                            )
-                                                        }
-                                                    >
-                                                        Remove
-                                                    </button>
+                                {userToken && carts.length ? (
+                                    carts.map((cart, idx) => {
+                                        if (cart.quantity) {
+                                            return (
+                                                <div
+                                                    className="flex justify-start items-center gap-3 w-full "
+                                                    key={idx}
+                                                >
+                                                    <img
+                                                        className="w-20 h-12"
+                                                        src={`${
+                                                            import.meta.env
+                                                                .VITE_BASEURL
+                                                        }/storage/${
+                                                            cart.product?.image
+                                                        }`}
+                                                        alt="cart"
+                                                    />
+                                                    <div className="flex flex-col gap-0">
+                                                        <span className="text-black sm:text-base text-sm whitespace-nowrap">
+                                                            {cart.product?.name}
+                                                        </span>
+                                                        <span className="sm:text-sm text-xs text-gray-500">
+                                                            AED{' '}
+                                                            {
+                                                                cart.product
+                                                                    ?.price
+                                                            }
+                                                        </span>
+                                                    </div>
+                                                    <div className="flex sm:basis-24 basis-16 text-base h-8 min-w-[80px] sm:min-w-[100px] px-2 sm:px-3 items-center ms-auto w-auto  justify-between rounded-full border border-gray-300">
+                                                        <span
+                                                            onClick={() => {
+                                                                dispatch(
+                                                                    updateCartItem(
+                                                                        {
+                                                                            cart_id:
+                                                                                cart.id as number,
+                                                                            quantity:
+                                                                                cart.quantity -
+                                                                                1,
+                                                                        }
+                                                                    )
+                                                                ).then(() => {
+                                                                    dispatch(
+                                                                        getCartData()
+                                                                    );
+                                                                });
+                                                            }}
+                                                            className="cursor-pointer"
+                                                        >
+                                                            -
+                                                        </span>
+                                                        <span>
+                                                            {cart.quantity}
+                                                        </span>
+                                                        <span
+                                                            onClick={() => {
+                                                                dispatch(
+                                                                    updateCartItem(
+                                                                        {
+                                                                            cart_id:
+                                                                                cart.id as number,
+                                                                            quantity:
+                                                                                cart.quantity +
+                                                                                1,
+                                                                        }
+                                                                    )
+                                                                ).then(() => {
+                                                                    dispatch(
+                                                                        getCartData()
+                                                                    );
+                                                                });
+                                                            }}
+                                                            className="cursor-pointer"
+                                                        >
+                                                            +
+                                                        </span>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </li>
-                                    ))
+                                            );
+                                        }
+                                    })
                                 ) : (
-                                    <li className="flex justify-center text-2xl">
-                                        No Items
-                                    </li>
+                                    <div className="flex justify-center tex-2xl">
+                                        No Products in the Cart
+                                    </div>
                                 )}
-                                <li>
-                                    <button
-                                        className="w-full bg-main text-mainWhite py-2 rounded mt-2"
-                                        onClick={onCheckout}
-                                    >
-                                        Checkout
+                                <div className="flex justify-between text-base mt-6 border-t border-gray-200 pt-2">
+                                    <button className="!rounded-full shadow-md px-5">
+                                        keep shopping
                                     </button>
-                                </li>
+                                    <button
+                                        onClick={() => onCheckout()}
+                                        className="btn !rounded-full  shadow-md"
+                                    >
+                                        checkout
+                                    </button>
+                                </div>
                             </ul>
                         </div>
                     </div>

@@ -2,7 +2,7 @@ import { Link, Navigate, useNavigate } from 'react-router-dom';
 import Footer from '../components/Footer';
 import { FaEnvelope } from 'react-icons/fa';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import axios from 'axios';
+import instance from '../axios/index';
 import { useState } from 'react';
 import { useToken } from '../hooks/useToken';
 import { FaUser } from 'react-icons/fa';
@@ -23,7 +23,6 @@ function Signup() {
     const navigate = useNavigate();
     const { userToken } = useToken();
     const [backError, setBackError] = useState('');
-    const [userData, setUserData] = useState(null);
 
     const {
         register,
@@ -32,16 +31,15 @@ function Signup() {
     } = useForm<Inputs>();
 
     const sendData = (cR: any) => {
-        const credentialDecode = jwtDecode(cR.credential);
-        const userData = {
+        const credentialDecode: any = jwtDecode(cR.credential);
+        const userData: any = {
             name: credentialDecode.name,
             email: credentialDecode.email,
             photo: credentialDecode.picture,
             client_id: cR.clientId,
             provider: 'google',
         };
-        setUserData(userData);
-        axios
+        instance
             .post(
                 `${import.meta.env.VITE_BASEURL}/api/user/auth/social`,
                 userData,
@@ -51,7 +49,7 @@ function Signup() {
                     },
                 }
             )
-            .then((response) => {
+            .then((response: any) => {
                 if (response.status === 200) {
                     console.log(
                         'Google sign-in data sent successfully:',
@@ -66,7 +64,7 @@ function Signup() {
                     navigate('/');
                 }
             })
-            .catch((error) => {
+            .catch((error: any) => {
                 console.error('Error sending Google sign-in data:', error);
                 setBackError(
                     error.response?.data?.message || 'An error occurred'
@@ -75,18 +73,18 @@ function Signup() {
     };
     const onSubmit: SubmitHandler<Inputs> = (data) => {
         setLoading(true);
-        axios
+        instance
             .post(
                 `${import.meta.env.VITE_BASEURL}/api/user/auth/register`,
                 data
             )
-            .then((d) => {
+            .then((d: any) => {
                 if (d.status == 200) {
                     setLoading(false);
                     navigate('/signin');
                 }
             })
-            .catch((err) => {
+            .catch((err: any) => {
                 const msg = err.response.data.message;
                 if (msg) {
                     setLoading(false);
