@@ -16,7 +16,7 @@ import styles from '../../utils/styles/navbar.module.css';
 
 function Navbar() {
     const [openMenu, setOpenMenu] = useState<boolean>(false);
-    const [keyword , setKeyword] = useState('');
+    const [keyword, setKeyword] = useState('');
     const [notifications, setNotifications] = useState<any>({
         readNotifications: [],
         unreadNotifications: [],
@@ -41,13 +41,13 @@ function Navbar() {
     const [hoveredNotificationId, setHoveredNotificationId] = useState<
         number | null
     >(null);
- 
-    const handleKeyPress = (e:any) => {
-        if(keyword != "" && e.key === 'Enter'){
+
+    const handleKeyPress = (e: any) => {
+        if (keyword != '' && e.key === 'Enter') {
             navigate(`/search/${keyword}`);
-            setKeyword('')  
+            setKeyword('');
         }
-    }
+    };
     const Signout = () => {
         removeItem('userData');
         removeItem('adminData');
@@ -181,12 +181,14 @@ function Navbar() {
                     </NavLink>
                 </div>
                 <div className="flex grow gap-x-1">
-
-                    <input  type="text" 
-                        onChange={(e) => setKeyword(e.target.value)} 
+                    <input
+                        type="text"
+                        onChange={(e) => setKeyword(e.target.value)}
                         value={keyword}
-                        onKeyPress={handleKeyPress} 
-                        className='w-full bg-transparent flex items-center rounded-full border-gray-400 border px-4 pb-2 pt-1.5 placeholder:text-xs ' placeholder='Search'/>
+                        onKeyPress={handleKeyPress}
+                        className="w-full bg-transparent flex items-center rounded-full border-gray-400 border px-4 pb-2 pt-1.5 placeholder:text-xs "
+                        placeholder="Search"
+                    />
                 </div>
                 <div className="flex justify-between items-center grow-0 sm:grow">
                     <div className="flex justify-center ms-auto me-3 gap-3 text-3xl">
@@ -196,7 +198,7 @@ function Navbar() {
                                     <img
                                         src="/public/assets/navbar/Asset_26.png"
                                         alt="icon"
-                                        className="cursor-pointer w-5"
+                                        className="cursor-pointer min-w-5 w-5"
                                     />
                                 </div>
                                 {notifications.unreadCount > 0 && (
@@ -331,7 +333,7 @@ function Navbar() {
                                 <img
                                     src="/public/assets/navbar/Asset_24.png"
                                     alt="ShoppingCart"
-                                    className="cursor-pointer w-6"
+                                    className="cursor-pointer min-w-6 w-6"
                                 />
                             </div>
                             {filteredCarts.length > 0 && (
@@ -459,7 +461,6 @@ function Navbar() {
                             <button onClick={() => Signout()} className="btn">
                                 sign out
                             </button>
-
                         ) : (
                             <>
                                 <Link to="/signup" className="btn">
