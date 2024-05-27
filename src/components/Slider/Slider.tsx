@@ -23,6 +23,13 @@ export default function Slider() {
         setActiveIndex(swiper.activeIndex);
     };
 
+    const ensureAbsoluteUrl = (url: string) => {
+        if (!url) return '#';
+        return url.startsWith('http://') || url.startsWith('https://')
+            ? url
+            : `http://${url}`;
+    };
+
     return (
         <>
             <Swiper
@@ -42,7 +49,7 @@ export default function Slider() {
             >
                 {sliderData.map((slide: any, index: any) => (
                     <SwiperSlide key={index}>
-                        <a href={slide.link || '#'}>
+                        <a href={ensureAbsoluteUrl(slide.link) || '#'}>
                             <img
                                 src={
                                     import.meta.env.VITE_BASEURL +
