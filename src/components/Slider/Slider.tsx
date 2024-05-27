@@ -42,7 +42,7 @@ export default function Slider() {
             >
                 {sliderData.map((slide: any, index: any) => (
                     <SwiperSlide key={index}>
-                        <a href="#">
+                        <a href={slide.link || '#'}>
                             <img
                                 src={
                                     import.meta.env.VITE_BASEURL +
