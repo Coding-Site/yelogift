@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { FaStar } from 'react-icons/fa';
 import { FiCircle } from 'react-icons/fi';
 import { FaRegCircleStop } from 'react-icons/fa6';
-import { IProduct } from '../models/IProduct';
 import { IProductPart } from '../models/IProductPart';
 import { useDispatch } from 'react-redux';
 import { addNewItem, getCartData } from '../store/CartSlice/CartSlice';
@@ -11,22 +10,25 @@ import { AppDispatch } from '../store';
 import instance from '../axios';
 
 function SingleProduct() {
-    const [Product, setProduct] = useState<IProduct>();
+    const [Product, setProduct] = useState<any>();
     const [selecedPart, setSelectedPart] = useState(1);
     const [q, setQ] = useState(1);
     const { id } = useParams();
+    const [buttonsDisabled, setButtonsDisabled] = useState<boolean>(false);
 
     const localstorage = JSON.parse(localStorage.getItem('userData') as string);
     const userToken = localstorage?.userToken;
-
+    const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
     useEffect(() => {
         instance.get(`/api/home/products/${id}`).then((d) => {
             const prod = d.data.data;
             setProduct(prod);
+            if (!prod.product_parts || prod.product_parts.length === 0) {
+                setButtonsDisabled(true);
+            }
         });
     }, []);
-
     const AddtoCart = () => {
         if (userToken) {
             dispatch(
@@ -42,6 +44,33 @@ function SingleProduct() {
             alert('you should sign in to add products');
         }
     };
+
+    const buyNow = () => {
+        if (userToken) {
+            instance
+                .post(
+                    '/api/user/order/direct',
+                    { part_id: selecedPart },
+                    {
+                        headers: {
+                            Authorization: `Bearer ${userToken}`,
+                        },
+                    }
+                )
+                .then((data) => {
+                    const orderId = data.data.data.order.id;
+                    console.log(orderId);
+                    localStorage.setItem('orderId', JSON.stringify(orderId));
+                    navigate(`buy-now/${orderId}`);
+                })
+                .catch((error) => {
+                    console.error('Error placing order', error);
+                });
+        } else {
+            alert('You should sign in to place an order');
+        }
+    };
+
     return (
         <>
             <div className="py-10 flex flex-col sm:flex-row justify-between container ">
@@ -87,7 +116,7 @@ function SingleProduct() {
 
                     <span className="text-main">choose product part</span>
                     <div className="flex flex-col gap-2 w-full pe-4">
-                        {Product?.product_parts?.map((pp, idx) => (
+                        {Product?.product_parts?.map((pp: any, idx: any) => (
                             <div
                                 key={idx}
                                 className={`rounded p-2 cursor-pointer flex items-start gap-2 w-full ${
@@ -152,11 +181,16 @@ function SingleProduct() {
                         <button
                             className="btn grow !rounded-md basis-2/4"
                             onClick={AddtoCart}
+                            disabled={buttonsDisabled}
                         >
                             Add to cart
                         </button>
-                        <button className="btn grow !bg-white !rounded-md basis-auto ">
-                            Add Review
+                        <button
+                            className="btn grow !bg-white !rounded-md basis-auto "
+                            disabled={buttonsDisabled}
+                            onClick={buyNow}
+                        >
+                            Buy Now
                         </button>
                     </div>
                 </div>

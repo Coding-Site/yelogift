@@ -28,7 +28,6 @@ function AddNotification() {
             console.error('Failed to add notification', error);
         }
     };
-
     return (
         <div className="w-full container py-5">
             <div className="flex flex-col container py-5 px-2 bg-[#1F1F1F]">

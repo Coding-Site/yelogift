@@ -8,9 +8,12 @@ import { useToken } from '../hooks/useToken';
 import { FaUser } from 'react-icons/fa';
 import { IoPhonePortrait } from 'react-icons/io5';
 import { RiLockPasswordFill } from 'react-icons/ri';
-import { GoogleLogin } from '@react-oauth/google';
-import { jwtDecode } from 'jwt-decode';
-
+import {
+    FacebookAuthProvider,
+    GoogleAuthProvider,
+    signInWithPopup,
+} from 'firebase/auth';
+import { auth } from '../config/config';
 type Inputs = {
     name: string;
     email: string;
@@ -30,14 +33,30 @@ function Signup() {
         formState: { errors },
     } = useForm<Inputs>();
 
+    const signInWithGoogle = async () => {
+        signInWithPopup(auth, new GoogleAuthProvider())
+            .then((res) => {
+                console.log(res);
+                sendData(res);
+            })
+            .catch((error) => console.log(error));
+    };
+    const signInWithFacebook = async () => {
+        signInWithPopup(auth, new FacebookAuthProvider())
+            .then((res) => {
+                console.log(res);
+                sendData(res);
+            })
+            .catch((error) => console.log(error));
+    };
+
     const sendData = (cR: any) => {
-        const credentialDecode: any = jwtDecode(cR.credential);
         const userData: any = {
-            name: credentialDecode.name,
-            email: credentialDecode.email,
-            photo: credentialDecode.picture,
-            client_id: cR.clientId,
-            provider: 'google',
+            name: cR.user.displayName,
+            email: cR.user.email,
+            photo: cR.user.photoURL,
+            client_id: cR.user.uid,
+            provider: cR.providerId,
         };
         instance
             .post(
@@ -51,10 +70,6 @@ function Signup() {
             )
             .then((response: any) => {
                 if (response.status === 200) {
-                    console.log(
-                        'Google sign-in data sent successfully:',
-                        response.data
-                    );
                     const userLocal = {
                         userName: response.data.data.user.name,
                         userToken: response.data.data.token,
@@ -112,21 +127,20 @@ function Signup() {
                             <button
                                 style={{ position: 'relative' }}
                                 className="flex gap-x-2 "
+                                onClick={() => {
+                                    signInWithGoogle();
+                                }}
                             >
-                                <GoogleLogin
-                                    shape="circle"
-                                    size="small"
-                                    theme="filled_black"
-                                    logo_alignment="center"
-                                    onSuccess={(credentialResponse) => {
-                                        sendData(credentialResponse);
-                                    }}
-                                    onError={() => {
-                                        console.log('Login Failed');
-                                    }}
+                                <img
+                                    src="assets/signin/google.png"
+                                    alt="singin with google"
                                 />
+                                Google
                             </button>
-                            <button className="flex gap-x-2 ">
+                            <button
+                                onClick={() => signInWithFacebook()}
+                                className="flex gap-x-2 "
+                            >
                                 <img
                                     src="assets/signin/facebook.png"
                                     alt="singin with google"

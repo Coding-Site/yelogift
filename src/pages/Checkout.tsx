@@ -47,7 +47,7 @@ function Checkout() {
                     </span>
                     <div className="flex flex-col gap-3 sm:text-black text-white">
                         {carts.length ? (
-                            carts.map((cart, idx) => {
+                            carts.map((cart: any, idx) => {
                                 if (cart.quantity) {
                                     return (
                                         <div
@@ -64,6 +64,9 @@ function Checkout() {
                                                 alt="cart"
                                             />
                                             <div className="flex flex-col gap-0">
+                                                <span className="text-black sm:text-base text-sm whitespace-nowrap">
+                                                    {cart.productPartTitle}
+                                                </span>
                                                 <span className="text-sm text-gray-500">
                                                     AED {cart.product?.price}
                                                 </span>

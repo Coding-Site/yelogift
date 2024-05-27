@@ -3,9 +3,7 @@ import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import MobileMenu from './MobileMenu.tsx';
-import { LiaShoppingBagSolid } from 'react-icons/lia';
 import { FaCheck } from 'react-icons/fa';
-import { IoMdNotificationsOutline } from 'react-icons/io';
 import { useLocalStorage } from '../../hooks/useLocalStorage.tsx';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store/index.ts';
@@ -26,6 +24,8 @@ function Navbar() {
     });
     const navigate = useNavigate();
     const carts = useSelector((state: RootState) => state.cartSlice.items);
+    const filteredCarts = carts.filter((cart) => cart.quantity !== 0);
+
     const dispatch = useDispatch<AppDispatch>();
     const localstorageUser = JSON.parse(
         localStorage.getItem('userData') as string
@@ -70,7 +70,6 @@ function Navbar() {
                 )
                 .then((d) => {
                     const orderId = d.data.data.id;
-                    console.log(d);
                     localStorage.setItem('orderId', JSON.stringify(orderId));
                 })
                 .then(() => navigate('/checkout'))
@@ -88,7 +87,6 @@ function Navbar() {
             })
             .then((response) => {
                 setNotifications(response.data.data);
-                console.log(response.data.data);
             })
             .catch((error) => {
                 console.log('Error fetching notifications:', error);
@@ -192,146 +190,161 @@ function Navbar() {
                 </div>
                 <div className="flex justify-between items-center grow-0 sm:grow">
                     <div className="flex justify-center ms-auto me-3 gap-3 text-3xl">
-                        <div className="dropdown dropdown-end bg-transparent text-3xl">
-                            <div tabIndex={0} role="button">
-                                <IoMdNotificationsOutline className="cursor-pointer" />
-                            </div>
-                            {notifications.unreadCount > 0 && (
-                                <span className="absolute size-4 z-10 text-xs flex justify-center items-center font-semibold top-0 right-0 text-black bg-white rounded-full">
-                                    {notifications.unreadCount}
-                                </span>
-                            )}
-                            <ul
-                                tabIndex={0}
-                                className="dropdown-content z-[1] menu p-2 shadow bg-white rounded sm:w-96 w-80 text-mainLightBlack"
-                            >
-                                {notifications.unreadNotifications.length ||
-                                notifications.readNotifications.length ? (
-                                    <>
-                                        {notifications.unreadNotifications.map(
-                                            (notification: any, idx: any) => (
-                                                <div
-                                                    className="flex justify-start items-center gap-3 w-full"
-                                                    key={idx}
-                                                    onMouseEnter={() =>
-                                                        setHoveredNotificationId(
-                                                            notification.id
-                                                        )
-                                                    }
-                                                    onMouseLeave={() =>
-                                                        setHoveredNotificationId(
-                                                            null
-                                                        )
-                                                    }
-                                                >
-                                                    <div className="flex flex-col gap-0 mb-3 w-full">
-                                                        <div className="w-full flex item-center justify-between">
-                                                            <span className="text-black font-bold sm:text-base text-sm w-full break-all overflow-hidden ">
-                                                                {
-                                                                    notification.title
-                                                                }
-                                                            </span>
-                                                            <FaCheck
-                                                                color="#888"
-                                                                onClick={() =>
-                                                                    handleRead(
-                                                                        notification.id
-                                                                    )
-                                                                }
-                                                            />
-                                                        </div>
-                                                        <span
-                                                            className={`text-black sm:text-base text-sm w-9/12 ${
-                                                                hoveredNotificationId ===
-                                                                notification.id
-                                                                    ? 'break-all'
-                                                                    : `${styles.line_clamp}`
-                                                            }`}
-                                                        >
-                                                            {
-                                                                notification.message
-                                                            }
-                                                        </span>
-                                                        <span className="font-extralight text-slate-400 text-xs ml-auto mt-2">
-                                                            {formatDate(
-                                                                notification.updated_at
-                                                            )}
-                                                        </span>
-                                                        <hr />
-                                                    </div>
-                                                </div>
-                                            )
-                                        )}
-                                        {notifications.readNotifications.map(
-                                            (notification: any, idx: any) => (
-                                                <div
-                                                    className="flex justify-start items-center gap-3 w-full"
-                                                    key={idx}
-                                                    onMouseEnter={() =>
-                                                        setHoveredNotificationId(
-                                                            notification.id
-                                                        )
-                                                    }
-                                                    onMouseLeave={() =>
-                                                        setHoveredNotificationId(
-                                                            null
-                                                        )
-                                                    }
-                                                >
-                                                    <div className="flex flex-col gap-0 w-full">
-                                                        <div className="w-full flex item-center justify-between">
-                                                            <span className="text-slate-400 font-bold sm:text-base text-sm w-full break-all overflow-hidden">
-                                                                {
-                                                                    notification.title
-                                                                }
-                                                            </span>
-                                                            <FaCheck color="rgba(240, 185, 11, 1)" />
-                                                        </div>
-                                                        <span
-                                                            className={`text-black sm:text-base text-sm w-9/12 ${
-                                                                hoveredNotificationId ===
-                                                                notification.id
-                                                                    ? 'break-all'
-                                                                    : `${styles.line_clamp}`
-                                                            }`}
-                                                        >
-                                                            {
-                                                                notification.message
-                                                            }
-                                                        </span>
-                                                        <span className="font-extralight text-slate-400 text-xs ml-auto mt-2">
-                                                            {formatDate(
-                                                                notification.updated_at
-                                                            )}
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            )
-                                        )}
-                                    </>
-                                ) : (
-                                    <div className="flex justify-center text-2xl">
-                                        No Notifications
-                                    </div>
+                        {userToken && (
+                            <div className="dropdown dropdown-end bg-transparent text-3xl z-[10000]">
+                                <div tabIndex={0} role="button">
+                                    <img
+                                        src="/public/assets/navbar/Asset_26.png"
+                                        alt="icon"
+                                        className="cursor-pointer w-5"
+                                    />
+                                </div>
+                                {notifications.unreadCount > 0 && (
+                                    <span className="absolute size-4 z-10 text-xs flex justify-center items-center font-semibold top-0 right-0 text-black bg-white rounded-full">
+                                        {notifications.unreadCount}
+                                    </span>
                                 )}
-                            </ul>
-                        </div>
-
+                                <ul
+                                    tabIndex={0}
+                                    className="dropdown-content z-[1] menu p-2 shadow bg-white rounded sm:w-96 w-80 text-mainLightBlack"
+                                >
+                                    {notifications.unreadNotifications.length ||
+                                    notifications.readNotifications.length ? (
+                                        <>
+                                            {notifications.unreadNotifications.map(
+                                                (
+                                                    notification: any,
+                                                    idx: any
+                                                ) => (
+                                                    <div
+                                                        className="flex justify-start items-center gap-3 w-full"
+                                                        key={idx}
+                                                        onMouseEnter={() =>
+                                                            setHoveredNotificationId(
+                                                                notification.id
+                                                            )
+                                                        }
+                                                        onMouseLeave={() =>
+                                                            setHoveredNotificationId(
+                                                                null
+                                                            )
+                                                        }
+                                                    >
+                                                        <div className="flex flex-col gap-0 mb-3 w-full">
+                                                            <div className="w-full flex item-center justify-between">
+                                                                <span className="text-black font-bold sm:text-base text-sm w-full break-all overflow-hidden ">
+                                                                    {
+                                                                        notification.title
+                                                                    }
+                                                                </span>
+                                                                <FaCheck
+                                                                    color="#888"
+                                                                    onClick={() =>
+                                                                        handleRead(
+                                                                            notification.id
+                                                                        )
+                                                                    }
+                                                                />
+                                                            </div>
+                                                            <span
+                                                                className={`text-black sm:text-base text-sm w-9/12 ${
+                                                                    hoveredNotificationId ===
+                                                                    notification.id
+                                                                        ? 'break-all'
+                                                                        : `${styles.line_clamp}`
+                                                                }`}
+                                                            >
+                                                                {
+                                                                    notification.message
+                                                                }
+                                                            </span>
+                                                            <span className="font-extralight text-slate-400 text-xs ml-auto mt-2">
+                                                                {formatDate(
+                                                                    notification.updated_at
+                                                                )}
+                                                            </span>
+                                                            <hr />
+                                                        </div>
+                                                    </div>
+                                                )
+                                            )}
+                                            {notifications.readNotifications.map(
+                                                (
+                                                    notification: any,
+                                                    idx: any
+                                                ) => (
+                                                    <div
+                                                        className="flex justify-start items-center gap-3 w-full"
+                                                        key={idx}
+                                                        onMouseEnter={() =>
+                                                            setHoveredNotificationId(
+                                                                notification.id
+                                                            )
+                                                        }
+                                                        onMouseLeave={() =>
+                                                            setHoveredNotificationId(
+                                                                null
+                                                            )
+                                                        }
+                                                    >
+                                                        <div className="flex flex-col gap-0 w-full">
+                                                            <div className="w-full flex item-center justify-between">
+                                                                <span className="text-slate-400 font-bold sm:text-base text-sm w-full break-all overflow-hidden">
+                                                                    {
+                                                                        notification.title
+                                                                    }
+                                                                </span>
+                                                                <FaCheck color="rgba(240, 185, 11, 1)" />
+                                                            </div>
+                                                            <span
+                                                                className={`text-black sm:text-base text-sm w-9/12 ${
+                                                                    hoveredNotificationId ===
+                                                                    notification.id
+                                                                        ? 'break-all'
+                                                                        : `${styles.line_clamp}`
+                                                                }`}
+                                                            >
+                                                                {
+                                                                    notification.message
+                                                                }
+                                                            </span>
+                                                            <span className="font-extralight text-slate-400 text-xs ml-auto mt-2">
+                                                                {formatDate(
+                                                                    notification.updated_at
+                                                                )}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                )
+                                            )}
+                                        </>
+                                    ) : (
+                                        <div className="flex justify-center text-2xl">
+                                            No Notifications
+                                        </div>
+                                    )}
+                                </ul>
+                            </div>
+                        )}
                         <div className="dropdown dropdown-end bg-transparent text-3xl">
                             <div tabIndex={0} role="button">
-                                <LiaShoppingBagSolid className="cursor-pointer" />
+                                <img
+                                    src="/public/assets/navbar/Asset_24.png"
+                                    alt="ShoppingCart"
+                                    className="cursor-pointer w-6"
+                                />
                             </div>
-                            {carts.length > 0 && (
+                            {filteredCarts.length > 0 && (
                                 <span className="absolute size-4 z-10 text-xs flex justify-center items-center font-semibold top-0 right-0 text-black bg-white rounded-full">
-                                    {carts.length}
+                                    {filteredCarts.length}
                                 </span>
                             )}
                             <ul
                                 tabIndex={0}
-                                className="dropdown-content z-[1] menu p-2 shadow bg-white rounded-box sm:w-96 w-80 text-mainLightBlack"
+                                className="dropdown-content z-[10000] menu p-2 shadow bg-white rounded-box sm:w-96 w-80 text-mainLightBlack"
                             >
                                 {userToken && carts.length ? (
-                                    carts.map((cart, idx) => {
+                                    carts.map((cart: any, idx) => {
                                         if (cart.quantity) {
                                             return (
                                                 <div
@@ -343,17 +356,19 @@ function Navbar() {
                                                         src={`${
                                                             import.meta.env
                                                                 .VITE_BASEURL
-                                                        }/storage/${
+                                                        }/public/storage/${
                                                             cart.product?.image
                                                         }`}
                                                         alt="cart"
                                                     />
                                                     <div className="flex flex-col gap-0">
                                                         <span className="text-black sm:text-base text-sm whitespace-nowrap">
-                                                            {cart.product?.name}
+                                                            {
+                                                                cart.productPartTitle
+                                                            }
                                                         </span>
                                                         <span className="sm:text-sm text-xs text-gray-500">
-                                                            AED{' '}
+                                                            AED
                                                             {
                                                                 cart.product
                                                                     ?.price
@@ -440,7 +455,6 @@ function Navbar() {
                         ) : (
                             ''
                         )}
-
                         {userToken || adminToken ? (
                             <button onClick={() => Signout()} className="btn">
                                 sign out

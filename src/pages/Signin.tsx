@@ -8,7 +8,12 @@ import { useState } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import instance from '../axios';
 import axios from 'axios';
-
+import {
+    FacebookAuthProvider,
+    GoogleAuthProvider,
+    signInWithPopup,
+} from 'firebase/auth';
+import { auth } from '../config/config';
 type Inputs = {
     login: string;
     password: string;
@@ -22,35 +27,66 @@ function Signin() {
     const userToken = localstorage?.userToken;
     const [backError, setBackError] = useState('');
 
-    // const onLoginStart = useCallback(() => {
-    //     alert('login start');
-    // }, []);
-
-    // const socialFacebookSignin = (data: any) => {
-    //     instance
-    //         .post('/api/user/auth/facebook/callback', data)
-    //         .then((d) => console.log('data after login', d));
-    // };
-
-    // const socialGoogleSignin = (data: any) => {
-    //     instance
-    //         .post('/api/user/auth/google/callback', data)
-    //         .then((d) => console.log('data after login', d));
-    // };
-
-    // const onLogoutSuccess = useCallback(() => {
-    //     setProfile(null);
-    //     setProvider('');
-    //     alert('logout success');
-    // }, []);
-
     const {
         register,
         handleSubmit,
         formState: { errors },
     } = useForm<Inputs>();
 
-    const onSubmit: SubmitHandler<Inputs> = (data) => {
+    const signInWithGoogle = async () => {
+        signInWithPopup(auth, new GoogleAuthProvider())
+            .then((res) => {
+                console.log(res);
+                sendData(res);
+            })
+            .catch((error) => console.log(error));
+    };
+    const signInWithFacebook = async () => {
+        signInWithPopup(auth, new FacebookAuthProvider())
+            .then((res) => {
+                console.log(res);
+                sendData(res);
+            })
+            .catch((error) => console.log(error));
+    };
+
+    const sendData = (cR: any) => {
+        const userData: any = {
+            name: cR.user.displayName,
+            email: cR.user.email,
+            photo: cR.user.photoURL,
+            client_id: cR.user.uid,
+            provider: cR.providerId,
+        };
+        instance
+            .post(
+                `${import.meta.env.VITE_BASEURL}/api/user/auth/social`,
+                userData,
+                {
+                    headers: {
+                        'ngrok-skip-browser-warning': true,
+                    },
+                }
+            )
+            .then((response: any) => {
+                if (response.status === 200) {
+                    const userLocal = {
+                        userName: response.data.data.user.name,
+                        userToken: response.data.data.token,
+                        role: 'user',
+                    };
+                    localStorage.setItem('userData', JSON.stringify(userLocal));
+                    navigate('/');
+                }
+            })
+            .catch((error: any) => {
+                console.error('Error sending Google sign-in data:', error);
+                setBackError(
+                    error.response?.data?.message || 'An error occurred'
+                );
+            });
+    };
+    const onSubmitt: SubmitHandler<Inputs> = (data) => {
         setLoading(true);
         instance.post(`/api/login`, data);
         axios
@@ -89,8 +125,6 @@ function Signin() {
                 }
             });
     };
-
-    console.log(userToken);
     if (userToken !== undefined && userToken !== null)
         return <Navigate to="/" />;
     return (
@@ -120,62 +154,24 @@ function Signin() {
                   [&>*]:px-1
                   gap-x-2 "
                         >
-                            {/* <LoginSocialGoogle
-                isOnlyGetToken
-                client_id="157310444849-dnrecdlu5o6pi5o5crriofipop72kp6c.apps.googleusercontent.com"
-                onLoginStart={onLoginStart}
-                onResolve={ async ({ provider, data }) => {
-
-                  const res = await axios.get(`https://www.googleapis.com/oauth2/v3/userinfo?access_token=ya29.a0AXooCgvlsrWPjZ4qBgMyuAeRfyrLWLvKzeSm2n52mE6aeBDoXcbuQYUezGch47DNf9Nv0aZhVwwxuCCEgc7nY_SEpuKljG-K-1nCpjS55er5L_w4D5Sz1DYxm3KciyEPmgQKGt0L_fTfmRbbT9pGE-6Qtn8nnRS4VAaCgYKAXsSARESFQHGX2Mizai8my2sXyShPFtt3WP6rQ0169`);
-                  console.log('res' , res)
-                  console.log('provider' , provider)
-                  console.log('data' , data)
-                  // socialGoogleSignin(data)
-                  // setProvider(provider)
-                  // setProfile(data)
-                }}
-                onReject={(err) => {
-                  console.log(err)
-                }}
-              >
-                <GoogleLoginButton />
-              </LoginSocialGoogle> */}
-
                             <button className="flex gap-x-1 sm:gap-x-2 ">
                                 <img
                                     src="assets/signin/google.png"
                                     alt="singin with google"
+                                    onClick={() => {
+                                        signInWithGoogle();
+                                    }}
                                 />
                                 Google
                             </button>
-
-                            {/* <LoginSocialFacebook
-                isOnlyGetToken
-                redirect_uri={REDIRECT_URI}
-                // appId='1853429178493655'
-                appId='507151123510318'
-                onLoginStart={onLoginStart}
-                onResolve={({ provider, data }: IResolveParams) => {
-                  console.log('data', data)
-                  // socialFacebookSignin(data);
-                  setProvider(provider)
-                  setProfile(data)
-                }}
-                onReject={(err: any) => {
-                  console.log(err)
-                }}
-              >
-                <FacebookLoginButton />
-              </LoginSocialFacebook> */}
-
                             <button className="flex gap-x-1 sm:gap-x-2 ">
                                 <img
                                     src="assets/signin/facebook.png"
                                     alt="singin with google"
+                                    onClick={() => signInWithFacebook()}
                                 />
                                 Facebook
                             </button>
-
                             <button className="flex gap-x-1 sm:gap-x-2  ">
                                 <img
                                     src="assets/signin/binance.png"
@@ -191,9 +187,8 @@ function Signin() {
                             continue with email or phone number
                         </span>
                     </div>
-
                     <form
-                        onSubmit={handleSubmit(onSubmit)}
+                        onSubmit={handleSubmit(onSubmitt)}
                         className="py-10 flex flex-col justify-center mx-auto items-center gap-5 w-[65%]"
                     >
                         <div className="relative w-full">

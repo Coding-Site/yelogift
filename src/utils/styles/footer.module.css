@@ -1,0 +1,7 @@
+.footer_sec {
+    max-width: 100%;
+    overflow: hidden;
+}
+.footer_container {
+    flex-wrap: wrap;
+}

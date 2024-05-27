@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { IProduct } from '../../models/IProduct';
 import axios from 'axios';
@@ -11,14 +9,11 @@ const userToken = localstorage?.userToken;
 export const getCartData = createAsyncThunk('carts/getAll', async () => {
     try {
         if (userToken) {
-            const res = await instance.get<any>(
-                `/api/user/carts`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${userToken}`,
-                    },
-                }
-            );
+            const res = await instance.get<any>(`/api/user/carts`, {
+                headers: {
+                    Authorization: `Bearer ${userToken}`,
+                },
+            });
             return res.data.data;
         } else {
             return [];
@@ -28,7 +23,9 @@ export const getCartData = createAsyncThunk('carts/getAll', async () => {
     }
 });
 
-export const addNewItem = createAsyncThunk('carts/addItemProduct', async ({
+export const addNewItem = createAsyncThunk(
+    'carts/addItemProduct',
+    async ({
         product_id,
         product_part_id,
         quantity,
@@ -37,9 +34,6 @@ export const addNewItem = createAsyncThunk('carts/addItemProduct', async ({
         product_part_id: number;
         quantity: number;
     }) => {
-
-
-        console.log('add new to cart');
         try {
             if (userToken) {
                 const res = await instance.post(
@@ -186,7 +180,13 @@ const cartSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(getCartData.fulfilled, (state, action) => {
             const data = action?.payload;
-            const newITems: { id: any; product: any; productPartId: any; quantity: any; }[] = [];
+            const newITems: {
+                id: any;
+                product: any;
+                productPartId: any;
+                quantity: any;
+                productPartTitle: any;
+            }[] = [];
 
             data.forEach((element: any) => {
                 newITems.push({
@@ -194,6 +194,7 @@ const cartSlice = createSlice({
                     product: element.product,
                     productPartId: element.product_part_id,
                     quantity: element.quantity,
+                    productPartTitle: element.product_part.title,
                 });
             });
 
@@ -201,10 +202,8 @@ const cartSlice = createSlice({
 
             return state;
         });
-        
     },
 });
 
-export const { decreaseOneItem, increaseOneItem } =
-    cartSlice.actions;
+export const { decreaseOneItem, increaseOneItem } = cartSlice.actions;
 export default cartSlice.reducer;
