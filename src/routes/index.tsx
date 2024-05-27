@@ -19,6 +19,7 @@ const UserOrders = lazy(() => import('../pages/UserOrders'));
 const OrdersHistory = lazy(() => import('../pages/OrdersHistory'));
 const Signin = lazy(() => import('../pages/Signin'));
 const Signup = lazy(() => import('../pages/SignUp'));
+const Search = lazy(() => import('../pages/Search'));
 const AdminHome = lazy(() => import('../admin/AdminHome/AdminHome'));
 const AdminLogin = lazy(() => import('../admin/AdminLogin'));
 
@@ -164,6 +165,14 @@ export const router = createHashRouter([
                         element: (
                             <Suspense fallback={<Spinner />}>
                                 <OrdersHistory />
+                            </Suspense>
+                        ),
+                    },
+                    {
+                        path: 'search/:keyword',
+                        element: (
+                            <Suspense fallback={<Spinner />}>
+                                <Search />
                             </Suspense>
                         ),
                     },
