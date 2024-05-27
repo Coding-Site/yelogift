@@ -22,6 +22,8 @@ function Navbar() {
     });
     const navigate = useNavigate();
     const carts = useSelector((state: RootState) => state.cartSlice.items);
+    const filteredCarts = carts.filter((cart) => cart.quantity !== 0);
+
     const dispatch = useDispatch<AppDispatch>();
     const localstorageUser = JSON.parse(
         localStorage.getItem('userData') as string
@@ -60,7 +62,6 @@ function Navbar() {
                 )
                 .then((d) => {
                     const orderId = d.data.data.id;
-                    console.log(d);
                     localStorage.setItem('orderId', JSON.stringify(orderId));
                 })
                 .then(() => navigate('/checkout'))
@@ -78,7 +79,6 @@ function Navbar() {
             })
             .then((response) => {
                 setNotifications(response.data.data);
-                console.log(response.data.data);
             })
             .catch((error) => {
                 console.log('Error fetching notifications:', error);
@@ -300,7 +300,6 @@ function Navbar() {
                                 </ul>
                             </div>
                         )}
-
                         <div className="dropdown dropdown-end bg-transparent text-3xl">
                             <div tabIndex={0} role="button">
                                 <img
@@ -309,9 +308,9 @@ function Navbar() {
                                     className="cursor-pointer w-6"
                                 />
                             </div>
-                            {carts.length > 0 && (
+                            {filteredCarts.length > 0 && (
                                 <span className="absolute size-4 z-10 text-xs flex justify-center items-center font-semibold top-0 right-0 text-black bg-white rounded-full">
-                                    {carts.length}
+                                    {filteredCarts.length}
                                 </span>
                             )}
                             <ul
@@ -319,7 +318,7 @@ function Navbar() {
                                 className="dropdown-content z-[10000] menu p-2 shadow bg-white rounded-box sm:w-96 w-80 text-mainLightBlack"
                             >
                                 {userToken && carts.length ? (
-                                    carts.map((cart, idx) => {
+                                    carts.map((cart: any, idx) => {
                                         if (cart.quantity) {
                                             return (
                                                 <div
@@ -331,14 +330,16 @@ function Navbar() {
                                                         src={`${
                                                             import.meta.env
                                                                 .VITE_BASEURL
-                                                        }/storage/${
+                                                        }/public/storage/${
                                                             cart.product?.image
                                                         }`}
                                                         alt="cart"
                                                     />
                                                     <div className="flex flex-col gap-0">
                                                         <span className="text-black sm:text-base text-sm whitespace-nowrap">
-                                                            {cart.product?.name}
+                                                            {
+                                                                cart.productPartTitle
+                                                            }
                                                         </span>
                                                         <span className="sm:text-sm text-xs text-gray-500">
                                                             AED
@@ -428,7 +429,6 @@ function Navbar() {
                         ) : (
                             ''
                         )}
-
                         {userToken || adminToken ? (
                             <button onClick={() => Signout()} className="btn">
                                 sign out

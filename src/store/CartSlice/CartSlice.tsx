@@ -185,6 +185,7 @@ const cartSlice = createSlice({
                 product: any;
                 productPartId: any;
                 quantity: any;
+                productPartTitle: any;
             }[] = [];
 
             data.forEach((element: any) => {
@@ -193,6 +194,7 @@ const cartSlice = createSlice({
                     product: element.product,
                     productPartId: element.product_part_id,
                     quantity: element.quantity,
+                    productPartTitle: element.product_part.title,
                 });
             });
 
