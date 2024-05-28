@@ -20,6 +20,11 @@ function SingleProduct() {
     const userToken = localstorage?.userToken;
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
     useEffect(() => {
         instance.get(`/api/home/products/${id}`).then((d) => {
             const prod = d.data.data;
@@ -44,7 +49,6 @@ function SingleProduct() {
             alert('you should sign in to add products');
         }
     };
-
     const buyNow = () => {
         if (userToken) {
             instance
@@ -70,7 +74,6 @@ function SingleProduct() {
             alert('You should sign in to place an order');
         }
     };
-
     return (
         <>
             <div className="py-10 flex flex-col sm:flex-row justify-between container ">
@@ -94,7 +97,6 @@ function SingleProduct() {
                                 </span>
                             </div>
                         </div>
-
                         <img
                             src={`${
                                 import.meta.env.VITE_BASEURL
@@ -104,7 +106,6 @@ function SingleProduct() {
                         />
                     </div>
                 </div>
-
                 <div className="flex w-full sm:w-1/2 flex-col justify-start items-start gap-5">
                     <span className="capitalize text-white text-3xl font-semibold">
                         {Product?.name}
@@ -113,7 +114,6 @@ function SingleProduct() {
                     <span className="p-2 border w-full border-gray-200 rounded-md text-sm">
                         {Product?.description}
                     </span>
-
                     <span className="text-main">choose product part</span>
                     <div className="flex flex-col gap-2 w-full pe-4">
                         {Product?.product_parts?.map((pp: any, idx: any) => (
@@ -129,7 +129,6 @@ function SingleProduct() {
                                 ) : (
                                     <FiCircle className="mt-1" />
                                 )}
-
                                 <div className="flex flex-col gap-3">
                                     <span>{(pp as IProductPart)?.title}</span>
                                     <span className="text-gray-500  ">
@@ -165,7 +164,6 @@ function SingleProduct() {
                             <div className="flex justify-center items-center w-1/2">
                                 {q}
                             </div>
-
                             <button
                                 onClick={() =>
                                     setQ((old) => (old > 1 ? --old : old))
@@ -176,7 +174,6 @@ function SingleProduct() {
                             </button>
                         </div>
                     </div>
-
                     <div className="flex justify-between w-full gap-3">
                         <button
                             className="btn grow !rounded-md basis-2/4"
@@ -195,7 +192,6 @@ function SingleProduct() {
                     </div>
                 </div>
             </div>
-
             <div className="container mb-10">
                 <div
                     tabIndex={0}
@@ -207,6 +203,26 @@ function SingleProduct() {
                     <div className="collapse-content ">
                         {Product?.description}
                     </div>
+                </div>
+                <div
+                    tabIndex={0}
+                    className="collapse collapse-arrow rounded-none px-0 border-t border-gray-500 "
+                >
+                    <div className="collapse-title after:!w-3 after:!h-3 after:!text-main text-xl font-medium px-0">
+                        How To Redeem
+                    </div>
+                    {Product?.how_to_redeem ? (
+                        <div className="collapse-content ">
+                            <p>{Product.how_to_redeem}</p>
+                        </div>
+                    ) : (
+                        <div className="collapse-content ">
+                            <p>
+                                Please contact our support team if you have any
+                                questions.
+                            </p>
+                        </div>
+                    )}
                 </div>
                 <div
                     tabIndex={0}

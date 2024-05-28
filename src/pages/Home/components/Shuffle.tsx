@@ -24,7 +24,7 @@ function Shuffle() {
         <div className="flex flex-col gap-6">
             <div className="flex justify-start sm:justify-center gap-x-3 w-full container overflow-x-auto scrollbar-none">
                 <div
-                    className="flex flex-col items-center w-24 justify-between cursor-pointer"
+                    className="flex flex-col items-center min-w-24 justify-between cursor-pointer"
                     onClick={() => handleActiveItem('all')}
                 >
                     <img
@@ -45,7 +45,7 @@ function Shuffle() {
                 {cats.map((item) => (
                     <div
                         key={item.name}
-                        className="flex flex-col items-center w-24 justify-between cursor-pointer"
+                        className="flex flex-col items-center min-w-24 justify-between cursor-pointer"
                         onClick={() =>
                             handleActiveItem(item.name.toLocaleLowerCase())
                         }
@@ -71,7 +71,6 @@ function Shuffle() {
                     </div>
                 ))}
             </div>
-
             <div className="felx flex-col">
                 {cats.map((cat, idx) => {
                     if (

@@ -13,6 +13,7 @@ type Inputs = {
     product_id: string;
     name: string;
     description: string;
+    how_to_redeem: string;
     category_id: string;
     image: string;
     price: number;
@@ -44,6 +45,7 @@ function EditProduct() {
                     product_id: id,
                     name: product?.name,
                     description: product?.description,
+                    how_to_redeem: product?.how_to_redeem,
                     category_id: product?.category_id,
                     price: product?.price,
                     discount: product?.discount,
@@ -120,8 +122,24 @@ function EditProduct() {
                             </label>
                             <textarea
                                 className="border border-gray-400 rounded-md bg-transparent p-1"
-                                rows={10}
+                                rows={5}
                                 {...register('description')}
+                            ></textarea>
+                            <span className="absolute bottom-2 left-[50%] -translate-x-[50%] bg-gray-600 p-4 py-2 rounded-md">
+                                Tiny editor
+                            </span>
+                        </div>
+                        <div className="flex flex-col gap-2 relative">
+                            <label
+                                htmlFor="how_to_redeem"
+                                className="text-main font-semibold"
+                            >
+                                How to redeem
+                            </label>
+                            <textarea
+                                className="border border-gray-400 rounded-md bg-transparent p-1"
+                                rows={5}
+                                {...register('how_to_redeem')}
                             ></textarea>
                             <span className="absolute bottom-2 left-[50%] -translate-x-[50%] bg-gray-600 p-4 py-2 rounded-md">
                                 Tiny editor

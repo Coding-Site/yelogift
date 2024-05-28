@@ -42,10 +42,13 @@ function Navbar() {
         number | null
     >(null);
 
-    const handleKeyPress = (e: any) => {
-        if (keyword != '' && e.key === 'Enter') {
-            navigate(`/search/${keyword}`);
-            setKeyword('');
+    const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+            const trimmedKeyword = keyword.trim().replace(/\s+/g, ' ');
+            if (trimmedKeyword !== '') {
+                navigate(`/search/${trimmedKeyword}`);
+                setKeyword('');
+            }
         }
     };
     const Signout = () => {
@@ -78,19 +81,21 @@ function Navbar() {
     };
 
     const fetchNotifications = () => {
-        instance
-            .get('/api/user/notification', {
-                headers: {
-                    Authorization: `Bearer ${userToken}`,
-                    'ngrok-skip-browser-warning': true,
-                },
-            })
-            .then((response) => {
-                setNotifications(response.data.data);
-            })
-            .catch((error) => {
-                console.log('Error fetching notifications:', error);
-            });
+        if (userToken) {
+            instance
+                .get('/api/user/notification', {
+                    headers: {
+                        Authorization: `Bearer ${userToken}`,
+                        'ngrok-skip-browser-warning': true,
+                    },
+                })
+                .then((response) => {
+                    setNotifications(response.data.data);
+                })
+                .catch((error) => {
+                    console.log('Error fetching notifications:', error);
+                });
+        }
     };
 
     useEffect(() => {
@@ -169,18 +174,32 @@ function Navbar() {
                     >
                         Categories
                     </NavLink>
-                    <NavLink
-                        className={({ isActive }) =>
-                            isActive
-                                ? 'text-main font-semibold'
-                                : 'dark:text-gray-600 text-mainWhite'
-                        }
-                        to="/ordershistory"
-                    >
-                        My Orders
-                    </NavLink>
+                    {userToken && (
+                        <NavLink
+                            className={({ isActive }) =>
+                                isActive
+                                    ? 'text-main font-semibold text-nowrap	'
+                                    : 'dark:text-gray-600 text-mainWhite text-nowrap	'
+                            }
+                            to="/ordershistory"
+                        >
+                            My Orders
+                        </NavLink>
+                    )}
+                    {userToken && (
+                        <NavLink
+                            className={({ isActive }) =>
+                                isActive
+                                    ? 'text-main font-semibold text-nowrap	'
+                                    : 'dark:text-gray-600 text-mainWhite text-nowrap	'
+                            }
+                            to={`user-settings`}
+                        >
+                            Settings
+                        </NavLink>
+                    )}
                 </div>
-                <div className="flex grow gap-x-1">
+                <div className="flex grow gap-x-1 w-full">
                     <input
                         type="text"
                         onChange={(e) => setKeyword(e.target.value)}
@@ -345,7 +364,7 @@ function Navbar() {
                                 tabIndex={0}
                                 className="dropdown-content z-[10000] menu p-2 shadow bg-white rounded-box sm:w-96 w-80 text-mainLightBlack"
                             >
-                                {userToken && carts.length ? (
+                                {userToken && filteredCarts.length ? (
                                     carts.map((cart: any, idx) => {
                                         if (cart.quantity) {
                                             return (

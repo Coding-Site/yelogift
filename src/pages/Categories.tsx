@@ -18,7 +18,6 @@ function Categories() {
         instance.get(`/api/home/products?page=${page}`).then((d) => {
             const prods = d.data.data.data;
             const data = d.data.data;
-            console.log(data);
             setPerPage(data.per_page);
             setProducts(prods);
             setPages(Math.ceil(data.total / data.per_page) as number);

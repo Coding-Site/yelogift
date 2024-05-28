@@ -13,6 +13,7 @@ import Spinner from '../../../utils/Spinner';
 type Inputs = {
     name: string;
     description: string;
+    how_to_redeem: string;
     category_id: string;
     image: any;
     price: number;
@@ -75,7 +76,6 @@ function AddProduct() {
                     Add new product
                 </span>
             </div>
-
             <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col ">
                 <div className="flex  w-full gap-10">
                     <div className="w-full sm:w-1/2 flex flex-col gap-5">
@@ -101,8 +101,24 @@ function AddProduct() {
                             </label>
                             <textarea
                                 className="border border-gray-400 rounded-md bg-transparent p-1"
-                                rows={10}
+                                rows={5}
                                 {...register('description')}
+                            ></textarea>
+                            <span className="absolute bottom-2 left-[50%] -translate-x-[50%] bg-gray-600 p-4 py-2 rounded-md">
+                                Tiny editor
+                            </span>
+                        </div>
+                        <div className="flex flex-col gap-2 relative">
+                            <label
+                                htmlFor="how_to_redeem"
+                                className="text-main font-semibold"
+                            >
+                                How to redeem
+                            </label>
+                            <textarea
+                                className="border border-gray-400 rounded-md bg-transparent p-1"
+                                rows={5}
+                                {...register('how_to_redeem')}
                             ></textarea>
                             <span className="absolute bottom-2 left-[50%] -translate-x-[50%] bg-gray-600 p-4 py-2 rounded-md">
                                 Tiny editor
@@ -135,7 +151,6 @@ function AddProduct() {
                             </select>
                         </div>
                     </div>
-
                     <div className="w-full sm:w-1/2 flex flex-col gap-5">
                         <div
                             className="flex gap-2 items-center 
@@ -154,7 +169,6 @@ function AddProduct() {
                         [&>*]:border-gray-400 
                         "
                         ></div>
-
                         <div className="flex flex-col  gap-2 items-start">
                             <label
                                 htmlFor="image"
@@ -171,7 +185,6 @@ function AddProduct() {
                                     e: React.ChangeEvent<HTMLInputElement>
                                 ) => handleImage(e)}
                             />
-
                             <div className="flex justify-between items-end gap-3 border border-gray-600 rounded-md bg-transparent p-3 w-full">
                                 <label
                                     htmlFor="image"
@@ -204,7 +217,6 @@ function AddProduct() {
                                 </button>
                             </div>
                         </div>
-
                         <div className="flex flex-col gap-2">
                             <label
                                 htmlFor="name"
@@ -226,15 +238,6 @@ function AddProduct() {
                                         />
                                     </div>
                                 </div>
-                                {/* <div className="flex flex-col w-[48%] gap-2">
-                <span className="inline-flex items-center gap-1" >Compare at price <CiCircleInfo /></span>
-                <div className="flex gap-2 border border-gray-400 rounded-md bg-transparent p-1">
-                  <span className=" bg-gray-600 size-8 aspect-square rounded-md flex justify-center items-center">
-                    <BiDollar className=" text-main" />
-                  </span>
-                  <input type="text" className="bg-transparent outline-none border-none" />
-                </div>
-              </div> */}
                                 <div className="flex flex-col w-full gap-2">
                                     <span>Discount</span>
                                     <div className="flex gap-2 border border-gray-400 rounded-md bg-transparent p-1">
@@ -250,35 +253,8 @@ function AddProduct() {
                                 </div>
                             </div>
                         </div>
-
-                        {/* <div className="flex flex-col gap-2">
-              <label htmlFor="name" className="text-main font-semibold">
-                Selling Type
-              </label>
-              <div className="flex flex-wrap justify-between items-end gap-3 border border-gray-600 rounded-md bg-transparent p-3 w-full">
-                <div className="flex w-full gap-2">
-                  <input
-                    {...register("selling")}
-                    type="radio"
-                    value="auto"
-                    className="bg-transparent outline-none border-none"
-                  />
-                  <span>Auto (Email-insite)</span>
-                </div>
-                <div className="flex w-full gap-2">
-                  <input
-                    {...register("selling")}
-                    type="radio"
-                    value="manual"
-                    className="bg-transparent  bg-main outline-none border-none"
-                  />
-                  <span>Manual (Email-insite)</span>
-                </div>
-              </div>
-            </div> */}
                     </div>
                 </div>
-
                 <div className="w-full text-end mt-5">
                     <button
                         type="submit"
