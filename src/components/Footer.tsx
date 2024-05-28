@@ -21,6 +21,7 @@ function Footer() {
     }, []);
     useEffect(() => {
         instance.get(`/api/footer`).then((d) => {
+            console.log(d.data.data.description);
             setDesc(d.data.data.description);
         });
     }, []);

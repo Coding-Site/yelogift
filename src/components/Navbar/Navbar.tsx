@@ -186,6 +186,18 @@ function Navbar() {
                             My Orders
                         </NavLink>
                     )}
+                    {userToken && (
+                        <NavLink
+                            className={({ isActive }) =>
+                                isActive
+                                    ? 'text-main font-semibold text-nowrap	'
+                                    : 'dark:text-gray-600 text-mainWhite text-nowrap	'
+                            }
+                            to={`user-settings`}
+                        >
+                            Settings
+                        </NavLink>
+                    )}
                 </div>
                 <div className="flex grow gap-x-1 w-full">
                     <input

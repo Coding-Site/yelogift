@@ -22,6 +22,7 @@ const Signup = lazy(() => import('../pages/SignUp'));
 const Search = lazy(() => import('../pages/Search'));
 const AdminHome = lazy(() => import('../admin/AdminHome/AdminHome'));
 const AdminLogin = lazy(() => import('../admin/AdminLogin'));
+const UserSettings = lazy(() => import('../pages/UserSettings'));
 
 // Setting Pages
 const Settings = lazy(() => import('../admin/Settings/Settings'));
@@ -157,6 +158,14 @@ export const router = createHashRouter([
                         element: (
                             <Suspense fallback={<Spinner />}>
                                 <UserOrders />
+                            </Suspense>
+                        ),
+                    },
+                    {
+                        path: 'user-settings',
+                        element: (
+                            <Suspense fallback={<Spinner />}>
+                                <UserSettings />
                             </Suspense>
                         ),
                     },
