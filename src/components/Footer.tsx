@@ -5,6 +5,7 @@ import instance from '../axios';
 
 function Footer() {
     const [socials, setSocials] = useState<any>([]);
+    const [desc, setDesc] = useState<any>([]);
 
     const iconObj: any = {
         facebook: '/assets/social/facebook.png',
@@ -16,6 +17,11 @@ function Footer() {
     useEffect(() => {
         instance.get(`/api/social`).then((d) => {
             setSocials(d.data.data);
+        });
+    }, []);
+    useEffect(() => {
+        instance.get(`/api/footer`).then((d) => {
+            setDesc(d.data.data.description);
         });
     }, []);
 
@@ -32,15 +38,13 @@ function Footer() {
                         src="/assets/logo.png"
                         alt="logo"
                     />
-                    <p className="w-[340px] text-sm">
-                        Experience seamless access to leading entertainment
-                        platforms through our convenient gift card purchase
-                        portal.
+                    <p className="w-[340px] text-sm break-words overflow-hidden">
+                        {desc}
                     </p>
                     <ul className="flex gap-2">
                         {socials &&
-                            socials.map((soc: any) => (
-                                <li key={soc.url}>
+                            socials.map((soc: any, idx: any) => (
+                                <li key={idx}>
                                     <Link to={soc.url}>
                                         <img
                                             src={iconObj[soc.icon]}
@@ -148,9 +152,8 @@ function Footer() {
                         </li>
                         <li className="flex gap-x-2 ">
                             {socials.map((social: any, idx: any) => (
-                                <Link to={social.url}>
+                                <Link key={idx} to={social.url}>
                                     <img
-                                        key={idx}
                                         className="size-10 mx-auto"
                                         src={iconObj[social.icon]}
                                         alt={social.icon}
