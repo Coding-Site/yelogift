@@ -4,7 +4,6 @@ import { PiEye } from 'react-icons/pi';
 import { Link } from 'react-router-dom';
 import { ICard } from '../../../models/ICard';
 import { GoPencil } from 'react-icons/go';
-// import { FiSearch } from "react-icons/fi";
 import { IProduct } from '../../../models/IProduct';
 import Spinner from '../../../utils/Spinner';
 import instance from '../../../axios';
@@ -16,19 +15,9 @@ function Products() {
     );
     const adminToken = localstorage?.adminToken;
     const [loading, setLoading] = useState(false);
-    const [Allproducts, setAllProducts] = useState<IProduct[]>([]);
+    const [allProducts, setAllProducts] = useState<IProduct[]>([]);
     const [products, setProducts] = useState<IProduct[]>([]);
     const [term, setTerm] = useState('');
-
-    useEffect(() => {
-        const filteredPRoducts = products.filter(
-            (pro) =>
-                pro?.name.toLowerCase().startsWith(term) ||
-                pro?.name.toLowerCase().includes(term)
-        );
-        setProducts(() => (term ? filteredPRoducts : Allproducts));
-        setLoading(false);
-    }, [term]);
 
     useEffect(() => {
         setLoading(true);
@@ -43,7 +32,16 @@ function Products() {
                 setAllProducts(data.data.data);
                 setLoading(false);
             });
-    }, []);
+    }, [adminToken]);
+
+    useEffect(() => {
+        const filteredProducts = allProducts.filter(
+            (pro) =>
+                pro?.name.toLowerCase().startsWith(term.toLowerCase()) ||
+                pro?.name.toLowerCase().includes(term.toLowerCase())
+        );
+        setProducts(term ? filteredProducts : allProducts);
+    }, [term, allProducts]);
 
     const deleteProduct = async (id: number) => {
         setLoading(true);
@@ -81,16 +79,21 @@ function Products() {
                 </Link>
             </div>
 
-            <div className="flex flex-col gap-2 rounded-t-xl p-4  bg-white text-mainLightBlack">
+            <div className="flex flex-col gap-2 rounded-t-xl p-4 bg-white text-mainLightBlack">
                 <div className="flex justify-between w-full py-5 ps-4">
                     <p className="font-medium text-xl">
                         You have {products.length} card in total{' '}
                     </p>
-                    <div className="flex relative">
+                    <div className="flex items-center gap-1.5 rounded-full shadow-md border-2 border-gray-400 p-2.5 w-[250px] h-[33px]">
+                        <img
+                            src="/public/assets/admin/9035096_search_icon 4.svg"
+                            alt="icon"
+                            className="w-[20px] h-[16px]"
+                        />
                         <input
                             type="text"
-                            className="rounded-full shadow-md border-2 border-gray-400 p-1 ps-7"
-                            placeholder="Search product"
+                            className="font-normal text-xs"
+                            placeholder="Search a card"
                             onChange={(e) => setTerm(e.target.value)}
                         />
                     </div>
@@ -101,7 +104,7 @@ function Products() {
                 ) : (
                     <table className="text-center table-auto border-collapse">
                         <thead>
-                            <tr className="border-b-[30px] border- border-transparent font-medium">
+                            <tr className="border-b-[30px] border-transparent font-medium">
                                 <td>ID</td>
                                 <td>Name</td>
                                 <td>Category</td>
@@ -159,6 +162,7 @@ function Products() {
                                             onClick={() =>
                                                 deleteProduct(pro.id)
                                             }
+                                            className="cursor-pointer"
                                         />
                                     </td>
                                 </tr>

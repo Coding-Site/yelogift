@@ -20,6 +20,11 @@ function SingleProduct() {
     const userToken = localstorage?.userToken;
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
     useEffect(() => {
         instance.get(`/api/home/products/${id}`).then((d) => {
             const prod = d.data.data;
@@ -204,17 +209,6 @@ function SingleProduct() {
                     className="collapse collapse-arrow rounded-none px-0 border-t border-gray-500 "
                 >
                     <div className="collapse-title after:!w-3 after:!h-3 after:!text-main text-xl font-medium px-0">
-                        Terms and Conditions
-                    </div>
-                    <div className="collapse-content ">
-                        <p>Terma and conditions here</p>
-                    </div>
-                </div>
-                <div
-                    tabIndex={0}
-                    className="collapse collapse-arrow rounded-none px-0 border-t border-gray-500 "
-                >
-                    <div className="collapse-title after:!w-3 after:!h-3 after:!text-main text-xl font-medium px-0">
                         How To Redeem
                     </div>
                     {Product?.how_to_redeem ? (
@@ -229,6 +223,17 @@ function SingleProduct() {
                             </p>
                         </div>
                     )}
+                </div>
+                <div
+                    tabIndex={0}
+                    className="collapse collapse-arrow rounded-none px-0 border-t border-gray-500 "
+                >
+                    <div className="collapse-title after:!w-3 after:!h-3 after:!text-main text-xl font-medium px-0">
+                        Terms and Conditions
+                    </div>
+                    <div className="collapse-content ">
+                        <p>Terma and conditions here</p>
+                    </div>
                 </div>
             </div>
         </>
