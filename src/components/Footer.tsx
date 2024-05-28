@@ -1,30 +1,23 @@
 import { Link } from 'react-router-dom';
 import styles from '../utils/styles/footer.module.css';
-// import { useEffect, useState } from "react";
-// import axios from "axios";
+import { useEffect, useState } from 'react';
+import instance from '../axios';
 
 function Footer() {
-    // const [socials, setSocials] = useState<Social[]>([]);
-    // const localstorage = JSON.parse(localStorage.getItem('userData') as string);
-    // const userToken = localstorage?.userToken;
+    const [socials, setSocials] = useState<any>([]);
 
-    // const iconObj: any = {
-    //   'facebook': "/assets/social/facebook.png",
-    //   'twitter': "/assets/social/twitter.png",
-    //   'linkedin': "/assets/social/linkedin.png",
-    //   'youtube': "/assets/social/youtube.png",
-    // };
+    const iconObj: any = {
+        facebook: '/assets/social/facebook.png',
+        twitter: '/assets/social/twitter.png',
+        linkedin: '/assets/social/linkedin.png',
+        youtube: '/assets/social/youtube.png',
+    };
 
-    // useEffect(() => {
-    //   axios.get(`${import.meta.env.VITE_BASEURL}/api/admin/social`, {
-    //     headers: {
-    //       Authorization: `Bearer ${userToken}`,
-    //     },
-    //   })
-    //     .then(d => {
-    //       setSocials(d.data.data);
-    //     });
-    // }, []);
+    useEffect(() => {
+        instance.get(`/api/social`).then((d) => {
+            setSocials(d.data.data);
+        });
+    }, []);
 
     return (
         <footer
@@ -45,30 +38,18 @@ function Footer() {
                         portal.
                     </p>
                     <ul className="flex gap-2">
-                        <li>
-                            <Link to="/">
-                                <img
-                                    src="/assets/social/facebook.png"
-                                    alt="facebook"
-                                />
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/">
-                                <img
-                                    src="/assets/social/youtube.png"
-                                    alt="youtube"
-                                />
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/">
-                                <img
-                                    src="/assets/social/linkedin.png"
-                                    alt="linkedin"
-                                />
-                            </Link>
-                        </li>
+                        {socials &&
+                            socials.map((soc: any) => (
+                                <li key={soc.url}>
+                                    <Link to={soc.url}>
+                                        <img
+                                            src={iconObj[soc.icon]}
+                                            alt={soc.icon}
+                                            className="social_icons_footer"
+                                        />
+                                    </Link>
+                                </li>
+                            ))}
                     </ul>
                 </div>
                 <div className="flex flex-col uppercase  ">
@@ -115,7 +96,7 @@ function Footer() {
                 <div className="flex flex-col uppercase">
                     <ul className="text-mainWhite text-sm w-52 mx-auto gap-y-3 flex items-center justify-center flex-col text-center">
                         <li className="flex justify-between gap-x-3 w-full">
-                            <Link to="/">Company</Link>{' '}
+                            <Link to="/">Company</Link>
                             <img
                                 className="w-4"
                                 src="/assets/slider/prev.png"
@@ -123,7 +104,7 @@ function Footer() {
                             />
                         </li>
                         <li className="flex justify-between gap-x-3 w-full">
-                            <Link to="/">Categories </Link>{' '}
+                            <Link to="/">Categories </Link>
                             <img
                                 className="w-4"
                                 src="/assets/slider/prev.png"
@@ -131,7 +112,7 @@ function Footer() {
                             />
                         </li>
                         <li className="flex justify-between gap-x-3 w-full">
-                            <Link to="/">Contact us</Link>{' '}
+                            <Link to="/">Contact us</Link>
                             <img
                                 className="w-4"
                                 src="/assets/slider/prev.png"
@@ -139,7 +120,7 @@ function Footer() {
                             />
                         </li>
                         <li className="flex justify-between gap-x-3 w-full">
-                            <Link to="/">About Us</Link>{' '}
+                            <Link to="/">About Us</Link>
                             <img
                                 className="w-4"
                                 src="/assets/slider/prev.png"
@@ -147,7 +128,7 @@ function Footer() {
                             />
                         </li>
                         <li className="flex justify-between gap-x-3 w-full">
-                            <Link to="/">Privacy Policy</Link>{' '}
+                            <Link to="/">Privacy Policy</Link>
                             <img
                                 className="w-4"
                                 src="/assets/slider/prev.png"
@@ -155,7 +136,7 @@ function Footer() {
                             />
                         </li>
                         <li className="flex justify-between gap-x-3 w-full">
-                            <Link to="/">Terms & Conditions</Link>{' '}
+                            <Link to="/">Terms & Conditions</Link>
                             <img
                                 className="w-4"
                                 src="/assets/slider/prev.png"
@@ -166,22 +147,16 @@ function Footer() {
                             Follow us
                         </li>
                         <li className="flex gap-x-2 ">
-                            {/* {socials.map((social, idx) => <img key={idx} className="size-10 mx-auto" src={iconObj[social.icon]} alt="" />)} */}
-                            <img
-                                className="size-10 mx-auto"
-                                src="/assets/social/facebook.png"
-                                alt=""
-                            />
-                            <img
-                                className="size-10 mx-auto"
-                                src="/assets/social/twitter.png"
-                                alt=""
-                            />
-                            <img
-                                className="size-10 mx-auto"
-                                src="/assets/social/youtube.png"
-                                alt=""
-                            />
+                            {socials.map((social: any, idx: any) => (
+                                <Link to={social.url}>
+                                    <img
+                                        key={idx}
+                                        className="size-10 mx-auto"
+                                        src={iconObj[social.icon]}
+                                        alt={social.icon}
+                                    />
+                                </Link>
+                            ))}
                         </li>
                     </ul>
                     <p className="text-center normal-case text-sm mt-5 text-gray-400">

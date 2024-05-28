@@ -12,10 +12,6 @@ function Card({ data }: { data: IProduct }) {
                 src="/assets/cards/top.png"
                 alt="top card"
             />
-            {/* <pre>
-          from card com
-          {JSON.stringify(data, null, 2)}
-        </pre> */}
             <img
                 className="w-[242px] h-[80px] sm:h-[135px]"
                 src={`${import.meta.env.VITE_BASEURL}/public/storage/${

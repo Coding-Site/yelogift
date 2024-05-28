@@ -169,18 +169,20 @@ function Navbar() {
                     >
                         Categories
                     </NavLink>
-                    <NavLink
-                        className={({ isActive }) =>
-                            isActive
-                                ? 'text-main font-semibold'
-                                : 'dark:text-gray-600 text-mainWhite'
-                        }
-                        to="/ordershistory"
-                    >
-                        My Orders
-                    </NavLink>
+                    {userToken && (
+                        <NavLink
+                            className={({ isActive }) =>
+                                isActive
+                                    ? 'text-main font-semibold text-nowrap	'
+                                    : 'dark:text-gray-600 text-mainWhite text-nowrap	'
+                            }
+                            to="/ordershistory"
+                        >
+                            My Orders
+                        </NavLink>
+                    )}
                 </div>
-                <div className="flex grow gap-x-1">
+                <div className="flex grow gap-x-1 w-full">
                     <input
                         type="text"
                         onChange={(e) => setKeyword(e.target.value)}
