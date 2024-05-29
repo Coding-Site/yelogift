@@ -14,6 +14,8 @@ import {
     signInWithPopup,
 } from 'firebase/auth';
 import { auth } from '../config/config';
+import Modal from 'react-modal';
+
 type Inputs = {
     login: string;
     password: string;
@@ -26,12 +28,48 @@ function Signin() {
     const localstorage = JSON.parse(localStorage.getItem('userData') as string);
     const userToken = localstorage?.userToken;
     const [backError, setBackError] = useState('');
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+    const [isEmailSent, setIsEmailSent] = useState(false);
 
+    Modal.setAppElement('#root');
     const {
         register,
         handleSubmit,
         formState: { errors },
     } = useForm<Inputs>();
+
+    const {
+        register: registerForgetPassword,
+        handleSubmit: handleSubmitForgetPassword,
+        formState: { errors: forgetPasswordErrors },
+    } = useForm<any>();
+
+    const onForgetPasswordSubmit: SubmitHandler<any> = (data) => {
+        console.log(data);
+        setIsEmailSent(true);
+
+        // axios
+        //     .post(`${import.meta.env.VITE_BASEURL}/api/forget-password`, data, {
+        //         headers: {
+        //             'ngrok-skip-browser-warning': true,
+        //         },
+        //     })
+        //     .then((response) => {
+        //         console.log(response);
+        //         setIsModalOpen(false);
+        //     })
+        //     .catch((error) => {
+        //         console.error('Error sending forget password email:', error);
+        //         setBackError(
+        //             error.response?.data?.message || 'An error occurred'
+        //         );
+        //     });
+    };
+
+    const doneSeeingEmailNoti = () => {
+        setIsModalOpen(false);
+        setIsEmailSent(false);
+    };
 
     const signInWithGoogle = async () => {
         signInWithPopup(auth, new GoogleAuthProvider())
@@ -235,12 +273,12 @@ function Signin() {
                                 />
                                 remember me
                             </label>
-                            <Link
-                                to="/"
-                                className="text-main underline text-xs"
+                            <span
+                                className="text-main text-xs text-xs hover:underline cursor-pointer"
+                                onClick={() => setIsModalOpen(true)}
                             >
                                 forget password?
-                            </Link>
+                            </span>
                         </div>
                         <button className="btn !w-[80%] !rounded-md mt-12 mx-auto">
                             {loading ? 'loading...' : 'login'}
@@ -264,6 +302,77 @@ function Signin() {
                 </div>
             </div>
             <Footer />
+
+            {/* Modal for Forget Password */}
+            <Modal
+                isOpen={isModalOpen}
+                onRequestClose={() => setIsModalOpen(false)}
+                style={{
+                    overlay: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.75)',
+                        zIndex: 1000,
+                    },
+                    content: {
+                        color: 'lightsteelblue',
+                        top: '50%',
+                        left: '50%',
+                        right: 'auto',
+                        bottom: 'auto',
+                        marginRight: '-50%',
+                        transform: 'translate(-50%, -50%)',
+                        zIndex: 1001,
+                        width: '60%',
+                        maxWidth: '90%',
+                        backgroundColor: '#1E2329',
+                    },
+                }}
+            >
+                {isEmailSent ? (
+                    <div className="flex flex-col items-center justify-center">
+                        <p className="text-main text-center">
+                            An email has been sent to your email address. Please
+                            check your inbox.
+                        </p>
+                        <button
+                            onClick={doneSeeingEmailNoti}
+                            className=" rounded-xl w-full btn text-black font-semibold mt-5"
+                        >
+                            Okay
+                        </button>
+                    </div>
+                ) : (
+                    <>
+                        <h2 className="text-xl text-main font-semibold mb-4">
+                            Forget Password
+                        </h2>
+                        <form
+                            onSubmit={handleSubmitForgetPassword(
+                                onForgetPasswordSubmit
+                            )}
+                            className="flex flex-col gap-4"
+                        >
+                            <div className="relative w-full">
+                                <input
+                                    type="email"
+                                    {...registerForgetPassword('email', {
+                                        required: true,
+                                    })}
+                                    className="bg-transparent border rounded-lg w-full ps-4 py-2 placeholder:text-white outline-none placeholder:text-xs"
+                                    placeholder="Enter your email"
+                                />
+                            </div>
+                            {forgetPasswordErrors.email && (
+                                <span className="text-red-600 w-full text-center">
+                                    This field is required
+                                </span>
+                            )}
+                            <button className="py-2 rounded-xl w-full btn text-black font-semibold mx-auto w-[50%]">
+                                Send
+                            </button>
+                        </form>
+                    </>
+                )}
+            </Modal>
         </div>
     );
 }

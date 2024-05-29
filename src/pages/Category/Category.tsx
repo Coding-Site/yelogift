@@ -16,6 +16,10 @@ function Category() {
     const [, setPerPage] = useState(10);
 
     useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
+    useEffect(() => {
         setLoading(true);
         instance.get(`/api/home/categories/${categoryId}`).then((d) => {
             const cat = d.data.data;

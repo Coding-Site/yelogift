@@ -13,6 +13,10 @@ function Categories() {
     const [pages, setPages] = useState<number>(0);
     const [, setPerPage] = useState(10);
 
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
     const getProducts = (page: number) => {
         setLoading(true);
         instance.get(`/api/home/products?page=${page}`).then((d) => {

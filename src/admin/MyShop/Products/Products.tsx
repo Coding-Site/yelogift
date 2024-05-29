@@ -92,7 +92,7 @@ function Products() {
                         />
                         <input
                             type="text"
-                            className="font-normal text-xs"
+                            className="font-normal text-xs outline-none"
                             placeholder="Search a card"
                             onChange={(e) => setTerm(e.target.value)}
                         />
