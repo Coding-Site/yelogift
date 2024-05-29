@@ -1,5 +1,6 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import instance from '../../axios';
+import { useNavigate } from 'react-router-dom';
 
 type Inputs = {
     title: string;
@@ -11,8 +12,7 @@ function AddNotification() {
     const { adminToken } = JSON.parse(
         localStorage.getItem('adminData') as string
     );
-
-    console.log(adminToken);
+    const navigate = useNavigate();
 
     const onSubmit: SubmitHandler<Inputs> = async (data) => {
         try {
@@ -23,7 +23,7 @@ function AddNotification() {
                     'ngrok-skip-browser-warning': true,
                 },
             });
-            console.log('Notification added successfully');
+            navigate('/admin/notification');
         } catch (error) {
             console.error('Failed to add notification', error);
         }
