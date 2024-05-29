@@ -104,9 +104,6 @@ function AddProduct() {
                                 rows={5}
                                 {...register('description')}
                             ></textarea>
-                            <span className="absolute bottom-2 left-[50%] -translate-x-[50%] bg-gray-600 p-4 py-2 rounded-md">
-                                Tiny editor
-                            </span>
                         </div>
                         <div className="flex flex-col gap-2 relative">
                             <label
@@ -120,9 +117,6 @@ function AddProduct() {
                                 rows={5}
                                 {...register('how_to_redeem')}
                             ></textarea>
-                            <span className="absolute bottom-2 left-[50%] -translate-x-[50%] bg-gray-600 p-4 py-2 rounded-md">
-                                Tiny editor
-                            </span>
                         </div>
                         <div className="flex flex-col gap-2">
                             <label

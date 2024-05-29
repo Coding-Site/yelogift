@@ -7,6 +7,7 @@
 @tailwind components;
 @tailwind utilities;
 
+/* swiper_classes */
 .swiper {
     margin: 0 !important;
     max-height: 50vh !important;
@@ -28,4 +29,15 @@
     max-height: 30px !important;
     min-width: 30px !important;
     min-height: 30px !important;
+}
+/* tailwind_override */
+.adding_to_card_single_btn {
+    width: 100% !important;
+}
+/* popup_react-model_responsive */
+@media (max-width: 768px) {
+    .ReactModal__Content {
+        width: 90% !important;
+        max-width: 90% !important;
+    }
 }

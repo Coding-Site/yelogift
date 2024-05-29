@@ -1,9 +1,13 @@
 import { CiSearch } from 'react-icons/ci';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import { FiCircle } from 'react-icons/fi';
 import { FaRegCircleStop } from 'react-icons/fa6';
 
 function Sidebar() {
+    const location = useLocation();
+    const isPathActive = (paths: any) => {
+        return paths.some((path: any) => location.pathname.includes(path));
+    };
     return (
         <div className="flex flex-col gap-4 bg-mainBlack p-4 w-[250px] ">
             <Link to="/">
@@ -24,7 +28,19 @@ function Sidebar() {
             <ul className="menu menu-xs text-mainWhite rounded-lg max-w-xs w-full">
                 <li>
                     <details open>
-                        <summary>My Shop</summary>
+                        <summary
+                            className={
+                                isPathActive([
+                                    '/admin/products',
+                                    '/admin/category',
+                                    '/admin/orders',
+                                ])
+                                    ? 'text-main'
+                                    : ''
+                            }
+                        >
+                            My Shop
+                        </summary>
                         <ul>
                             <li>
                                 <NavItem item="Products" to="/admin/products" />
@@ -40,7 +56,21 @@ function Sidebar() {
                 </li>
                 <li>
                     <details open>
-                        <summary>Settings</summary>
+                        <summary
+                            className={
+                                isPathActive([
+                                    '/admin/site-setting',
+                                    '/admin/slider',
+                                    '/admin/social',
+                                    '/admin/footer',
+                                    '/admin/video',
+                                ])
+                                    ? 'text-main'
+                                    : ''
+                            }
+                        >
+                            Settings
+                        </summary>
                         <ul>
                             <li>
                                 <NavItem
