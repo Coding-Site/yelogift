@@ -34,6 +34,7 @@ function SingleProduct() {
             }
         });
     }, []);
+
     const AddtoCart = () => {
         setAddedInTheCard(false);
         if (userToken) {
@@ -45,12 +46,13 @@ function SingleProduct() {
                 })
             ).then(() => {
                 dispatch(getCartData());
-                setAddedInTheCard(true);
+                // setAddedInTheCard(true);
             });
         } else {
             alert('you should sign in to add products');
         }
     };
+
     const buyNow = () => {
         if (userToken) {
             instance

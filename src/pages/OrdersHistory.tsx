@@ -28,7 +28,7 @@ function OrdersHistory() {
     }, []);
 
     return (
-        <div className="flex py-10 w-full container ">
+        <div className="flex py-10 w-full container min-h-[100vh] ">
             <div className="flex flex-col justify-between w-full gap-y-5">
                 <div>Orders History</div>
 

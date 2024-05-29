@@ -46,17 +46,13 @@ function Signin() {
 
     const onForgetPasswordSubmit: SubmitHandler<any> = (data) => {
         console.log(data);
-        setIsEmailSent(true);
-
-        // axios
-        //     .post(`${import.meta.env.VITE_BASEURL}/api/forget-password`, data, {
-        //         headers: {
-        //             'ngrok-skip-browser-warning': true,
-        //         },
-        //     })
+        // instance
+        //     .post(`/api/user/auth/forgit/password`, data)
         //     .then((response) => {
-        //         console.log(response);
-        //         setIsModalOpen(false);
+        //         if (response) {
+        //             console.log(response);
+        //             setIsEmailSent(true);
+        //         }
         //     })
         //     .catch((error) => {
         //         console.error('Error sending forget password email:', error);

@@ -9,8 +9,6 @@ import { GoPencil } from 'react-icons/go';
 import Spinner from '../../../utils/Spinner';
 import instance from '../../../axios';
 
-
-
 function Orders() {
     const [loading, setLoading] = useState(false);
     const [allOrdersLength, setallOrdersLength] = useState<number>();
@@ -19,9 +17,10 @@ function Orders() {
     const [confirmedOrders, setConfirmedOrders] = useState<IOrder[]>([]);
     const [cancelledOrders, setCancelledOrders] = useState<IOrder[]>([]);
     const [filterTap, setFilterTap] = useState('all');
-    const localstorage = JSON.parse(localStorage.getItem('adminData') as string);
+    const localstorage = JSON.parse(
+        localStorage.getItem('adminData') as string
+    );
     const adminToken = localstorage?.adminToken;
-
 
     useEffect(() => {
         setLoading(true);
@@ -33,7 +32,7 @@ function Orders() {
             })
             .then((d) => {
                 const orders: IOrder[] = d.data.data;
-                setallOrdersLength(orders.length)
+                setallOrdersLength(orders.length);
 
                 orders.map((order: any) => {
                     if (order.status == '0') {
@@ -102,40 +101,45 @@ function Orders() {
             <div className="flex flex-col gap-2 rounded-t-3xl p-4  bg-white text-mainLightBlack">
                 <div className="flex justify-between w-full text-center border-b font-bold py-3">
                     <span
-                        className={`cursor-pointer grow ${filterTap == 'all' ? 'text-main' : ''
-                            }`}
+                        className={`cursor-pointer grow ${
+                            filterTap == 'all' ? 'text-main' : ''
+                        }`}
                         onClick={() => setFilterTap('all')}
                     >
                         All Orders
                     </span>
                     <span
-                        className={`cursor-pointer grow ${filterTap == 'pending' ? 'text-main' : ''
-                            }`}
+                        className={`cursor-pointer grow ${
+                            filterTap == 'pending' ? 'text-main' : ''
+                        }`}
                         onClick={() => setFilterTap('pending')}
                     >
                         Pending orders
                     </span>
                     <span
-                        className={`cursor-pointer grow ${filterTap == 'confirmed' ? 'text-main' : ''
-                            }`}
+                        className={`cursor-pointer grow ${
+                            filterTap == 'confirmed' ? 'text-main' : ''
+                        }`}
                         onClick={() => setFilterTap('confirmed')}
                     >
                         Delivered orders
                     </span>
                     <span
-                        className={`cursor-pointer grow ${filterTap == 'cancelled' ? 'text-main' : ''
-                            }`}
+                        className={`cursor-pointer grow ${
+                            filterTap == 'cancelled' ? 'text-main' : ''
+                        }`}
                         onClick={() => setFilterTap('cancelled')}
                     >
                         Cancelled orders
                     </span>
                 </div>
 
-                {loading ? (<Spinner />) : (
-
+                {loading ? (
+                    <Spinner />
+                ) : (
                     <table className="text-center table-auto border-collapse">
                         <thead className="">
-                            <tr className='border-b-[30px] border-transparent text-gray-400'>
+                            <tr className="border-b-[30px] border-transparent text-gray-400">
                                 <td>Order ID</td>
                                 <td>Order Date</td>
                                 <td>Product Name</td>
@@ -148,18 +152,37 @@ function Orders() {
                         <tbody>
                             {orders.map((order, idx) => {
                                 // return order.payment_status == 0  ?  null :
-                                return <tr key={idx} className='border-b-[20px] border-transparent  even:bg-gray-50'>
-                                        <td className="font-semibold">#{order.id}</td>
+                                return (
+                                    <tr
+                                        key={idx}
+                                        className="border-b-[20px] border-transparent  even:bg-gray-50"
+                                    >
+                                        <td className="font-semibold">
+                                            #{order.id}
+                                        </td>
                                         <td>
                                             {' '}
-                                            {order.created_at.slice(0, order.created_at.indexOf('T')).replace(/-/g, '/')}
+                                            {order.created_at
+                                                .slice(
+                                                    0,
+                                                    order.created_at.indexOf(
+                                                        'T'
+                                                    )
+                                                )
+                                                .replace(/-/g, '/')}
                                         </td>
-                                        <td> {order?.order_product[0]?.product?.name}</td>
+                                        <td>
+                                            {' '}
+                                            {
+                                                order?.order_product[0]?.product
+                                                    ?.name
+                                            }
+                                        </td>
 
                                         <td className="text-green-600 font-semibold">
                                             ${order.price}
                                         </td>
-                                        <td className='text-xs'>
+                                        <td className="text-xs">
                                             <Status
                                                 paymentstatus={order.payment_status.toString()}
                                                 status={order.status.toString()}
@@ -167,12 +190,14 @@ function Orders() {
                                         </td>
 
                                         <td>
-                                            <Link to={`/admin/orders/${order.id}`}>
+                                            <Link
+                                                to={`/admin/orders/${order.id}`}
+                                            >
                                                 <GoPencil />
                                             </Link>
                                         </td>
                                     </tr>
-                                
+                                );
                             })}
                         </tbody>
                     </table>

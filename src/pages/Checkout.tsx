@@ -42,7 +42,7 @@ function Checkout() {
                         Order Summary
                     </span>
                     <span className="sm:hidden flex text-2xl font-semibold gap-x-2">
-                        <img className="w-8" src="assets/checkout/cart.png" />{' '}
+                        <img className="w-8" src="/assets/checkout/cart.png" />{' '}
                         Cart
                     </span>
                     <div className="flex flex-col gap-3 sm:text-black text-white">
