@@ -46,7 +46,7 @@ function SingleProduct() {
                 })
             ).then(() => {
                 dispatch(getCartData());
-                // setAddedInTheCard(true);
+                setAddedInTheCard(true);
             });
         } else {
             alert('you should sign in to add products');
