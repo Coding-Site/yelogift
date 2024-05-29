@@ -130,7 +130,7 @@ const Pagination = ({
     };
 
     return (
-        <div className="flex justify-center items-center w-[350px] mx-auto [&>*]:cursor-pointer">
+        <div className="w-[150px] flex justify-center items-center sm:w-[350px]  mx-auto [&>*]:cursor-pointer">
             <FaChevronLeft className="text-main text-3xl " onClick={Prev} />
             <div
                 className={`gap-5 flex justify-center items-center w-[250px] `}

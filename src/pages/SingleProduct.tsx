@@ -82,7 +82,7 @@ function SingleProduct() {
         <>
             <div className="py-10 flex flex-col sm:flex-row justify-between container ">
                 <div className="flex w-full sm:w-1/2 p-10 justify-center  items-start pt-0">
-                    <div className="bg-white  rounded-md flex flex-col justify-stretch items-center w-[350px]">
+                    <div className="bg-black sm:bg-white  rounded-md flex flex-col justify-stretch items-center w-[350px]">
                         <div className="hidden  sm:flex bg-white flex-col justify-stretch items-center  p-6 w-full rounded-md">
                             <div className="relative w-1/3 rounded-full bg-black h-[15px]">
                                 <div className="size-5 rounded-full bg-black absolute -top-[50%] left-[50%] -translate-x-[50%]"></div>
@@ -111,8 +111,10 @@ function SingleProduct() {
                         {Product?.name}
                     </span>
                     <Rating rating={2} />
-                    <span className="p-2 border w-full border-gray-200 rounded-md text-sm">
-                        {Product?.description}
+                    <span className="p-2 border w-full border-gray-200 rounded-md text-sm text-ellipsis ">
+                        <span className="line_clamp w-[50%] text-ellipsis">
+                            {Product?.description}
+                        </span>
                     </span>
                     <span className="text-main">choose product part</span>
                     <div className="flex flex-col gap-2 w-full pe-4">

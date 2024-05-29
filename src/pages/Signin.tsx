@@ -46,20 +46,20 @@ function Signin() {
 
     const onForgetPasswordSubmit: SubmitHandler<any> = (data) => {
         console.log(data);
-        // instance
-        //     .post(`/api/user/auth/forgit/password`, data)
-        //     .then((response) => {
-        //         if (response) {
-        //             console.log(response);
-        //             setIsEmailSent(true);
-        //         }
-        //     })
-        //     .catch((error) => {
-        //         console.error('Error sending forget password email:', error);
-        //         setBackError(
-        //             error.response?.data?.message || 'An error occurred'
-        //         );
-        //     });
+        instance
+            .post(`/api/user/auth/forget/password`, data)
+            .then((response) => {
+                if (response) {
+                    console.log(response);
+                    setIsEmailSent(true);
+                }
+            })
+            .catch((error) => {
+                console.error('Error sending forget password email:', error);
+                setBackError(
+                    error.response?.data?.message || 'An error occurred'
+                );
+            });
     };
 
     const doneSeeingEmailNoti = () => {
@@ -130,7 +130,6 @@ function Signin() {
                 },
             })
             .then((d) => {
-                console.log(d);
                 if (d.data.data.role == 'user') {
                     const data = {
                         userToken: d.data.data.token.token,
