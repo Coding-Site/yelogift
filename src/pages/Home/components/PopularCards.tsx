@@ -21,8 +21,8 @@ function PopularCards() {
                     to="/categories"
                     className="text-main hidden  sm:flex gap-6"
                 >
-                    view more{' '}
-                    <img className="w-6" src="slider/prev.png" alt="" />
+                    view more
+                    <img className="w-6" src="/assets/slider/prev.png" alt="" />
                 </Link>
             </div>
 
