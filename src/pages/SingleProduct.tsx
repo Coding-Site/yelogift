@@ -35,22 +35,23 @@ function SingleProduct() {
         });
     }, []);
 
-    const AddtoCart = () => {
+    const AddtoCart = async () => {
         setAddedInTheCard(false);
-        if (userToken) {
-            dispatch(
-                addNewItem({
-                    product_id: Product?.id as number,
-                    product_part_id: selecedPart,
-                    quantity: q,
-                })
-            ).then(() => {
-                dispatch(getCartData());
-                setAddedInTheCard(true);
-            });
-        } else {
+
+        if (!userToken) {
             alert('you should sign in to add products');
+            return;
         }
+
+        await dispatch(
+            addNewItem({
+                product_id: Product?.id as number,
+                product_part_id: selecedPart,
+                quantity: q,
+            })
+        );
+        dispatch(getCartData());
+        setAddedInTheCard(true);
     };
 
     const buyNow = () => {
