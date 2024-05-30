@@ -27,7 +27,7 @@ function CardsFeed(data: {
                         className="min-w-[130px] sm:min-w-[200px]"
                     >
                         <img
-                            className="min-w-[200px] max-w-[200px]"
+                            className="min-w-[200px] max-w-[200px] max-h-[134px] min-h-[134px] object-cover"
                             src={`${
                                 import.meta.env.VITE_BASEURL
                             }/public/storage/${product.image}`}
@@ -45,7 +45,7 @@ function CardsFeed(data: {
                             className="min-w-[130px] sm:min-w-[200px]"
                         >
                             <img
-                                className="min-w-[200px] max-w-[200px]"
+                                className="min-w-[200px] max-w-[200px] max-h-[134px] min-h-[134px] object-cover"
                                 src={`${
                                     import.meta.env.VITE_BASEURL
                                 }/public/storage/${product.image}`}
@@ -61,7 +61,7 @@ function CardsFeed(data: {
                         className="min-w-[130px] sm:min-w-[200px]"
                     >
                         <img
-                            className="w-[300px]"
+                            className="w-[300px] max-h-[134px] h-[87px] sm:min-h-[134px] object-cover"
                             src={`${
                                 import.meta.env.VITE_BASEURL
                             }/public/storage/${product.image}`}

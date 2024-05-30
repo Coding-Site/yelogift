@@ -43,14 +43,19 @@ function Products() {
         setProducts(term ? filteredProducts : allProducts);
     }, [term, allProducts]);
 
+    console.log(products);
     const deleteProduct = async (id: number) => {
         setLoading(true);
         try {
-            await instance.get(`/api/admin/product/delete/${id}`, {
-                headers: {
-                    Authorization: `Bearer ${adminToken}`,
-                },
-            });
+            const response = await instance.get(
+                `/api/admin/product/delete/${id}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${adminToken}`,
+                    },
+                }
+            );
+            console.log('Delete response:', response);
             setProducts((prevProducts) =>
                 prevProducts.filter((product) => product.id !== id)
             );

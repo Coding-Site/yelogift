@@ -94,7 +94,7 @@ const Cart = ({ product }: { product: IProduct }) => {
                         product.image
                     }
                     alt="card"
-                    className="rounded-md"
+                    className="rounded-md "
                 />
             </div>
 

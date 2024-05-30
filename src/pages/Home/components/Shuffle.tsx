@@ -51,7 +51,7 @@ function Shuffle() {
                         }
                     >
                         <img
-                            className="aspect-square size-12 max-w-20 mb-2 md:size-20"
+                            className="aspect-square size-12 max-w-20 mb-2 md:size-20 "
                             src={
                                 import.meta.env.VITE_BASEURL +
                                 '/public/storage/' +
