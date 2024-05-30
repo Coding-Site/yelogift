@@ -21,8 +21,8 @@ function PopularCards() {
                     to="/categories"
                     className="text-main hidden  sm:flex gap-6"
                 >
-                    view more{' '}
-                    <img className="w-6" src="slider/prev.png" alt="" />
+                    view more
+                    <img className="w-6" src="/assets/slider/prev.png" alt="" />
                 </Link>
             </div>
 
@@ -34,7 +34,7 @@ function PopularCards() {
                         className="min-w-[130px] sm:min-w-[200px]"
                     >
                         <img
-                            className="w-[300px]"
+                            className="w-[130] h-[87px] sm:min-h-[156px] sm:min-w-[234]  "
                             src={`${
                                 import.meta.env.VITE_BASEURL
                             }/public/storage/${card.image}`}

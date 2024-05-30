@@ -71,27 +71,34 @@ function Notification() {
                             <th>Message</th>
                             <th>Actions</th>
                         </tr>
+                        <div className="h-[10px]"></div>
                     </thead>
                     <tbody>
                         {notifications &&
                             notifications.map((not, idx) => (
-                                <tr key={idx} className="text-center w-full">
-                                    <td className={`break-all `}>
-                                        {not.title}
-                                    </td>
-                                    <td className={`break-all `}>
-                                        {not.message}
-                                    </td>
-
-                                    <td
-                                        className="cursor-pointer flex justify-center gap-x-3"
-                                        onClick={() =>
-                                            deleteNotification(not?.id)
-                                        }
+                                <>
+                                    <tr
+                                        key={idx}
+                                        className="text-center w-full "
                                     >
-                                        <FaTrashAlt />
-                                    </td>
-                                </tr>
+                                        <td className={`break-all `}>
+                                            {not.title}
+                                        </td>
+                                        <td className={`break-all w-[60%]`}>
+                                            {not.message}
+                                        </td>
+
+                                        <td
+                                            className="cursor-pointer flex justify-center gap-x-3"
+                                            onClick={() =>
+                                                deleteNotification(not?.id)
+                                            }
+                                        >
+                                            <FaTrashAlt />
+                                        </td>
+                                    </tr>
+                                    <div className="h-[10px]"></div>
+                                </>
                             ))}
                     </tbody>
                 </table>

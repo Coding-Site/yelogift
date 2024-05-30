@@ -139,7 +139,7 @@ const Cart = ({ product }: { product: IProduct }) => {
             <div className="flex justify-start w-full py-2 font-semibold">
                 <div className="flex flex-col ">
                     <span>ebay</span>
-                    <span>{product.price} SAR</span>
+                    <span>{product.price}USD</span>
                 </div>
             </div>
         </>

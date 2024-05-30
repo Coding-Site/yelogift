@@ -87,19 +87,18 @@ function Sidebar() {
                             <li>
                                 <NavItem item="Footer" to="/admin/footer" />
                             </li>
-                            <li>
+                            {/* <li>
                                 <NavItem item="Video" to="/admin/video" />
-                            </li>
+                            </li> */}
                         </ul>
                     </details>
                 </li>
-
-                <li>
+                {/* <li>
                     <NavEc item="Currency" to="/admin/currency" />
-                </li>
-                <li>
+                </li> */}
+                {/* <li>
                     <NavEc item="Custom Page" to="/admin/custom-page" />
-                </li>
+                </li> */}
                 <li>
                     <NavEc item="Notification" to="/admin/notification" />
                 </li>

@@ -54,7 +54,7 @@ function Navbar() {
     const Signout = () => {
         removeItem('userData');
         removeItem('adminData');
-        navigate(0);
+        navigate('/');
     };
 
     const onCheckout = () => {
@@ -200,14 +200,21 @@ function Navbar() {
                     )}
                 </div>
                 <div className="flex grow gap-x-1 w-full">
-                    <input
-                        type="text"
-                        onChange={(e) => setKeyword(e.target.value)}
-                        value={keyword}
-                        onKeyPress={handleKeyPress}
-                        className="w-full bg-transparent flex items-center rounded-full border-gray-400 border px-4 pb-2 pt-1.5 placeholder:text-xs "
-                        placeholder="Search"
-                    />
+                    <div className="w-full  flex items-center rounded-full border-gray-400 border px-4 pb-2 pt-1.5 placeholder:text-xs ">
+                        <img
+                            src="/assets/admin/9035096_search_icon 4.svg"
+                            alt="search"
+                            className="mr-2"
+                        />
+                        <input
+                            type="text"
+                            onChange={(e) => setKeyword(e.target.value)}
+                            value={keyword}
+                            onKeyPress={handleKeyPress}
+                            placeholder="Search"
+                            className="bg-transparent outline-none w-full"
+                        />
+                    </div>
                 </div>
                 <div className="flex justify-between items-center grow-0 sm:grow">
                     <div className="flex justify-center ms-auto me-3 gap-3 text-3xl">
@@ -215,7 +222,7 @@ function Navbar() {
                             <div className="dropdown dropdown-end bg-transparent text-3xl z-[10000]">
                                 <div tabIndex={0} role="button">
                                     <img
-                                        src="/public/assets/navbar/Asset_26.png"
+                                        src="/assets/navbar/Asset_26.png"
                                         alt="icon"
                                         className="cursor-pointer min-w-5 w-5"
                                     />
@@ -350,7 +357,7 @@ function Navbar() {
                         <div className="dropdown dropdown-end bg-transparent text-3xl">
                             <div tabIndex={0} role="button">
                                 <img
-                                    src="/public/assets/navbar/Asset_24.png"
+                                    src="/assets/navbar/Asset_24.png"
                                     alt="ShoppingCart"
                                     className="cursor-pointer min-w-6 w-6"
                                 />

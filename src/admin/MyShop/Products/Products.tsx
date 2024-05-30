@@ -43,14 +43,19 @@ function Products() {
         setProducts(term ? filteredProducts : allProducts);
     }, [term, allProducts]);
 
+    console.log(products);
     const deleteProduct = async (id: number) => {
         setLoading(true);
         try {
-            await instance.get(`/api/admin/product/delete/${id}`, {
-                headers: {
-                    Authorization: `Bearer ${adminToken}`,
-                },
-            });
+            const response = await instance.get(
+                `/api/admin/product/delete/${id}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${adminToken}`,
+                    },
+                }
+            );
+            console.log('Delete response:', response);
             setProducts((prevProducts) =>
                 prevProducts.filter((product) => product.id !== id)
             );
@@ -86,7 +91,7 @@ function Products() {
                     </p>
                     <div className="flex items-center gap-1.5 rounded-full shadow-md border-2 border-gray-400 p-2.5 w-[250px] h-[33px]">
                         <img
-                            src="/public/assets/admin/9035096_search_icon 4.svg"
+                            src="/assets/admin/9035096_search_icon 4.svg"
                             alt="icon"
                             className="w-[20px] h-[16px]"
                         />
@@ -113,7 +118,7 @@ function Products() {
                                 <td>Price</td>
                                 <td>Discount</td>
                                 <td>Parts</td>
-                                <td></td>
+                                <td>Edit</td>
                             </tr>
                         </thead>
                         <tbody>
@@ -135,7 +140,8 @@ function Products() {
                                         />
                                     </td>
                                     <td className="text-xs text-wrap max-w-44 w-44">
-                                        {pro.description.slice(0, 10)}{' '}
+                                        {pro.description.slice(0, 8)}
+                                        {'...'}
                                     </td>
                                     <td className="text-green-600">
                                         ${pro.price}
@@ -144,26 +150,29 @@ function Products() {
                                         {pro.discount}%
                                     </td>
                                     <td>
-                                        <Link
-                                            to={`/admin/products/${pro.id}/parts/`}
-                                        >
-                                            <PiEye className="mx-auto mr-5" />
-                                        </Link>
+                                        <div className="flex items-center justify-center">
+                                            <Link
+                                                className=" "
+                                                to={`/admin/products/${pro.id}/parts/`}
+                                            >
+                                                <PiEye />
+                                            </Link>
+                                        </div>
                                     </td>
                                     <td>
-                                        <Link
-                                            to={`/admin/products/edit/${pro.id}`}
-                                        >
-                                            <GoPencil />
-                                        </Link>
-                                    </td>
-                                    <td>
-                                        <FaTrashCan
-                                            onClick={() =>
-                                                deleteProduct(pro.id)
-                                            }
-                                            className="cursor-pointer"
-                                        />
+                                        <div className="flex items-center justify-center gap-2">
+                                            <Link
+                                                to={`/admin/products/edit/${pro.id}`}
+                                            >
+                                                <GoPencil />
+                                            </Link>
+                                            <FaTrashCan
+                                                onClick={() =>
+                                                    deleteProduct(pro.id)
+                                                }
+                                                className="cursor-pointer"
+                                            />
+                                        </div>
                                     </td>
                                 </tr>
                             ))}

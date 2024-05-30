@@ -7,6 +7,10 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+    background-color: #000;
+}
+
 /* swiper_classes */
 .swiper {
     margin: 0 !important;
@@ -40,4 +44,11 @@
         width: 90% !important;
         max-width: 90% !important;
     }
+}
+.line_clamp {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 1;
 }

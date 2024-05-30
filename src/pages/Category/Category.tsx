@@ -94,14 +94,14 @@ const Cart = ({ product }: { product: IProduct }) => {
                         product.image
                     }
                     alt="card"
-                    className="rounded-md"
+                    className="rounded-md "
                 />
             </div>
 
             <div className="flex justify-between w-full py-2 font-semibold">
                 <div className="flex flex-col ">
                     <span>{product.category?.name}</span>
-                    <span>{product.price} SAR</span>
+                    <span>{product.price} USD</span>
                 </div>
                 <div className="flex">
                     5.0 <FaStar className="ms-1 text-main" />
@@ -130,7 +130,7 @@ const Pagination = ({
     };
 
     return (
-        <div className="flex justify-center items-center w-[350px] mx-auto [&>*]:cursor-pointer">
+        <div className="w-[150px] flex justify-center items-center sm:w-[350px]  mx-auto [&>*]:cursor-pointer">
             <FaChevronLeft className="text-main text-3xl " onClick={Prev} />
             <div
                 className={`gap-5 flex justify-center items-center w-[250px] `}

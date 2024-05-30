@@ -46,24 +46,20 @@ function Signin() {
 
     const onForgetPasswordSubmit: SubmitHandler<any> = (data) => {
         console.log(data);
-        setIsEmailSent(true);
-
-        // axios
-        //     .post(`${import.meta.env.VITE_BASEURL}/api/forget-password`, data, {
-        //         headers: {
-        //             'ngrok-skip-browser-warning': true,
-        //         },
-        //     })
-        //     .then((response) => {
-        //         console.log(response);
-        //         setIsModalOpen(false);
-        //     })
-        //     .catch((error) => {
-        //         console.error('Error sending forget password email:', error);
-        //         setBackError(
-        //             error.response?.data?.message || 'An error occurred'
-        //         );
-        //     });
+        instance
+            .post(`/api/user/auth/forget/password`, data)
+            .then((response) => {
+                if (response) {
+                    console.log(response);
+                    setIsEmailSent(true);
+                }
+            })
+            .catch((error) => {
+                console.error('Error sending forget password email:', error);
+                setBackError(
+                    error.response?.data?.message || 'An error occurred'
+                );
+            });
     };
 
     const doneSeeingEmailNoti = () => {
@@ -97,15 +93,11 @@ function Signin() {
             provider: cR.providerId,
         };
         instance
-            .post(
-                `${import.meta.env.VITE_BASEURL}/api/user/auth/social`,
-                userData,
-                {
-                    headers: {
-                        'ngrok-skip-browser-warning': true,
-                    },
-                }
-            )
+            .post(`/api/user/auth/social`, userData, {
+                headers: {
+                    'ngrok-skip-browser-warning': true,
+                },
+            })
             .then((response: any) => {
                 if (response.status === 200) {
                     const userLocal = {
@@ -115,6 +107,7 @@ function Signin() {
                     };
                     localStorage.setItem('userData', JSON.stringify(userLocal));
                     navigate('/');
+                    console.log(response);
                 }
             })
             .catch((error: any) => {
@@ -134,7 +127,6 @@ function Signin() {
                 },
             })
             .then((d) => {
-                console.log(d);
                 if (d.data.data.role == 'user') {
                     const data = {
                         userToken: d.data.data.token.token,
@@ -157,8 +149,8 @@ function Signin() {
             .catch((err) => {
                 const msg = err.response.data.message;
                 console.log(err);
+                setLoading(false);
                 if (msg) {
-                    setLoading(false);
                     setBackError(msg);
                 }
             });
@@ -180,37 +172,33 @@ function Signin() {
                             Login to your account
                         </h2>
                         <div
-                            className="flex 
-                  justify-around 
-                  w-full 
-                  [&>*]:border 
-                  [&>*]:border-gray-300 
-                  [&>*]:text-xs 
-                  [&>*]:rounded-md 
-                  [&>*]:py-2 
-                  sm:[&>*]:px-4 
-                  [&>*]:px-1
-                  gap-x-2 "
+                            className="flex justify-around w-full
+          [&>*]:border [&>*]:border-gray-300 [&>*]:rounded-md [&>*]:py-2 [&>*]:px-4"
                         >
-                            <button className="flex gap-x-1 sm:gap-x-2 ">
+                            <button
+                                style={{ position: 'relative' }}
+                                className="flex gap-x-2 "
+                                onClick={() => {
+                                    signInWithGoogle();
+                                }}
+                            >
                                 <img
                                     src="assets/signin/google.png"
                                     alt="singin with google"
-                                    onClick={() => {
-                                        signInWithGoogle();
-                                    }}
                                 />
                                 Google
                             </button>
-                            <button className="flex gap-x-1 sm:gap-x-2 ">
+                            <button
+                                onClick={() => signInWithFacebook()}
+                                className="flex gap-x-2 "
+                            >
                                 <img
                                     src="assets/signin/facebook.png"
                                     alt="singin with google"
-                                    onClick={() => signInWithFacebook()}
                                 />
                                 Facebook
                             </button>
-                            <button className="flex gap-x-1 sm:gap-x-2  ">
+                            <button className="flex gap-x-2 ">
                                 <img
                                     src="assets/signin/binance.png"
                                     alt="singin with google"
