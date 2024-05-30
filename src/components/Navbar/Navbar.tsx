@@ -54,7 +54,7 @@ function Navbar() {
     const Signout = () => {
         removeItem('userData');
         removeItem('adminData');
-        navigate(0);
+        navigate('/');
     };
 
     const onCheckout = () => {

@@ -93,15 +93,11 @@ function Signin() {
             provider: cR.providerId,
         };
         instance
-            .post(
-                `${import.meta.env.VITE_BASEURL}/api/user/auth/social`,
-                userData,
-                {
-                    headers: {
-                        'ngrok-skip-browser-warning': true,
-                    },
-                }
-            )
+            .post(`/api/user/auth/social`, userData, {
+                headers: {
+                    'ngrok-skip-browser-warning': true,
+                },
+            })
             .then((response: any) => {
                 if (response.status === 200) {
                     const userLocal = {
@@ -111,6 +107,7 @@ function Signin() {
                     };
                     localStorage.setItem('userData', JSON.stringify(userLocal));
                     navigate('/');
+                    console.log(response);
                 }
             })
             .catch((error: any) => {
@@ -152,8 +149,8 @@ function Signin() {
             .catch((err) => {
                 const msg = err.response.data.message;
                 console.log(err);
+                setLoading(false);
                 if (msg) {
-                    setLoading(false);
                     setBackError(msg);
                 }
             });
@@ -175,37 +172,33 @@ function Signin() {
                             Login to your account
                         </h2>
                         <div
-                            className="flex 
-                  justify-around 
-                  w-full 
-                  [&>*]:border 
-                  [&>*]:border-gray-300 
-                  [&>*]:text-xs 
-                  [&>*]:rounded-md 
-                  [&>*]:py-2 
-                  sm:[&>*]:px-4 
-                  [&>*]:px-1
-                  gap-x-2 "
+                            className="flex justify-around w-full
+          [&>*]:border [&>*]:border-gray-300 [&>*]:rounded-md [&>*]:py-2 [&>*]:px-4"
                         >
-                            <button className="flex gap-x-1 sm:gap-x-2 ">
+                            <button
+                                style={{ position: 'relative' }}
+                                className="flex gap-x-2 "
+                                onClick={() => {
+                                    signInWithGoogle();
+                                }}
+                            >
                                 <img
                                     src="assets/signin/google.png"
                                     alt="singin with google"
-                                    onClick={() => {
-                                        signInWithGoogle();
-                                    }}
                                 />
                                 Google
                             </button>
-                            <button className="flex gap-x-1 sm:gap-x-2 ">
+                            <button
+                                onClick={() => signInWithFacebook()}
+                                className="flex gap-x-2 "
+                            >
                                 <img
                                     src="assets/signin/facebook.png"
                                     alt="singin with google"
-                                    onClick={() => signInWithFacebook()}
                                 />
                                 Facebook
                             </button>
-                            <button className="flex gap-x-1 sm:gap-x-2  ">
+                            <button className="flex gap-x-2 ">
                                 <img
                                     src="assets/signin/binance.png"
                                     alt="singin with google"

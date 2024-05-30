@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Link, useParams } from 'react-router-dom';
 import { FaChevronLeft } from 'react-icons/fa6';
-import {  useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { IProduct } from '../models/IProduct';
 import Spinner from '../utils/Spinner';
 import instance from '../axios';
@@ -13,17 +13,18 @@ function Search() {
 
     const getSearchedProducts = () => {
         setLoading(true);
-        instance.get(`/api/home/products/search?query=${keyword}`).then((d:any) => {
-            setProducts(d.data);
-            setLoading(false);
-        });
+        instance
+            .get(`/api/home/products/search?query=${keyword}`)
+            .then((d: any) => {
+                setProducts(d.data);
+                setLoading(false);
+            });
     };
 
     useEffect(() => {
         setLoading(true);
 
         getSearchedProducts();
-
     }, [keyword]);
 
     return (
@@ -69,8 +70,9 @@ const Cart = ({ product }: { product: IProduct }) => {
                     {product.name}
                 </span>
                 <img
-                    src={`${import.meta.env.VITE_BASEURL}/public/storage/${product.image
-                        }`}
+                    src={`${import.meta.env.VITE_BASEURL}/public/storage/${
+                        product.image
+                    }`}
                     alt="card"
                     className="rounded-md"
                 />
@@ -79,7 +81,7 @@ const Cart = ({ product }: { product: IProduct }) => {
             <div className="flex justify-start w-full py-2 font-semibold">
                 <div className="flex flex-col ">
                     <span>ebay</span>
-                    <span>{product.price} SAR</span>
+                    <span>{product.price} USD</span>
                 </div>
             </div>
         </>

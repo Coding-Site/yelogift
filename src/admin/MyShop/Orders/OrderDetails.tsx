@@ -12,29 +12,31 @@ function OrderDetails() {
     const [, setOrder] = useState<any>();
     const [orderProducts, setOrderProducts] = useState<any[]>([]);
     const [sendedCode, setSendedCode] = useState([]);
-    const localstorage = JSON.parse(localStorage.getItem('adminData') as string);
+    const localstorage = JSON.parse(
+        localStorage.getItem('adminData') as string
+    );
     const adminToken = localstorage?.adminToken;
     const [total, setTotal] = useState();
     const [price, setPrice] = useState();
     const [discount, setDiscount] = useState();
     const confirmOrderCodes = () => {
-        instance.post(
-            `/api/admin/orders/delivery/code`,
-            {
-                order_id: id,
-                order_codes: sendedCode,
-            }
-            ,
-            {
-                headers: {
-                    Authorization: `Bearer ${adminToken}`
+        console.log(id, sendedCode);
+        instance
+            .post(
+                `/api/admin/orders/delivery/code`,
+                {
+                    order_id: id,
+                    order_codes: sendedCode,
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${adminToken}`,
+                    },
                 }
-            }
-        )
+            )
             .then((d) => console.log(d))
             .catch((err) => console.log(err));
     };
-
 
     useEffect(() => {
         instance
@@ -45,12 +47,11 @@ function OrderDetails() {
             })
             .then((d) => {
                 const order = d.data.data;
-                setDiscount(order.discount)
-                setPrice(order.order.price)
-                setTotal(order.total_price)
+                setDiscount(order.discount);
+                setPrice(order.order.price);
+                setTotal(order.total_price);
                 setOrder(order);
-                setOrderProducts(order.order_product);
-
+                setOrderProducts(order.order.order_product);
             });
     }, []);
 
@@ -64,7 +65,6 @@ function OrderDetails() {
                     Order <i className="text-main"> #{id} </i>
                 </span>
             </div>
-
 
             <form className="flex flex-col text-white">
                 <div className="flex  my-5 justify-between pe-5">
@@ -91,7 +91,10 @@ function OrderDetails() {
                     </thead>
                     <tbody>
                         {orderProducts?.map((product) => (
-                            <OrderPartCode setSendedCode={setSendedCode} part={product} />
+                            <OrderPartCode
+                                setSendedCode={setSendedCode}
+                                part={product}
+                            />
                         ))}
                     </tbody>
                 </table>

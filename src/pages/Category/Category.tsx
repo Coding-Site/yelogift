@@ -101,7 +101,7 @@ const Cart = ({ product }: { product: IProduct }) => {
             <div className="flex justify-between w-full py-2 font-semibold">
                 <div className="flex flex-col ">
                     <span>{product.category?.name}</span>
-                    <span>{product.price} SAR</span>
+                    <span>{product.price} USD</span>
                 </div>
                 <div className="flex">
                     5.0 <FaStar className="ms-1 text-main" />

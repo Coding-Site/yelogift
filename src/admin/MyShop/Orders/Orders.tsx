@@ -11,11 +11,9 @@ import instance from '../../../axios';
 
 function Orders() {
     const [loading, setLoading] = useState(false);
-    const [allOrdersLength, setallOrdersLength] = useState<number>();
+    const [allOrdersLength, setAllOrdersLength] = useState<number>(0);
     const [orders, setOrders] = useState<IOrder[]>([]);
-    const [pendingOrders, setPendingOrders] = useState<IOrder[]>([]);
-    const [confirmedOrders, setConfirmedOrders] = useState<IOrder[]>([]);
-    const [cancelledOrders, setCancelledOrders] = useState<IOrder[]>([]);
+    const [filteredOrders, setFilteredOrders] = useState<IOrder[]>([]);
     const [filterTap, setFilterTap] = useState('all');
     const localstorage = JSON.parse(
         localStorage.getItem('adminData') as string
@@ -32,42 +30,31 @@ function Orders() {
             })
             .then((d) => {
                 const orders: IOrder[] = d.data.data;
-                setallOrdersLength(orders.length);
+                const filteredOrders = orders.filter(
+                    (order: any) => order.payment_status !== '0'
+                );
+                setAllOrdersLength(filteredOrders.length);
 
-                orders.map((order: any) => {
-                    if (order.status == '0') {
-                        setPendingOrders((old) => [...old, order]);
-                    } else if (order.status == '1') {
-                        setConfirmedOrders((old) => [...old, order]);
-                    } else {
-                        setCancelledOrders((old) => [...old, order]);
-                    }
-                });
-
-                setFilterTap('all');
-                setOrders(orders);
+                setOrders(filteredOrders);
                 setLoading(false);
             });
     }, []);
-
     useEffect(() => {
         setLoading(true);
-        setOrders(() => {
-            if (filterTap == 'all') {
-                setLoading(false);
-                return orders;
-            } else if (filterTap == 'pending') {
-                setLoading(false);
-                return pendingOrders;
-            } else if (filterTap == 'confirmed') {
-                setLoading(false);
-                return confirmedOrders;
-            } else {
-                setLoading(false);
-                return cancelledOrders;
+        const updatedOrders = orders.filter((order) => {
+            if (filterTap === 'all') {
+                return true;
+            } else if (filterTap === 'pending') {
+                return order.status === '0';
+            } else if (filterTap === 'confirmed') {
+                return order.status === '1';
             }
+            return false;
         });
-    }, [filterTap]);
+
+        setFilteredOrders(updatedOrders);
+        setLoading(false);
+    }, [filterTap, orders]);
 
     return (
         <div className="flex flex-col gap-8 w-full py-10 container">
@@ -85,24 +72,24 @@ function Orders() {
                     </span>
                 </div>
                 <div className="flex bg-[#FFF3BA] h-full rounded px-4 py-3 flex-col justify-between grow">
-                    <span>Pending Orders</span>
+                    <span>In Progress Orders</span>
                     <span className="text-center text-3xl text-[#C19712]">
-                        {pendingOrders.length}
+                        {orders.filter((order) => order.status === '0').length}
                     </span>
                 </div>
                 <div className="flex bg-[#FFD2C4] h-full rounded px-4 py-3 flex-col justify-between grow">
-                    <span>Delievered Orders</span>
+                    <span>Delivered Orders</span>
                     <span className="text-center text-3xl text-[#D64E23]">
-                        {confirmedOrders.length}
+                        {orders.filter((order) => order.status === '1').length}
                     </span>
                 </div>
             </div>
 
-            <div className="flex flex-col gap-2 rounded-t-3xl p-4  bg-white text-mainLightBlack">
+            <div className="flex flex-col gap-2 rounded-t-3xl p-4 bg-white text-mainLightBlack">
                 <div className="flex justify-between w-full text-center border-b font-bold py-3">
                     <span
                         className={`cursor-pointer grow ${
-                            filterTap == 'all' ? 'text-main' : ''
+                            filterTap === 'all' ? 'text-main' : ''
                         }`}
                         onClick={() => setFilterTap('all')}
                     >
@@ -110,27 +97,19 @@ function Orders() {
                     </span>
                     <span
                         className={`cursor-pointer grow ${
-                            filterTap == 'pending' ? 'text-main' : ''
+                            filterTap === 'pending' ? 'text-main' : ''
                         }`}
                         onClick={() => setFilterTap('pending')}
                     >
-                        Pending orders
+                        In Progress orders
                     </span>
                     <span
                         className={`cursor-pointer grow ${
-                            filterTap == 'confirmed' ? 'text-main' : ''
+                            filterTap === 'confirmed' ? 'text-main' : ''
                         }`}
                         onClick={() => setFilterTap('confirmed')}
                     >
                         Delivered orders
-                    </span>
-                    <span
-                        className={`cursor-pointer grow ${
-                            filterTap == 'cancelled' ? 'text-main' : ''
-                        }`}
-                        onClick={() => setFilterTap('cancelled')}
-                    >
-                        Cancelled orders
                     </span>
                 </div>
 
@@ -138,67 +117,56 @@ function Orders() {
                     <Spinner />
                 ) : (
                     <table className="text-center table-auto border-collapse">
-                        <thead className="">
+                        <thead>
                             <tr className="border-b-[30px] border-transparent text-gray-400">
                                 <td>Order ID</td>
                                 <td>Order Date</td>
                                 <td>Product Name</td>
                                 <td>Product Price</td>
-                                {/* <td>Selling type</td> */}
                                 <td>Status</td>
                                 <td></td>
                             </tr>
                         </thead>
                         <tbody>
-                            {orders.map((order, idx) => {
-                                // return order.payment_status == 0  ?  null :
-                                return (
-                                    <tr
-                                        key={idx}
-                                        className="border-b-[20px] border-transparent  even:bg-gray-50"
-                                    >
-                                        <td className="font-semibold">
-                                            #{order.id}
-                                        </td>
-                                        <td>
-                                            {' '}
-                                            {order.created_at
-                                                .slice(
-                                                    0,
-                                                    order.created_at.indexOf(
-                                                        'T'
-                                                    )
-                                                )
-                                                .replace(/-/g, '/')}
-                                        </td>
-                                        <td>
-                                            {' '}
-                                            {
-                                                order?.order_product[0]?.product
-                                                    ?.name
-                                            }
-                                        </td>
-
-                                        <td className="text-green-600 font-semibold">
-                                            ${order.price}
-                                        </td>
-                                        <td className="text-xs">
-                                            <Status
-                                                paymentstatus={order.payment_status.toString()}
-                                                status={order.status.toString()}
-                                            />
-                                        </td>
-
-                                        <td>
+                            {filteredOrders.map((order: any, idx: any) => (
+                                <tr
+                                    key={idx}
+                                    className="border-b-[20px] border-transparent even:bg-gray-50"
+                                >
+                                    <td className="font-semibold">
+                                        #{order.id}
+                                    </td>
+                                    <td>
+                                        {order.created_at
+                                            .slice(
+                                                0,
+                                                order.created_at.indexOf('T')
+                                            )
+                                            .replace(/-/g, '/')}
+                                    </td>
+                                    <td>
+                                        {order?.order_product[0]?.product?.name}
+                                    </td>
+                                    <td className="text-green-600 font-semibold">
+                                        ${order.price}
+                                    </td>
+                                    <td className="text-xs">
+                                        <Status
+                                            paymentstatus={order.payment_status.toString()}
+                                            status={order.status.toString()}
+                                        />
+                                    </td>
+                                    <td>
+                                        {order.status !== '1' && (
                                             <Link
                                                 to={`/admin/orders/${order.id}`}
                                             >
                                                 <GoPencil />
                                             </Link>
-                                        </td>
-                                    </tr>
-                                );
-                            })}
+                                        )}
+                                    </td>
+                                </tr>
+                            ))}
                         </tbody>
                     </table>
                 )}

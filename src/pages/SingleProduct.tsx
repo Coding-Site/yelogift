@@ -15,12 +15,12 @@ function SingleProduct() {
     const [q, setQ] = useState(1);
     const { id } = useParams();
     const [buttonsDisabled, setButtonsDisabled] = useState<boolean>(false);
-
     const localstorage = JSON.parse(localStorage.getItem('userData') as string);
     const userToken = localstorage?.userToken;
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
     const [addedInTheCard, setAddedInTheCard] = useState<boolean>(false);
+
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);

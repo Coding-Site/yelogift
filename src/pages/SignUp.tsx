@@ -162,7 +162,6 @@ function Signup() {
                             continue with email or phone number
                         </span>
                     </div>
-
                     <form
                         onSubmit={handleSubmit(onSubmit)}
                         className="py-10 flex flex-col justify-center mx-auto items-center gap-5 w-[65%]"

@@ -69,7 +69,7 @@ function OrdersHistory() {
                                                     </p>
                                                     <div className="text-sm text-gray-500">
                                                         {order.quantity} x{' '}
-                                                        {order.price} SAR value
+                                                        {order.price} USE value
                                                     </div>
                                                 </div>
                                             </div>

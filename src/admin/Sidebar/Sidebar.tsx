@@ -87,9 +87,9 @@ function Sidebar() {
                             <li>
                                 <NavItem item="Footer" to="/admin/footer" />
                             </li>
-                            <li>
+                            {/* <li>
                                 <NavItem item="Video" to="/admin/video" />
-                            </li>
+                            </li> */}
                         </ul>
                     </details>
                 </li>
