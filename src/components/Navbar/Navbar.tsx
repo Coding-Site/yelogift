@@ -99,12 +99,9 @@ function Navbar() {
     };
 
     useEffect(() => {
-        fetchNotifications();
-    }, [userToken]);
-    useEffect(() => {
         dispatch(getCartData());
         fetchNotifications();
-    }, [dispatch]);
+    }, [dispatch, userToken]);
 
     const formatDate = (dateString: any) => {
         const options: any = {
