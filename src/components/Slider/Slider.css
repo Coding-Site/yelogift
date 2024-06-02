@@ -1,3 +1,18 @@
 .slider_img {
     object-fit: contain;
 }
+
+.slider_container {
+    width: 96%;
+    margin: 0 auto;
+    overflow: hidden;
+    border-radius: 30px;
+    height: fit-content;
+    max-height: 50vh;
+}
+@media (max-width: 650px) {
+    .slider_container {
+        width: 90%;
+        max-height: 25vh;
+    }
+}

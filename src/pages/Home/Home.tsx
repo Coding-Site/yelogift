@@ -5,7 +5,7 @@ import Shuffle from './components/Shuffle';
 
 function Home() {
     return (
-        <div className="py-10">
+        <div className=" py-2 sm:py-10">
             <Slider />
             <PopularCards />
             <Shuffle />

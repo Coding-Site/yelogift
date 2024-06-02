@@ -10,6 +10,7 @@ import { AppDispatch, RootState } from '../../store/index.ts';
 import {
     getCartData,
     updateCartItem,
+    clearCart,
 } from '../../store/CartSlice/CartSlice.tsx';
 import instance from '../../axios/index.ts';
 import styles from '../../utils/styles/navbar.module.css';
@@ -54,7 +55,10 @@ function Navbar() {
     const Signout = () => {
         removeItem('userData');
         removeItem('adminData');
+        dispatch(clearCart());
+        removeItem('orderId');
         navigate('/');
+        window.location.reload();
     };
 
     const onCheckout = () => {
@@ -140,19 +144,19 @@ function Navbar() {
         <>
             <div className="w-full bg-mainBlack text-mainWhite px-5 flex justify-between items-center py-5 gap-3">
                 <MobileMenu open={openMenu} setOpenMenu={setOpenMenu} />
-                <div className="flex justify-between items-center gap-4 py-4">
+                <div className="w-max flex justify-between items-center gap-4 py-4">
                     <GiHamburgerMenu
                         className="text-main text-2xl cursor-pointer flex sm:hidden"
                         onClick={() => setOpenMenu(!openMenu)}
                     />
-                    <Link className="" to="/">
-                        <img
-                            src="/assets/logo.png"
-                            className="cursor-pointer w-[150px]"
-                            alt="logo"
-                        />
-                    </Link>
                 </div>
+                <Link className="mx-auto min-w-[150px]" to="/">
+                    <img
+                        src="/assets/logo.png"
+                        className="cursor-pointer w-[150px]"
+                        alt="logo"
+                    />
+                </Link>
                 <div className="hidden sm:flex justify-start gap-9 ps-5 py-4 items-center">
                     <NavLink
                         to="/"
@@ -199,8 +203,8 @@ function Navbar() {
                         </NavLink>
                     )}
                 </div>
-                <div className="flex grow gap-x-1 w-full">
-                    <div className="w-full  flex items-center rounded-full border-gray-400 border px-4 pb-2 pt-1.5 placeholder:text-xs ">
+                <div className="hidden md:flex grow gap-x-1 w-full">
+                    <div className=" w-full  flex items-center rounded-full border-gray-400 border px-4 pb-2 pt-1.5 placeholder:text-xs ">
                         <img
                             src="/assets/admin/9035096_search_icon 4.svg"
                             alt="search"

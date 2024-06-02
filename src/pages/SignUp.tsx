@@ -77,6 +77,7 @@ function Signup() {
                     };
                     localStorage.setItem('userData', JSON.stringify(userLocal));
                     navigate('/');
+                    window.location.reload();
                 }
             })
             .catch((error: any) => {

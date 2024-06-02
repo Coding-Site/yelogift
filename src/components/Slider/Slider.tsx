@@ -5,6 +5,7 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
+import './Slider.css';
 
 export default function Slider() {
     const [sliderData, setSliderData] = useState<any>([]);
@@ -32,39 +33,41 @@ export default function Slider() {
 
     return (
         <>
-            <Swiper
-                spaceBetween={30}
-                centeredSlides={true}
-                autoplay={{
-                    delay: 3500,
-                    disableOnInteraction: false,
-                }}
-                pagination={{
-                    clickable: true,
-                }}
-                navigation={true}
-                modules={[Autoplay, Pagination, Navigation]}
-                className="mySwiper"
-                onSlideChange={handleSlideChange}
-            >
-                {sliderData.map((slide: any, index: any) => (
-                    <SwiperSlide key={index}>
-                        <a href={ensureAbsoluteUrl(slide.link) || '#'}>
-                            <img
-                                src={
-                                    import.meta.env.VITE_BASEURL +
-                                    '/public/storage/' +
-                                    slide.image
-                                }
-                                className="slider_img"
-                                alt={slide.description}
-                            />
-                        </a>
-                    </SwiperSlide>
-                ))}
-            </Swiper>
+            <div className="slider_container">
+                <Swiper
+                    spaceBetween={30}
+                    centeredSlides={true}
+                    autoplay={{
+                        delay: 3500,
+                        disableOnInteraction: false,
+                    }}
+                    pagination={{
+                        clickable: true,
+                    }}
+                    navigation={true}
+                    modules={[Autoplay, Pagination, Navigation]}
+                    className="mySwiper"
+                    onSlideChange={handleSlideChange}
+                >
+                    {sliderData.map((slide: any, index: any) => (
+                        <SwiperSlide key={index}>
+                            <a href={ensureAbsoluteUrl(slide.link) || '#'}>
+                                <img
+                                    src={
+                                        import.meta.env.VITE_BASEURL +
+                                        '/public/storage/' +
+                                        slide.image
+                                    }
+                                    className="slider_img"
+                                    alt={slide.description}
+                                />
+                            </a>
+                        </SwiperSlide>
+                    ))}
+                </Swiper>
+            </div>
             {sliderData.length > 0 && (
-                <div className="flex flex-col gap-7 relative mt-10">
+                <div className="flex flex-col gap-7 relative mt-5 sm:mt-10">
                     <div className="text-lg text-main font-semibold text-center px-5 mb-14 sm:mb-0">
                         {sliderData[activeIndex]?.title || 'Default Title'}
                     </div>

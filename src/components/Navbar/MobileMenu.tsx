@@ -1,8 +1,9 @@
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-// import Switcher from "../../utils/Switcher";
 import { IoClose } from 'react-icons/io5';
 import { Dispatch, SetStateAction } from 'react';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
+import { clearCart } from '../../store/CartSlice/CartSlice';
+import { useDispatch } from 'react-redux';
 
 function MobileMenu({
     open,
@@ -19,13 +20,17 @@ function MobileMenu({
     );
     const adminRole = localstorageAdmin?.role;
     const adminToken = localstorageAdmin?.adminToken;
+    const dispatch = useDispatch<any>();
 
     const { removeItem } = useLocalStorage();
     const navigate = useNavigate();
     const Signout = () => {
         removeItem('userData');
         removeItem('adminData');
+        dispatch(clearCart());
+        removeItem('orderId');
         navigate('/');
+        window.location.reload();
     };
     return (
         <>

@@ -108,8 +108,10 @@ function Signin() {
                     localStorage.setItem('userData', JSON.stringify(userLocal));
                     navigate('/');
                     console.log(response);
+                    window.location.reload();
                 }
             })
+
             .catch((error: any) => {
                 console.error('Error sending Google sign-in data:', error);
                 setBackError(
@@ -135,6 +137,7 @@ function Signin() {
                     };
                     setItem('userData', JSON.stringify(data));
                     navigate('/');
+                    window.location.reload();
                 } else {
                     const data = {
                         adminToken: d.data.data.token.token,
