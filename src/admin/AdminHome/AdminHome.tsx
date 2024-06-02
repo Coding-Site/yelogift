@@ -8,10 +8,7 @@ function AdminHome() {
             />
             <div className="flex flex-col gap-5">
                 <span className="text-main text-5xl">Hello Admin,</span>
-                <p className="text-">
-                    {' '}
-                    Start by editing or deleting as needed.
-                </p>
+                <p className="text-">Start by editing or deleting as needed.</p>
             </div>
         </div>
     );

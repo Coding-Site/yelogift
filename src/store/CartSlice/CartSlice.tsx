@@ -4,10 +4,10 @@ import axios from 'axios';
 import instance from '../../axios';
 
 const localstorage = JSON.parse(localStorage.getItem('userData') as string);
-const userToken = localstorage?.userToken;
 
 export const getCartData = createAsyncThunk('carts/getAll', async () => {
     try {
+        const userToken = localstorage?.userToken;
         if (userToken) {
             const res = await instance.get<any>(`/api/user/carts`, {
                 headers: {
@@ -36,7 +36,9 @@ export const addNewItem = createAsyncThunk(
     }) => {
         console.log('add new to cart');
         try {
+            const userToken = localstorage?.userToken;
             if (userToken) {
+                console.log('user token found, ', userToken);
                 const res = await instance.post(
                     `/api/user/carts/store`,
                     { product_id, product_part_id, quantity },
@@ -48,7 +50,7 @@ export const addNewItem = createAsyncThunk(
                 );
                 return res;
             } else {
-                return null;
+                throw new Error("User doesn't existed in this case ");
             }
         } catch (err) {
             console.log(err);
@@ -59,6 +61,8 @@ export const updateCartItem = createAsyncThunk(
     'carts/UpdatecartItem',
     async ({ cart_id, quantity }: { cart_id: number; quantity: number }) => {
         try {
+            const userToken = localstorage?.userToken;
+
             if (userToken) {
                 const res = await axios.post(
                     `${import.meta.env.VITE_BASEURL}/api/user/carts/update`,
@@ -82,6 +86,8 @@ export const deleteCartProduct = createAsyncThunk(
     'carts/DeletecartItem',
     async ({ id }: { id: number }) => {
         try {
+            const userToken = localstorage?.userToken;
+
             if (userToken) {
                 const res = await axios.get(
                     `${
@@ -177,11 +183,15 @@ const cartSlice = createSlice({
             localStorage.setItem('cart', JSON.stringify(state));
             return state;
         },
+        clearCart: (state) => {
+            state.items = [];
+            localStorage.removeItem('cart');
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(getCartData.fulfilled, (state, action) => {
             const data = action?.payload;
-            const newITems: {
+            const newItems: {
                 id: any;
                 product: any;
                 productPartId: any;
@@ -189,20 +199,24 @@ const cartSlice = createSlice({
             }[] = [];
 
             data.forEach((element: any) => {
-                newITems.push({
-                    id: element.id,
-                    product: element.product,
-                    productPartId: element.product_part_id,
-                    quantity: element.quantity,
-                });
+                if (element.quantity > 0) {
+                    newItems.push({
+                        id: element.id,
+                        product: element.product,
+                        productPartId: element.product_part_id,
+                        quantity: element.quantity,
+                    });
+                }
             });
 
-            state = { ...state, items: newITems };
+            state = { ...state, items: newItems };
 
+            localStorage.setItem('cart', JSON.stringify(state));
             return state;
         });
     },
 });
 
-export const { decreaseOneItem, increaseOneItem } = cartSlice.actions;
+export const { decreaseOneItem, increaseOneItem, clearCart } =
+    cartSlice.actions;
 export default cartSlice.reducer;
