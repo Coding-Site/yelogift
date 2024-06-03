@@ -87,6 +87,12 @@ function Sidebar() {
                             <li>
                                 <NavItem item="Footer" to="/admin/footer" />
                             </li>
+                            <li>
+                                <NavItem
+                                    item="Advertisment Top Nav"
+                                    to="/admin/topnav-settings"
+                                />
+                            </li>
                             {/* <li>
                                 <NavItem item="Video" to="/admin/video" />
                             </li> */}

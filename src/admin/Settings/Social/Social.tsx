@@ -1,9 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from 'react';
-import { FaTrashAlt } from 'react-icons/fa';
 import { GoPencil } from 'react-icons/go';
-import { Link, useNavigate } from 'react-router-dom';
-import { FaPlus } from 'react-icons/fa6';
+import { useNavigate } from 'react-router-dom';
 import instance from '../../../axios';
 type Social = {
     id: number;
@@ -24,16 +22,6 @@ function Social() {
         twitter: '/assets/social/twitter.png',
         linkedin: '/assets/social/linkedin.png',
         youtube: '/assets/social/youtube.png',
-    };
-
-    const deleteSocial = (id: number) => {
-        instance
-            .get(`/api/admin/social/delete/${id}`, {
-                headers: {
-                    Authorization: `Bearer ${adminToken}`,
-                },
-            })
-            .then(() => navigate(0));
     };
 
     useEffect(() => {

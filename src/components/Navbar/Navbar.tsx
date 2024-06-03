@@ -151,7 +151,7 @@ function Navbar() {
                         onClick={() => setOpenMenu(!openMenu)}
                     />
                 </div>
-                <Link className="mx-auto min-w-[150px]" to="/">
+                <Link className="mx-auto min-w-[115px] " to="/">
                     <img
                         src="/assets/Logo/Asset-1.png"
                         className="cursor-pointer w-[150px]"
