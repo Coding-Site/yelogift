@@ -16,6 +16,7 @@
     margin: 0 !important;
     max-height: 50vh !important;
     user-select: none;
+    min-width: 100%;
 }
 .swiper-pagination-bullets {
     display: none;

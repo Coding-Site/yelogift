@@ -13,7 +13,7 @@ function Sidebar() {
             <Link to="/">
                 <img
                     className="w-[60%] me-auto"
-                    src="/assets/logo.png"
+                    src="/assets/Logo/Asset-1.png"
                     alt="logo"
                 />
             </Link>

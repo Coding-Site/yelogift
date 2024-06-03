@@ -35,7 +35,7 @@ function Footer() {
                 <div className="flex flex-col gap-3  ">
                     <img
                         className="w-[150px]"
-                        src="/assets/logo.png"
+                        src="/assets/Logo/Asset-1.png"
                         alt="logo"
                     />
                     <p className="w-[340px] text-sm break-words overflow-hidden">

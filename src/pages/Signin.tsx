@@ -130,10 +130,12 @@ function Signin() {
             })
             .then((d) => {
                 if (d.data.data.role == 'user') {
+                    console.log(d);
                     const data = {
                         userToken: d.data.data.token.token,
                         userName: d.data.data.user.name,
                         role: d.data.data.role,
+                        auth: d.data.data.auth,
                     };
                     setItem('userData', JSON.stringify(data));
                     navigate('/');

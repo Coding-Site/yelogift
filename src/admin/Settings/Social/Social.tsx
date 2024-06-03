@@ -54,12 +54,6 @@ function Social() {
                 <span className="ps-3 border-mainLightColor border-s-4 font-medium">
                     Social Media
                 </span>
-                <Link
-                    to="/admin/social/add"
-                    className="bg-main rounded-md flex justify-center items-center text-mainLightBlack size-11"
-                >
-                    <FaPlus />
-                </Link>
             </div>
 
             <table className="w-full text-center">
@@ -67,7 +61,6 @@ function Social() {
                     <tr>
                         <th>Title</th>
                         <th> Image</th>
-                        <th>delete</th>
                         <th>update</th>
                     </tr>
                 </thead>
@@ -78,15 +71,9 @@ function Social() {
                             <td>
                                 {' '}
                                 <img
-                                    className="mx-auto"
+                                    className="mx-auto w-[30px] h-[30px]"
                                     src={iconObj[social.icon]}
                                     alt="icon"
-                                />
-                            </td>
-                            <td>
-                                <FaTrashAlt
-                                    onClick={() => deleteSocial(social.id)}
-                                    className="mx-auto cursor-pointer"
                                 />
                             </td>
                             <td>

@@ -43,7 +43,6 @@ function Products() {
         setProducts(term ? filteredProducts : allProducts);
     }, [term, allProducts]);
 
-    console.log(products);
     const deleteProduct = async (id: number) => {
         setLoading(true);
         try {
@@ -115,8 +114,6 @@ function Products() {
                                 <td>Category</td>
                                 <td>Pic</td>
                                 <td>Description</td>
-                                <td>Price</td>
-                                <td>Discount</td>
                                 <td>Parts</td>
                                 <td>Edit</td>
                             </tr>
@@ -140,14 +137,7 @@ function Products() {
                                         />
                                     </td>
                                     <td className="text-xs text-wrap max-w-44 w-44">
-                                        {pro.description.slice(0, 8)}
-                                        {'...'}
-                                    </td>
-                                    <td className="text-green-600">
-                                        ${pro.price}
-                                    </td>
-                                    <td className="text-red-600">
-                                        {pro.discount}%
+                                        {pro.description.slice(0, 15)}
                                     </td>
                                     <td>
                                         <div className="flex items-center justify-center">

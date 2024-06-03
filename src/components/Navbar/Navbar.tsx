@@ -37,6 +37,7 @@ function Navbar() {
     const userToken = localstorageUser?.userToken;
     const adminRole = localstorageAdmin?.role;
     const adminToken = localstorageAdmin?.adminToken;
+    const userAuth = localstorageUser?.auth;
     const { removeItem } = useLocalStorage();
 
     const [hoveredNotificationId, setHoveredNotificationId] = useState<
@@ -152,7 +153,7 @@ function Navbar() {
                 </div>
                 <Link className="mx-auto min-w-[150px]" to="/">
                     <img
-                        src="/assets/logo.png"
+                        src="/assets/Logo/Asset-1.png"
                         className="cursor-pointer w-[150px]"
                         alt="logo"
                     />
@@ -190,7 +191,7 @@ function Navbar() {
                             My Orders
                         </NavLink>
                     )}
-                    {userToken && (
+                    {userToken && userAuth == 'yelogift' && (
                         <NavLink
                             className={({ isActive }) =>
                                 isActive

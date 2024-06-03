@@ -51,7 +51,10 @@ export default function Slider() {
                 >
                     {sliderData.map((slide: any, index: any) => (
                         <SwiperSlide key={index}>
-                            <a href={ensureAbsoluteUrl(slide.link) || '#'}>
+                            <a
+                                href={ensureAbsoluteUrl(slide.link) || '#'}
+                                className="h-[50vh]"
+                            >
                                 <img
                                     src={
                                         import.meta.env.VITE_BASEURL +
