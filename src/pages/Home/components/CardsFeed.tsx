@@ -46,7 +46,7 @@ function CardsFeed(data: {
                                         <div className="size-5 rounded-full bg-black absolute -top-[50%] left-[50%] -translate-x-[50%]"></div>
                                     </div>
                                     <img
-                                        className="min-w-[200px] max-w-[200px] max-h-[134px] min-h-[134px] object-cover mx-auto min-w-full mt-5  rounded-2xl"
+                                        className="min-w-[200px] max-w-[200px] max-h-[134px] min-h-[134px] object-cover mx-auto  mt-5  rounded-2xl"
                                         src={`${
                                             import.meta.env.VITE_BASEURL
                                         }/public/storage/${product.image}`}
@@ -78,7 +78,7 @@ function CardsFeed(data: {
                                         <div className="size-5 rounded-full bg-black absolute -top-[50%] left-[50%] -translate-x-[50%]"></div>
                                     </div>
                                     <img
-                                        className="min-w-[200px] max-w-[200px] max-h-[134px] min-h-[134px] object-cover mx-auto min-w-full mt-5  rounded-2xl"
+                                        className="min-w-[200px] max-w-[200px] max-h-[134px] min-h-[134px] object-cover mx-auto  mt-5  rounded-2xl"
                                         src={`${
                                             import.meta.env.VITE_BASEURL
                                         }/public/storage/${product.image}`}

@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import Spinner from '../../../utils/Spinner';
 import { useForm } from 'react-hook-form';
 import instance from '../../../axios';
+import { FaTrash } from 'react-icons/fa';
 
 function Codes() {
     const localstorage = JSON.parse(
@@ -64,6 +65,23 @@ function Codes() {
                 setLoading(false);
             });
     };
+
+    const deleteCode = (codeId: any) => {
+        setLoading(true);
+        instance
+            .get(`/api/admin/product/parts/codes/delete/${codeId}`, {
+                headers: {
+                    Authorization: `Bearer ${adminToken}`,
+                },
+            })
+            .then((response) => {
+                if (response.data.status) {
+                    getAllCodes({ password });
+                }
+                setLoading(false);
+            });
+    };
+
     const onSubmit = (data: any) => {
         getAllCodes(data);
     };
@@ -165,6 +183,7 @@ function Codes() {
                                 <td>Part </td>
                                 <td>Product </td>
                                 <td>Status</td>
+                                <td>Delete</td>
                             </tr>
                         </thead>
 
@@ -189,6 +208,12 @@ function Codes() {
                                             </p>
                                         )}
                                     </td>
+                                    <button
+                                        onClick={() => deleteCode(code.id)}
+                                        className="text-red-600"
+                                    >
+                                        <FaTrash />
+                                    </button>
                                 </tr>
                             ))}
                         </tbody>

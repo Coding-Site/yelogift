@@ -58,7 +58,13 @@ function EditProduct() {
         setLoading(true);
         const fd = new FormData();
         for (const i in data) {
-            fd.append(i, i != 'image' ? (data as any)[i] : data.image[0]);
+            if (i === 'image') {
+                if (data.image && data.image[0]) {
+                    fd.append(i, data.image[0]);
+                }
+            } else {
+                fd.append(i, (data as any)[i]);
+            }
         }
         instance
             .post(`/api/admin/product/update`, fd, {

@@ -94,7 +94,7 @@ const Cart = ({ product }: { product: IProduct }) => {
                         product.image
                     }
                     alt="card"
-                    className="rounded-md "
+                    className="w-[130] h-[87px] sm:min-h-[156px]  sm:min-w-full rounded-md "
                 />
             </div>
 

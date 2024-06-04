@@ -42,6 +42,7 @@ function EditPart() {
                     title: part.title,
                     price: part.price,
                     discount: part.discount,
+                    price_text: part.price_text,
                 };
                 reset(defaultValues);
                 setLoading(false);
