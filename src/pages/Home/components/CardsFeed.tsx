@@ -96,28 +96,28 @@ function CardsFeed(data: {
                         </Link>
                     ))}
             </div>
-            <div className="flex sm:hidden justify-start overflow-x-scroll scrollbar-none sm:gap-12 gap-x-4 mt-3 sm:mt-10">
+            <div className="flex sm:hidden justify-start overflow-x-scroll scrollbar-none sm:gap-12 gap-x-2 mt-3 sm:mt-10">
                 {data.products.map((product: IProduct, idx) => (
                     <Link to={`/product/${product.id}`} key={idx}>
                         <div
                             key={idx}
-                            className="bg-white  flex flex-col justify-stretch items-center min-w-[150px] max-w-[150px] rounded-2xl 	"
+                            className="bg-white  flex flex-col justify-stretch items-center min-w-[112px] max-w-[112px] rounded-2xl max-h-[140px] min-h-[140px]	"
                         >
-                            <div className="  flex bg-[#EEEEEE] flex-col justify-stretch items-center  py-4 px-2 w-full rounded-2xl">
-                                <div className="relative w-1/3 rounded-full bg-black h-[15px]">
-                                    <div className="size-5 rounded-full bg-black absolute -top-[50%] left-[50%] -translate-x-[50%]"></div>
+                            <div className="  flex bg-[#EEEEEE] flex-col justify-stretch items-center  py-3 px-1 w-full rounded-2xl max-h-[140px] min-h-[140px]">
+                                <div className="relative w-[42px] rounded-full bg-black h-[15px]">
+                                    <div className="size-3 rounded-full bg-black absolute -top-[43%] left-[50%] -translate-x-[50%]"></div>
                                 </div>
                                 <img
-                                    className="  mx-auto w-full	 mt-5  rounded-2xl max-h-[99px] min-h-[99px]"
+                                    className="  mx-auto w-[90%] mt-2  rounded-2xl max-h-[62px] min-h-[62px]"
                                     src={`${
                                         import.meta.env.VITE_BASEURL
                                     }/public/storage/${product.image}`}
                                 />
-                                <div className="flex flex-col text-gray-500 justify-center items-center mt-2">
-                                    <span className="text-xs font-bold text-black">
+                                <div className="flex flex-col text-gray-500 justify-center items-center mt-1 w-full ">
+                                    <span className="text-[9px] font-bold text-black text-nowrap w-full line_clamp text-center">
                                         {product?.name}
                                     </span>
-                                    <span className="text-xs  mt-2">
+                                    <span className="text-[9px]  mt-1 text-nowrap  w-full line_clamp text-center">
                                         {prodCat}
                                     </span>
                                 </div>

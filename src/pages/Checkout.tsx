@@ -91,7 +91,7 @@ function Checkout() {
                     <div className="flex items-center justify-between text-sm mt-5">
                         <span>Total Estimate</span>
                         <span className="text-xl text-[#6D6D6D]">
-                            ${calculateTotalPrice()}
+                            USDT {calculateTotalPrice()}
                         </span>
                     </div>
                 </div>

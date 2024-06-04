@@ -77,7 +77,7 @@ function CheckoutSingleNow() {
                     <div className="flex items-center justify-between text-sm mt-5">
                         <span>Total Estimate</span>
                         <span className="text-xl text-[#6D6D6D]">
-                            ${orderData?.total_price}
+                            USDT {orderData?.total_price}
                         </span>
                     </div>
                 </div>

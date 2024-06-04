@@ -28,6 +28,7 @@ function Footer() {
     return (
         <footer
             className={`bg-mainLightBlack pt-10 pb-5 text-mainWhite ${styles.footer_sec} `}
+            id="footer"
         >
             <div
                 className={`${styles.footer_container} hidden sm:flex w-full flex-col gap-y-3 sm:flex-row justify-between container border-b border-gray-700 pb-10 `}
@@ -74,7 +75,7 @@ function Footer() {
                             <Link to="/">About Us</Link>
                         </li>
                         <li>
-                            <Link to="/">Contact</Link>
+                            <Link to="#footer">Contact us</Link>
                         </li>
                     </ul>
                 </div>
@@ -116,7 +117,7 @@ function Footer() {
                             />
                         </li>
                         <li className="flex justify-between gap-x-3 w-full">
-                            <Link to="/">Contact us</Link>
+                            <Link to="#footer">Contact us</Link>
                             <img
                                 className="w-4"
                                 src="/assets/slider/prev.png"
@@ -173,15 +174,15 @@ function Footer() {
 
             <div className="flex flex-col gap-y-5 sm:flex-row justify-between  w-full container py-5 text-gray-500">
                 <span>&copy; 2024 yelogift all rights reserved </span>{' '}
-                <span>
-                    made by{' '}
+                {/* <span>
+                    made by
                     <a
                         className="inline-block mx-2"
                         href="https://coding-site.com"
                     >
                         coding site
                     </a>
-                </span>
+                </span> */}
             </div>
         </footer>
     );

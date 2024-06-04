@@ -14,6 +14,7 @@ type Inputs = {
     title: string;
     discount: string;
     price: string;
+    price_text?: string;
     selling_type: 'auto' | 'manual';
     manual_input?: string;
     code?: string;
@@ -36,7 +37,6 @@ function AddPart() {
 
     const onSubmit: SubmitHandler<Inputs> = (data: Inputs) => {
         setLoading(true);
-        console.log({ ...data, product_id: productId, codes });
         instance
             .post(
                 `/api/admin/product/parts/store`,
@@ -113,6 +113,19 @@ function AddPart() {
                                 </label>
                                 <input
                                     {...register('price')}
+                                    type="text"
+                                    className="border border-gray-400 rounded-md bg-transparent p-1"
+                                />
+                            </div>
+                            <div className="flex flex-col gap-2 relative">
+                                <label
+                                    htmlFor="price_text"
+                                    className="text-main font-semibold"
+                                >
+                                    Price Description
+                                </label>
+                                <input
+                                    {...register('price_text')}
                                     type="text"
                                     className="border border-gray-400 rounded-md bg-transparent p-1"
                                 />

@@ -53,7 +53,7 @@ export default function Slider() {
                         <SwiperSlide key={index}>
                             <a
                                 href={ensureAbsoluteUrl(slide.link) || '#'}
-                                className="h-[50vh]"
+                                className="h-[50vh] a_slider_img"
                             >
                                 <img
                                     src={

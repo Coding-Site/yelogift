@@ -147,7 +147,7 @@ function Navbar() {
                 <MobileMenu open={openMenu} setOpenMenu={setOpenMenu} />
                 <div className="w-max flex justify-between items-center gap-4 py-4">
                     <GiHamburgerMenu
-                        className="text-main text-2xl cursor-pointer flex sm:hidden"
+                        className="text-main text-2xl cursor-pointer flex md:hidden"
                         onClick={() => setOpenMenu(!openMenu)}
                     />
                 </div>
@@ -158,7 +158,7 @@ function Navbar() {
                         alt="logo"
                     />
                 </Link>
-                <div className="hidden sm:flex justify-start gap-9 ps-5 py-4 items-center">
+                <div className="hidden md:flex justify-start gap-5 ps-5 py-4 items-center">
                     <NavLink
                         to="/"
                         className={({ isActive }) =>

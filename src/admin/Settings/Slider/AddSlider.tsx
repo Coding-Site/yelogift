@@ -28,7 +28,7 @@ function AddSlider() {
         for (const i in data) {
             fd.append(i, i != 'image' ? (data as any)[i] : data.image[0]);
         }
-
+        console.log(fd);
         instance
             .post(`/api/admin/slider/store`, fd, {
                 headers: {

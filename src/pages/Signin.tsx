@@ -165,24 +165,25 @@ function Signin() {
     return (
         <div className="flex flex-col text-mainWhite">
             <div className="flex flex-col-reverse sm:flex-row bg-black sm:bg-mainLightBlack pt-5 sm:pt-0">
-                <div className=" p-4  flex flex-col w-full sm:w-1/2 gap-y-10">
+                <div className=" p-4  flex flex-col w-full sm:w-1/2 justify-between h-fit">
                     <div className="p-0 sm:p-5 h-1/5 flex flex-col gap-y-10">
-                        <img
-                            className="w-28 hidden sm:flex"
-                            src="/assets/logo.png"
-                            alt="logo"
-                        />
-
-                        <h2 className="text-3xl font-semibold">
-                            Login to your account
-                        </h2>
+                        <div>
+                            <img
+                                className="w-28 hidden sm:flex mb-10"
+                                src="/public/assets/Logo/Asset-1.png"
+                                alt="logo"
+                            />
+                            <h2 className="text-3xl font-semibold mt-2">
+                                Login to your account
+                            </h2>
+                        </div>
                         <div
-                            className="flex justify-around w-full
-          [&>*]:border [&>*]:border-gray-300 [&>*]:rounded-md [&>*]:py-2 [&>*]:px-4"
+                            className="flex  flex-col items-center justify-around w-full md:flex-row
+          [&>*]:border [&>*]:border-gray-300 [&>*]:rounded-md [&>*]:py-2 [&>*]:px-4 gap-2"
                         >
                             <button
                                 style={{ position: 'relative' }}
-                                className="flex gap-x-2 "
+                                className="flex justify-around items-center pad_0_im h-[42px] w-[140px] min-w-[110px] text-[14px] gap-1 "
                                 onClick={() => {
                                     signInWithGoogle();
                                 }}
@@ -195,7 +196,7 @@ function Signin() {
                             </button>
                             <button
                                 onClick={() => signInWithFacebook()}
-                                className="flex gap-x-2 "
+                                className="flex justify-around items-center pad_0_im h-[42px] w-[140px] min-w-[110px] text-[14px] gap-1 "
                             >
                                 <img
                                     src="assets/signin/facebook.png"
@@ -203,7 +204,7 @@ function Signin() {
                                 />
                                 Facebook
                             </button>
-                            <button className="flex gap-x-2 ">
+                            <button className="flex justify-around items-center pad_0_im h-[42px] w-[140px] min-w-[110px] text-[14px] gap-1 ">
                                 <img
                                     src="assets/signin/binance.png"
                                     alt="singin with google"
@@ -288,7 +289,7 @@ function Signin() {
                         alt="login hero"
                     />
                     <img
-                        className="hidden sm:flex"
+                        className="hidden sm:flex w-full h-[100%] object-cover"
                         src="/assets/admin/login-hero.jpg"
                         alt="login hero"
                     />
