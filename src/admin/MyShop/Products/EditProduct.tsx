@@ -5,7 +5,6 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { ICategory } from '../../../models/ICategory';
 import { PiArrowsCounterClockwise } from 'react-icons/pi';
 import { FaRegTrashAlt } from 'react-icons/fa';
-import { BiDollar } from 'react-icons/bi';
 import Spinner from '../../../utils/Spinner';
 import instance from '../../../axios';
 
