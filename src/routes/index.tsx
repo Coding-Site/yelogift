@@ -42,6 +42,9 @@ const AddCategory = lazy(() => import('../admin/MyShop/Category/AddCategory'));
 const TopNavSettings = lazy(
     () => import('../admin/Settings/TopNav/TopNavSettings')
 );
+const ContactUsSettings = lazy(
+    () => import('../admin/Settings/ContactUS/ContactUsSettings')
+);
 
 // Site Settings Pages
 const SiteSetting = lazy(
@@ -417,6 +420,14 @@ export const router = createHashRouter([
                                 element: (
                                     <Suspense fallback={<Spinner />}>
                                         <TopNavSettings />
+                                    </Suspense>
+                                ),
+                            },
+                            {
+                                path: 'contact-settings',
+                                element: (
+                                    <Suspense fallback={<Spinner />}>
+                                        <ContactUsSettings />
                                     </Suspense>
                                 ),
                             },

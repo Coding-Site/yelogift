@@ -6,6 +6,7 @@ import instance from '../axios';
 function Footer() {
     const [socials, setSocials] = useState<any>([]);
     const [desc, setDesc] = useState<any>([]);
+    const [contactData, setContactData] = useState<any>(null);
 
     const iconObj: any = {
         facebook: '/assets/social/facebook.png',
@@ -24,6 +25,19 @@ function Footer() {
             setDesc(d.data.data.description);
         });
     }, []);
+    useEffect(() => {
+        const fetchContactData = async () => {
+            try {
+                const response = await instance.get('/api/contact ');
+                const ContactData = response.data.data[0];
+                setContactData(ContactData);
+            } catch (error) {
+                console.error('Failed to fetch Contact data:', error);
+            }
+        };
+        fetchContactData();
+    }, []);
+    console.log(contactData);
 
     return (
         <footer
@@ -66,35 +80,35 @@ function Footer() {
                             <Link to="/">Privact Policy</Link>
                         </li>
                         <li>
-                            <Link to="/"></Link>Services
-                        </li>
-                        <li>
                             <Link to="/">Term and Conditions</Link>
                         </li>
                         <li>
                             <Link to="/">About Us</Link>
                         </li>
-                        <li>
-                            <Link to="#footer">Contact us</Link>
-                        </li>
                     </ul>
                 </div>
-                <div className="flex flex-col">
-                    <ul className="text-mainWhite">
-                        <li className="text-main capitalize font-semibold text-xl mb-2">
-                            Contact Us
-                        </li>
-                        <li className="text-main">
-                            <Link to="/">Based in IRAQ</Link>
-                        </li>
-                        <li>
-                            <Link to="/"></Link>hello@yourdomain.com
-                        </li>
-                        <li>
-                            <Link to="/">(078) 12345 12112</Link>
-                        </li>
-                    </ul>
-                </div>
+                {contactData?.address ||
+                contactData?.mail_1 ||
+                contactData?.mail_2 ||
+                contactData?.phone_1 ||
+                contactData?.phone_2 ? (
+                    <div className="flex flex-col">
+                        <ul className="text-mainWhite">
+                            <li className="text-main capitalize font-semibold text-xl mb-2">
+                                Contact Us
+                            </li>
+                            <li className="text-main">
+                                {contactData?.address}
+                            </li>
+                            <li>{contactData?.mail_1}</li>
+                            <li>{contactData?.mail_2}</li>
+                            <li>{contactData?.phone_1}</li>
+                            <li>{contactData?.phone_2}</li>
+                        </ul>
+                    </div>
+                ) : (
+                    ''
+                )}
             </div>
             {/* ________________________________________________mob__________________________________________________________________         */}
             <div className="flex sm:hidden w-full flex-col gap-y-3  justify-between container">

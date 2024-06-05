@@ -89,7 +89,13 @@ function Sidebar() {
                             </li>
                             <li>
                                 <NavItem
-                                    item="Advertisment Top Nav"
+                                    item="Contact Us"
+                                    to="/admin/contact-settings"
+                                />
+                            </li>
+                            <li>
+                                <NavItem
+                                    item="Ad Nav-bar"
                                     to="/admin/topnav-settings"
                                 />
                             </li>
