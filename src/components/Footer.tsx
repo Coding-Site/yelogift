@@ -37,7 +37,6 @@ function Footer() {
         };
         fetchContactData();
     }, []);
-    console.log(contactData);
 
     return (
         <footer
@@ -77,13 +76,15 @@ function Footer() {
                             Company
                         </li>
                         <li>
-                            <Link to="/">Privact Policy</Link>
+                            <Link to="/privact-policy">Privact Policy</Link>
                         </li>
                         <li>
-                            <Link to="/">Term and Conditions</Link>
+                            <Link to="/term-and-conditions">
+                                Term and Conditions
+                            </Link>
                         </li>
                         <li>
-                            <Link to="/">About Us</Link>
+                            <Link to="/about-us">About Us</Link>
                         </li>
                     </ul>
                 </div>

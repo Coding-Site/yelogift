@@ -20,6 +20,9 @@ const OrdersHistory = lazy(() => import('../pages/OrdersHistory'));
 const Signin = lazy(() => import('../pages/Signin'));
 const Signup = lazy(() => import('../pages/SignUp'));
 const Search = lazy(() => import('../pages/Search'));
+const About = lazy(() => import('../pages/About'));
+const TermAndConditions = lazy(() => import('../pages/TermAndConditions'));
+const PrivacyPolicy = lazy(() => import('../pages/PrivacyPolicy'));
 const AdminHome = lazy(() => import('../admin/AdminHome/AdminHome'));
 const AdminLogin = lazy(() => import('../admin/AdminLogin'));
 const UserSettings = lazy(() => import('../pages/UserSettings'));
@@ -188,6 +191,30 @@ export const router = createHashRouter([
                         element: (
                             <Suspense fallback={<Spinner />}>
                                 <Search />
+                            </Suspense>
+                        ),
+                    },
+                    {
+                        path: 'about-us',
+                        element: (
+                            <Suspense fallback={<Spinner />}>
+                                <About />
+                            </Suspense>
+                        ),
+                    },
+                    {
+                        path: 'term-and-conditions',
+                        element: (
+                            <Suspense fallback={<Spinner />}>
+                                <TermAndConditions />
+                            </Suspense>
+                        ),
+                    },
+                    {
+                        path: 'privact-policy',
+                        element: (
+                            <Suspense fallback={<Spinner />}>
+                                <PrivacyPolicy />
                             </Suspense>
                         ),
                     },

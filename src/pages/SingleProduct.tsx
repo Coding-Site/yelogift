@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { FaStar } from 'react-icons/fa';
+// import { FaStar } from 'react-icons/fa';
 import { FiCircle } from 'react-icons/fi';
 import { FaRegCircleStop } from 'react-icons/fa6';
 import { IProductPart } from '../models/IProductPart';
@@ -263,20 +263,20 @@ function SingleProduct() {
 
 export default SingleProduct;
 
-const Rating = ({ rating }: { rating: number }) => {
-    const end = 5;
-    const [rt] = useState(rating);
-    return (
-        <div className="rating flex items-end gap-1">
-            {Array.from({ length: end }, (_, idx) => (
-                <FaStar
-                    key={idx}
-                    className={`text-2xl  
-         ${idx + 1 <= rt ? 'text-main' : ' text-gray-500'}  
-         `}
-                />
-            ))}
-            <span>Rating {rating}</span>
-        </div>
-    );
-};
+// const Rating = ({ rating }: { rating: number }) => {
+//     const end = 5;
+//     const [rt] = useState(rating);
+//     return (
+//         <div className="rating flex items-end gap-1">
+//             {Array.from({ length: end }, (_, idx) => (
+//                 <FaStar
+//                     key={idx}
+//                     className={`text-2xl
+//          ${idx + 1 <= rt ? 'text-main' : ' text-gray-500'}
+//          `}
+//                 />
+//             ))}
+//             <span>Rating {rating}</span>
+//         </div>
+//     );
+// };

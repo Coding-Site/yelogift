@@ -170,7 +170,7 @@ function Signin() {
                         <div>
                             <img
                                 className="w-28 hidden sm:flex mb-10"
-                                src="/public/assets/Logo/Asset-1.png"
+                                src="/assets/Logo/Asset-1.png"
                                 alt="logo"
                             />
                             <h2 className="text-3xl font-semibold mt-2">
