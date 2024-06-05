@@ -41,9 +41,9 @@ function Checkout() {
     };
 
     return (
-        <div className="flex flex-col py-10 w-full container text-mainLightBlack">
+        <div className="flex flex-col md:py-10 w-full md:container text-mainLightBlack">
             <div className="flex justify-between flex-col sm:flex-row w-full gap-3">
-                <div className="flex justify-start flex-col gap-y-10 sm:text-black text-white px-10 py-10 sm:bg-white grow">
+                <div className="flex justify-start flex-col gap-y-10 sm:text-black text-white px-5 md:py-10 sm:bg-white grow">
                     <span className="sm:flex hidden text-2xl font-semibold  ">
                         Order Summary
                     </span>
@@ -56,31 +56,36 @@ function Checkout() {
                             carts.map((cart: any, idx) => {
                                 if (cart.quantity) {
                                     return (
-                                        <div
-                                            className="flex  justify-between  w-full "
-                                            key={idx}
-                                        >
-                                            <img
-                                                className="w-20 h-12"
-                                                src={`${
-                                                    import.meta.env.VITE_BASEURL
-                                                }/public/storage/${
-                                                    cart.product?.image
-                                                }`}
-                                                alt="cart"
-                                            />
-                                            <div className="flex flex-col gap-0">
-                                                <span className="text-black sm:text-base text-sm whitespace-nowrap">
-                                                    {cart.product?.name}
-                                                </span>
-                                                <span className="text-sm text-gray-500">
-                                                    USD {cart.product?.price}
-                                                </span>
+                                        <>
+                                            <div
+                                                className="flex  justify-between  w-full "
+                                                key={idx}
+                                            >
+                                                <img
+                                                    className="w-20 h-12"
+                                                    src={`${
+                                                        import.meta.env
+                                                            .VITE_BASEURL
+                                                    }/public/storage/${
+                                                        cart.product?.image
+                                                    }`}
+                                                    alt="cart"
+                                                />
+                                                <div className="flex flex-col gap-0">
+                                                    <span className="text-black sm:text-base text-sm whitespace-nowrap">
+                                                        {cart.product?.name}
+                                                    </span>
+                                                    <span className="text-sm text-gray-500">
+                                                        USD{' '}
+                                                        {cart.product?.price}
+                                                    </span>
+                                                </div>
+                                                <div className="flex  py-1 px-4 items-center   justify-center items-center rounded-full w-auto border border-gray-300">
+                                                    {cart.quantity}
+                                                </div>
                                             </div>
-                                            <div className="flex  py-1 px-4 items-center   justify-center items-center rounded-full w-auto border border-gray-300">
-                                                {cart.quantity}
-                                            </div>
-                                        </div>
+                                            <hr />
+                                        </>
                                     );
                                 }
                             })
@@ -88,7 +93,7 @@ function Checkout() {
                             <span>No Items in the Cart</span>
                         )}
                     </div>
-                    <div className="flex items-center justify-between text-sm mt-5">
+                    <div className="flex items-center container justify-between text-sm mt-5">
                         <span>Total Estimate</span>
                         <span className="text-xl text-[#6D6D6D]">
                             USDT {calculateTotalPrice()}
@@ -161,7 +166,7 @@ function Checkout() {
                     )}
                 </div>
             </div>
-            <div className="flex flex-col gap-y-5  items-center py-14">
+            <div className="flex flex-col gap-y-5  items-center py-2 md:py-14">
                 <button className="btn !rounded-md !w-56" onClick={SendToDB}>
                     {' '}
                     Submit
