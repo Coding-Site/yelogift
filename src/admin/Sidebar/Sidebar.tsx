@@ -13,7 +13,7 @@ function Sidebar() {
             <Link to="/">
                 <img
                     className="w-[60%] me-auto"
-                    src="/assets/logo.png"
+                    src="/assets/Logo/Asset-1.png"
                     alt="logo"
                 />
             </Link>
@@ -86,6 +86,18 @@ function Sidebar() {
                             </li>
                             <li>
                                 <NavItem item="Footer" to="/admin/footer" />
+                            </li>
+                            <li>
+                                <NavItem
+                                    item="Contact Us"
+                                    to="/admin/contact-settings"
+                                />
+                            </li>
+                            <li>
+                                <NavItem
+                                    item="Ad Nav-bar"
+                                    to="/admin/topnav-settings"
+                                />
                             </li>
                             {/* <li>
                                 <NavItem item="Video" to="/admin/video" />

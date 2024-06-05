@@ -35,7 +35,7 @@ function MobileMenu({
     return (
         <>
             <div
-                className={`absolute top-20 min-w-fit left-0 sm:hidden h-screen z-30 flex flex-col gap-4 pt-5 bg-mainBlack transition-all ease-out lef-0 text-white w-[200px] ${
+                className={`absolute top-32 min-w-fit left-0 md:hidden h-screen z-30 flex flex-col gap-4 pt-5 bg-mainBlack transition-all ease-out lef-0 text-white w-[200px] ${
                     open ? '' : '-translate-x-[120%]'
                 }  p-2 `}
             >

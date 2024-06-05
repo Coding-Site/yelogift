@@ -16,6 +16,7 @@
     margin: 0 !important;
     max-height: 50vh !important;
     user-select: none;
+    min-width: 100%;
 }
 .swiper-pagination-bullets {
     display: none;
@@ -37,7 +38,7 @@
 
 @media (max-width: 650px) {
     .swiper {
-        max-height: 25vh !important;
+        max-height: 30vh !important;
     }
 }
 
@@ -58,4 +59,12 @@
     overflow: hidden;
     text-overflow: ellipsis;
     -webkit-line-clamp: 1;
+}
+
+.preserve-whitespace {
+    white-space: pre-line;
+}
+
+.pad_0_im {
+    padding: 0 !important;
 }

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { FaChevronLeft } from 'react-icons/fa6';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -14,6 +13,7 @@ type Inputs = {
     title: string;
     discount: string;
     price: string;
+    price_text: string;
     selling_type: any;
 };
 
@@ -42,6 +42,7 @@ function EditPart() {
                     title: part.title,
                     price: part.price,
                     discount: part.discount,
+                    price_text: part.price_text,
                 };
                 reset(defaultValues);
                 setLoading(false);
@@ -65,7 +66,10 @@ function EditPart() {
                 setLoading(false);
                 navigate(`/admin/products/${productId}/parts`);
             })
-            .catch((err) => console.log(err));
+            .catch((err) => {
+                console.log(err);
+                setLoading(false);
+            });
     };
 
     return (
@@ -109,6 +113,19 @@ function EditPart() {
                                 </label>
                                 <input
                                     {...register('price')}
+                                    type="text"
+                                    className="border border-gray-400 rounded-md bg-transparent p-1"
+                                />
+                            </div>
+                            <div className="flex flex-col gap-2 relative">
+                                <label
+                                    htmlFor="price_text"
+                                    className="text-main font-semibold"
+                                >
+                                    Price Description
+                                </label>
+                                <input
+                                    {...register('price_text')}
                                     type="text"
                                     className="border border-gray-400 rounded-md bg-transparent p-1"
                                 />

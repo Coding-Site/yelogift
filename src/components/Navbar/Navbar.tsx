@@ -37,6 +37,7 @@ function Navbar() {
     const userToken = localstorageUser?.userToken;
     const adminRole = localstorageAdmin?.role;
     const adminToken = localstorageAdmin?.adminToken;
+    const userAuth = localstorageUser?.auth;
     const { removeItem } = useLocalStorage();
 
     const [hoveredNotificationId, setHoveredNotificationId] = useState<
@@ -146,18 +147,18 @@ function Navbar() {
                 <MobileMenu open={openMenu} setOpenMenu={setOpenMenu} />
                 <div className="w-max flex justify-between items-center gap-4 py-4">
                     <GiHamburgerMenu
-                        className="text-main text-2xl cursor-pointer flex sm:hidden"
+                        className="text-main text-2xl cursor-pointer flex md:hidden"
                         onClick={() => setOpenMenu(!openMenu)}
                     />
                 </div>
-                <Link className="mx-auto min-w-[150px]" to="/">
+                <Link className="mx-auto min-w-[115px] " to="/">
                     <img
-                        src="/assets/logo.png"
+                        src="/assets/Logo/Asset-1.png"
                         className="cursor-pointer w-[150px]"
                         alt="logo"
                     />
                 </Link>
-                <div className="hidden sm:flex justify-start gap-9 ps-5 py-4 items-center">
+                <div className="hidden md:flex justify-start gap-5 ps-5 py-4 items-center">
                     <NavLink
                         to="/"
                         className={({ isActive }) =>
@@ -190,7 +191,7 @@ function Navbar() {
                             My Orders
                         </NavLink>
                     )}
-                    {userToken && (
+                    {userToken && userAuth == 'yelogift' && (
                         <NavLink
                             className={({ isActive }) =>
                                 isActive

@@ -39,6 +39,12 @@ const OrderDetails = lazy(() => import('../admin/MyShop/Orders/OrderDetails'));
 const Customers = lazy(() => import('../admin/MyShop/Customers/Customers'));
 const Category = lazy(() => import('../admin/MyShop/Category/Category'));
 const AddCategory = lazy(() => import('../admin/MyShop/Category/AddCategory'));
+const TopNavSettings = lazy(
+    () => import('../admin/Settings/TopNav/TopNavSettings')
+);
+const ContactUsSettings = lazy(
+    () => import('../admin/Settings/ContactUS/ContactUsSettings')
+);
 
 // Site Settings Pages
 const SiteSetting = lazy(
@@ -406,6 +412,22 @@ export const router = createHashRouter([
                                 element: (
                                     <Suspense fallback={<Spinner />}>
                                         <Footer />
+                                    </Suspense>
+                                ),
+                            },
+                            {
+                                path: 'topnav-settings',
+                                element: (
+                                    <Suspense fallback={<Spinner />}>
+                                        <TopNavSettings />
+                                    </Suspense>
+                                ),
+                            },
+                            {
+                                path: 'contact-settings',
+                                element: (
+                                    <Suspense fallback={<Spinner />}>
+                                        <ContactUsSettings />
                                     </Suspense>
                                 ),
                             },

@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import Spinner from '../../../utils/Spinner';
 import { useForm } from 'react-hook-form';
 import instance from '../../../axios';
+import { FaTrash } from 'react-icons/fa';
 
 function Codes() {
     const localstorage = JSON.parse(
@@ -64,6 +65,23 @@ function Codes() {
                 setLoading(false);
             });
     };
+
+    const deleteCode = (codeId: any) => {
+        setLoading(true);
+        instance
+            .get(`/api/admin/product/parts/codes/delete/${codeId}`, {
+                headers: {
+                    Authorization: `Bearer ${adminToken}`,
+                },
+            })
+            .then((response) => {
+                if (response.data.status) {
+                    getAllCodes({ password });
+                }
+                setLoading(false);
+            });
+    };
+
     const onSubmit = (data: any) => {
         getAllCodes(data);
     };
@@ -79,7 +97,7 @@ function Codes() {
             })
             .then((d) => console.log('after uploading codes fiel', d));
     }
-
+    console.log(codes);
     return (
         <div className="flex flex-col gap-4 w-full py-5 container">
             <div className="flex items-center justify-between w-full pt-10 pb-5 ">
@@ -162,9 +180,10 @@ function Codes() {
                             <tr className="border-b-[30px] border- border-transparent font-medium">
                                 <td>ID</td>
                                 <td>Code</td>
-                                <td>Part ID</td>
-                                <td>Product ID</td>
+                                <td>Part </td>
+                                <td>Product </td>
                                 <td>Status</td>
+                                <td>Delete</td>
                             </tr>
                         </thead>
 
@@ -176,9 +195,25 @@ function Codes() {
                                 >
                                     <td className="font-bold">#{code.id}</td>
                                     <td className="w-36">{code.code}</td>
-                                    <td>{code?.part_id}</td>
-                                    <td>{code?.product_id}</td>
-                                    <td>{code?.status}</td>
+                                    <td>{code?.part.title}</td>
+                                    <td>{code?.product.name}</td>
+                                    <td>
+                                        {code?.status == 0 ? (
+                                            <p className="text-[#1B8900]">
+                                                Available
+                                            </p>
+                                        ) : (
+                                            <p className="text-[#6D6D6D]">
+                                                Used
+                                            </p>
+                                        )}
+                                    </td>
+                                    <button
+                                        onClick={() => deleteCode(code.id)}
+                                        className="text-red-600"
+                                    >
+                                        <FaTrash />
+                                    </button>
                                 </tr>
                             ))}
                         </tbody>

@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import instance from '../../../axios';
 import Spinner from '../../../utils/Spinner';
 
-function Footer() {
+function TopNavSettings() {
     const { register, handleSubmit, reset } = useForm<any>();
     const [loading, setLoading] = useState(false);
     const localstorage = JSON.parse(
@@ -12,32 +12,34 @@ function Footer() {
     const adminToken = localstorage?.adminToken;
 
     useEffect(() => {
-        const fetchFooterData = async () => {
+        const fetchTopNav = async () => {
             try {
                 setLoading(true);
-                const response = await instance.get('/api/admin/footer', {
+                const response = await instance.get('/api/admin/advertismant', {
                     headers: {
                         Authorization: `Bearer ${adminToken}`,
                     },
                 });
-                const footerData = response.data;
-                const defaultValues = {
-                    description: footerData.data.description,
+                const topNavData = response.data.data[0];
+                console.log(topNavData);
+                const defaultValues: any = {
+                    description: topNavData.description || '',
+                    url: topNavData.url || '',
                 };
-                reset(defaultValues as any);
+                reset(defaultValues);
             } catch (error) {
-                console.error('Failed to fetch footer data:', error);
+                console.error('Failed to fetch topnav data:', error);
             } finally {
                 setLoading(false);
             }
         };
-        fetchFooterData();
+        fetchTopNav();
     }, []);
 
     const onSubmit = async (data: any) => {
         try {
             setLoading(true);
-            await instance.post('/api/admin/footer/update', data, {
+            await instance.put('/api/admin/advertismant/update', data, {
                 headers: {
                     Authorization: `Bearer ${adminToken}`,
                 },
@@ -56,14 +58,14 @@ function Footer() {
                 <>
                     <div className="flex justify-between mb-6">
                         <span className="ps-3 border-mainLightColor border-s-4 font-medium">
-                            Footer
+                            Advertisment Top Nav
                         </span>
                     </div>
                     <form
                         onSubmit={handleSubmit(onSubmit)}
-                        className="flex items-end gap-3 w-full"
+                        className="flex flex-col items-start gap-3 w-full"
                     >
-                        <div className="flex flex-col grow">
+                        <div className="flex flex-col grow w-full">
                             <label
                                 htmlFor="description "
                                 className="text-main mb-4"
@@ -79,6 +81,19 @@ function Footer() {
                                 rows={10}
                             ></textarea>
                         </div>
+                        <div className="flex flex-col grow w-full">
+                            <label
+                                htmlFor="url"
+                                className="text-main flex flex-col font-semibold gap-y-2 w-full"
+                            >
+                                URL
+                                <input
+                                    {...register('url')}
+                                    type="text"
+                                    className="border border-gray-400 rounded-md bg-transparent p-1"
+                                />
+                            </label>
+                        </div>
                         <button className="btn py-2  !rounded-md px-5">
                             Save changes
                         </button>
@@ -89,4 +104,4 @@ function Footer() {
     );
 }
 
-export default Footer;
+export default TopNavSettings;

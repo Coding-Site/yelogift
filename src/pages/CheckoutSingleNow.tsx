@@ -68,11 +68,17 @@ function CheckoutSingleNow() {
                                     }
                                 </span>
                                 <span className="text-sm text-gray-500">
-                                    {orderData?.order.currency}{' '}
+                                    USD
                                     {orderData?.total_price}
                                 </span>
                             </div>
                         </div>
+                    </div>
+                    <div className="flex items-center justify-between text-sm mt-5">
+                        <span>Total Estimate</span>
+                        <span className="text-xl text-[#6D6D6D]">
+                            USDT {orderData?.total_price}
+                        </span>
                     </div>
                 </div>
                 <div className="flex justify-start flex-col sm:text-black text-white gap-y-10 px-10 py-10 sm:bg-white grow">

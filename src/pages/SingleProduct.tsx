@@ -79,6 +79,7 @@ function SingleProduct() {
             alert('You should sign in to place an order');
         }
     };
+    console.log(Product);
     return (
         <>
             <div className="py-10 flex flex-col sm:flex-row justify-between container ">
@@ -111,7 +112,7 @@ function SingleProduct() {
                     <span className="capitalize text-white text-3xl font-semibold">
                         {Product?.name}
                     </span>
-                    <Rating rating={2} />
+                    {/* <Rating rating={2} /> */}
                     <span className="p-2 border w-full border-gray-200 rounded-md text-sm text-ellipsis ">
                         <span className="line_clamp w-[50%] text-ellipsis">
                             {Product?.description}
@@ -134,15 +135,21 @@ function SingleProduct() {
                                 )}
                                 <div className="flex flex-col gap-3">
                                     <span>{(pp as IProductPart)?.title}</span>
-                                    <span className="text-gray-500  ">
-                                        Price: USD{' '}
-                                        <span className="line-through">
-                                            {' '}
-                                            {pp?.discount}
+                                    <div className="flex gap-5 text-gray-500 ">
+                                        Price :{' '}
+                                        {pp?.discount > 0 && (
+                                            <span className="text-gray-500 line-through ">
+                                                USD {pp?.price}
+                                            </span>
+                                        )}
+                                        <span className="text-gray-500 ">
+                                            USD {pp?.priceDiscount}
                                         </span>
-                                    </span>
+                                    </div>
                                 </div>
-                                <span className="ms-auto">{pp?.price}</span>
+                                <span className="ms-auto">
+                                    {pp?.price_text}
+                                </span>
                             </div>
                         ))}
                     </div>
@@ -211,7 +218,9 @@ function SingleProduct() {
                         Description
                     </div>
                     <div className="collapse-content ">
-                        {Product?.description}
+                        <p className="preserve-whitespace ">
+                            {Product?.description}
+                        </p>
                     </div>
                 </div>
                 <div
@@ -223,7 +232,9 @@ function SingleProduct() {
                     </div>
                     {Product?.how_to_redeem ? (
                         <div className="collapse-content ">
-                            <p>{Product.how_to_redeem}</p>
+                            <p className="preserve-whitespace ">
+                                {Product.how_to_redeem}
+                            </p>
                         </div>
                     ) : (
                         <div className="collapse-content ">

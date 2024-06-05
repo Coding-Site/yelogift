@@ -5,7 +5,6 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { ICategory } from '../../../models/ICategory';
 import { PiArrowsCounterClockwise } from 'react-icons/pi';
 import { FaRegTrashAlt } from 'react-icons/fa';
-import { BiDollar } from 'react-icons/bi';
 import Spinner from '../../../utils/Spinner';
 import instance from '../../../axios';
 
@@ -59,7 +58,13 @@ function EditProduct() {
         setLoading(true);
         const fd = new FormData();
         for (const i in data) {
-            fd.append(i, i != 'image' ? (data as any)[i] : data.image[0]);
+            if (i === 'image') {
+                if (data.image && data.image[0]) {
+                    fd.append(i, data.image[0]);
+                }
+            } else {
+                fd.append(i, (data as any)[i]);
+            }
         }
         instance
             .post(`/api/admin/product/update`, fd, {
@@ -224,42 +229,6 @@ function EditProduct() {
                                 >
                                     <FaRegTrashAlt /> remove
                                 </button>
-                            </div>
-                        </div>
-                        <div className="flex flex-col gap-2">
-                            <label
-                                htmlFor="name"
-                                className="text-main font-semibold"
-                            >
-                                Pricing
-                            </label>
-                            <div className="flex flex-wrap justify-between items-end gap-3 border border-gray-600 rounded-md bg-transparent p-3 w-full">
-                                <div className="flex flex-col w-full gap-2">
-                                    <span>Price</span>
-                                    <div className="flex gap-2 border border-gray-400 rounded-md bg-transparent p-1">
-                                        <span className=" bg-gray-600 size-8 aspect-square rounded-md flex justify-center items-center">
-                                            <BiDollar className=" text-main" />
-                                        </span>
-                                        <input
-                                            {...register('price')}
-                                            type="text"
-                                            className="bg-transparent outline-none border-none"
-                                        />
-                                    </div>
-                                </div>
-                                <div className="flex flex-col w-full gap-2">
-                                    <span>Discount</span>
-                                    <div className="flex gap-2 border border-gray-400 rounded-md bg-transparent p-1">
-                                        <span className=" bg-gray-600 size-8 aspect-square rounded-md flex justify-center items-center">
-                                            <BiDollar className=" text-main" />
-                                        </span>
-                                        <input
-                                            {...register('discount')}
-                                            type="text"
-                                            className="bg-transparent outline-none border-none"
-                                        />
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
