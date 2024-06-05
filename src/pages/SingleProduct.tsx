@@ -68,7 +68,6 @@ function SingleProduct() {
                 )
                 .then((data) => {
                     const orderId = data.data.data.order.id;
-                    console.log(orderId);
                     localStorage.setItem('orderId', JSON.stringify(orderId));
                     navigate(`buy-now/${orderId}`);
                 })
@@ -79,7 +78,6 @@ function SingleProduct() {
             alert('You should sign in to place an order');
         }
     };
-    console.log(Product);
     return (
         <>
             <div className="py-10 flex flex-col sm:flex-row justify-between container ">

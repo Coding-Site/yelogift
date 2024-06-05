@@ -49,7 +49,6 @@ function Signup() {
     };
 
     const sendData = (cR: any) => {
-        console.log(cR.user);
         const userData: any = {
             name: cR?.user.displayName,
             email: cR?.user.email,
@@ -74,7 +73,6 @@ function Signup() {
                         userToken: response?.data.data.token,
                         role: 'user',
                     };
-                    console.log(userLocal);
                     localStorage.setItem('userData', JSON.stringify(userLocal));
                     navigate('/');
                     window.location.reload();
