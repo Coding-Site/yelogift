@@ -47,9 +47,15 @@ function Checkout() {
                     <span className="sm:flex hidden text-2xl font-semibold  ">
                         Order Summary
                     </span>
-                    <span className="sm:hidden flex text-2xl font-semibold gap-x-2">
+                    <span className="sm:hidden flex items-center text-2xl font-semibold gap-x-2">
                         <img className="w-8" src="/assets/checkout/cart.png" />{' '}
-                        Cart
+                        Cart{'   '}
+                        {carts.length > 0 && (
+                            <span className="text-sm text-gray-500">
+                                ({carts.length}{' '}
+                                {carts.length == 1 ? 'Item' : 'Items'})
+                            </span>
+                        )}
                     </span>
                     <div className="flex flex-col gap-3 sm:text-black text-white">
                         {carts.length ? (
