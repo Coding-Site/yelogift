@@ -76,7 +76,7 @@ function Footer() {
                             Company
                         </li>
                         <li>
-                            <Link to="/privact-policy">Privact Policy</Link>
+                            <Link to="/privact-policy">Privacy Policy</Link>
                         </li>
                         <li>
                             <Link to="/term-and-conditions">

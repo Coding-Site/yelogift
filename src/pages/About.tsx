@@ -1,4 +1,10 @@
+import { useEffect } from 'react';
+
 export default function About() {
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
     return (
         <div className="flex flex-col items-center justify-center min-h-[40vh] bg-mainLightBlack p-6">
             <div className="bg-mainBlack shadow-md rounded-lg px-28 py-14 min-w-lg text-center max-w-[75%] ">
