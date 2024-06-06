@@ -17,7 +17,6 @@ function OrderDetails() {
     const [price, setPrice] = useState();
     const [discount, setDiscount] = useState();
     const confirmOrderCodes = () => {
-        console.log(id, sendedCode);
         instance
             .post(
                 `/api/admin/orders/delivery/code`,

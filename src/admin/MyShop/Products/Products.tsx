@@ -54,7 +54,6 @@ function Products() {
                     },
                 }
             );
-            console.log('Delete response:', response);
             setProducts((prevProducts) =>
                 prevProducts.filter((product) => product.id !== id)
             );
