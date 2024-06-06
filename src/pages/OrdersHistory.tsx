@@ -6,7 +6,7 @@ import instance from '../axios';
 function OrdersHistory() {
     const [orders, setOrders] = useState<any>([]);
     const [loading, setLoading] = useState(false);
-
+    console.log(orders);
     useEffect(() => {
         setLoading(true);
         const localstorage = JSON.parse(
@@ -27,10 +27,12 @@ function OrdersHistory() {
             });
     }, []);
 
+    console.log(orders[0]);
+
     return (
         <div className="flex py-10 w-full container min-h-[100vh] ">
-            <div className="flex flex-col justify-between w-full gap-y-5">
-                <div>Orders History</div>
+            <div className="flex flex-col  w-full ">
+                <div className="mb-5">Orders History</div>
 
                 {loading ? (
                     <Spinner />
@@ -43,10 +45,10 @@ function OrdersHistory() {
 
                         {orders.map((order: any, idx: any) => (
                             <div
-                                className="flex w-full justify-between"
+                                className="flex flex-col sm:flex-row w-full justify-between"
                                 key={idx}
                             >
-                                <div className="flex flex-col bg-white p-10 w-1/2 rounded">
+                                <div className="flex flex-col bg-white p-10 w-full  sm:w-1/2 rounded">
                                     {order?.order_product?.map(
                                         (order: any, idxx: any) => (
                                             <div
@@ -76,13 +78,7 @@ function OrdersHistory() {
                                         )
                                     )}
                                 </div>
-                                <div className="flex flex-col justify-center items-center gap-y-2 w-1/2">
-                                    <button
-                                        type="button"
-                                        className="bg-transparent border-2 border-white w-52 py-3 flex justify-center items-center text-white"
-                                    >
-                                        {}Pay Now
-                                    </button>
+                                <div className="flex flex-col justify-center items-center gap-y-2 w-full sm:w-1/2 py-2">
                                     <span className="text-lg font-semibold">
                                         {order.status == 0 ? (
                                             <span className="text-gray-600">

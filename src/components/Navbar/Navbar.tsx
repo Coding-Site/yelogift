@@ -11,6 +11,7 @@ import {
     getCartData,
     updateCartItem,
     clearCart,
+    deleteCartProduct,
 } from '../../store/CartSlice/CartSlice.tsx';
 import instance from '../../axios/index.ts';
 import styles from '../../utils/styles/navbar.module.css';
@@ -25,8 +26,6 @@ function Navbar() {
     });
     const navigate = useNavigate();
     const carts = useSelector((state: RootState) => state.cartSlice.items);
-    const filteredCarts = carts.filter((cart) => cart.quantity !== 0);
-
     const dispatch = useDispatch<AppDispatch>();
     const localstorageUser = JSON.parse(
         localStorage.getItem('userData') as string
@@ -79,6 +78,9 @@ function Navbar() {
                 .then((d) => {
                     const orderId = d.data.data.id;
                     localStorage.setItem('orderId', JSON.stringify(orderId));
+                })
+                .then(() => {
+                    dispatch(getCartData());
                 })
                 .then(() => navigate('/checkout'))
                 .catch((err) => console.log(err));
@@ -139,6 +141,23 @@ function Navbar() {
             .catch((error) => {
                 console.log('Error marking notification as read:', error);
             });
+    };
+
+    const handleDecrease = (id: number) => {
+        const item = carts.find((cart) => cart.id === id);
+        if (item) {
+            if (item.quantity === 1) {
+                dispatch(deleteCartProduct({ id })).then(() => {
+                    dispatch(getCartData());
+                });
+            } else {
+                dispatch(
+                    updateCartItem({ cart_id: id, quantity: item.quantity - 1 })
+                ).then(() => {
+                    dispatch(getCartData());
+                });
+            }
+        }
     };
 
     return (
@@ -367,16 +386,16 @@ function Navbar() {
                                     className="cursor-pointer min-w-6 w-6"
                                 />
                             </div>
-                            {filteredCarts.length > 0 && (
+                            {carts.length > 0 && (
                                 <span className="absolute size-4 z-10 text-xs flex justify-center items-center font-semibold top-0 right-0 text-black bg-white rounded-full">
-                                    {filteredCarts.length}
+                                    {carts.length}
                                 </span>
                             )}
                             <ul
                                 tabIndex={0}
                                 className="dropdown-content z-[10000] menu p-2 shadow bg-white rounded-box sm:w-96 w-80 text-mainLightBlack"
                             >
-                                {userToken && filteredCarts.length ? (
+                                {userToken && carts.length ? (
                                     carts.map((cart: any, idx) => {
                                         if (cart.quantity) {
                                             return (
@@ -390,43 +409,26 @@ function Navbar() {
                                                             import.meta.env
                                                                 .VITE_BASEURL
                                                         }/public/storage/${
-                                                            cart.product?.image
+                                                            cart.product_image
                                                         }`}
                                                         alt="cart"
                                                     />
                                                     <div className="flex flex-col gap-0">
                                                         <span className="text-black sm:text-base text-sm whitespace-nowrap">
-                                                            {
-                                                                cart.productPartTitle
-                                                            }
+                                                            {cart.part_name}
                                                         </span>
                                                         <span className="sm:text-sm text-xs text-gray-500">
-                                                            AED
-                                                            {
-                                                                cart.product
-                                                                    ?.price
-                                                            }
+                                                            USD
+                                                            {cart.part_price}
                                                         </span>
                                                     </div>
                                                     <div className="flex sm:basis-24 basis-16 text-base h-8 min-w-[80px] sm:min-w-[100px] px-2 sm:px-3 items-center ms-auto w-auto  justify-between rounded-full border border-gray-300">
                                                         <span
-                                                            onClick={() => {
-                                                                dispatch(
-                                                                    updateCartItem(
-                                                                        {
-                                                                            cart_id:
-                                                                                cart.id as number,
-                                                                            quantity:
-                                                                                cart.quantity -
-                                                                                1,
-                                                                        }
-                                                                    )
-                                                                ).then(() => {
-                                                                    dispatch(
-                                                                        getCartData()
-                                                                    );
-                                                                });
-                                                            }}
+                                                            onClick={() =>
+                                                                handleDecrease(
+                                                                    cart.id
+                                                                )
+                                                            }
                                                             className="cursor-pointer"
                                                         >
                                                             -

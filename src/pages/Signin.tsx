@@ -141,7 +141,10 @@ function Signin() {
                     navigate('/');
                     window.location.reload();
                 } else {
+                    console.log(d);
                     const data = {
+                        adminID: d.data.data.user.id,
+                        adminMail: d.data.data.user.email,
                         adminToken: d.data.data.token.token,
                         adminName: d.data.data.user.name,
                         role: d.data.data.role,

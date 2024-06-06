@@ -28,6 +28,9 @@ const AdminLogin = lazy(() => import('../admin/AdminLogin'));
 const UserSettings = lazy(() => import('../pages/UserSettings'));
 
 // Setting Pages
+const AdminSettings = lazy(
+    () => import('../admin/Admin Settings/AdminSettings')
+);
 const Settings = lazy(() => import('../admin/Settings/Settings'));
 const Products = lazy(() => import('../admin/MyShop/Products/Products'));
 const Parts = lazy(() => import('../admin/MyShop/Parts/Parts'));
@@ -509,6 +512,14 @@ export const router = createHashRouter([
                                 ),
                             },
                         ],
+                    },
+                    {
+                        path: 'admin-settings',
+                        element: (
+                            <Suspense fallback={<Spinner />}>
+                                <AdminSettings />
+                            </Suspense>
+                        ),
                     },
                 ],
             },

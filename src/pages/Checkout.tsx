@@ -1,21 +1,17 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { useSelector } from 'react-redux';
-import { RootState } from '../store';
-// import { getCartData, updateCartItem } from '../store/CartSlice/CartSlice';
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import instance from '../axios';
 
 function Checkout() {
-    const carts = useSelector((state: RootState) => state.cartSlice.items);
     const [methods, setMethods] = useState([]);
     const navigate = useNavigate();
-    // const dispatch = useDispatch<AppDispatch>();
     const [currencyId, setCurrencyId] = useState(null);
     const localstorage = JSON.parse(localStorage.getItem('userData') as string);
     const userToken = localstorage?.userToken;
+    const orderId = JSON.parse(localStorage.getItem('orderId') as string);
     const [payMethod, setPayMethod] = useState<'binance' | 'crypto'>('crypto');
-    console.log(carts);
+    const [daaaata, setDaaaata] = useState<any>([]);
+
     useEffect(() => {
         instance
             .get(`/api/user/order/currancy`, {
@@ -24,6 +20,16 @@ function Checkout() {
                 },
             })
             .then((d) => setMethods(d.data.data));
+    }, []);
+
+    useEffect(() => {
+        instance
+            .get(`/api/user/order/get/${orderId}`, {
+                headers: {
+                    Authorization: `Bearer ${userToken}`,
+                },
+            })
+            .then((d) => setDaaaata(d.data.data.order.order_product));
     }, []);
 
     const SendToDB = () => {
@@ -35,8 +41,8 @@ function Checkout() {
     };
 
     const calculateTotalPrice = () => {
-        return carts.reduce((total: number, cart: any) => {
-            return total + cart.quantity * cart.product.price;
+        return daaaata.reduce((total: number, cart: any) => {
+            return total + cart.quantity * cart.product_part.price;
         }, 0);
     };
 
@@ -50,48 +56,63 @@ function Checkout() {
                     <span className="sm:hidden flex items-center text-2xl font-semibold gap-x-2">
                         <img className="w-8" src="/assets/checkout/cart.png" />{' '}
                         Cart{'   '}
-                        {carts.length > 0 && (
+                        {daaaata.length > 0 && (
                             <span className="text-sm text-gray-500">
-                                ({carts.length}{' '}
-                                {carts.length == 1 ? 'Item' : 'Items'})
+                                (
+                                {daaaata.reduce(
+                                    (total: any, item: any) =>
+                                        total + item.quantity,
+                                    0
+                                )}
+                                {daaaata.reduce(
+                                    (total: any, item: any) =>
+                                        total + item.quantity,
+                                    0
+                                ) === 1
+                                    ? ' Item'
+                                    : ' Items'}
+                                )
                             </span>
                         )}
                     </span>
                     <div className="flex flex-col gap-3 sm:text-black text-white">
-                        {carts.length ? (
-                            carts.map((cart: any, idx) => {
-                                if (cart.quantity) {
+                        {daaaata.length ? (
+                            daaaata.map((item: any, idx: any) => {
+                                if (item.quantity) {
                                     return (
-                                        <>
-                                            <div
-                                                className="flex  justify-between  w-full "
-                                                key={idx}
-                                            >
+                                        <div key={idx}>
+                                            <div className="flex  justify-between  w-full ">
                                                 <img
                                                     className="w-20 h-12"
                                                     src={`${
                                                         import.meta.env
                                                             .VITE_BASEURL
                                                     }/public/storage/${
-                                                        cart.product?.image
+                                                        item.product.image
                                                     }`}
                                                     alt="cart"
                                                 />
                                                 <div className="flex flex-col gap-0">
                                                     <span className="text-black sm:text-base text-sm whitespace-nowrap">
-                                                        {cart.product?.name}
+                                                        {
+                                                            item.product_part
+                                                                .title
+                                                        }
                                                     </span>
                                                     <span className="text-sm text-gray-500">
                                                         USD{' '}
-                                                        {cart.product?.price}
+                                                        {
+                                                            item.product_part
+                                                                .price
+                                                        }
                                                     </span>
                                                 </div>
                                                 <div className="flex  py-1 px-4 items-center   justify-center items-center rounded-full w-auto border border-gray-300">
-                                                    {cart.quantity}
+                                                    {item.quantity}
                                                 </div>
                                             </div>
-                                            <hr />
-                                        </>
+                                            <hr className="mt-2" />
+                                        </div>
                                     );
                                 }
                             })
