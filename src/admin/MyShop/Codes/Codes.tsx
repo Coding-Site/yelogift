@@ -97,7 +97,6 @@ function Codes() {
             })
             .then((d) => console.log('after uploading codes fiel', d));
     }
-    console.log(codes);
     return (
         <div className="flex flex-col gap-4 w-full py-5 container">
             <div className="flex items-center justify-between w-full pt-10 pb-5 ">

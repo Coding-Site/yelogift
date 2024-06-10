@@ -36,7 +36,6 @@ function Signup() {
     const signInWithGoogle = async () => {
         signInWithPopup(auth, new GoogleAuthProvider())
             .then((res) => {
-                console.log(res);
                 sendData(res);
             })
             .catch((error) => console.log(error));
@@ -44,7 +43,6 @@ function Signup() {
     const signInWithFacebook = async () => {
         signInWithPopup(auth, new FacebookAuthProvider())
             .then((res) => {
-                console.log(res);
                 sendData(res);
             })
             .catch((error) => console.log(error));
@@ -52,11 +50,11 @@ function Signup() {
 
     const sendData = (cR: any) => {
         const userData: any = {
-            name: cR.user.displayName,
-            email: cR.user.email,
-            photo: cR.user.photoURL,
-            client_id: cR.user.uid,
-            provider: cR.providerId,
+            name: cR?.user.displayName,
+            email: cR?.user.email,
+            photo: cR?.user.photoURL,
+            client_id: cR?.user.uid,
+            provider: cR?.providerId,
         };
         instance
             .post(
@@ -71,8 +69,8 @@ function Signup() {
             .then((response: any) => {
                 if (response.status === 200) {
                     const userLocal = {
-                        userName: response.data.data.user.name,
-                        userToken: response.data.data.token,
+                        userName: response?.data.data.user.name,
+                        userToken: response?.data.data.token,
                         role: 'user',
                     };
                     localStorage.setItem('userData', JSON.stringify(userLocal));
@@ -118,7 +116,7 @@ function Signup() {
                         <div>
                             <img
                                 className="w-28 hidden sm:flex mb-10"
-                                src="/public/assets/Logo/Asset-1.png"
+                                src="/assets/Logo/Asset-1.png"
                                 alt="logo"
                             />
                             <h2 className="text-3xl font-semibold mt-2">

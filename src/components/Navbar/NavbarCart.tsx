@@ -35,7 +35,7 @@ function NavbarCart({ setOpenCart, openCart }: Props) {
         <div className="bg-white flex flex-col gap-2 rounded-md p-3 ">
             <div className="flex flex-col gap-3">
                 {carts.length > 0 ? (
-                    carts.map((cart, idx) => (
+                    carts.map((cart: any, idx: any) => (
                         <div
                             className="flex justify-start gap-3 w-full "
                             key={idx}

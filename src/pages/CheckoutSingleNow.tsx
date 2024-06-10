@@ -42,9 +42,9 @@ function CheckoutSingleNow() {
     };
 
     return (
-        <div className="flex flex-col py-10 w-full container text-mainLightBlack">
+        <div className="flex flex-col md:py-10 w-full md:container text-mainLightBlack">
             <div className="flex justify-between flex-col sm:flex-row w-full gap-3">
-                <div className="flex justify-start flex-col gap-y-10 sm:text-black text-white px-10 py-10 sm:bg-white grow">
+                <div className="flex justify-start flex-col gap-y-10 sm:text-black text-white px-10 md:py-10 sm:bg-white grow">
                     <span className="sm:flex hidden text-2xl font-semibold  ">
                         Order Summary
                     </span>
@@ -81,7 +81,7 @@ function CheckoutSingleNow() {
                         </span>
                     </div>
                 </div>
-                <div className="flex justify-start flex-col sm:text-black text-white gap-y-10 px-10 py-10 sm:bg-white grow">
+                <div className="flex justify-start flex-col sm:text-black text-white gap-y-3 md:gap-y-10 px-10 py-2 md:py-10 sm:bg-white grow">
                     <span className="text-2xl font-semibold  ">
                         Select Payment method{' '}
                     </span>

@@ -114,6 +114,9 @@ function Sidebar() {
                 <li>
                     <NavEc item="Notification" to="/admin/notification" />
                 </li>
+                <li>
+                    <NavEc item="Admin Settings" to="/admin/admin-settings" />
+                </li>
             </ul>
 
             <div className="flex mt-auto gap-2">
