@@ -5,6 +5,7 @@ import { FaStar } from 'react-icons/fa';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { IProduct } from '../../models/IProduct';
 import instance from '../../axios';
+import { Helmet } from 'react-helmet-async';
 
 function Category() {
     const [loading, setLoading] = useState<boolean>(false);
@@ -35,42 +36,71 @@ function Category() {
         });
     }, []);
 
-    return (
-        <div className="flex flex-col gap-4 w-full py-5 container ps-12">
-            {/* <pre>
-            {JSON.stringify(category, null, 2)}
-        </pre> */}
-            <div className="flex items-center justify-start w-full relative ">
-                <Link to="/">
-                    <FaChevronLeft className="text-main text-2xl absolute -left-7 font-semibold top-[50%] -translate-y-[50%]" />
-                </Link>
-                <span className="text-3xl text-white font-semibold">
-                    {category?.name}
-                </span>
-            </div>
-            <div className="flex flex-wrap justify-between sm:justify-start min-h-screen">
-                {loading ? (
-                    <div>Loading ...</div>
-                ) : (
-                    Products.map((pro: IProduct, idx: any) => (
-                        <Link
-                            key={idx}
-                            to={`/product/${pro.id}`}
-                            className="flex flex-col items-center sm:px-4 py-5 w-[45%] lg:w-1/4"
-                        >
-                            <Cart product={pro} />
-                        </Link>
-                    ))
-                )}
-            </div>
+    const [metaDesc, setMetaDesc] = useState(
+        'Discover a variety of game gift cards for top games. Shop now for the best deals and instant delivery. Enhance your gaming experience with our easy-to-use gift cards.'
+    );
 
-            <Pagination
-                pages={pages}
-                page={page}
-                setPage={setPage}
-                loading={loading}
-            />
-        </div>
+    const [metaKeyWord, setMetaKeyWord] = useState<any>(
+        'seo, search engine optimization'
+    );
+
+    useEffect(() => {
+        instance.get(`/api/pages/3`).then((d) => {
+            const page = d.data.data;
+            setMetaDesc(page.content);
+            setMetaKeyWord(page.tags);
+        });
+    }, []);
+
+    return (
+        <>
+            <Helmet>
+                <title>
+                    {category
+                        ? `${category.name} | Yelo-Gift`
+                        : `Product | Yelo-Gift`}
+                </title>
+                <link rel="canonical" href={`"/categories/"${categoryId}`} />
+                <meta name="description" content={metaDesc} />
+                <meta
+                    name="keywords"
+                    content={metaKeyWord.replace(/[\[\]]/g, '')}
+                />
+            </Helmet>
+
+            <div className="flex flex-col gap-4 w-full py-5 container ps-12">
+                <div className="flex items-center justify-start w-full relative ">
+                    <Link to="/">
+                        <FaChevronLeft className="text-main text-2xl absolute -left-7 font-semibold top-[50%] -translate-y-[50%]" />
+                    </Link>
+                    <span className="text-3xl text-white font-semibold">
+                        {category?.name}
+                    </span>
+                </div>
+                <div className="flex flex-wrap justify-between sm:justify-start min-h-screen">
+                    {loading ? (
+                        <div>Loading ...</div>
+                    ) : (
+                        Products.map((pro: IProduct, idx: any) => (
+                            <Link
+                                key={idx}
+                                to={`/product/${pro.id}`}
+                                className="flex flex-col items-center sm:px-4 py-5 w-[45%] lg:w-1/4"
+                            >
+                                <Cart product={pro} />
+                            </Link>
+                        ))
+                    )}
+                </div>
+
+                <Pagination
+                    pages={pages}
+                    page={page}
+                    setPage={setPage}
+                    loading={loading}
+                />
+            </div>
+        </>
     );
 }
 

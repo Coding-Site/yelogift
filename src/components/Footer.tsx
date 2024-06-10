@@ -73,7 +73,7 @@ function Footer() {
                 <div className="flex flex-col uppercase  ">
                     <ul className="text-mainWhite">
                         <li className="text-main capitalize font-semibold text-xl mb-2">
-                            Company
+                            About Us
                         </li>
                         <li>
                             <Link to="/privact-policy">Privacy Policy</Link>
@@ -115,14 +115,6 @@ function Footer() {
             <div className="flex sm:hidden w-full flex-col gap-y-3  justify-between container">
                 <div className="flex flex-col uppercase">
                     <ul className="text-mainWhite text-sm w-52 mx-auto gap-y-3 flex items-center justify-center flex-col text-center">
-                        <li className="flex justify-between gap-x-3 w-full">
-                            <Link to="/">Company</Link>
-                            <img
-                                className="w-4"
-                                src="/assets/slider/prev.png"
-                                alt=""
-                            />
-                        </li>
                         <li className="flex justify-between gap-x-3 w-full">
                             <Link to="/">Categories </Link>
                             <img
@@ -179,9 +171,7 @@ function Footer() {
                         </li>
                     </ul>
                     <p className="text-center normal-case text-sm mt-5 text-gray-400">
-                        Experience seamless access to leading entertainment
-                        platforms through our convenient gift card purchase
-                        portal.
+                        {desc}
                     </p>
                 </div>
                 <hr />

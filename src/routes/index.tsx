@@ -68,6 +68,8 @@ const Footer = lazy(() => import('../admin/Settings/Footer/Footer'));
 // Other Pages
 const Currency = lazy(() => import('../admin/Currency/Currency'));
 const Notification = lazy(() => import('../admin/Notification/Notification'));
+const SeoControl = lazy(() => import('../admin/SeoControl/SeoControl'));
+
 const AddNotification = lazy(
     () => import('../admin/Notification/AddNotification')
 );
@@ -518,6 +520,14 @@ export const router = createHashRouter([
                         element: (
                             <Suspense fallback={<Spinner />}>
                                 <AdminSettings />
+                            </Suspense>
+                        ),
+                    },
+                    {
+                        path: 'ceo-control',
+                        element: (
+                            <Suspense fallback={<Spinner />}>
+                                <SeoControl />
                             </Suspense>
                         ),
                     },

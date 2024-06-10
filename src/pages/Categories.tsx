@@ -5,6 +5,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { IProduct } from '../models/IProduct';
 import Spinner from '../utils/Spinner';
 import instance from '../axios';
+import { Helmet } from 'react-helmet-async';
 
 function Categories() {
     const [loading, setLoading] = useState<boolean>(false);
@@ -32,42 +33,69 @@ function Categories() {
 
     useEffect(() => {
         setLoading(true);
-
         getProducts(page);
     }, [page]);
 
+    const [pageTitle, setPageTitle] = useState('Categories | Yelo-Gift');
+    const [metaDesc, setMetaDesc] = useState(
+        'Experience seamless access to leading entertainment platforms through our convenient gift card purchase portal. facebook; linkedin; youtube; twitter.'
+    );
+    const [metaKeyWord, setMetaKeyWord] = useState(
+        'seo, search engine optimization'
+    );
+
+    useEffect(() => {
+        instance.get(`/api/pages/4`).then((d) => {
+            const prod = d.data.data;
+            setPageTitle(`${prod.title} | Yelo-Gift`);
+            setMetaDesc(prod.content);
+            setMetaKeyWord(prod.tags);
+        });
+    }, []);
+
     return (
-        <div className="flex flex-col gap-4 w-full py-5 container ps-12">
-            <div className="flex items-center justify-start w-full relative ">
-                <Link to="/">
-                    <FaChevronLeft className="text-main text-2xl absolute -left-7 font-semibold top-[50%] -translate-y-[50%]" />
-                </Link>
-                <span className="text-3xl text-white font-semibold">
-                    More cards for you
-                </span>
+        <>
+            <Helmet>
+                <title>{pageTitle}</title>
+                <link rel="canonical" href="/categories" />
+                <meta name="description" content={metaDesc} />
+                <meta
+                    name="keywords"
+                    content={metaKeyWord.replace(/[\[\]]/g, '')}
+                />
+            </Helmet>
+            <div className="flex flex-col gap-4 w-full py-5 container ps-12">
+                <div className="flex items-center justify-start w-full relative ">
+                    <Link to="/">
+                        <FaChevronLeft className="text-main text-2xl absolute -left-7 font-semibold top-[50%] -translate-y-[50%]" />
+                    </Link>
+                    <span className="text-3xl text-white font-semibold">
+                        More cards for you
+                    </span>
+                </div>
+                <div className="flex flex-wrap  justify-between sm:justify-start min-h-screen">
+                    {loading ? (
+                        <Spinner />
+                    ) : (
+                        Products.map((pro: IProduct, idx) => (
+                            <Link
+                                key={idx}
+                                to={`/product/${pro.id}`}
+                                className="flex flex-col items-center sm:px-4 py-5 w-[45%] lg:w-1/4 "
+                            >
+                                <Cart product={pro} />
+                            </Link>
+                        ))
+                    )}
+                </div>
+                <Pagination
+                    pages={pages}
+                    page={page}
+                    setPage={setPage}
+                    loading={loading}
+                />
             </div>
-            <div className="flex flex-wrap  justify-between sm:justify-start min-h-screen">
-                {loading ? (
-                    <Spinner />
-                ) : (
-                    Products.map((pro: IProduct, idx) => (
-                        <Link
-                            key={idx}
-                            to={`/product/${pro.id}`}
-                            className="flex flex-col items-center sm:px-4 py-5 w-[45%] lg:w-1/4 "
-                        >
-                            <Cart product={pro} />
-                        </Link>
-                    ))
-                )}
-            </div>
-            <Pagination
-                pages={pages}
-                page={page}
-                setPage={setPage}
-                loading={loading}
-            />
-        </div>
+        </>
     );
 }
 
@@ -136,12 +164,12 @@ const Cart = ({ product }: { product: IProduct }) => {
                 />
             </div>
 
-            <div className="flex justify-start w-full py-2 font-semibold">
+            {/* <div className="flex justify-start w-full py-2 font-semibold">
                 <div className="flex flex-col ">
                     <span>ebay</span>
                     <span>{product.price}USD</span>
                 </div>
-            </div>
+            </div> */}
         </>
     );
 };

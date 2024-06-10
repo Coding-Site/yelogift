@@ -117,6 +117,9 @@ function Sidebar() {
                 <li>
                     <NavEc item="Admin Settings" to="/admin/admin-settings" />
                 </li>
+                <li>
+                    <NavEc item="CEO control" to="/admin/ceo-control" />
+                </li>
             </ul>
 
             <div className="flex mt-auto gap-2">
