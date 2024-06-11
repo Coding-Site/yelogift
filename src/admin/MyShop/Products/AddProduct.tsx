@@ -17,6 +17,7 @@ type Inputs = {
     image: any;
     price: number;
     discount: number;
+    popular: boolean;
 };
 
 function AddProduct() {
@@ -34,6 +35,7 @@ function AddProduct() {
         setImage(image.target.files[0]);
     };
     const onSubmit: SubmitHandler<Inputs> = (data: any) => {
+        console.log(data);
         setLoading(true);
         const fd = new FormData();
         for (const i in data) {
@@ -208,6 +210,20 @@ function AddProduct() {
                                 >
                                     <FaRegTrashAlt /> remove
                                 </button>
+                            </div>
+                            <div className="flex  gap-2">
+                                <label
+                                    htmlFor="popular"
+                                    className="text-main font-semibold"
+                                >
+                                    Popular
+                                </label>
+                                <input
+                                    {...register('popular')}
+                                    type="checkbox"
+                                    id="popular"
+                                    className="border border-gray-400 rounded-md bg-transparent p-1"
+                                />
                             </div>
                         </div>
                     </div>

@@ -250,12 +250,12 @@ function Navbar() {
                                         alt="icon"
                                         className="cursor-pointer min-w-5 w-5"
                                     />
+                                    {notifications.unreadCount > 0 && (
+                                        <span className="absolute size-4 z-10 text-xs flex justify-center items-center font-semibold top-0 right-0 text-black bg-white rounded-full">
+                                            {notifications.unreadCount}
+                                        </span>
+                                    )}
                                 </div>
-                                {notifications.unreadCount > 0 && (
-                                    <span className="absolute size-4 z-10 text-xs flex justify-center items-center font-semibold top-0 right-0 text-black bg-white rounded-full">
-                                        {notifications.unreadCount}
-                                    </span>
-                                )}
                                 <ul
                                     tabIndex={0}
                                     className="dropdown-content z-[1] menu p-2 shadow bg-white rounded sm:w-96 w-80 text-mainLightBlack"
@@ -385,12 +385,12 @@ function Navbar() {
                                     alt="ShoppingCart"
                                     className="cursor-pointer min-w-6 w-6"
                                 />
+                                {carts.length > 0 && (
+                                    <span className="absolute size-4 z-10 text-xs flex justify-center items-center font-semibold top-0 right-0 text-black bg-white rounded-full">
+                                        {carts.length}
+                                    </span>
+                                )}
                             </div>
-                            {carts.length > 0 && (
-                                <span className="absolute size-4 z-10 text-xs flex justify-center items-center font-semibold top-0 right-0 text-black bg-white rounded-full">
-                                    {carts.length}
-                                </span>
-                            )}
                             <ul
                                 tabIndex={0}
                                 className="dropdown-content z-[10000] menu p-2 shadow bg-white rounded-box sm:w-96 w-80 text-mainLightBlack"

@@ -34,7 +34,6 @@ function SeoControl() {
                             : JSON.parse(page.tags).join(', ')
                     );
                 });
-                console.log(response.data.data);
             } catch (error) {
                 console.error('Failed to fetch data:', error);
             } finally {

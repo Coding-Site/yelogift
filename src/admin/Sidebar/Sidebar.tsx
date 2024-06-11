@@ -118,7 +118,7 @@ function Sidebar() {
                     <NavEc item="Admin Settings" to="/admin/admin-settings" />
                 </li>
                 <li>
-                    <NavEc item="CEO control" to="/admin/ceo-control" />
+                    <NavEc item="SEO control" to="/admin/ceo-control" />
                 </li>
             </ul>
 

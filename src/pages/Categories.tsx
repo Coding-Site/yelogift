@@ -12,29 +12,6 @@ function Categories() {
     const [Products, setProducts] = useState([]);
     const [page, setPage] = useState<number>(1);
     const [pages, setPages] = useState<number>(0);
-    const [, setPerPage] = useState(10);
-
-    useEffect(() => {
-        window.scrollTo(0, 0);
-    }, []);
-
-    const getProducts = (page: number) => {
-        setLoading(true);
-        instance.get(`/api/home/products?page=${page}`).then((d) => {
-            const prods = d.data.data.data;
-            const data = d.data.data;
-            setPerPage(data.per_page);
-            setProducts(prods);
-            setPages(Math.ceil(data.total / data.per_page) as number);
-            setPage(page);
-            setLoading(false);
-        });
-    };
-
-    useEffect(() => {
-        setLoading(true);
-        getProducts(page);
-    }, [page]);
 
     const [pageTitle, setPageTitle] = useState('Categories | Yelo-Gift');
     const [metaDesc, setMetaDesc] = useState(
@@ -43,6 +20,29 @@ function Categories() {
     const [metaKeyWord, setMetaKeyWord] = useState(
         'seo, search engine optimization'
     );
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
+    const getProducts = (page: number) => {
+        setLoading(true);
+        instance
+            .get(`/api/home/products/popular/paginate?page=${page}`)
+            .then((d) => {
+                const prods = d.data.data.data;
+                const data = d.data.data;
+                setProducts(prods);
+                setPages(Math.ceil(data.total / data.per_page) as number);
+                setPage(page);
+                setLoading(false);
+            });
+    };
+
+    useEffect(() => {
+        setLoading(true);
+        getProducts(page);
+    }, [page]);
 
     useEffect(() => {
         instance.get(`/api/pages/4`).then((d) => {
@@ -77,14 +77,18 @@ function Categories() {
                     {loading ? (
                         <Spinner />
                     ) : (
-                        Products.map((pro: IProduct, idx) => (
-                            <Link
-                                key={idx}
-                                to={`/product/${pro.id}`}
-                                className="flex flex-col items-center sm:px-4 py-5 w-[45%] lg:w-1/4 "
-                            >
-                                <Cart product={pro} />
-                            </Link>
+                        Products.map((pro: any, idx) => (
+                            <>
+                                {pro.popular && (
+                                    <Link
+                                        key={idx}
+                                        to={`/product/${pro.id}`}
+                                        className="flex flex-col items-center sm:px-4 py-5 w-[45%] lg:w-1/4 "
+                                    >
+                                        <Cart product={pro} />
+                                    </Link>
+                                )}
+                            </>
                         ))
                     )}
                 </div>
@@ -163,13 +167,6 @@ const Cart = ({ product }: { product: IProduct }) => {
                     className="w-[130] h-[87px] sm:min-h-[156px]  sm:min-w-full rounded-md "
                 />
             </div>
-
-            {/* <div className="flex justify-start w-full py-2 font-semibold">
-                <div className="flex flex-col ">
-                    <span>ebay</span>
-                    <span>{product.price}USD</span>
-                </div>
-            </div> */}
         </>
     );
 };
