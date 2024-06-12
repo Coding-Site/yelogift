@@ -64,7 +64,7 @@ function Categories() {
                     content={metaKeyWord.replace(/[\[\]]/g, '')}
                 />
             </Helmet>
-            <div className="flex flex-col gap-4 w-full py-5 container ps-12">
+            <div className="flex flex-col gap-4 w-full py-5 container ps-12 min-h-screen">
                 <div className="flex items-center justify-start w-full relative ">
                     <Link to="/">
                         <FaChevronLeft className="text-main text-2xl absolute -left-7 font-semibold top-[50%] -translate-y-[50%]" />
@@ -73,31 +73,29 @@ function Categories() {
                         More cards for you
                     </span>
                 </div>
-                <div className="flex flex-wrap  justify-between sm:justify-start min-h-screen">
+                <div className="flex flex-wrap  justify-between sm:justify-start ">
                     {loading ? (
                         <Spinner />
                     ) : (
-                        Products.map((pro: any, idx) => (
-                            <>
-                                {pro.popular && (
-                                    <Link
-                                        key={idx}
-                                        to={`/product/${pro.id}`}
-                                        className="flex flex-col items-center sm:px-4 py-5 w-[45%] lg:w-1/4 "
-                                    >
-                                        <Cart product={pro} />
-                                    </Link>
-                                )}
-                            </>
+                        Products.map((pro: any, idx: any) => (
+                            <Link
+                                key={idx}
+                                to={`/product/${pro.id}`}
+                                className="flex flex-col items-center sm:px-4 py-5 w-[45%] lg:w-1/4 "
+                            >
+                                <Cart product={pro} />
+                            </Link>
                         ))
                     )}
                 </div>
-                <Pagination
-                    pages={pages}
-                    page={page}
-                    setPage={setPage}
-                    loading={loading}
-                />
+                <div className="mt-[50px]">
+                    <Pagination
+                        pages={pages}
+                        page={page}
+                        setPage={setPage}
+                        loading={loading}
+                    />
+                </div>
             </div>
         </>
     );

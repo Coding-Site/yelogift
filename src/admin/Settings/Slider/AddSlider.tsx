@@ -40,6 +40,7 @@ function AddSlider() {
                 navigate('/admin/slider');
             })
             .catch((err) => {
+                console.error(err);
                 const msg = err.response.data.message;
                 setBackError(msg);
             });

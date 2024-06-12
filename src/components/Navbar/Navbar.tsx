@@ -63,27 +63,7 @@ function Navbar() {
 
     const onCheckout = () => {
         if (carts.length > 0) {
-            instance
-                .post(
-                    `/api/user/order/checkout`,
-                    {
-                        name: 'mohamemd',
-                    },
-                    {
-                        headers: {
-                            Authorization: `Bearer ${userToken}`,
-                        },
-                    }
-                )
-                .then((d) => {
-                    const orderId = d.data.data.id;
-                    localStorage.setItem('orderId', JSON.stringify(orderId));
-                })
-                .then(() => {
-                    dispatch(getCartData());
-                })
-                .then(() => navigate('/checkout'))
-                .catch((err) => console.log(err));
+            navigate('/checkout');
         }
     };
 
@@ -188,7 +168,7 @@ function Navbar() {
                     >
                         Home
                     </NavLink>
-                    <NavLink
+                    {/* <NavLink
                         className={({ isActive }) =>
                             isActive
                                 ? 'text-main font-semibold'
@@ -197,7 +177,7 @@ function Navbar() {
                         to="/categories"
                     >
                         Categories
-                    </NavLink>
+                    </NavLink> */}
                     {userToken && (
                         <NavLink
                             className={({ isActive }) =>

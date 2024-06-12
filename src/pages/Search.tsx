@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Link, useParams } from 'react-router-dom';
 import { FaChevronLeft } from 'react-icons/fa6';
 import { useEffect, useState } from 'react';
@@ -61,28 +60,23 @@ export default Search;
 const Cart = ({ product }: { product: IProduct }) => {
     return (
         <>
-            <div className="bg-white rounded-md p-3 pt-6  flex flex-col items-center w-full ">
-                <div className="relative w-2/3 sm:w-1/3 rounded-full bg-black h-[20px]">
-                    <div className="size-7 rounded-full bg-black absolute -top-[50%] left-[50%] -translate-x-[50%]"></div>
+            <div className="bg-white rounded-md p-1 pt-4  sm:p-3 sm:pt-6  flex flex-col items-center w-full ">
+                <div className="relative w-[55%] sm:w-1/3 rounded-full bg-black h-[15px] sm:h-[20px] mb-3">
+                    <div className="size-4 sm:size-7 rounded-full bg-black absolute -top-[50%] left-[50%] -translate-x-[50%]"></div>
                 </div>
 
-                <span className="text-gray-500 uppercase my-2 text-xs sm:text-base">
+                <img
+                    src={
+                        import.meta.env.VITE_BASEURL +
+                        '/public/storage/' +
+                        product.image
+                    }
+                    alt="card"
+                    className="w-[130] h-[87px] sm:min-h-[156px]  sm:min-w-full rounded-md "
+                />
+                <span className="text-gray-500 uppercase my-[4px] sm:my-2 text-[10px] sm:text-base text-nowrap	">
                     {product.name}
                 </span>
-                <img
-                    src={`${import.meta.env.VITE_BASEURL}/public/storage/${
-                        product.image
-                    }`}
-                    alt="card"
-                    className="rounded-md"
-                />
-            </div>
-
-            <div className="flex justify-start w-full py-2 font-semibold">
-                <div className="flex flex-col ">
-                    <span>ebay</span>
-                    <span>{product.price} USD</span>
-                </div>
             </div>
         </>
     );

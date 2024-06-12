@@ -1,16 +1,18 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import instance from '../axios';
-
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../store/index.ts';
+import { getCartData } from '../store/CartSlice/CartSlice.tsx';
 function Checkout() {
     const [methods, setMethods] = useState([]);
     const navigate = useNavigate();
     const [currencyId, setCurrencyId] = useState(null);
     const localstorage = JSON.parse(localStorage.getItem('userData') as string);
     const userToken = localstorage?.userToken;
-    const orderId = JSON.parse(localStorage.getItem('orderId') as string);
     const [payMethod, setPayMethod] = useState<'binance' | 'crypto'>('crypto');
     const [daaaata, setDaaaata] = useState<any>([]);
+    const dispatch = useDispatch<AppDispatch>();
 
     useEffect(() => {
         instance
@@ -24,15 +26,35 @@ function Checkout() {
 
     useEffect(() => {
         instance
-            .get(`/api/user/order/get/${orderId}`, {
+            .get(`/api/user/carts`, {
                 headers: {
                     Authorization: `Bearer ${userToken}`,
                 },
             })
-            .then((d) => setDaaaata(d.data.data.order.order_product));
+            .then((d) => setDaaaata(d.data.data));
     }, []);
 
     const SendToDB = () => {
+        instance
+            .post(
+                `/api/user/order/checkout`,
+                {
+                    name: 'mohamemd',
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${userToken}`,
+                    },
+                }
+            )
+            .then((d) => {
+                const orderId = d.data.data.id;
+                localStorage.setItem('orderId', JSON.stringify(orderId));
+            })
+            .then(() => {
+                dispatch(getCartData());
+            });
+
         if (payMethod == 'binance') {
             navigate('/paymentauto');
         } else {

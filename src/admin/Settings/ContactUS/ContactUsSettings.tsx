@@ -21,13 +21,13 @@ function ContactUsSettings() {
                     },
                 });
                 const ContactData = response.data.data[0];
-                console.log(ContactData);
                 const defaultValues: any = {
                     address: ContactData.address || '',
                     mail_1: ContactData.mail_1 || '',
                     mail_2: ContactData.mail_2 || '',
                     phone_1: ContactData.phone_1 || '',
                     phone_2: ContactData.phone_2 || '',
+                    whatsapp: ContactData.whatsapp || '',
                 };
                 reset(defaultValues);
             } catch (error) {
@@ -40,7 +40,6 @@ function ContactUsSettings() {
     }, []);
 
     const onSubmit = async (data: any) => {
-        console.log(data);
         try {
             setLoading(true);
             await instance.put('/api/admin/contact/update/1', data, {
@@ -129,6 +128,19 @@ function ContactUsSettings() {
                                 Phone-2
                                 <input
                                     {...register('phone_2')}
+                                    type="text"
+                                    className="border border-gray-400 rounded-md bg-transparent p-1"
+                                />
+                            </label>
+                        </div>
+                        <div className="flex flex-col grow w-full">
+                            <label
+                                htmlFor="whatsapp"
+                                className="text-main flex flex-col font-semibold gap-y-2 w-full"
+                            >
+                                Whatsapp
+                                <input
+                                    {...register('whatsapp')}
                                     type="text"
                                     className="border border-gray-400 rounded-md bg-transparent p-1"
                                 />

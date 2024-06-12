@@ -41,21 +41,33 @@ function EditSlider() {
     const onSubmit: SubmitHandler<Inputs> = (data: any) => {
         setLoading(true);
         const fd = new FormData();
-        console.log(fd);
 
-        for (const i in data) {
-            i != 'image' ? fd.append(i, data[i]) : fd.append(i, image);
+        for (const key in data) {
+            if (key !== 'image') {
+                fd.append(key, data[key]);
+            }
         }
+
+        if (image) {
+            fd.append('image', image);
+        } else {
+            fd.append('image', '');
+        }
+
         instance
             .post(`/api/admin/slider/update`, fd, {
                 headers: {
                     Authorization: `Bearer ${adminToken}`,
                 },
             })
-            .then((data) => {
+            .then((response) => {
                 setLoading(false);
                 navigate('/admin/slider');
-                console.log(data);
+                console.log(response);
+            })
+            .catch((error) => {
+                setLoading(false);
+                console.error(error);
             });
     };
 
