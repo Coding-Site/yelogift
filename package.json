@@ -18,6 +18,9 @@
     "firebase": "^10.12.1",
     "jwt-decode": "^4.0.0",
     "react": "^18.2.0",
+    "react-beautiful-dnd": "^13.1.1",
+    "react-dnd": "^16.0.1",
+    "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "^18.2.0",
     "react-helmet-async": "^2.0.5",
     "react-hook-form": "^7.51.3",
@@ -33,6 +36,7 @@
   },
   "devDependencies": {
     "@types/react": "^18.2.66",
+    "@types/react-beautiful-dnd": "^13.1.8",
     "@types/react-dom": "^18.2.22",
     "@types/react-modal": "^3.16.3",
     "@typescript-eslint/eslint-plugin": "^7.2.0",

@@ -51,6 +51,18 @@ function Sidebar() {
                             <li>
                                 <NavItem item="Orders" to="/admin/orders" />
                             </li>
+                            <li>
+                                <NavItem
+                                    item="Sections Order Ranking"
+                                    to="/admin/section-order"
+                                />
+                            </li>
+                            <li>
+                                <NavItem
+                                    item="Popular Order Ranking"
+                                    to="/admin/popular-order"
+                                />
+                            </li>
                         </ul>
                     </details>
                 </li>
@@ -153,7 +165,7 @@ const NavItem = ({ item, to }: NavItemProps) => {
             {({ isActive }) => (
                 <div className={`flex items-center gap-2 `}>
                     {!isActive ? <FiCircle /> : <FaRegCircleStop />}
-                    <span>{item}</span>
+                    <span className="text-nowrap	">{item}</span>
                 </div>
             )}
         </NavLink>

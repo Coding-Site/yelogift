@@ -17,7 +17,7 @@ type Inputs = {
     image: string;
     price: number;
     discount: number;
-    popular: boolean;
+    popular: any;
 };
 
 function EditProduct() {
@@ -49,7 +49,10 @@ function EditProduct() {
                     category_id: product?.category_id,
                     price: product?.price,
                     discount: product?.discount,
-                    popular: product?.popular,
+                    popular:
+                        typeof product?.popular === 'boolean'
+                            ? product.popular
+                            : product?.popular !== 'false',
                 };
                 reset(defaultValues as any);
                 setLoading(false);
