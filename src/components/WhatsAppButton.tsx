@@ -2,22 +2,29 @@ import { useEffect, useState } from 'react';
 import instance from '../axios';
 
 const WhatsAppButton = () => {
-    const [whatsData, setWhatsData] = useState<any>(null);
+    const [whatsData, setWhatsData] = useState('');
 
     useEffect(() => {
         const fetchContactData = async () => {
             try {
-                const response = await instance.get('/api/contact ');
-                const ContactData = response.data.data[0];
-                setWhatsData(ContactData.whatsapp);
+                const response = await instance.get('/api/contact');
+                const contactData = response.data.data[0];
+                if (contactData && contactData.whatsapp) {
+                    const formattedNumber = contactData.whatsapp.replace(
+                        /[^0-9]/g,
+                        ''
+                    );
+                    setWhatsData(formattedNumber);
+                }
             } catch (error) {
-                console.error('Failed to fetch Contact data:', error);
+                console.error('Failed to fetch contact data:', error);
             }
         };
+
         fetchContactData();
     }, []);
 
-    if (!whatsData) return;
+    if (!whatsData) return null;
 
     return (
         <a
