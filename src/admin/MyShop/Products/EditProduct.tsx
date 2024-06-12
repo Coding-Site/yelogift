@@ -17,6 +17,7 @@ type Inputs = {
     image: string;
     price: number;
     discount: number;
+    popular: any;
 };
 
 function EditProduct() {
@@ -48,6 +49,10 @@ function EditProduct() {
                     category_id: product?.category_id,
                     price: product?.price,
                     discount: product?.discount,
+                    popular:
+                        typeof product?.popular === 'boolean'
+                            ? product.popular
+                            : product?.popular !== 'false',
                 };
                 reset(defaultValues as any);
                 setLoading(false);
@@ -229,6 +234,20 @@ function EditProduct() {
                                 >
                                     <FaRegTrashAlt /> remove
                                 </button>
+                            </div>
+                            <div className="flex gap-2">
+                                <label
+                                    htmlFor="popular"
+                                    className="text-main font-semibold"
+                                >
+                                    Popular
+                                </label>
+                                <input
+                                    {...register('popular')}
+                                    type="checkbox"
+                                    id="popular"
+                                    className="border border-gray-400 rounded-md bg-transparent p-1"
+                                />
                             </div>
                         </div>
                     </div>

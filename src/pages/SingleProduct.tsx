@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { addNewItem, getCartData } from '../store/CartSlice/CartSlice';
 import { AppDispatch } from '../store';
 import instance from '../axios';
+import { Helmet } from 'react-helmet-async';
 
 function SingleProduct() {
     const [Product, setProduct] = useState<any>();
@@ -89,17 +90,36 @@ function SingleProduct() {
         }
     };
 
+    const metaDesc =
+        'Buy gift cards for your favorite games at unbeatable prices. Enjoy instant delivery and enhance your gaming experience with our wide selection of game gift cards.';
+
     return (
         <>
+            <Helmet>
+                <title>
+                    {Product
+                        ? `${Product.name} | Yelo-Gift`
+                        : `Product | Yelo-Gift`}
+                </title>
+                <link rel="canonical" href="/" />
+                <meta
+                    name="description"
+                    content={Product ? `${Product.description}` : metaDesc}
+                />
+                <meta
+                    name="keywords"
+                    content={Product ? `${Product.description}` : metaDesc}
+                />
+            </Helmet>
             <div className="py-10 flex flex-col sm:flex-row justify-between container ">
                 <div className="flex w-full sm:w-1/2 p-10 justify-center items-start pt-0">
                     <div className="bg-black sm:bg-white rounded-md flex flex-col justify-stretch items-center w-[350px]">
                         <div className="hidden sm:flex bg-white flex-col justify-stretch items-center p-6 w-full rounded-md">
                             <div className="relative w-1/3 rounded-full bg-black h-[15px]">
                                 <div className="size-5 rounded-full bg-black absolute -top-[50%] left-[50%] -translate-x-[50%]"></div>
-                                <span className="absolute text-gray-500 font-semibold -right-[80px] -top-[4px]">
+                                {/* <span className="absolute text-gray-500 font-semibold -right-[80px] -top-[4px]">
                                     ${Product?.price}
-                                </span>
+                                </span> */}
                             </div>
                             <div className="flex flex-col text-gray-500 justify-center items-center mt-5">
                                 <span className="text-2xl">

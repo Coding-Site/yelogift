@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable react-refresh/only-export-components */
 import { createHashRouter } from 'react-router-dom';
 import { Suspense, lazy } from 'react';
 import Spinner from '../utils/Spinner';
@@ -26,6 +24,12 @@ const PrivacyPolicy = lazy(() => import('../pages/PrivacyPolicy'));
 const AdminHome = lazy(() => import('../admin/AdminHome/AdminHome'));
 const AdminLogin = lazy(() => import('../admin/AdminLogin'));
 const UserSettings = lazy(() => import('../pages/UserSettings'));
+const SectionOrder = lazy(
+    () => import('../admin/MyShop/SectionOrd/SectionOrder')
+);
+const PopularOrderRanking = lazy(
+    () => import('../admin/MyShop/PopularOrderRanking/PopularOrderRanking')
+);
 
 // Setting Pages
 const AdminSettings = lazy(
@@ -68,6 +72,8 @@ const Footer = lazy(() => import('../admin/Settings/Footer/Footer'));
 // Other Pages
 const Currency = lazy(() => import('../admin/Currency/Currency'));
 const Notification = lazy(() => import('../admin/Notification/Notification'));
+const SeoControl = lazy(() => import('../admin/SeoControl/SeoControl'));
+
 const AddNotification = lazy(
     () => import('../admin/Notification/AddNotification')
 );
@@ -236,6 +242,22 @@ export const router = createHashRouter([
                         element: (
                             <Suspense fallback={<Spinner />}>
                                 <AdminHome />
+                            </Suspense>
+                        ),
+                    },
+                    {
+                        path: 'section-order',
+                        element: (
+                            <Suspense fallback={<Spinner />}>
+                                <SectionOrder />
+                            </Suspense>
+                        ),
+                    },
+                    {
+                        path: 'popular-order',
+                        element: (
+                            <Suspense fallback={<Spinner />}>
+                                <PopularOrderRanking />
                             </Suspense>
                         ),
                     },
@@ -518,6 +540,14 @@ export const router = createHashRouter([
                         element: (
                             <Suspense fallback={<Spinner />}>
                                 <AdminSettings />
+                            </Suspense>
+                        ),
+                    },
+                    {
+                        path: 'ceo-control',
+                        element: (
+                            <Suspense fallback={<Spinner />}>
+                                <SeoControl />
                             </Suspense>
                         ),
                     },

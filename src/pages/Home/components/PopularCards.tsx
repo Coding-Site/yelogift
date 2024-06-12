@@ -22,7 +22,11 @@ function PopularCards() {
                     className="text-main hidden  sm:flex gap-6"
                 >
                     view more
-                    <img className="w-6" src="/assets/slider/prev.png" alt="" />
+                    <img
+                        className="w-6"
+                        src="/assets/slider/prev.png"
+                        alt="prev"
+                    />
                 </Link>
             </div>
 

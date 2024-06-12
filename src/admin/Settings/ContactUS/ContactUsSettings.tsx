@@ -69,22 +69,6 @@ function ContactUsSettings() {
                         onSubmit={handleSubmit(onSubmit)}
                         className="flex flex-col items-start gap-3 w-full"
                     >
-                        {/* <div className="flex flex-col grow w-full">
-                            <label
-                                htmlFor="description "
-                                className="text-main mb-4"
-                            >
-                                Description
-                            </label>
-                            <textarea
-                                {...register('description')}
-                                name="description"
-                                className="bg-transparent p-2 border border-gray-400 rounded-md outline-none grow"
-                                id="description"
-                                cols={30}
-                                rows={10}
-                            ></textarea>
-                        </div> */}
                         <div className="flex flex-col grow w-full">
                             <label
                                 htmlFor="address"
