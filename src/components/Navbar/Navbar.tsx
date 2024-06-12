@@ -468,10 +468,7 @@ function Navbar() {
                                         No Products in the Cart
                                     </div>
                                 )}
-                                <div className="flex justify-between text-base mt-6 border-t border-gray-200 pt-2">
-                                    <button className="!rounded-full shadow-md px-5">
-                                        keep shopping
-                                    </button>
+                                <div className="flex justify-end text-base mt-6 border-t border-gray-200 pt-2">
                                     <button
                                         onClick={() => onCheckout()}
                                         className="btn !rounded-full  shadow-md"
