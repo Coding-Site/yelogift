@@ -52,9 +52,12 @@ const OrderDetails = lazy(() => import('../admin/MyShop/Orders/OrderDetails'));
 const Customers = lazy(() => import('../admin/MyShop/Customers/Customers'));
 const Category = lazy(() => import('../admin/MyShop/Category/Category'));
 const AddCategory = lazy(() => import('../admin/MyShop/Category/AddCategory'));
+const TopNavTable = lazy(() => import('../admin/Settings/TopNav/TopNavTable'));
 const TopNavSettings = lazy(
     () => import('../admin/Settings/TopNav/TopNavSettings')
 );
+const TopNavAdd = lazy(() => import('../admin/Settings/TopNav/TopNavAdd'));
+
 const ContactUsSettings = lazy(
     () => import('../admin/Settings/ContactUS/ContactUsSettings')
 );
@@ -478,13 +481,42 @@ export const router = createHashRouter([
                                     </Suspense>
                                 ),
                             },
+                            // {
+                            //     path: 'topnav-settings',
+                            //     element: (
+                            //         <Suspense fallback={<Spinner />}>
+                            //             <TopNavTable />
+                            //         </Suspense>
+                            //     ),
+                            // },
                             {
                                 path: 'topnav-settings',
-                                element: (
-                                    <Suspense fallback={<Spinner />}>
-                                        <TopNavSettings />
-                                    </Suspense>
-                                ),
+                                children: [
+                                    {
+                                        path: '',
+                                        element: (
+                                            <Suspense fallback={<Spinner />}>
+                                                <TopNavTable />
+                                            </Suspense>
+                                        ),
+                                    },
+                                    {
+                                        path: 'edit/:id',
+                                        element: (
+                                            <Suspense fallback={<Spinner />}>
+                                                <TopNavSettings />
+                                            </Suspense>
+                                        ),
+                                    },
+                                    {
+                                        path: 'add',
+                                        element: (
+                                            <Suspense fallback={<Spinner />}>
+                                                <TopNavAdd />
+                                            </Suspense>
+                                        ),
+                                    },
+                                ],
                             },
                             {
                                 path: 'contact-settings',

@@ -1,52 +1,27 @@
 import { useForm } from 'react-hook-form';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import instance from '../../../axios';
 import Spinner from '../../../utils/Spinner';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function TopNavSettings() {
-    const { register, handleSubmit, reset } = useForm<any>();
+    const { register, handleSubmit } = useForm<any>({
+        defaultValues: {
+            color1: '#585858', // Default background color
+            color2: '#ffffff', // Default font color
+        },
+    });
     const [loading, setLoading] = useState(false);
     const localstorage = JSON.parse(
         localStorage.getItem('adminData') as string
     );
     const adminToken = localstorage?.adminToken;
-    const { id } = useParams();
     const navigate = useNavigate();
-
-    useEffect(() => {
-        const fetchTopNav = async () => {
-            try {
-                setLoading(true);
-                const response = await instance.get(
-                    `/api/admin/advertismant/get/${id}`,
-                    {
-                        headers: {
-                            Authorization: `Bearer ${adminToken}`,
-                        },
-                    }
-                );
-                const topNavData = response.data.data;
-                const defaultValues: any = {
-                    description: topNavData.description || '',
-                    url: topNavData.url || '',
-                    color1: topNavData.color1 || '',
-                    color2: topNavData.color2 || '',
-                };
-                reset(defaultValues);
-            } catch (error) {
-                console.error('Failed to fetch topnav data:', error);
-            } finally {
-                setLoading(false);
-            }
-        };
-        fetchTopNav();
-    }, []);
 
     const onSubmit = async (data: any) => {
         try {
             setLoading(true);
-            await instance.put(`/api/admin/advertismant/update/${id}`, data, {
+            await instance.post(`/api/admin/advertismant/store`, data, {
                 headers: {
                     Authorization: `Bearer ${adminToken}`,
                 },
