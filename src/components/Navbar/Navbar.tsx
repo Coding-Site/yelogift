@@ -63,27 +63,7 @@ function Navbar() {
 
     const onCheckout = () => {
         if (carts.length > 0) {
-            instance
-                .post(
-                    `/api/user/order/checkout`,
-                    {
-                        name: 'mohamemd',
-                    },
-                    {
-                        headers: {
-                            Authorization: `Bearer ${userToken}`,
-                        },
-                    }
-                )
-                .then((d) => {
-                    const orderId = d.data.data.id;
-                    localStorage.setItem('orderId', JSON.stringify(orderId));
-                })
-                .then(() => {
-                    dispatch(getCartData());
-                })
-                .then(() => navigate('/checkout'))
-                .catch((err) => console.log(err));
+            navigate('/checkout');
         }
     };
 
@@ -188,16 +168,7 @@ function Navbar() {
                     >
                         Home
                     </NavLink>
-                    <NavLink
-                        className={({ isActive }) =>
-                            isActive
-                                ? 'text-main font-semibold'
-                                : 'dark:text-gray-600 text-mainWhite'
-                        }
-                        to="/categories"
-                    >
-                        Categories
-                    </NavLink>
+
                     {userToken && (
                         <NavLink
                             className={({ isActive }) =>
@@ -468,10 +439,7 @@ function Navbar() {
                                         No Products in the Cart
                                     </div>
                                 )}
-                                <div className="flex justify-between text-base mt-6 border-t border-gray-200 pt-2">
-                                    <button className="!rounded-full shadow-md px-5">
-                                        keep shopping
-                                    </button>
+                                <div className="flex justify-end text-base mt-6 border-t border-gray-200 pt-2">
                                     <button
                                         onClick={() => onCheckout()}
                                         className="btn !rounded-full  shadow-md"

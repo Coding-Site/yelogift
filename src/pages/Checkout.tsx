@@ -1,6 +1,10 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import instance from '../axios';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../store/index.ts';
+import { getCartData } from '../store/CartSlice/CartSlice.tsx';
+import { PiWarningCircleThin } from 'react-icons/pi';
 
 function Checkout() {
     const [methods, setMethods] = useState([]);
@@ -8,9 +12,24 @@ function Checkout() {
     const [currencyId, setCurrencyId] = useState(null);
     const localstorage = JSON.parse(localStorage.getItem('userData') as string);
     const userToken = localstorage?.userToken;
-    const orderId = JSON.parse(localStorage.getItem('orderId') as string);
     const [payMethod, setPayMethod] = useState<'binance' | 'crypto'>('crypto');
     const [daaaata, setDaaaata] = useState<any>([]);
+    const dispatch = useDispatch<AppDispatch>();
+    const [feeDesc, setFeeDesc] = useState<any>(null);
+
+    useEffect(() => {
+        const fetchFeeData = async () => {
+            try {
+                const response = await instance.get('/api/fee');
+                const feeData = response.data.data;
+                console.log(feeData);
+                setFeeDesc(feeData.description);
+            } catch (error) {
+                console.error('Failed to fetch topnav data:', error);
+            }
+        };
+        fetchFeeData();
+    }, []);
 
     useEffect(() => {
         instance
@@ -24,15 +43,35 @@ function Checkout() {
 
     useEffect(() => {
         instance
-            .get(`/api/user/order/get/${orderId}`, {
+            .get(`/api/user/carts`, {
                 headers: {
                     Authorization: `Bearer ${userToken}`,
                 },
             })
-            .then((d) => setDaaaata(d.data.data.order.order_product));
+            .then((d) => setDaaaata(d.data.data));
     }, []);
 
     const SendToDB = () => {
+        instance
+            .post(
+                `/api/user/order/checkout`,
+                {
+                    name: 'mohamemd',
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${userToken}`,
+                    },
+                }
+            )
+            .then((d) => {
+                const orderId = d.data.data.id;
+                localStorage.setItem('orderId', JSON.stringify(orderId));
+            })
+            .then(() => {
+                dispatch(getCartData());
+            });
+
         if (payMethod == 'binance') {
             navigate('/paymentauto');
         } else {
@@ -120,11 +159,21 @@ function Checkout() {
                             <span>No Items in the Cart</span>
                         )}
                     </div>
-                    <div className="flex items-center container justify-between text-sm mt-5">
-                        <span>Total Estimate</span>
-                        <span className="text-xl text-[#6D6D6D]">
-                            USDT {calculateTotalPrice()}
-                        </span>
+                    <div>
+                        <div className="flex items-center container justify-between text-sm mt-5">
+                            <span>Total Estimate</span>
+                            <span className="text-xl text-[#6D6D6D]">
+                                USDT {calculateTotalPrice()}
+                            </span>
+                        </div>
+                        {feeDesc && (
+                            <div className="w-fit  bg-[#f3ca49] mx-auto flex gap-2 items-center justify-center sm:max-w-[265px] lg:max-w-[500px] rounded-2xl mt-5 p-2 ">
+                                <PiWarningCircleThin className="text-[#000] text-[20px]" />
+                                <p className="mx-auto text-center text-[#000] text-[10px] ">
+                                    {feeDesc}
+                                </p>
+                            </div>
+                        )}
                     </div>
                 </div>
                 <div className="flex justify-start flex-col sm:text-black text-white gap-y-10 px-10 py-10 sm:bg-white grow">

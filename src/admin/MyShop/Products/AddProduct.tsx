@@ -24,6 +24,7 @@ function AddProduct() {
     const navigate = useNavigate();
     const [categories, setCategories] = useState<ICategory[]>([]);
     const [image, setImage] = useState<any>();
+    const [imagePreview, setImagePreview] = useState<string | null>(null);
     const localstorage = JSON.parse(
         localStorage.getItem('adminData') as string
     );
@@ -32,8 +33,17 @@ function AddProduct() {
     const [loading, setLoading] = useState<Boolean>(false);
 
     const handleImage = (image: any) => {
-        setImage(image.target.files[0]);
+        const file = image.target.files[0];
+        setImage(file);
+
+        // Generate a preview URL
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            setImagePreview(reader.result as string);
+        };
+        reader.readAsDataURL(file);
     };
+
     const onSubmit: SubmitHandler<Inputs> = (data: any) => {
         console.log(data);
         setLoading(true);
@@ -132,7 +142,7 @@ function AddProduct() {
                                 className="border  border-gray-400 rounded-md bg-transparent p-1"
                             >
                                 <option className="bg-mainLightBlack text-mainWhite">
-                                    Select Categorty
+                                    Select Category
                                 </option>
                                 {categories.map((cat, idx) => (
                                     <option
@@ -169,7 +179,7 @@ function AddProduct() {
                                 htmlFor="image"
                                 className="text-main font-semibold"
                             >
-                                product image
+                                Product Image
                             </label>
                             <input
                                 {...register('image')}
@@ -185,17 +195,27 @@ function AddProduct() {
                                     htmlFor="image"
                                     className="flex flex-col justify-end aspect-square border rounded-md cursor-pointer  border-dashed  border-gray-400 h-[150px]"
                                 >
-                                    <img
-                                        className="size-12 mx-auto"
-                                        src="/assets/products/upload.png"
-                                        alt="upload image"
-                                    />
-                                    <span className="text-xs px-5 text-center pb-4">
-                                        <span className="underline  text-[#8095FF]">
-                                            click to upload{' '}
-                                        </span>{' '}
-                                        or drag and drop
-                                    </span>
+                                    {imagePreview ? (
+                                        <img
+                                            className="w-[150px] h-[147px] mx-auto "
+                                            src={imagePreview}
+                                            alt="Selected Image Preview"
+                                        />
+                                    ) : (
+                                        <>
+                                            <img
+                                                className="size-12 mx-auto"
+                                                src="/assets/products/upload.png"
+                                                alt="upload image"
+                                            />
+                                            <span className="text-xs px-5 text-center pb-4">
+                                                <span className="underline  text-[#8095FF]">
+                                                    click to upload{' '}
+                                                </span>{' '}
+                                                or drag and drop
+                                            </span>
+                                        </>
+                                    )}
                                 </label>
                                 <label
                                     htmlFor="image"
@@ -205,13 +225,17 @@ function AddProduct() {
                                 </label>
                                 <button
                                     type="button"
-                                    onClick={() => unregister('image')}
+                                    onClick={() => {
+                                        unregister('image');
+                                        setImage(null);
+                                        setImagePreview(null);
+                                    }}
                                     className="grow flex items-center justify-center gap-2 border border-gray-600 p-1 h-10 rounded-lg "
                                 >
                                     <FaRegTrashAlt /> remove
                                 </button>
                             </div>
-                            <div className="flex  gap-2">
+                            <div className="flex gap-2">
                                 <label
                                     htmlFor="popular"
                                     className="text-main font-semibold"

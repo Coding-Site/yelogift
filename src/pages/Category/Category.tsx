@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Link, useParams } from 'react-router-dom';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa6';
-import { FaStar } from 'react-icons/fa';
+// import { FaStar } from 'react-icons/fa';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { IProduct } from '../../models/IProduct';
 import instance from '../../axios';
@@ -68,7 +68,7 @@ function Category() {
                 />
             </Helmet>
 
-            <div className="flex flex-col gap-4 w-full py-5 container ps-12">
+            <div className="flex flex-col gap-4 w-full py-5 container sm:ps-12 min-h-screen">
                 <div className="flex items-center justify-start w-full relative ">
                     <Link to="/">
                         <FaChevronLeft className="text-main text-2xl absolute -left-7 font-semibold top-[50%] -translate-y-[50%]" />
@@ -77,7 +77,7 @@ function Category() {
                         {category?.name}
                     </span>
                 </div>
-                <div className="flex flex-wrap justify-between sm:justify-start min-h-screen">
+                <div className="flex flex-wrap justify-between sm:justify-start ">
                     {loading ? (
                         <div>Loading ...</div>
                     ) : (
@@ -92,13 +92,14 @@ function Category() {
                         ))
                     )}
                 </div>
-
-                <Pagination
-                    pages={pages}
-                    page={page}
-                    setPage={setPage}
-                    loading={loading}
-                />
+                <div className="mt-[50px]">
+                    <Pagination
+                        pages={pages}
+                        page={page}
+                        setPage={setPage}
+                        loading={loading}
+                    />
+                </div>
             </div>
         </>
     );
@@ -109,14 +110,11 @@ export default Category;
 const Cart = ({ product }: { product: IProduct }) => {
     return (
         <>
-            <div className="bg-white rounded-md p-3 pt-6  flex flex-col items-center w-full ">
-                <div className="relative w-2/3 sm:w-1/3 rounded-full bg-black h-[20px]">
-                    <div className="size-7 rounded-full bg-black absolute -top-[50%] left-[50%] -translate-x-[50%]"></div>
+            <div className="bg-white rounded-md p-1 pt-4  sm:p-3 sm:pt-6  flex flex-col items-center w-full ">
+                <div className="relative w-[55%] sm:w-1/3 rounded-full bg-black h-[15px] sm:h-[20px] mb-3">
+                    <div className="size-4 sm:size-7 rounded-full bg-black absolute -top-[50%] left-[50%] -translate-x-[50%]"></div>
                 </div>
 
-                <span className="text-gray-500 uppercase my-2 text-xs sm:text-base">
-                    {product.name}
-                </span>
                 <img
                     src={
                         import.meta.env.VITE_BASEURL +
@@ -126,16 +124,9 @@ const Cart = ({ product }: { product: IProduct }) => {
                     alt="card"
                     className="w-[130] h-[87px] sm:min-h-[156px]  sm:min-w-full rounded-md "
                 />
-            </div>
-
-            <div className="flex justify-between w-full py-2 font-semibold">
-                <div className="flex flex-col ">
-                    <span>{product.category?.name}</span>
-                    <span>{product.price} USD</span>
-                </div>
-                <div className="flex">
-                    5.0 <FaStar className="ms-1 text-main" />
-                </div>
+                <span className="text-gray-500 uppercase my-[4px] sm:my-2 text-[10px] sm:text-base text-nowrap	">
+                    {product.name}
+                </span>
             </div>
         </>
     );

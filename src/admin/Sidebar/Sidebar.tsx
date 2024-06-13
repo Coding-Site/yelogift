@@ -63,6 +63,12 @@ function Sidebar() {
                                     to="/admin/popular-order"
                                 />
                             </li>
+                            <li>
+                                <NavItem
+                                    item="Binance Pay Fee"
+                                    to="/admin/binance-pay-fee"
+                                />
+                            </li>
                         </ul>
                     </details>
                 </li>

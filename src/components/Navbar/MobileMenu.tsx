@@ -53,14 +53,6 @@ function MobileMenu({
                 >
                     Home
                 </NavLink>
-                <NavLink
-                    className={({ isActive }) =>
-                        isActive ? 'text-main font-semibold' : 'text-mainWhite'
-                    }
-                    to="/categories"
-                >
-                    Categories
-                </NavLink>
                 {userToken && (
                     <NavLink
                         className={({ isActive }) =>

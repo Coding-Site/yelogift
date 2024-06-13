@@ -1,6 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from 'react';
 import { IOrder } from '../../../models/IOrder';
 import Status from './Status';
@@ -157,7 +154,7 @@ function Orders() {
                                         />
                                     </td>
                                     <td>
-                                        {order.status !== '1' && (
+                                        {order.status == '0' && (
                                             <Link
                                                 to={`/admin/orders/${order.id}`}
                                             >

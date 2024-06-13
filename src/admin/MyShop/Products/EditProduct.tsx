@@ -14,21 +14,23 @@ type Inputs = {
     description: string;
     how_to_redeem: string;
     category_id: string;
-    image: string;
+    image: FileList;
     price: number;
     discount: number;
-    popular: any;
+    popular: boolean;
 };
 
 function EditProduct() {
     const [loading, setLoading] = useState<Boolean>(false);
     const { id } = useParams();
     const [categories, setCategories] = useState<ICategory[]>([]);
+    const [imagePreview, setImagePreview] = useState<string>('');
     const localstorage = JSON.parse(
         localStorage.getItem('adminData') as string
     );
     const adminToken = localstorage?.adminToken;
-    const { register, handleSubmit, unregister, reset } = useForm<Inputs>();
+    const { register, handleSubmit, unregister, reset, setValue } =
+        useForm<Inputs>();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -49,15 +51,25 @@ function EditProduct() {
                     category_id: product?.category_id,
                     price: product?.price,
                     discount: product?.discount,
-                    popular:
-                        typeof product?.popular === 'boolean'
-                            ? product.popular
-                            : product?.popular !== 'false',
+                    popular: product?.popular === true,
                 };
                 reset(defaultValues as any);
+                setImagePreview(
+                    `${import.meta.env.VITE_BASEURL}/public/storage/${
+                        product?.image
+                    }`
+                ); // Set initial image preview with backend URL
                 setLoading(false);
             });
-    }, []);
+    }, [adminToken, id, reset]);
+
+    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const files = e.target.files;
+        if (files && files.length > 0) {
+            setImagePreview(URL.createObjectURL(files[0]));
+            setValue('image', files);
+        }
+    };
 
     const onSubmit: SubmitHandler<Inputs> = (data) => {
         setLoading(true);
@@ -95,7 +107,7 @@ function EditProduct() {
                 },
             })
             .then((data) => setCategories(data.data.data));
-    }, []);
+    }, [adminToken]);
 
     return (
         <div className="flex flex-col gap-4 w-full py-5 container ps-12">
@@ -108,7 +120,7 @@ function EditProduct() {
                 </span>
             </div>
             <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col ">
-                <div className="flex  w-full gap-10">
+                <div className="flex w-full gap-10">
                     <div className="w-full sm:w-1/2 flex flex-col gap-5">
                         <div className="flex flex-col gap-2">
                             <label
@@ -159,7 +171,7 @@ function EditProduct() {
                             <select
                                 {...register('category_id')}
                                 id="category"
-                                className="border  border-gray-400 rounded-md bg-transparent p-1"
+                                className="border border-gray-400 rounded-md bg-transparent p-1"
                             >
                                 {categories.map((cat, idx) => (
                                     <option
@@ -174,48 +186,34 @@ function EditProduct() {
                         </div>
                     </div>
                     <div className="w-full sm:w-1/2 flex flex-col gap-5">
-                        <div
-                            className="flex gap-2 items-center 
-                    w-full 
-                    justify-end
-                    [&>*]:w-[120px] 
-                    [&>*]:h-[50px] 
-                    [&>*]:rounded-md  
-                    [&>*]:px-3 
-                    [&>*]:py-2 
-                    [&>*]:border 
-                    [&>*]:flex 
-                    [&>*]:cursor-pointer 
-                    [&>*]:justify-center 
-                    [&>*]:items-center 
-                    [&>*]:border-gray-400 
-                  "
-                        ></div>
-                        <div className="flex flex-col  gap-2 items-start">
+                        <div className="flex flex-col gap-2 items-start">
                             <label
                                 htmlFor="image"
                                 className="text-main font-semibold"
                             >
-                                product image
+                                Product Image
                             </label>
                             <input
-                                {...register('image')}
                                 type="file"
                                 id="image"
                                 className="hidden"
+                                onChange={handleImageChange}
                             />
                             <div className="flex justify-between items-end gap-3 border border-gray-600 rounded-md bg-transparent p-3 w-full">
                                 <label
                                     htmlFor="image"
-                                    className="flex flex-col justify-end aspect-square border rounded-md cursor-pointer  border-dashed  border-gray-400 h-[150px]"
+                                    className="flex flex-col justify-end aspect-square border rounded-md cursor-pointer border-dashed border-gray-400 h-[150px]"
                                 >
                                     <img
                                         className="size-12 mx-auto"
-                                        src="/assets/products/upload.png"
-                                        alt="upload image"
+                                        src={
+                                            imagePreview ||
+                                            '/assets/products/upload.png'
+                                        }
+                                        alt="product preview"
                                     />
                                     <span className="text-xs px-5 text-center pb-4">
-                                        <span className="underline  text-[#8095FF]">
+                                        <span className="underline text-[#8095FF]">
                                             click to upload{' '}
                                         </span>{' '}
                                         or drag and drop
@@ -229,8 +227,11 @@ function EditProduct() {
                                 </label>
                                 <button
                                     type="button"
-                                    onClick={() => unregister('image')}
-                                    className="grow flex items-center justify-center gap-2 border border-gray-600 p-1 h-10 rounded-lg "
+                                    onClick={() => {
+                                        setImagePreview('');
+                                        unregister('image');
+                                    }}
+                                    className="grow flex items-center justify-center gap-2 border border-gray-600 p-1 h-10 rounded-lg"
                                 >
                                     <FaRegTrashAlt /> remove
                                 </button>
