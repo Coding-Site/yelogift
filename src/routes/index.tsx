@@ -30,6 +30,9 @@ const SectionOrder = lazy(
 const PopularOrderRanking = lazy(
     () => import('../admin/MyShop/PopularOrderRanking/PopularOrderRanking')
 );
+const BinancePayFees = lazy(
+    () => import('../admin/MyShop/BinancePayFees/BinancePayFees')
+);
 
 // Setting Pages
 const AdminSettings = lazy(
@@ -258,6 +261,14 @@ export const router = createHashRouter([
                         element: (
                             <Suspense fallback={<Spinner />}>
                                 <PopularOrderRanking />
+                            </Suspense>
+                        ),
+                    },
+                    {
+                        path: 'binance-pay-fee',
+                        element: (
+                            <Suspense fallback={<Spinner />}>
+                                <BinancePayFees />
                             </Suspense>
                         ),
                     },

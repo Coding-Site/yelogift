@@ -7,15 +7,19 @@ function Status({
     status: string;
     paymentstatus: string;
 }) {
-    const [fstatus, setFStats] = useState('');
+    const [fstatus, setFStatus] = useState('');
 
     useEffect(() => {
-        setFStats(() => {
-            return paymentstatus === '0'
-                ? 'Pending'
-                : status === '0'
-                ? 'in-Progress'
-                : 'Confirmed';
+        setFStatus(() => {
+            if (status === '-1') {
+                return 'Rejected';
+            } else if (paymentstatus === '0') {
+                return 'Pending';
+            } else if (status === '0') {
+                return 'InProgress';
+            } else {
+                return 'Confirmed';
+            }
         });
     }, [status, paymentstatus]);
 
@@ -23,8 +27,10 @@ function Status({
         <>
             {fstatus === 'Pending' ? (
                 <Pending />
-            ) : fstatus === 'in-Progress' ? (
-                <InProgrss />
+            ) : fstatus === 'InProgress' ? (
+                <InProgress />
+            ) : fstatus === 'Rejected' ? (
+                <Rejected />
             ) : (
                 <Confirmed />
             )}
@@ -36,7 +42,7 @@ export default Status;
 
 function Pending() {
     return (
-        <span className="px-4 rounded-full py-0.5 border  bg-[#B2B2B2] border-[#303030] text-white">
+        <span className="px-4 rounded-full py-0.5 border bg-[#B2B2B2] border-[#303030] text-white">
             Pending
         </span>
     );
@@ -50,10 +56,18 @@ function Confirmed() {
     );
 }
 
-function InProgrss() {
+function InProgress() {
     return (
         <span className="px-4 rounded-full py-0.5 border bg-yellow-800 border-yellow-900 text-white">
             In Progress
+        </span>
+    );
+}
+
+function Rejected() {
+    return (
+        <span className="px-4 rounded-full py-0.5 border bg-red-600 border-red-700 text-white">
+            Rejected
         </span>
     );
 }
