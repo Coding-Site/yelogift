@@ -168,16 +168,7 @@ function Navbar() {
                     >
                         Home
                     </NavLink>
-                    {/* <NavLink
-                        className={({ isActive }) =>
-                            isActive
-                                ? 'text-main font-semibold'
-                                : 'dark:text-gray-600 text-mainWhite'
-                        }
-                        to="/categories"
-                    >
-                        Categories
-                    </NavLink> */}
+
                     {userToken && (
                         <NavLink
                             className={({ isActive }) =>
