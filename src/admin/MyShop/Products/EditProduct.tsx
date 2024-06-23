@@ -58,7 +58,7 @@ function EditProduct() {
                     `${import.meta.env.VITE_BASEURL}/public/storage/${
                         product?.image
                     }`
-                ); // Set initial image preview with backend URL
+                );
                 setLoading(false);
             });
     }, [adminToken, id, reset]);
@@ -204,20 +204,27 @@ function EditProduct() {
                                     htmlFor="image"
                                     className="flex flex-col justify-end aspect-square border rounded-md cursor-pointer border-dashed border-gray-400 h-[150px]"
                                 >
-                                    <img
-                                        className="size-12 mx-auto"
-                                        src={
-                                            imagePreview ||
-                                            '/assets/products/upload.png'
-                                        }
-                                        alt="product preview"
-                                    />
-                                    <span className="text-xs px-5 text-center pb-4">
-                                        <span className="underline text-[#8095FF]">
-                                            click to upload{' '}
-                                        </span>{' '}
-                                        or drag and drop
-                                    </span>
+                                    {imagePreview ? (
+                                        <img
+                                            className="w-[150px] h-[147px] mx-auto "
+                                            src={imagePreview}
+                                            alt="Selected Image Preview"
+                                        />
+                                    ) : (
+                                        <>
+                                            <img
+                                                className="size-12 mx-auto"
+                                                src="/assets/products/upload.png"
+                                                alt="upload image"
+                                            />
+                                            <span className="text-xs px-5 text-center pb-4">
+                                                <span className="underline  text-[#8095FF]">
+                                                    click to upload{' '}
+                                                </span>{' '}
+                                                or drag and drop
+                                            </span>
+                                        </>
+                                    )}
                                 </label>
                                 <label
                                     htmlFor="image"

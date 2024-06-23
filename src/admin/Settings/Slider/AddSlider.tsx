@@ -20,13 +20,26 @@ function AddSlider() {
         localStorage.getItem('adminData') as string
     );
     const adminToken = localstorage?.adminToken;
+    const [image, setImage] = useState<any>();
+    const [imagePreview, setImagePreview] = useState<string | null>(null);
+
+    const handleImage = (image: any) => {
+        const file = image.target.files[0];
+        setImage(file);
+
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            setImagePreview(reader.result as string);
+        };
+        reader.readAsDataURL(file);
+    };
 
     const onSubmit: SubmitHandler<Inputs> = (data) => {
         setLoading(true);
         const fd = new FormData();
 
         for (const i in data) {
-            fd.append(i, i != 'image' ? (data as any)[i] : data.image[0]);
+            fd.append(i, i != 'image' ? (data as any)[i] : image);
         }
         console.log(fd);
         instance
@@ -109,23 +122,36 @@ function AddSlider() {
                                     type="file"
                                     id="image"
                                     className="hidden"
+                                    onChange={(
+                                        e: React.ChangeEvent<HTMLInputElement>
+                                    ) => handleImage(e)}
                                 />
 
                                 <label
                                     htmlFor="image"
                                     className="flex flex-col w-full grow justify-center  border rounded-md cursor-pointer  border-dashed  border-gray-400 "
                                 >
-                                    <img
-                                        className="size-12 mx-auto"
-                                        src="/assets/products/upload.png"
-                                        alt="upload image"
-                                    />
-                                    <span className="text-xs px-5 text-center pb-4">
-                                        <span className="underline  text-[#8095FF]">
-                                            click to upload{' '}
-                                        </span>{' '}
-                                        or drag and drop
-                                    </span>
+                                    {imagePreview ? (
+                                        <img
+                                            className="w-[500px] h-[auto] mx-auto "
+                                            src={imagePreview}
+                                            alt="Selected Image Preview"
+                                        />
+                                    ) : (
+                                        <>
+                                            <img
+                                                className="size-12 mx-auto"
+                                                src="/assets/products/upload.png"
+                                                alt="upload image"
+                                            />
+                                            <span className="text-xs px-5 text-center pb-4">
+                                                <span className="underline  text-[#8095FF]">
+                                                    click to upload{' '}
+                                                </span>{' '}
+                                                or drag and drop
+                                            </span>
+                                        </>
+                                    )}
                                 </label>
                             </div>
                         </div>

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaChevronLeft } from 'react-icons/fa6';
@@ -36,7 +35,6 @@ function AddProduct() {
         const file = image.target.files[0];
         setImage(file);
 
-        // Generate a preview URL
         const reader = new FileReader();
         reader.onloadend = () => {
             setImagePreview(reader.result as string);
