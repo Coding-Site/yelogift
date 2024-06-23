@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import Footer from '../components/Footer';
 import { IoIosLock } from 'react-icons/io';
@@ -20,6 +19,45 @@ type Inputs = {
     login: string;
     password: string;
 };
+
+// const signInWithBinance = async () => {
+//     const clientId =
+//         'ae05edbf6ddff5577099e0daab671aa7b97a307770d54fe65077e1c268e9f274';
+//     const redirectUri = 'https://yelogift.net/';
+//     const scope = 'user:email,user:address';
+//     const state = 'YOUR_STATE'; &state=${state}
+//     const url = `https://www.binance.com/en/oauth/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}`;
+//     const popup: any = window.open(url, '_blank', 'width=600,height=600');
+
+//     const polling = setInterval(() => {
+//         if (!popup || popup.closed || popup.closed === undefined) {
+//             clearInterval(polling);
+//         }
+//         try {
+//             if (popup.location.href.includes('https://yelogift.net/')) {
+//                 clearInterval(polling);
+//                 const code = new URLSearchParams(popup.location.search).get(
+//                     'code'
+//                 );
+//                 popup.close();
+//                 axios
+//                     .post('/api/auth/binance', { code })
+//                     .then((response) => {
+//                         console.log(response.data);
+//                     })
+//                     .catch((error) => {
+//                         console.error(
+//                             'Error sending Binance sign-in data:',
+//                             error
+//                         );
+//                     });
+//             }
+//             console.log('done');
+//         } catch (error) {
+//             console.error(error);
+//         }
+//     }, 1000);
+// };
 
 function Signin() {
     const [loading, setLoading] = useState<boolean>(false);
@@ -207,7 +245,10 @@ function Signin() {
                                 />
                                 Facebook
                             </button>
-                            <button className="flex justify-around items-center pad_0_im h-[42px] w-[140px] min-w-[110px] text-[14px] gap-1 ">
+                            <button
+                                // onClick={signInWithBinance}
+                                className="flex justify-around items-center pad_0_im h-[42px] w-[140px] min-w-[110px] text-[14px] gap-1 "
+                            >
                                 <img
                                     src="assets/signin/binance.png"
                                     alt="singin with google"
