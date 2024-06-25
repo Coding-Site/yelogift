@@ -18,13 +18,17 @@ function Checkout() {
     const [feeDesc, setFeeDesc] = useState<any>(null);
 
     useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
+    useEffect(() => {
         const fetchFeeData = async () => {
             try {
                 const response = await instance.get('/api/fee');
                 const feeData = response.data.data;
                 setFeeDesc(feeData?.description);
             } catch (error) {
-                console.error('Failed to fetch topnav data:', error);
+                console.error('Failed to fetch  data:', error);
             }
         };
         fetchFeeData();
@@ -39,7 +43,6 @@ function Checkout() {
             })
             .then((d) => {
                 setMethods(d.data.data);
-                console.log(d);
             });
     }, []);
 
@@ -72,13 +75,12 @@ function Checkout() {
             })
             .then(() => {
                 dispatch(getCartData());
+                if (payMethod == 'binance') {
+                    navigate('/paymentauto');
+                } else {
+                    navigate('/paymentmanual');
+                }
             });
-
-        if (payMethod == 'binance') {
-            navigate('/paymentauto');
-        } else {
-            navigate('/paymentmanual');
-        }
     };
 
     const calculateTotalPrice = () => {

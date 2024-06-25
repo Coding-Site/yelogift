@@ -14,6 +14,10 @@ function CheckoutSingleNow() {
     const [feeDesc, setFeeDesc] = useState<any>(null);
 
     useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
+    useEffect(() => {
         const fetchFeeData = async () => {
             try {
                 const response = await instance.get('/api/fee');

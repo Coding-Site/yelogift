@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import Spinner from '../utils/Spinner';
 import instance from '../axios';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
 
 Modal.setAppElement('#root');
@@ -9,9 +9,9 @@ Modal.setAppElement('#root');
 function OrdersHistory() {
     const [orders, setOrders] = useState<any>([]);
     const [loading, setLoading] = useState(false);
-    const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-    const [orderIdToDelete, setOrderIdToDelete] = useState<string | null>(null);
-    // const navigate = useNavigate();
+    // const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+    // const [orderIdToDelete, setOrderIdToDelete] = useState<string | null>(null);
+    const navigate = useNavigate();
 
     const localstorage = JSON.parse(localStorage.getItem('userData') as string);
     const userToken = localstorage?.userToken;
@@ -28,27 +28,41 @@ function OrdersHistory() {
                 setOrders(d.data.data);
                 setLoading(false);
             });
-    }, [deleteModalOpen]);
+    }, []);
 
-    const deleteOrder = () => {
-        if (!orderIdToDelete) return;
-        instance
-            .delete(`/api/user/order/delete/${orderIdToDelete}`, {
-                headers: {
-                    Authorization: `Bearer ${userToken}`,
-                },
-            })
-            .then(() => {
-                setDeleteModalOpen(false);
-                setOrderIdToDelete(null);
-            })
-            .catch((err) => console.log(err));
-    };
-
-    // const onCheckout = (orderId: any) => {
-    //     localStorage.setItem('orderId', JSON.stringify(orderId));
-    //     navigate('/checkout');
+    // const deleteOrder = () => {
+    //     if (!orderIdToDelete) return;
+    //     instance
+    //         .delete(`/api/user/order/delete/${orderIdToDelete}`, {
+    //             headers: {
+    //                 Authorization: `Bearer ${userToken}`,
+    //             },
+    //         })
+    //         .then(() => {
+    //             setDeleteModalOpen(false);
+    //             setOrderIdToDelete(null);
+    //         })
+    //         .catch((err) => console.log(err));
     // };
+
+    const onPayNow = (order: any) => {
+        localStorage.setItem('orderId', JSON.stringify(order.id));
+
+        if (order.payment_method == 'cryptocurrancy') {
+            localStorage.setItem(
+                'currencyId',
+                JSON.stringify(order.payment_id)
+            );
+            navigate('/paymentmanual');
+        } else if (order.payment_method == 'binance') {
+            localStorage.setItem('currencyId', JSON.stringify(0));
+            navigate('/paymentauto');
+        } else if (order.payment_method == 'pay') {
+            navigate(
+                `/product/${order?.order_product[0].product.id}/buy-now/${order?.order_product[0].order_id}`
+            );
+        }
+    };
 
     return (
         <div className="flex py-10 w-full min-h-[100vh]">
@@ -72,7 +86,7 @@ function OrdersHistory() {
                                         &times;
                                     </button>
                                 )} */}
-                                {!(
+                                {/* {!(
                                     order.status === '0' &&
                                     order.payment_status === '1'
                                 ) && (
@@ -86,7 +100,7 @@ function OrdersHistory() {
                                     >
                                         &times;
                                     </button>
-                                )}
+                                )} */}
                                 <div className="flex flex-col bg-white px-[15px] py-[6px] lg:p-10 w-full sm:w-1/2 rounded">
                                     {order?.order_product?.map(
                                         (order: any, idxx: any) => (
@@ -118,17 +132,17 @@ function OrdersHistory() {
                                     )}
                                 </div>
                                 <div className="flex flex-col justify-center items-center gap-y-2 w-full sm:w-1/2 py-2">
-                                    {/* {order.status == 0 && (
+                                    {order.payment_status == 0 && (
                                         <button
                                             type="button"
                                             onClick={() => {
-                                                onCheckout(order.id);
+                                                onPayNow(order);
                                             }}
                                             className="bg-transparent border-2 border-white w-52 py-3 flex justify-center items-center text-white"
                                         >
-                                            Check out
+                                            Pay Now
                                         </button>
-                                    )} */}
+                                    )}
                                     <span className="text-lg font-semibold">
                                         {order.status === '-1' ? (
                                             <span className="text-[red]">
@@ -154,7 +168,7 @@ function OrdersHistory() {
                     </div>
                 )}
             </div>
-            <Modal
+            {/* <Modal
                 isOpen={deleteModalOpen}
                 onRequestClose={() => setDeleteModalOpen(false)}
                 contentLabel="Confirm Order Modal"
@@ -197,7 +211,7 @@ function OrdersHistory() {
                         No, Cancel
                     </button>
                 </div>
-            </Modal>
+            </Modal> */}
         </div>
     );
 }

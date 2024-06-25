@@ -12,9 +12,13 @@ function PaymentManual() {
     const userToken = localstorage?.userToken;
     const [cryptoPayData, setCryptoPayData] = useState<any>({});
     const [orderPrice, setOrderPrice] = useState<any>(null);
-    const orderId = JSON.parse(localStorage.getItem('orderId') as string);
-    const currencyId = JSON.parse(localStorage.getItem('currencyId') as string);
+    const [invMiss, setInvMiss] = useState<boolean>(false);
     useEffect(() => {
+        const orderId = JSON.parse(localStorage.getItem('orderId') as string);
+        const currencyId = JSON.parse(
+            localStorage.getItem('currencyId') as string
+        );
+        // window.location.reload();
         axios
             .post(
                 `${import.meta.env.VITE_BASEURL}/api/user/order/crypto`,
@@ -32,7 +36,6 @@ function PaymentManual() {
                 const data = d.data.data;
                 setCryptoPayData(data[0]);
                 setOrderPrice(data[1].price);
-                console.log(d);
             })
             .catch((err) => console.log(err));
     }, []);
@@ -42,8 +45,11 @@ function PaymentManual() {
     };
 
     const sentToDB = () => {
+        const orderId = JSON.parse(localStorage.getItem('orderId') as string);
+
         if (!invoice) {
             console.error('Invoice file is missing');
+            setInvMiss(true);
             return;
         }
 
@@ -62,9 +68,9 @@ function PaymentManual() {
                     },
                 }
             )
-            .then((d) => {
-                console.log('done', d);
+            .then(() => {
                 navigate('/');
+                setInvMiss(false);
             })
             .catch((err) => {
                 console.error('Error submitting data', err);
@@ -170,7 +176,11 @@ function PaymentManual() {
                             }/public/storage/${cryptoPayData.payment_qr}`}
                             alt="QR"
                         />
-                        {/* <span className="text-red-600 ">back end error</span> */}
+                        {invMiss && (
+                            <span className="text-red-600 ">
+                                Invoice file is missing
+                            </span>
+                        )}
                     </div>
 
                     <div className="flex-col flex sm:hidden">

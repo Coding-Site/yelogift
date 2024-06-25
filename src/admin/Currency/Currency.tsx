@@ -83,7 +83,7 @@ function Currency() {
                     Authorization: `Bearer ${adminToken}`,
                 },
             })
-            .then((res) => {
+            .then(() => {
                 setDoo(!doo);
             });
     };

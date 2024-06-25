@@ -142,9 +142,10 @@ function OrderDetails() {
                     </div>
                 </div>
                 {order?.order?.invoice && (
-                    <div className="mt-[20px] max-w-[300px] max-h-[300px]">
+                    <div className="flex flex-col mt-[20px] max-w-[500px] max-h-[500px]">
+                        <p className="text-2xl mb-4">Invoice :</p>
                         <img
-                            className=" mx-auto"
+                            className=" mx-auto max-w-fit max-h-[100%] "
                             src={`${
                                 import.meta.env.VITE_BASEURL
                             }/public/storage/${order?.order?.invoice}`}

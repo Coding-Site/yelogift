@@ -13,9 +13,9 @@ function PaymentAuto() {
     const [orderDetails, setOrderDetails] = useState<any>({});
     const [order, setOrder] = useState<any>({});
 
+    const orderId = JSON.parse(localStorage.getItem('orderId') as string);
     useEffect(() => {
         setLoading(true);
-        const orderId = JSON.parse(localStorage.getItem('orderId') as string);
         instance
             .post(
                 `/api/user/order/binance/pay`,
@@ -30,21 +30,20 @@ function PaymentAuto() {
             )
             .then((d) => {
                 setLoading(false);
-                const data = d.data.data;
-                setOrder(data.order);
-                setBinancePayData(data.pay_data.data);
+                const data = d?.data.data;
+                setOrder(data?.order);
+                setBinancePayData(data?.pay_data.data);
                 const od = {
-                    prepayId: data.pay_data.data.prepayId,
-                    email: data.order.email,
+                    prepayId: data?.pay_data.data.prepayId,
+                    email: data?.order.email,
                 };
                 setOrderDetails(od);
-                console.log(data);
             })
             .catch((err) => {
                 setLoading(false);
                 console.log(err);
             });
-    }, []);
+    }, [orderId]);
 
     const isMobileDevice = () => {
         return /Mobi|Android/i.test(navigator.userAgent);
