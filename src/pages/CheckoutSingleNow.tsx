@@ -18,10 +18,9 @@ function CheckoutSingleNow() {
             try {
                 const response = await instance.get('/api/fee');
                 const feeData = response.data.data;
-                console.log(feeData);
-                setFeeDesc(feeData.description);
+                setFeeDesc(feeData?.description);
             } catch (error) {
-                console.error('Failed to fetch topnav data:', error);
+                console.error('Failed to fetch feeData data:', error);
             }
         };
         fetchFeeData();
@@ -158,13 +157,13 @@ function CheckoutSingleNow() {
                                         src={
                                             import.meta.env.VITE_BASEURL +
                                             '/public/storage/' +
-                                            method?.icon
+                                            method?.currency.icon
                                         }
-                                        alt="cart"
+                                        alt="icon"
                                     />
 
                                     <span className="text-xs bg-gray-300 text-mainLightBlack rounded-full px-1 ">
-                                        {method?.currency}
+                                        {method?.currency.name}
                                     </span>
                                 </div>
                             ))}

@@ -179,7 +179,7 @@ function Footer() {
 
             <div className="flex flex-col gap-y-5 sm:flex-row justify-between  w-full container py-5 text-gray-500">
                 <span>&copy; 2024 yelogift all rights reserved </span>{' '}
-                {/* <span>
+                <span>
                     made by
                     <a
                         className="inline-block mx-2"
@@ -187,7 +187,7 @@ function Footer() {
                     >
                         coding site
                     </a>
-                </span> */}
+                </span>
             </div>
         </footer>
     );

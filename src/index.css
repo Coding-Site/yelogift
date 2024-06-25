@@ -77,3 +77,15 @@
         opacity: 1;
     }
 }
+
+/* @media (min-width: 640px) {
+    .mobile-link {
+        display: none;
+    }
+}
+
+@media (max-width: 639px) {
+    .web-link {
+        display: none;
+    }
+} */

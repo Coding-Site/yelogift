@@ -22,8 +22,7 @@ function Checkout() {
             try {
                 const response = await instance.get('/api/fee');
                 const feeData = response.data.data;
-                console.log(feeData);
-                setFeeDesc(feeData.description);
+                setFeeDesc(feeData?.description);
             } catch (error) {
                 console.error('Failed to fetch topnav data:', error);
             }
@@ -38,7 +37,10 @@ function Checkout() {
                     Authorization: `Bearer ${userToken}`,
                 },
             })
-            .then((d) => setMethods(d.data.data));
+            .then((d) => {
+                setMethods(d.data.data);
+                console.log(d);
+            });
     }, []);
 
     useEffect(() => {
@@ -228,13 +230,13 @@ function Checkout() {
                                         src={
                                             import.meta.env.VITE_BASEURL +
                                             '/public/storage/' +
-                                            method?.icon
+                                            method?.currency.icon
                                         }
-                                        alt="cart"
+                                        alt="icon"
                                     />
 
                                     <span className="text-xs bg-gray-300 text-mainLightBlack rounded-full px-1 ">
-                                        {method?.currency}
+                                        {method?.currency.name}
                                     </span>
                                 </div>
                             ))}

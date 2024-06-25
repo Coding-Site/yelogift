@@ -123,9 +123,12 @@ function Sidebar() {
                         </ul>
                     </details>
                 </li>
-                {/* <li>
+                <li>
                     <NavEc item="Currency" to="/admin/currency" />
-                </li> */}
+                </li>
+                <li>
+                    <NavEc item="Payment Setting" to="/admin/payment-setting" />
+                </li>
                 {/* <li>
                     <NavEc item="Custom Page" to="/admin/custom-page" />
                 </li> */}
