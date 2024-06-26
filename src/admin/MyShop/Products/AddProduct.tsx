@@ -43,7 +43,6 @@ function AddProduct() {
     };
 
     const onSubmit: SubmitHandler<Inputs> = (data: any) => {
-        console.log(data);
         setLoading(true);
         const fd = new FormData();
         for (const i in data) {
@@ -60,7 +59,7 @@ function AddProduct() {
                 navigate('/admin/products');
             })
             .catch((err) => {
-                console.log(err);
+                console.error(err);
                 setLoading(false);
             });
     };

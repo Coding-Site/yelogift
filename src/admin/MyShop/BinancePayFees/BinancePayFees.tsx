@@ -22,7 +22,7 @@ function BinancePayFees() {
                 });
                 const feeData = response.data.data;
                 const defaultValues: any = {
-                    description: feeData.description || '',
+                    description: feeData?.description || '',
                 };
                 reset(defaultValues);
             } catch (error) {

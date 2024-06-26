@@ -265,7 +265,7 @@ function Signin() {
                     </div>
                     <form
                         onSubmit={handleSubmit(onSubmitt)}
-                        className="py-10 flex flex-col justify-center mx-auto items-center gap-5 w-[65%]"
+                        className="py-10 flex flex-col justify-center mx-auto items-center gap-5 w-[85%]"
                     >
                         <div className="relative w-full">
                             <input

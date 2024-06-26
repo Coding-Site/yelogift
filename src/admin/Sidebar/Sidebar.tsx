@@ -90,12 +90,12 @@ function Sidebar() {
                             Settings
                         </summary>
                         <ul>
-                            <li>
+                            {/* <li>
                                 <NavItem
                                     item="Site Settings"
                                     to="/admin/site-setting"
                                 />
-                            </li>
+                            </li> */}
                             <li>
                                 <NavItem item="Slider" to="/admin/slider" />
                             </li>

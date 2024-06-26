@@ -65,7 +65,6 @@ function Category() {
                     },
                 }
             );
-            console.log(`Category ${categoryId} reordered successfully.`);
         } catch (error: any) {
             console.error(
                 `Error reordering category ${categoryId}: ${error.message}`
@@ -107,7 +106,7 @@ function Category() {
 
         return (
             <tr ref={(node) => drag(drop(node))}>
-                <td>{category.id}</td>
+                <td>{index + 1}</td>
                 <td>{category.name}</td>
                 <td>
                     <img
@@ -165,7 +164,7 @@ function Category() {
                         <table className="text-center table-auto">
                             <thead>
                                 <tr className="border-y-4 border-transparent">
-                                    <th>ID</th>
+                                    <th>No.</th>
                                     <th>Name</th>
                                     <th>Icon</th>
                                     <th></th>

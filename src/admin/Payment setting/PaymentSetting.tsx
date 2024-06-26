@@ -22,13 +22,11 @@ function PaymentSetting() {
                 },
             })
             .then((d) => {
-                console.log(d);
                 const data: any = d.data.data;
                 setPayments(data);
                 setLoading(false);
             });
     }, []);
-    console.log(payments);
 
     return (
         <div className="flex flex-col gap-8 w-full py-10 container">

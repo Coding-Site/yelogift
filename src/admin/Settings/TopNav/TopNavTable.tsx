@@ -36,15 +36,11 @@ export default function TopNavTable() {
 
     const deleteTovNav = async (id: any) => {
         try {
-            const response = await instance.delete(
-                `/api/admin/advertismant/delete/${id}`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${adminToken}`,
-                    },
-                }
-            );
-            console.log(response);
+            await instance.delete(`/api/admin/advertismant/delete/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${adminToken}`,
+                },
+            });
         } catch (error) {
             console.error('Failed to fetch topnav data:', error);
         } finally {

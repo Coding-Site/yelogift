@@ -3,16 +3,18 @@ import { MdContentCopy } from 'react-icons/md';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function PaymentManual() {
     const navigate = useNavigate();
-
     const localstorage = JSON.parse(localStorage.getItem('userData') as string);
     const [invoice, setInvoice] = useState<any>(null);
     const userToken = localstorage?.userToken;
     const [cryptoPayData, setCryptoPayData] = useState<any>({});
     const [orderPrice, setOrderPrice] = useState<any>(null);
     const [invMiss, setInvMiss] = useState<boolean>(false);
+
     useEffect(() => {
         const orderId = JSON.parse(localStorage.getItem('orderId') as string);
         const currencyId = JSON.parse(
@@ -28,7 +30,7 @@ function PaymentManual() {
                 },
                 {
                     headers: {
-                        Authorization: `Bearer  ${userToken}`,
+                        Authorization: `Bearer ${userToken}`,
                     },
                 }
             )
@@ -75,6 +77,16 @@ function PaymentManual() {
             .catch((err) => {
                 console.error('Error submitting data', err);
             });
+    };
+
+    const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files && e.target.files[0];
+        if (file) {
+            setInvoice(file);
+            toast.success('Image uploaded successfully!', {
+                autoClose: 1500,
+            });
+        }
     };
 
     return (
@@ -148,13 +160,7 @@ function PaymentManual() {
                                 <input
                                     type="file"
                                     id="file"
-                                    onChange={(e) =>
-                                        setInvoice(
-                                            e?.target &&
-                                                e?.target?.files &&
-                                                (e?.target?.files[0] as any)
-                                        )
-                                    }
+                                    onChange={handleFileUpload}
                                     className="hidden"
                                 />
                             </label>
@@ -194,13 +200,7 @@ function PaymentManual() {
                             <input
                                 type="file"
                                 id="file"
-                                onChange={(e) =>
-                                    setInvoice(
-                                        e?.target &&
-                                            e?.target?.files &&
-                                            (e?.target?.files[0] as any)
-                                    )
-                                }
+                                onChange={handleFileUpload}
                                 className="hidden"
                             />
                         </label>
@@ -217,6 +217,7 @@ function PaymentManual() {
                     Cancel
                 </Link>
             </div>
+            <ToastContainer />
         </div>
     );
 }

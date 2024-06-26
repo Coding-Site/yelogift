@@ -9,7 +9,6 @@ function Shuffle() {
     const [active, setActive] = useState<string>('all');
 
     const handleActiveItem = (name: string) => {
-        console.log(name);
         setActive(name);
     };
 

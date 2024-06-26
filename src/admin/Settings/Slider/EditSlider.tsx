@@ -79,10 +79,9 @@ function EditSlider() {
                     Authorization: `Bearer ${adminToken}`,
                 },
             })
-            .then((response) => {
+            .then(() => {
                 setLoading(false);
                 navigate('/admin/slider');
-                console.log(response);
             })
             .catch((error) => {
                 setLoading(false);

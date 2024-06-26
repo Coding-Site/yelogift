@@ -78,7 +78,6 @@ function SingleProduct() {
                 )
                 .then((data) => {
                     const orderId = data.data.data.order_product.order_id;
-                    console.log(orderId);
                     localStorage.setItem('orderId', JSON.stringify(orderId));
                     navigate(`buy-now/${orderId}`);
                 })
