@@ -77,6 +77,8 @@ const Footer = lazy(() => import('../admin/Settings/Footer/Footer'));
 
 // Other Pages
 const Currency = lazy(() => import('../admin/Currency/Currency'));
+const BinanceAuth = lazy(() => import('../admin/BinanceAuth/BinanceAuth'));
+
 const PaymentSetting = lazy(
     () => import('../admin/Payment setting/PaymentSetting')
 );
@@ -568,6 +570,14 @@ export const router = createHashRouter([
                         element: (
                             <Suspense fallback={<Spinner />}>
                                 <Currency />
+                            </Suspense>
+                        ),
+                    },
+                    {
+                        path: 'binance-auth',
+                        element: (
+                            <Suspense fallback={<Spinner />}>
+                                <BinanceAuth />
                             </Suspense>
                         ),
                     },

@@ -54,7 +54,7 @@ function Category() {
         setIsDropping(true);
 
         try {
-            await instance.put(
+            const req = await instance.put(
                 `/api/admin/category/reorder/${categoryId}`,
                 {
                     order: newIndex + 1,
@@ -65,10 +65,9 @@ function Category() {
                     },
                 }
             );
+            console.log(req);
         } catch (error: any) {
-            console.error(
-                `Error reordering category ${categoryId}: ${error.message}`
-            );
+            console.error(`Error reordering category ${categoryId}: ${error}`);
         } finally {
             setIsDropping(false);
         }

@@ -25,7 +25,16 @@ function OrderDetails() {
 
     const navigate = useNavigate();
 
+    console.log({
+        order_id: id,
+        order_codes: sendedCode,
+    });
+
     const confirmOrderCodes = () => {
+        console.log({
+            order_id: id,
+            order_codes: sendedCode,
+        });
         instance
             .post(
                 `/api/admin/orders/delivery/code`,

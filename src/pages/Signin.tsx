@@ -3,7 +3,7 @@ import Footer from '../components/Footer';
 import { IoIosLock } from 'react-icons/io';
 import { FaEnvelope } from 'react-icons/fa';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import instance from '../axios';
 import axios from 'axios';
@@ -20,45 +20,6 @@ type Inputs = {
     password: string;
 };
 
-const signInWithBinance = async () => {
-    const clientId =
-        'miqzkp9x6x1ibvr7dlxmp5ycsc3kwdy4u4f7w2wvhl7otoa4razv4qfwv2l1gceq';
-    const redirectUri = 'https://yelogift.net/';
-    const scope = 'user:email,user:name';
-    // const state = 'YOUR_STATE'; &state=${state}
-    const url = `https://www.binance.com/en/oauth/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}`;
-    const popup: any = window.open(url, '_blank', 'width=600,height=600');
-
-    const polling = setInterval(() => {
-        if (!popup || popup.closed || popup.closed === undefined) {
-            clearInterval(polling);
-        }
-        try {
-            if (popup.location.href.includes('https://yelogift.net/')) {
-                clearInterval(polling);
-                const code = new URLSearchParams(popup.location.search).get(
-                    'code'
-                );
-                popup.close();
-                axios
-                    .post('/api/auth/binance', { code })
-                    .then((response) => {
-                        console.log(response.data);
-                    })
-                    .catch((error) => {
-                        console.error(
-                            'Error sending Binance sign-in data:',
-                            error
-                        );
-                    });
-            }
-            console.log('done');
-        } catch (error) {
-            console.error(error);
-        }
-    }, 1000);
-};
-
 function Signin() {
     const [loading, setLoading] = useState<boolean>(false);
     const navigate = useNavigate();
@@ -68,6 +29,7 @@ function Signin() {
     const [backError, setBackError] = useState('');
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [isEmailSent, setIsEmailSent] = useState(false);
+    const [binanceData, setBinanceData] = useState<any>(null);
 
     Modal.setAppElement('#root');
     const {
@@ -81,6 +43,70 @@ function Signin() {
         handleSubmit: handleSubmitForgetPassword,
         formState: { errors: forgetPasswordErrors },
     } = useForm<any>();
+
+    useEffect(() => {
+        const fetchBinanceAuthData = async () => {
+            try {
+                setLoading(true);
+                const response = await instance.get('/api/credintials ');
+                setBinanceData(response.data.data[0]);
+            } catch (error) {
+                console.error('Failed to fetch Contact data:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchBinanceAuthData();
+    }, []);
+
+    const signInWithBinance = async () => {
+        const clientId = binanceData?.client_id || ' ';
+        const redirectUrl = binanceData?.redirect_url || ' ';
+        const encodedRedirectUrl = encodeURIComponent(redirectUrl);
+        const scope = binanceData?.scope || 'user:email,user:name';
+        const encodedScope = encodeURIComponent(scope);
+
+        // const state = 'YOUR_STATE'; &state=${state}
+        const url = `https://accounts.binance.com/en/oauth/authorize?response_type=code&client_id=${clientId}&redirect_uri=${encodedRedirectUrl}&scope=${encodedScope}`;
+        const popup: any = window.open(url, '_blank', 'width=600,height=600');
+
+        // const userData: any = {
+        //     name: null,
+        //     email:null,
+        //     photo: null,
+        //     client_id: null,
+        //     provider: null,
+        // };
+
+        const polling = setInterval(() => {
+            if (!popup || popup.closed || popup.closed === undefined) {
+                clearInterval(polling);
+            }
+            try {
+                if (popup.location.href.includes('https://yelogift.net/')) {
+                    clearInterval(polling);
+                    const code = new URLSearchParams(popup.location.search).get(
+                        'code'
+                    );
+                    popup.close();
+                    axios
+                        .post('/api/auth/social', { code })
+                        .then((response: any) => {
+                            console.log(response.data);
+                        })
+                        .catch((error) => {
+                            console.error(
+                                'Error sending Binance sign-in data:',
+                                error
+                            );
+                        });
+                }
+                console.log('done');
+            } catch (error) {
+                console.error(error);
+            }
+        }, 1000);
+    };
 
     const onForgetPasswordSubmit: SubmitHandler<any> = (data) => {
         console.log(data);

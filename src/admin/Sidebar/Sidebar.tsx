@@ -141,6 +141,9 @@ function Sidebar() {
                 <li>
                     <NavEc item="SEO control" to="/admin/ceo-control" />
                 </li>
+                <li>
+                    <NavEc item="Binance Auth" to="/admin/binance-auth" />
+                </li>
             </ul>
 
             <div className="flex mt-auto gap-2">

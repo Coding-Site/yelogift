@@ -150,16 +150,17 @@ function PaymentManual() {
                             </span>
                         </div>
                         <div className="flex-col hidden sm:flex">
-                            <span className="text-2xl">Upload photo</span>
+                            <span className="text-2xl">Upload file</span>
                             <label
                                 htmlFor="file"
                                 className="w-full py-3 px-4 bg-[#222222] sm:bg-[#CBD3FF] rounded-md border-dashed border-gray-400 text-center text-gray-700 "
                             >
-                                Drop your PDF or PNG file here or{' '}
+                                Drop your PDF or image file here or{' '}
                                 <span className="font-bold">choose file</span>
                                 <input
                                     type="file"
                                     id="file"
+                                    accept="image/*,.pdf"
                                     onChange={handleFileUpload}
                                     className="hidden"
                                 />

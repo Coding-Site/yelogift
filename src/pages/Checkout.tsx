@@ -12,10 +12,11 @@ function Checkout() {
     const [currencyId, setCurrencyId] = useState(null);
     const localstorage = JSON.parse(localStorage.getItem('userData') as string);
     const userToken = localstorage?.userToken;
-    const [payMethod, setPayMethod] = useState<'binance' | 'crypto'>('crypto');
+    const [payMethod, setPayMethod] = useState<'binance' | 'crypto'>('binance');
     const [daaaata, setDaaaata] = useState<any>([]);
     const dispatch = useDispatch<AppDispatch>();
     const [feeDesc, setFeeDesc] = useState<any>(null);
+    const [feePer, setFeePer] = useState<any>(null);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -27,8 +28,9 @@ function Checkout() {
                 const response = await instance.get('/api/fee');
                 const feeData = response.data.data;
                 setFeeDesc(feeData?.description);
+                setFeePer(feeData?.percent);
             } catch (error) {
-                console.error('Failed to fetch  data:', error);
+                console.error('Failed to fetch fee data:', error);
             }
         };
         fetchFeeData();
@@ -75,7 +77,7 @@ function Checkout() {
             })
             .then(() => {
                 dispatch(getCartData());
-                if (payMethod == 'binance') {
+                if (payMethod === 'binance') {
                     navigate('/paymentauto');
                 } else {
                     navigate('/paymentmanual');
@@ -84,21 +86,31 @@ function Checkout() {
     };
 
     const calculateTotalPrice = () => {
-        return daaaata.reduce((total: number, cart: any) => {
+        const totalPrice = daaaata.reduce((total: number, cart: any) => {
             return total + cart.quantity * cart.product_part.price;
         }, 0);
+
+        if (payMethod === 'binance' && feePer) {
+            return totalPrice * (1 + feePer / 100);
+        }
+
+        return totalPrice;
     };
 
     return (
         <div className="flex flex-col md:py-10 w-full md:container text-mainLightBlack">
             <div className="flex justify-between flex-col sm:flex-row w-full gap-3">
                 <div className="flex justify-start flex-col gap-y-10 sm:text-black text-white px-5 md:py-10 sm:bg-white grow">
-                    <span className="sm:flex hidden text-2xl font-semibold  ">
+                    <span className="sm:flex hidden text-2xl font-semibold">
                         Order Summary
                     </span>
                     <span className="sm:hidden flex items-center text-2xl font-semibold gap-x-2">
-                        <img className="w-8" src="/assets/checkout/cart.png" />{' '}
-                        Cart{'   '}
+                        <img
+                            className="w-8"
+                            src="/assets/checkout/cart.png"
+                            alt="cart"
+                        />
+                        Cart
                         {daaaata.length > 0 && (
                             <span className="text-sm text-gray-500">
                                 (
@@ -124,7 +136,7 @@ function Checkout() {
                                 if (item.quantity) {
                                     return (
                                         <div key={idx}>
-                                            <div className="flex  justify-between  w-full ">
+                                            <div className="flex justify-between w-full">
                                                 <img
                                                     className="w-20 h-12"
                                                     src={`${
@@ -150,7 +162,7 @@ function Checkout() {
                                                         }
                                                     </span>
                                                 </div>
-                                                <div className="flex  py-1 px-4 items-center   justify-center items-center rounded-full w-auto border border-gray-300">
+                                                <div className="flex py-1 px-4 items-center justify-center rounded-full w-auto border border-gray-300">
                                                     {item.quantity}
                                                 </div>
                                             </div>
@@ -158,6 +170,7 @@ function Checkout() {
                                         </div>
                                     );
                                 }
+                                return null;
                             })
                         ) : (
                             <span>No Items in the Cart</span>
@@ -167,13 +180,13 @@ function Checkout() {
                         <div className="flex items-center container justify-between text-sm mt-5">
                             <span>Total Estimate</span>
                             <span className="text-xl text-[#6D6D6D]">
-                                USDT {calculateTotalPrice()}
+                                USDT {calculateTotalPrice().toFixed(2)}
                             </span>
                         </div>
-                        {feeDesc && (
-                            <div className="w-fit  bg-[#f3ca49] mx-auto flex gap-2 items-center justify-center sm:max-w-[265px] lg:max-w-[500px] rounded-2xl mt-5 p-2 ">
+                        {feeDesc && payMethod === 'binance' && (
+                            <div className="w-fit bg-[#f3ca49] mx-auto flex gap-2 items-center justify-center sm:max-w-[265px] lg:max-w-[500px] rounded-2xl mt-5 p-2">
                                 <PiWarningCircleThin className="text-[#000] text-[20px]" />
-                                <p className="mx-auto text-center text-[#000] text-[10px] ">
+                                <p className="mx-auto text-center text-[#000] text-[10px]">
                                     {feeDesc}
                                 </p>
                             </div>
@@ -181,17 +194,23 @@ function Checkout() {
                     </div>
                 </div>
                 <div className="flex justify-start flex-col sm:text-black text-white gap-y-10 px-10 py-10 sm:bg-white grow">
-                    <span className="text-2xl font-semibold  ">
-                        Select Payment method{' '}
+                    <span className="text-2xl font-semibold">
+                        Select Payment method
                     </span>
-                    <div className="flex flex-col font-medium text-xl ">
+                    <div className="flex flex-col font-medium text-xl">
                         <label htmlFor="binance" className="flex gap-2">
                             <input
                                 type="radio"
                                 onClick={() => setPayMethod('binance')}
+                                defaultChecked
                                 className="!flex"
                                 name="method"
                                 id="binance"
+                            />
+                            <img
+                                className="w-[23px] h-[23px]"
+                                src="assets/cLogo/Binance_logo_coin 5.png"
+                                alt=".."
                             />
                             Binance Pay
                         </label>
@@ -200,22 +219,26 @@ function Checkout() {
                                 type="radio"
                                 onClick={() => setPayMethod('crypto')}
                                 className="!flex"
-                                defaultChecked
                                 name="method"
                                 id="pay"
+                            />
+                            <img
+                                className="w-[23px] h-[23px]"
+                                src="assets/cLogo/IMG_4669 1.png"
+                                alt=".."
                             />
                             Cryptocurrency
                         </label>
                     </div>
-                    {payMethod == 'crypto' && (
+                    {payMethod === 'crypto' && (
                         <div className="flex justify-evenly flex-wrap gap-x-2 gap-y-8">
                             {methods.map((method: any, idx: any) => (
                                 <div
-                                    className="flex rounded-full !w-1/6 !h-10 flex-col  cursor-pointer justify-start items-center gap-y-1  "
+                                    className="flex rounded-full !w-1/6 !h-10 flex-col cursor-pointer justify-start items-center gap-y-1"
                                     key={idx}
                                     style={{
                                         border:
-                                            currencyId == method?.id
+                                            currencyId === method?.id
                                                 ? '1px solid #ccc'
                                                 : '',
                                     }}
@@ -236,8 +259,7 @@ function Checkout() {
                                         }
                                         alt="icon"
                                     />
-
-                                    <span className="text-xs bg-gray-300 text-mainLightBlack rounded-full px-1 ">
+                                    <span className="text-xs bg-gray-300 text-mainLightBlack rounded-full px-1">
                                         {method?.currency.name}
                                     </span>
                                 </div>
@@ -246,14 +268,12 @@ function Checkout() {
                     )}
                 </div>
             </div>
-            <div className="flex flex-col gap-y-5  items-center py-2 md:py-14">
+            <div className="flex flex-col gap-y-5 items-center py-2 md:py-14">
                 <button className="btn !rounded-md !w-56" onClick={SendToDB}>
-                    {' '}
                     Submit
                 </button>
                 <Link to="/" className="text-white">
-                    {' '}
-                    Cancel
+                    Back to Shopping
                 </Link>
             </div>
         </div>
