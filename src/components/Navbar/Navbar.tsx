@@ -323,7 +323,7 @@ function Navbar() {
                                                                 className={`text-black sm:text-base text-sm w-9/12 ${
                                                                     hoveredNotificationId ===
                                                                     notification.id
-                                                                        ? 'break-all'
+                                                                        ? ''
                                                                         : `${styles.line_clamp}`
                                                                 }`}
                                                             >

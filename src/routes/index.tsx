@@ -77,6 +77,14 @@ const Footer = lazy(() => import('../admin/Settings/Footer/Footer'));
 
 // Other Pages
 const Currency = lazy(() => import('../admin/Currency/Currency'));
+const BinanceAuth = lazy(() => import('../admin/BinanceAuth/BinanceAuth'));
+
+const PaymentSetting = lazy(
+    () => import('../admin/Payment setting/PaymentSetting')
+);
+const AddPayment = lazy(() => import('../admin/Payment setting/AddPayment'));
+const EditPayment = lazy(() => import('../admin/Payment setting/EditPayment'));
+
 const Notification = lazy(() => import('../admin/Notification/Notification'));
 const SeoControl = lazy(() => import('../admin/SeoControl/SeoControl'));
 
@@ -519,6 +527,35 @@ export const router = createHashRouter([
                                 ],
                             },
                             {
+                                path: 'payment-setting',
+                                children: [
+                                    {
+                                        path: '',
+                                        element: (
+                                            <Suspense fallback={<Spinner />}>
+                                                <PaymentSetting />
+                                            </Suspense>
+                                        ),
+                                    },
+                                    {
+                                        path: 'add',
+                                        element: (
+                                            <Suspense fallback={<Spinner />}>
+                                                <AddPayment />
+                                            </Suspense>
+                                        ),
+                                    },
+                                    {
+                                        path: 'edit/:id',
+                                        element: (
+                                            <Suspense fallback={<Spinner />}>
+                                                <EditPayment />
+                                            </Suspense>
+                                        ),
+                                    },
+                                ],
+                            },
+                            {
                                 path: 'contact-settings',
                                 element: (
                                     <Suspense fallback={<Spinner />}>
@@ -533,6 +570,14 @@ export const router = createHashRouter([
                         element: (
                             <Suspense fallback={<Spinner />}>
                                 <Currency />
+                            </Suspense>
+                        ),
+                    },
+                    {
+                        path: 'binance-auth',
+                        element: (
+                            <Suspense fallback={<Spinner />}>
+                                <BinanceAuth />
                             </Suspense>
                         ),
                     },

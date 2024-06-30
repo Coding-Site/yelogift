@@ -2,26 +2,32 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import instance from '../axios';
 import { PiWarningCircleThin } from 'react-icons/pi';
+
 function CheckoutSingleNow() {
     const [methods, setMethods] = useState([]);
     const navigate = useNavigate();
     const [currencyId, setCurrencyId] = useState(null);
     const localstorage = JSON.parse(localStorage.getItem('userData') as string);
     const userToken = localstorage?.userToken;
-    const [payMethod, setPayMethod] = useState<'binance' | 'crypto'>('crypto');
+    const [payMethod, setPayMethod] = useState<'binance' | 'crypto'>('binance');
     const orderId = JSON.parse(localStorage.getItem('orderId') as string);
     const [orderData, setOrderData] = useState<any>(null);
     const [feeDesc, setFeeDesc] = useState<any>(null);
+    const [feePer, setFeePer] = useState<any>(null);
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
 
     useEffect(() => {
         const fetchFeeData = async () => {
             try {
                 const response = await instance.get('/api/fee');
                 const feeData = response.data.data;
-                console.log(feeData);
-                setFeeDesc(feeData.description);
+                setFeeDesc(feeData?.description);
+                setFeePer(feeData?.percent);
             } catch (error) {
-                console.error('Failed to fetch topnav data:', error);
+                console.error('Failed to fetch fee data:', error);
             }
         };
         fetchFeeData();
@@ -49,11 +55,18 @@ function CheckoutSingleNow() {
     }, [orderId, userToken]);
 
     const SendToDB = () => {
-        if (payMethod == 'binance') {
+        if (payMethod === 'binance') {
             navigate('/paymentauto');
         } else {
             navigate('/paymentmanual');
         }
+    };
+
+    const calculateTotalPrice = () => {
+        if (orderData && feePer && payMethod === 'binance') {
+            return (orderData.total_price * (1 + feePer / 100)).toFixed(2);
+        }
+        return orderData?.total_price.toFixed(2);
     };
 
     return (
@@ -64,7 +77,7 @@ function CheckoutSingleNow() {
                         Order Summary
                     </span>
                     <div>
-                        <div className="flex  justify-start gap-3 w-full ">
+                        <div className="flex justify-start gap-3 w-full ">
                             <img
                                 className="w-20 h-12"
                                 src={`${
@@ -83,8 +96,7 @@ function CheckoutSingleNow() {
                                     }
                                 </span>
                                 <span className="text-sm text-gray-500">
-                                    USD
-                                    {orderData?.total_price}
+                                    USD {orderData?.total_price.toFixed(2)}
                                 </span>
                             </div>
                         </div>
@@ -93,13 +105,13 @@ function CheckoutSingleNow() {
                         <div className="flex items-center justify-between text-sm mt-5">
                             <span>Total Estimate</span>
                             <span className="text-xl text-[#6D6D6D]">
-                                USDT {orderData?.total_price}
+                                USDT {calculateTotalPrice()}
                             </span>
                         </div>
-                        {feeDesc && (
-                            <div className="w-fit  bg-[#f3ca49] mx-auto flex gap-2 items-center justify-center sm:max-w-[265px] lg:max-w-[500px] rounded-2xl mt-5 p-2 ">
+                        {feeDesc && payMethod === 'binance' && (
+                            <div className="w-fit bg-[#f3ca49] mx-auto flex gap-2 items-center justify-center sm:max-w-[265px] lg:max-w-[500px] rounded-2xl mt-5 p-2">
                                 <PiWarningCircleThin className="text-[#000] text-[20px]" />
-                                <p className="mx-auto text-center text-[#000] text-[10px] ">
+                                <p className="mx-auto text-center text-[#000] text-[10px]">
                                     {feeDesc}
                                 </p>
                             </div>
@@ -107,17 +119,23 @@ function CheckoutSingleNow() {
                     </div>
                 </div>
                 <div className="flex justify-start flex-col sm:text-black text-white gap-y-3 md:gap-y-10 px-10 py-2 md:py-10 sm:bg-white grow">
-                    <span className="text-2xl font-semibold  ">
-                        Select Payment method{' '}
+                    <span className="text-2xl font-semibold">
+                        Select Payment method
                     </span>
-                    <div className="flex flex-col font-medium text-xl ">
+                    <div className="flex flex-col font-medium text-xl">
                         <label htmlFor="binance" className="flex gap-2">
                             <input
                                 type="radio"
                                 onClick={() => setPayMethod('binance')}
+                                defaultChecked
                                 className="!flex"
                                 name="method"
                                 id="binance"
+                            />
+                            <img
+                                className="w-[23px] h-[23px]"
+                                src="assets/cLogo/Binance_logo_coin 5.png"
+                                alt=".."
                             />
                             Binance Pay
                         </label>
@@ -126,22 +144,26 @@ function CheckoutSingleNow() {
                                 type="radio"
                                 onClick={() => setPayMethod('crypto')}
                                 className="!flex"
-                                defaultChecked
                                 name="method"
                                 id="pay"
+                            />
+                            <img
+                                className="w-[23px] h-[23px]"
+                                src="assets/cLogo/IMG_4669 1.png"
+                                alt=".."
                             />
                             Cryptocurrency
                         </label>
                     </div>
-                    {payMethod == 'crypto' && (
+                    {payMethod === 'crypto' && (
                         <div className="flex justify-evenly flex-wrap gap-x-2 gap-y-8">
                             {methods.map((method: any, idx: any) => (
                                 <div
-                                    className="flex rounded-full !w-1/6 !h-10 flex-col  cursor-pointer justify-start items-center gap-y-1  "
+                                    className="flex rounded-full !w-1/6 !h-10 flex-col cursor-pointer justify-start items-center gap-y-1"
                                     key={idx}
                                     style={{
                                         border:
-                                            currencyId == method?.id
+                                            currencyId === method?.id
                                                 ? '1px solid #ccc'
                                                 : '',
                                     }}
@@ -158,13 +180,12 @@ function CheckoutSingleNow() {
                                         src={
                                             import.meta.env.VITE_BASEURL +
                                             '/public/storage/' +
-                                            method?.icon
+                                            method?.currency.icon
                                         }
-                                        alt="cart"
+                                        alt="icon"
                                     />
-
-                                    <span className="text-xs bg-gray-300 text-mainLightBlack rounded-full px-1 ">
-                                        {method?.currency}
+                                    <span className="text-xs bg-gray-300 text-mainLightBlack rounded-full px-1">
+                                        {method?.currency.name}
                                     </span>
                                 </div>
                             ))}
@@ -172,13 +193,11 @@ function CheckoutSingleNow() {
                     )}
                 </div>
             </div>
-            <div className="flex flex-col gap-y-5  items-center py-14">
+            <div className="flex flex-col gap-y-5 items-center py-14">
                 <button className="btn !rounded-md !w-56" onClick={SendToDB}>
-                    {' '}
                     Submit
                 </button>
                 <Link to="/" className="text-white">
-                    {' '}
                     Cancel
                 </Link>
             </div>

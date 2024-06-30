@@ -91,11 +91,9 @@ function Codes() {
         fd.append('codes', file);
         fd.append('part_id', partId as any);
 
-        instance
-            .post('/api/admin/product/parts/codes/upload', fd, {
-                headers: { Authorization: `Bearer ${adminToken}` },
-            })
-            .then((d) => console.log('after uploading codes fiel', d));
+        instance.post('/api/admin/product/parts/codes/upload', fd, {
+            headers: { Authorization: `Bearer ${adminToken}` },
+        });
     }
     return (
         <div className="flex flex-col gap-4 w-full py-5 container">

@@ -18,6 +18,9 @@ function AddCategory() {
     const [loading, setLoading] = useState(false);
     const { register, handleSubmit, unregister } = useForm<Inputs>();
 
+    const [image, setImage] = useState<any>();
+    const [imagePreview, setImagePreview] = useState<string | null>(null);
+
     const localstorage = JSON.parse(
         localStorage.getItem('adminData') as string
     );
@@ -28,23 +31,30 @@ function AddCategory() {
 
         const fd = new FormData();
         for (const i in data) {
-            fd.append(i, i != 'icon' ? (data as any)[i] : data.icon[0]);
+            fd.append(i, i != 'icon' ? (data as any)[i] : image);
         }
 
         instance
-            .post(
-                `/api/admin/category/store`,
-                fd,
-                {
-                    headers: {
-                        Authorization: `Bearer ${adminToken}`,
-                    },
-                }
-            )
+            .post(`/api/admin/category/store`, fd, {
+                headers: {
+                    Authorization: `Bearer ${adminToken}`,
+                },
+            })
             .then(() => {
                 setLoading(false);
                 navigate('/admin/category');
             });
+    };
+
+    const handleImage = (image: any) => {
+        const file = image.target.files[0];
+        setImage(file);
+
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            setImagePreview(reader.result as string);
+        };
+        reader.readAsDataURL(file);
     };
 
     return (
@@ -93,6 +103,9 @@ function AddCategory() {
                                     type="file"
                                     id="icon"
                                     className="hidden"
+                                    onChange={(
+                                        e: React.ChangeEvent<HTMLInputElement>
+                                    ) => handleImage(e)}
                                 />
                             </div>
                             <div className="flex justify-between items-end gap-3 border border-gray-600 rounded-md bg-transparent p-3 w-full">
@@ -100,17 +113,27 @@ function AddCategory() {
                                     htmlFor="icon"
                                     className="flex flex-col justify-end aspect-square border rounded-md cursor-pointer  border-dashed  border-gray-400 h-[150px]"
                                 >
-                                    <img
-                                        className="size-12 mx-auto"
-                                        src="/assets/products/upload.png"
-                                        alt="upload icon"
-                                    />
-                                    <span className="text-xs px-5 text-center pb-4">
-                                        <span className="underline  text-[#8095FF]">
-                                            click to upload{' '}
-                                        </span>{' '}
-                                        or drag and drop
-                                    </span>
+                                    {imagePreview ? (
+                                        <img
+                                            className="w-[150px] h-[147px] mx-auto "
+                                            src={imagePreview}
+                                            alt="Selected Image Preview"
+                                        />
+                                    ) : (
+                                        <>
+                                            <img
+                                                className="size-12 mx-auto"
+                                                src="/assets/products/upload.png"
+                                                alt="upload image"
+                                            />
+                                            <span className="text-xs px-5 text-center pb-4">
+                                                <span className="underline  text-[#8095FF]">
+                                                    click to upload{' '}
+                                                </span>{' '}
+                                                or drag and drop
+                                            </span>
+                                        </>
+                                    )}
                                 </label>
                                 <label
                                     htmlFor="icon"

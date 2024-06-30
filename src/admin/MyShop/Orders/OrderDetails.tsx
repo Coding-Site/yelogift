@@ -9,7 +9,7 @@ Modal.setAppElement('#root');
 
 function OrderDetails() {
     const { id } = useParams();
-    const [, setOrder] = useState<any>();
+    const [order, setOrder] = useState<any>(null);
     const [orderProducts, setOrderProducts] = useState<any[]>([]);
     const [sendedCode, setSendedCode] = useState([]);
     const localstorage = JSON.parse(
@@ -25,7 +25,16 @@ function OrderDetails() {
 
     const navigate = useNavigate();
 
+    console.log({
+        order_id: id,
+        order_codes: sendedCode,
+    });
+
     const confirmOrderCodes = () => {
+        console.log({
+            order_id: id,
+            order_codes: sendedCode,
+        });
         instance
             .post(
                 `/api/admin/orders/delivery/code`,
@@ -39,8 +48,7 @@ function OrderDetails() {
                     },
                 }
             )
-            .then((d) => {
-                console.log(d);
+            .then(() => {
                 setIsConfirmModalOpen(false);
                 navigate('/admin/orders');
             })
@@ -53,8 +61,7 @@ function OrderDetails() {
                     Authorization: `Bearer ${adminToken}`,
                 },
             })
-            .then((d) => {
-                console.log(d);
+            .then(() => {
                 setIsConfirmModalOpen(false);
                 navigate('/admin/orders');
             })
@@ -92,14 +99,6 @@ function OrderDetails() {
             <form className="flex flex-col text-white">
                 <div className="flex  my-5 justify-between pe-5">
                     <span className="font-semibold text-xl"> Add Codes</span>
-                    {/* <div className="flex gap-3 ">
-                        Auto
-                        <input
-                            type="checkbox"
-                            className="toggle toggle-primar checked:!bg-main  border-none"
-                        />
-                        Manual
-                    </div> */}
                 </div>
                 <table className="table-auto text-center">
                     <thead className="py-5">
@@ -151,6 +150,18 @@ function OrderDetails() {
                         </button>
                     </div>
                 </div>
+                {order?.order?.invoice && (
+                    <div className="flex flex-col mt-[20px] max-w-[500px] max-h-[500px]">
+                        <p className="text-2xl mb-4">Invoice :</p>
+                        <img
+                            className=" mx-auto max-w-fit max-h-[100%] "
+                            src={`${
+                                import.meta.env.VITE_BASEURL
+                            }/public/storage/${order?.order?.invoice}`}
+                            alt="invoice"
+                        />
+                    </div>
+                )}
             </form>
             <Modal
                 isOpen={isConfirmModalOpen}

@@ -99,9 +99,6 @@ const Table: React.FC<TableProps> = ({ id, adminToken }) => {
                                 },
                             }
                         );
-                        console.log(
-                            `Product ${productId} updated successfully.`
-                        );
                     } catch (error: any) {
                         console.error(
                             `Error updating product ${productId}: ${error.message}`

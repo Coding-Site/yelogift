@@ -22,7 +22,8 @@ function BinancePayFees() {
                 });
                 const feeData = response.data.data;
                 const defaultValues: any = {
-                    description: feeData.description || '',
+                    description: feeData?.description || '',
+                    percent: feeData?.percent || '',
                 };
                 reset(defaultValues);
             } catch (error) {
@@ -72,6 +73,19 @@ function BinancePayFees() {
                                 <input
                                     {...register('description')}
                                     type="text"
+                                    className="border border-gray-400 rounded-md bg-transparent p-1"
+                                />
+                            </label>
+                        </div>
+                        <div className="flex flex-col grow w-full">
+                            <label
+                                htmlFor="percent"
+                                className="text-main flex flex-col font-semibold gap-y-2 w-full"
+                            >
+                                Binance Pay Fee percentage
+                                <input
+                                    {...register('percent')}
+                                    type="number"
                                     className="border border-gray-400 rounded-md bg-transparent p-1"
                                 />
                             </label>

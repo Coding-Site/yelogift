@@ -2,61 +2,58 @@ import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaChevronLeft } from 'react-icons/fa6';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { ICategory } from '../../../models/ICategory';
-import { PiArrowsCounterClockwise } from 'react-icons/pi';
-import { FaRegTrashAlt } from 'react-icons/fa';
-import instance from '../../../axios';
-import Spinner from '../../../utils/Spinner';
+import instance from '../../axios';
+import Spinner from '../../utils/Spinner';
 
-type Inputs = {
-    name: string;
-    description: string;
-    how_to_redeem: string;
-    category_id: string;
-    image: any;
-    price: number;
-    discount: number;
-    popular: boolean;
-};
-
-function AddProduct() {
+function AddPayment() {
     const navigate = useNavigate();
-    const [categories, setCategories] = useState<ICategory[]>([]);
-    const [image, setImage] = useState<any>();
+    const [currency, setCurrency] = useState<any>([]);
+    const [image, setImage] = useState<File | null>(null);
     const [imagePreview, setImagePreview] = useState<string | null>(null);
     const localstorage = JSON.parse(
         localStorage.getItem('adminData') as string
     );
     const adminToken = localstorage?.adminToken;
-    const { register, handleSubmit, unregister } = useForm<Inputs>();
+    const { register, handleSubmit } = useForm<any>();
     const [loading, setLoading] = useState<Boolean>(false);
 
-    const handleImage = (image: any) => {
-        const file = image.target.files[0];
-        setImage(file);
+    const handleImage = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (file && file.type.startsWith('image/')) {
+            setImage(file);
 
-        const reader = new FileReader();
-        reader.onloadend = () => {
-            setImagePreview(reader.result as string);
-        };
-        reader.readAsDataURL(file);
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setImagePreview(reader.result as string);
+            };
+            reader.readAsDataURL(file);
+        } else {
+            console.error('Selected file is not an image');
+        }
     };
 
-    const onSubmit: SubmitHandler<Inputs> = (data: any) => {
+    const onSubmit: SubmitHandler<any> = (data: any) => {
         setLoading(true);
         const fd = new FormData();
-        for (const i in data) {
-            fd.append(i, i != 'image' ? data[i] : image);
+        for (const key in data) {
+            if (key !== 'payment_qr') {
+                fd.append(key, data[key]);
+            }
         }
+        if (image) {
+            fd.append('payment_qr', image);
+        }
+
         instance
-            .post(`/api/admin/product/store`, fd, {
+            .post(`/api/admin/payment/setting/store`, fd, {
                 headers: {
                     Authorization: `Bearer ${adminToken}`,
+                    'Content-Type': 'multipart/form-data',
                 },
             })
             .then(() => {
                 setLoading(false);
-                navigate('/admin/products');
+                navigate('/admin/payment-setting');
             })
             .catch((err) => {
                 console.error(err);
@@ -66,82 +63,56 @@ function AddProduct() {
 
     useEffect(() => {
         instance
-            .get(`/api/admin/category`, {
+            .get(`/api/admin/currency`, {
                 headers: {
                     Authorization: `Bearer ${adminToken}`,
                 },
             })
-            .then((data) => setCategories(data.data.data));
-    }, []);
+            .then((data) => setCurrency(data.data.data));
+    }, [adminToken]);
 
     return (
         <div className="flex flex-col gap-4 w-full py-5 container ps-12">
             <div className="flex items-center justify-start w-full relative ">
-                <Link to="/admin/products">
+                <Link to="/admin/payment-setting">
                     <FaChevronLeft className="text-main text-2xl absolute -left-7 font-semibold top-[50%] -translate-y-[50%]" />
                 </Link>
                 <span className="text-3xl text-white font-semibold">
-                    Add new product
+                    Add New Payment
                 </span>
             </div>
             <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col ">
-                <div className="flex  w-full gap-10">
+                <div className="flex justify-between w-full gap-10">
                     <div className="w-full sm:w-1/2 flex flex-col gap-5">
                         <div className="flex flex-col gap-2">
                             <label
-                                htmlFor="name"
+                                htmlFor="address"
                                 className="text-main font-semibold"
                             >
-                                Name
+                                Wallet Address
                             </label>
                             <input
-                                {...register('name')}
+                                {...register('address')}
                                 type="text"
                                 className="border border-gray-400 rounded-md bg-transparent p-1"
                             />
                         </div>
-                        <div className="flex flex-col gap-2 relative">
-                            <label
-                                htmlFor="description"
-                                className="text-main font-semibold"
-                            >
-                                Description
-                            </label>
-                            <textarea
-                                className="border border-gray-400 rounded-md bg-transparent p-1"
-                                rows={5}
-                                {...register('description')}
-                            ></textarea>
-                        </div>
-                        <div className="flex flex-col gap-2 relative">
-                            <label
-                                htmlFor="how_to_redeem"
-                                className="text-main font-semibold"
-                            >
-                                How to redeem
-                            </label>
-                            <textarea
-                                className="border border-gray-400 rounded-md bg-transparent p-1"
-                                rows={5}
-                                {...register('how_to_redeem')}
-                            ></textarea>
-                        </div>
                         <div className="flex flex-col gap-2">
                             <label
-                                htmlFor="category"
+                                htmlFor="currency_id"
                                 className="text-main font-semibold"
                             >
-                                Category
+                                Currency
                             </label>
                             <select
-                                {...register('category_id')}
-                                id="category"
+                                {...register('currency_id')}
+                                id="currency_id"
                                 className="border  border-gray-400 rounded-md bg-transparent p-1"
                             >
                                 <option className="bg-mainLightBlack text-mainWhite">
-                                    Select Category
+                                    Select Currency
                                 </option>
-                                {categories.map((cat, idx) => (
+                                {currency.map((cat: any, idx: any) => (
                                     <option
                                         className="bg-mainLightBlack text-mainWhite"
                                         key={idx}
@@ -152,8 +123,21 @@ function AddProduct() {
                                 ))}
                             </select>
                         </div>
+                        <div className="flex flex-col gap-2">
+                            <label
+                                htmlFor="blockchain_type"
+                                className="text-main font-semibold"
+                            >
+                                Blockchain type
+                            </label>
+                            <input
+                                {...register('blockchain_type')}
+                                type="text"
+                                className="border border-gray-400 rounded-md bg-transparent p-1"
+                            />
+                        </div>
                     </div>
-                    <div className="w-full sm:w-1/2 flex flex-col gap-5">
+                    <div className="w-fit  flex flex-col gap-5">
                         <div
                             className="flex gap-2 items-center 
                         w-full 
@@ -173,28 +157,26 @@ function AddProduct() {
                         ></div>
                         <div className="flex flex-col  gap-2 items-start">
                             <label
-                                htmlFor="image"
+                                htmlFor="payment_qr"
                                 className="text-main font-semibold"
                             >
-                                Product Image
+                                Payment QR
                             </label>
                             <input
-                                {...register('image')}
+                                {...register('payment_qr')}
                                 type="file"
-                                id="image"
+                                id="payment_qr"
                                 className="hidden"
-                                onChange={(
-                                    e: React.ChangeEvent<HTMLInputElement>
-                                ) => handleImage(e)}
+                                onChange={handleImage}
                             />
-                            <div className="flex justify-between items-end gap-3 border border-gray-600 rounded-md bg-transparent p-3 w-full">
+                            <div className="flex justify-between items-end gap-3 border border-gray-600 rounded-md bg-transparent p-3 w-fit">
                                 <label
-                                    htmlFor="image"
-                                    className="flex flex-col justify-end aspect-square border rounded-md cursor-pointer  border-dashed  border-gray-400 h-[150px]"
+                                    htmlFor="payment_qr"
+                                    className="flex flex-col justify-end aspect-square border rounded-md cursor-pointer  border-dashed  border-gray-400 h-[300px] w-[300px]"
                                 >
                                     {imagePreview ? (
                                         <img
-                                            className="w-[150px] h-[147px] mx-auto "
+                                            className="w-[auto] max-w-[300px] h-[auto] max-h-[300px] mx-auto "
                                             src={imagePreview}
                                             alt="Selected Image Preview"
                                         />
@@ -214,37 +196,6 @@ function AddProduct() {
                                         </>
                                     )}
                                 </label>
-                                <label
-                                    htmlFor="image"
-                                    className="grow cursor-pointer flex items-center justify-center gap-2 border border-gray-600 p-1 h-10 rounded-lg"
-                                >
-                                    <PiArrowsCounterClockwise /> replace
-                                </label>
-                                <button
-                                    type="button"
-                                    onClick={() => {
-                                        unregister('image');
-                                        setImage(null);
-                                        setImagePreview(null);
-                                    }}
-                                    className="grow flex items-center justify-center gap-2 border border-gray-600 p-1 h-10 rounded-lg "
-                                >
-                                    <FaRegTrashAlt /> remove
-                                </button>
-                            </div>
-                            <div className="flex gap-2">
-                                <label
-                                    htmlFor="popular"
-                                    className="text-main font-semibold"
-                                >
-                                    Popular
-                                </label>
-                                <input
-                                    {...register('popular')}
-                                    type="checkbox"
-                                    id="popular"
-                                    className="border border-gray-400 rounded-md bg-transparent p-1"
-                                />
                             </div>
                         </div>
                     </div>
@@ -254,7 +205,7 @@ function AddProduct() {
                         type="submit"
                         className="btn !rounded !w-[150px] !h-[50px] "
                     >
-                        {loading ? 'Adding...' : 'Add Product'}
+                        {loading ? 'Adding...' : 'Add '}
                     </button>
                 </div>
             </form>
@@ -267,4 +218,4 @@ function AddProduct() {
     );
 }
 
-export default AddProduct;
+export default AddPayment;

@@ -129,7 +129,7 @@ function Products() {
                                             src={`${
                                                 import.meta.env.VITE_BASEURL
                                             }/public/storage/${pro.image}`}
-                                            alt=""
+                                            alt="..."
                                         />
                                     </td>
                                     <td className="text-xs text-wrap max-w-44 w-44">

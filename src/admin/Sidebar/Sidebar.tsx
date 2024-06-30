@@ -90,12 +90,12 @@ function Sidebar() {
                             Settings
                         </summary>
                         <ul>
-                            <li>
+                            {/* <li>
                                 <NavItem
                                     item="Site Settings"
                                     to="/admin/site-setting"
                                 />
-                            </li>
+                            </li> */}
                             <li>
                                 <NavItem item="Slider" to="/admin/slider" />
                             </li>
@@ -123,9 +123,12 @@ function Sidebar() {
                         </ul>
                     </details>
                 </li>
-                {/* <li>
+                <li>
                     <NavEc item="Currency" to="/admin/currency" />
-                </li> */}
+                </li>
+                <li>
+                    <NavEc item="Payment Setting" to="/admin/payment-setting" />
+                </li>
                 {/* <li>
                     <NavEc item="Custom Page" to="/admin/custom-page" />
                 </li> */}
@@ -137,6 +140,9 @@ function Sidebar() {
                 </li>
                 <li>
                     <NavEc item="SEO control" to="/admin/ceo-control" />
+                </li>
+                <li>
+                    <NavEc item="Binance Auth" to="/admin/binance-auth" />
                 </li>
             </ul>
 

@@ -61,8 +61,6 @@ const PopularOrderRanking = () => {
             );
         }
 
-        console.log(popularProducts);
-
         const [, drop] = useDrop({
             accept: 'product',
             hover(item: DragItem) {
@@ -90,9 +88,6 @@ const PopularOrderRanking = () => {
                                     Authorization: `Bearer ${adminToken}`,
                                 },
                             }
-                        );
-                        console.log(
-                            `Product ${productId} updated successfully.`
                         );
                     } catch (error: any) {
                         console.error(

@@ -38,11 +38,11 @@ function Orders() {
     }, []);
     useEffect(() => {
         setLoading(true);
-        const updatedOrders = orders.filter((order) => {
+        const updatedOrders = orders.filter((order: any) => {
             if (filterTap === 'all') {
                 return true;
             } else if (filterTap === 'pending') {
-                return order.status === '0';
+                return order.payment_status === '0';
             } else if (filterTap === 'confirmed') {
                 return order.status === '1';
             }

@@ -16,6 +16,7 @@ function EditSlider() {
     const [loading, setLoading] = useState(false);
     const [slider, setSlider] = useState<any>();
     const [image, setImage] = useState<any>(null);
+    const [imagePreview, setImagePreview] = useState<string | null>(null);
     const { id } = useParams();
     const navigate = useNavigate();
 
@@ -31,12 +32,30 @@ function EditSlider() {
         };
 
         reset(defaultValues as any);
+        if (slider?.image) {
+            setImagePreview(
+                `${import.meta.env.VITE_BASEURL}/public/storage/${
+                    slider?.image
+                }`
+            );
+        }
     }, [slider]);
 
     const localstorage = JSON.parse(
         localStorage.getItem('adminData') as string
     );
     const adminToken = localstorage?.adminToken;
+
+    const handleImage = (image: any) => {
+        const file = image.target.files[0];
+        setImage(file);
+
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            setImagePreview(reader.result as string);
+        };
+        reader.readAsDataURL(file);
+    };
 
     const onSubmit: SubmitHandler<Inputs> = (data: any) => {
         setLoading(true);
@@ -60,10 +79,9 @@ function EditSlider() {
                     Authorization: `Bearer ${adminToken}`,
                 },
             })
-            .then((response) => {
+            .then(() => {
                 setLoading(false);
                 navigate('/admin/slider');
-                console.log(response);
             })
             .catch((error) => {
                 setLoading(false);
@@ -71,7 +89,7 @@ function EditSlider() {
             });
     };
 
-    const getSldier = () => {
+    const getSlider = () => {
         setLoading(true);
         instance
             .get(`/api/admin/slider/${id}`, {
@@ -86,7 +104,7 @@ function EditSlider() {
     };
 
     useEffect(() => {
-        getSldier();
+        getSlider();
     }, []);
 
     return (
@@ -107,7 +125,7 @@ function EditSlider() {
                     <div className="flex w-full justify-between gap-x-6">
                         <div className="flex flex-col w-1/2 gap-y-4">
                             <label
-                                htmlFor="name"
+                                htmlFor="title"
                                 className="text-main flex flex-col font-semibold gap-y-2 w-full"
                             >
                                 Title
@@ -146,41 +164,55 @@ function EditSlider() {
                                     htmlFor="image"
                                     className="text-main font-semibold"
                                 >
-                                    product image
+                                    Slider Image
                                 </label>
                                 <input
                                     {...register('image')}
                                     type="file"
                                     id="image"
                                     className="hidden"
-                                    onChange={(e: any) =>
-                                        setImage(e.target.files[0])
-                                    }
+                                    onChange={(e: any) => handleImage(e)}
                                 />
+
                                 <label
                                     htmlFor="image"
-                                    className="flex flex-col w-full grow justify-center  border rounded-md cursor-pointer  border-dashed  border-gray-400 "
+                                    className="flex flex-col w-full grow justify-center border rounded-md cursor-pointer border-dashed border-gray-400"
                                 >
-                                    <img
-                                        className="size-12 mx-auto"
-                                        src="/assets/products/upload.png"
-                                        alt="upload image"
-                                    />
-                                    <span className="text-xs px-5 text-center pb-4">
-                                        <span className="underline  text-[#8095FF]">
-                                            click to upload
-                                        </span>
-                                        or drag and drop
-                                    </span>
+                                    {imagePreview ? (
+                                        <img
+                                            className="w-[500px] h-[auto] mx-auto"
+                                            src={imagePreview}
+                                            alt="Selected Image Preview"
+                                        />
+                                    ) : (
+                                        <>
+                                            <img
+                                                className="size-12 mx-auto"
+                                                src="/assets/products/upload.png"
+                                                alt="upload image"
+                                            />
+                                            <span className="text-xs px-5 text-center pb-4">
+                                                <span className="underline text-[#8095FF]">
+                                                    click to upload
+                                                </span>{' '}
+                                                or drag and drop
+                                            </span>
+                                        </>
+                                    )}
                                 </label>
                             </div>
                         </div>
                     </div>
+                    {loading && (
+                        <span className="text-red-600 w-full text-center my-3">
+                            {loading}
+                        </span>
+                    )}
                     <button
                         type="submit"
-                        className="btn mt-5 mx-auto my-3 !rounded px-5 "
+                        className="btn mt-5 mx-auto my-3 !rounded px-5"
                     >
-                        Edit
+                        Update
                     </button>
                 </form>
             )}
