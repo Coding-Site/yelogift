@@ -5,7 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import { FiCopy } from 'react-icons/fi';
 import Modal from 'react-modal';
 import { IoIosCheckmarkCircle } from 'react-icons/io';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 Modal.setAppElement('#root');
 
 function OrdersHistory() {
@@ -64,7 +65,9 @@ function OrdersHistory() {
 
     const copyToClipboard = (text: string) => {
         navigator.clipboard.writeText(text).then(() => {
-            alert('Code copied to clipboard!');
+            toast.success('Copied', {
+                autoClose: 700,
+            });
         });
     };
 
@@ -239,13 +242,9 @@ function OrdersHistory() {
                                                                                 code.decrypt_code
                                                                             )
                                                                         }
-                                                                        className="ml-2 px-2 py-1 bg-[#F0B90B] text-white text-sm rounded hover:bg-[#f0b90bb0]"
+                                                                        className="ml-2 px-2 py-1 bg-[#F0B90B] text-white rounded hover:bg-[#f0b90bb0]"
                                                                     >
-                                                                        <FiCopy
-                                                                            size={
-                                                                                16
-                                                                            }
-                                                                        />
+                                                                        <FiCopy className="text-[16px]" />
                                                                     </button>
                                                                 </div>
                                                             )
@@ -302,6 +301,7 @@ function OrdersHistory() {
                     </div>
                 </div>
             </Modal>
+            <ToastContainer />
         </div>
     );
 }
