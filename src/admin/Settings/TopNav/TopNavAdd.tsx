@@ -7,8 +7,8 @@ import { useNavigate } from 'react-router-dom';
 function TopNavSettings() {
     const { register, handleSubmit } = useForm<any>({
         defaultValues: {
-            color1: '#585858', // Default background color
-            color2: '#ffffff', // Default font color
+            color1: '#585858',
+            color2: '#ffffff',
         },
     });
     const [loading, setLoading] = useState(false);

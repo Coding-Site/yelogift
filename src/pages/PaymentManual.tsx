@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { MdContentCopy } from 'react-icons/md';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
@@ -20,7 +19,6 @@ function PaymentManual() {
         const currencyId = JSON.parse(
             localStorage.getItem('currencyId') as string
         );
-        // window.location.reload();
         axios
             .post(
                 `${import.meta.env.VITE_BASEURL}/api/user/order/crypto`,
@@ -90,20 +88,22 @@ function PaymentManual() {
     };
 
     return (
-        <div className="flex flex-col py-10 w-full container bg-black sm:bg-transparent text-mainLightBlack">
+        <div className="flex flex-col sm:py-10 w-full sm:container bg-black sm:bg-transparent text-mainLightBlack">
             <div className="flex justify-between sm:flex-row flex-col w-full gap-x-12 gap-y-4">
-                <div className="flex justify-start flex-col px-10 py-10 sm:bg-white bg-[#000000] text-white sm:text-black grow w-full h-[480px] sm:h-[650px] ">
+                <div className="flex justify-start flex-col px-2 py-2 sm:px-10 sm:py-10 sm:bg-white bg-[#000000] text-white sm:text-black grow w-full  sm:h-[650px] ">
                     <div className="flex flex-col gap-y-3">
                         <span className="text-2xl font-semibold mb-5">
                             Wallet Connect
                         </span>
-                        <p>Send the indicated amount to the address below:</p>
-                        <span className="bg-[#222222] sm:bg-gray-300  text-white sm:text-gray-700 rounded-md text-sm mb-5 p-2 ">
+                        <p className="text-[12px] sm:text-[16px]">
+                            Send the indicated amount to the address below:
+                        </p>
+                        <span className="bg-[#222222] sm:bg-gray-300  text-white sm:text-gray-700 rounded-md text-sm mb-5 p-2 hidden sm:block">
                             You need to add network fee into transfer
                             transaction
                         </span>
                         <div className="flex flex-col gap-y-1">
-                            <span className="text-2xl">USDT Amount</span>
+                            <span className="sm:text-2xl">USDT Amount</span>
                             <div className="flex justify-between w-full">
                                 <input
                                     type="text"
@@ -128,7 +128,7 @@ function PaymentManual() {
                                 </span>
                             </p>
                         </div>
-                        <span className="text-2xl">Wallet address</span>
+                        <span className="sm:text-2xl">Wallet address</span>
                         <div className="flex justify-between w-full min-w-fit">
                             <input
                                 type="text"
@@ -168,16 +168,15 @@ function PaymentManual() {
                         </div>
                     </div>
                 </div>
-                <div className="flex justify-start flex-col px-10 py-10 sm:bg-white bg-[#000000] text-white sm:text-black grow w-full h-[650px]">
+                <div className="flex justify-start flex-col px-2 py-2 sm:px-10 sm:py-10 sm:bg-white bg-[#000000] text-white sm:text-black grow w-full sm:h-[650px]">
                     <span className="text-2xl font-semibold mb-5">
                         {' '}
                         Payment{' '}
                     </span>
-
-                    <div className="flex flex-col gap-y-7 items-center ">
+                    <div className="flex flex-col gap-y-7 w-full items-center ">
                         <p>Scan this QR code in the Binance app</p>
                         <img
-                            className="mx-auto max-h-[300px] max-w-[300px]"
+                            className="mx-auto w-[75%] sm:w-auto  max-h-[300px] max-w-[300px]"
                             src={`${
                                 import.meta.env.VITE_BASEURL
                             }/public/storage/${cryptoPayData.payment_qr}`}
@@ -189,12 +188,16 @@ function PaymentManual() {
                             </span>
                         )}
                     </div>
-
                     <div className="flex-col flex sm:hidden">
-                        <span className="text-2xl">Upload photo</span>
+                        <span className="hidden sm:block text-2xl">
+                            Upload photo
+                        </span>
+                        <span className="text-[15px] pt-[18px] pb-[9px] sm:hidden">
+                            To Verify Your Payment Upload Receipt
+                        </span>
                         <label
                             htmlFor="file"
-                            className="w-full py-3 px-4 bg-[#CBD3FF] rounded-md border-dashed border-gray-400 text-center text-gray-700 "
+                            className="w-full py-3 px-4 bg-[#CBD3FF] rounded-md border-dashed border-gray-400 text-center text-gray-700 text-[12px] sm:text-[16px] border-dashed border-[2px] border-[#0C192B]"
                         >
                             Drop your PDF or PNG file here or{' '}
                             <span className="font-bold">choose file</span>
@@ -208,11 +211,9 @@ function PaymentManual() {
                     </div>
                 </div>
             </div>
-
             <div className="flex flex-col gap-y-5  items-center py-14">
                 <button className="btn !rounded-md !w-56" onClick={sentToDB}>
-                    {' '}
-                    Submit
+                    Submit order
                 </button>
                 <Link to="/" className="text-white">
                     Cancel

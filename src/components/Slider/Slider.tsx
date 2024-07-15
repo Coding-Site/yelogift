@@ -10,7 +10,6 @@ import './Slider.css';
 export default function Slider() {
     const [sliderData, setSliderData] = useState<any>([]);
     const [activeIndex, setActiveIndex] = useState(0);
-
     useEffect(() => {
         instance
             .get(`/api/home/sliders`)

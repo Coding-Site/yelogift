@@ -2,6 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import instance from '../axios';
 import { PiWarningCircleThin } from 'react-icons/pi';
+import { IoIosArrowForward } from 'react-icons/io';
 
 function CheckoutSingleNow() {
     const [methods, setMethods] = useState([]);
@@ -72,12 +73,12 @@ function CheckoutSingleNow() {
     return (
         <div className="flex flex-col md:py-10 w-full md:container text-mainLightBlack">
             <div className="flex justify-between flex-col sm:flex-row w-full gap-3">
-                <div className="flex justify-start flex-col gap-y-10 sm:text-black text-white px-10 md:py-10 sm:bg-white grow">
+                <div className="flex justify-start flex-col gap-y-1 sm:gap-y-10 sm:text-black text-white px-5 sm:px-10 md:py-10 sm:bg-white grow">
                     <span className="sm:flex hidden text-2xl font-semibold  ">
                         Order Summary
                     </span>
-                    <div>
-                        <div className="flex justify-start gap-3 w-full ">
+                    <div className="w-full">
+                        <div className="flex justify-between sm:justify-start gap-3 w-full ">
                             <img
                                 className="w-20 h-12"
                                 src={`${
@@ -89,15 +90,27 @@ function CheckoutSingleNow() {
                                 alt="cart"
                             />
                             <div className="flex flex-col gap-0">
-                                <span className="text-black sm:text-base text-sm whitespace-nowrap">
+                                <span className="text-white sm:text-black sm:text-base text-sm whitespace-nowrap">
                                     {
                                         orderData?.order.order_product[0]
                                             .product_part.title
                                     }
                                 </span>
-                                <span className="text-sm text-gray-500">
-                                    USD {orderData?.total_price.toFixed(2)}
-                                </span>
+                                <div className="flex justify-between items-center">
+                                    <span className="text-sm text-gray-500">
+                                        {
+                                            orderData?.order.order_product[0]
+                                                .product_part.price_text
+                                        }
+                                    </span>
+                                    <span className="text-sm text-gray-500">
+                                        $
+                                        {
+                                            orderData?.order.order_product[0]
+                                                .product_part.price
+                                        }
+                                    </span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -119,36 +132,42 @@ function CheckoutSingleNow() {
                     </div>
                 </div>
                 <div className="flex justify-start flex-col sm:text-black text-white gap-y-3 md:gap-y-10 px-10 py-2 md:py-10 sm:bg-white grow">
-                    <span className="text-2xl font-semibold">
+                    <span className=" text-[17px]  sm:text-2xl font-semibold">
                         Select Payment method
                     </span>
                     <div className="flex flex-col font-medium text-xl">
-                        <label htmlFor="binance" className="flex gap-2">
+                        <label
+                            htmlFor="binance"
+                            className="flex gap-2 items-center"
+                        >
                             <input
                                 type="radio"
                                 onClick={() => setPayMethod('binance')}
                                 defaultChecked
-                                className="!flex"
+                                className="custom-radio"
                                 name="method"
                                 id="binance"
                             />
                             <img
-                                className="w-[23px] h-[23px]"
+                                className="w-[20px] h-[20px] object-cover"
                                 src="assets/cLogo/Binance_logo_coin 5.png"
                                 alt=".."
                             />
                             Binance Pay
                         </label>
-                        <label htmlFor="pay" className="flex gap-2">
+                        <label
+                            htmlFor="pay"
+                            className="flex gap-2 items-center"
+                        >
                             <input
                                 type="radio"
                                 onClick={() => setPayMethod('crypto')}
-                                className="!flex"
+                                className="custom-radio"
                                 name="method"
                                 id="pay"
                             />
                             <img
-                                className="w-[23px] h-[23px]"
+                                className="w-[20px] h-[20px] object-cover"
                                 src="assets/cLogo/IMG_4669 1.png"
                                 alt=".."
                             />
@@ -159,7 +178,7 @@ function CheckoutSingleNow() {
                         <div className="flex justify-evenly flex-wrap gap-x-2 gap-y-8">
                             {methods.map((method: any, idx: any) => (
                                 <div
-                                    className="flex rounded-full !w-1/6 !h-10 flex-col cursor-pointer justify-start items-center gap-y-1"
+                                    className="flex rounded-full !w-1/6 !h-10 flex-col cursor-pointer justify-start items-center gap-y-1 mb-[20px]"
                                     key={idx}
                                     style={{
                                         border:
@@ -193,9 +212,18 @@ function CheckoutSingleNow() {
                     )}
                 </div>
             </div>
-            <div className="flex flex-col gap-y-5 items-center py-14">
-                <button className="btn !rounded-md !w-56" onClick={SendToDB}>
+            <div className="flex flex-col gap-y-5 items-center pt-2 pb-10  md:py-14">
+                <button
+                    className="hidden sm:block btn !rounded-md !w-[80%] sm:!w-56"
+                    onClick={SendToDB}
+                >
                     Submit
+                </button>
+                <button
+                    className="sm:hidden btn !rounded-md !w-[80%] sm:!w-56"
+                    onClick={SendToDB}
+                >
+                    Pay Now <IoIosArrowForward />
                 </button>
                 <Link to="/" className="text-white">
                     Cancel

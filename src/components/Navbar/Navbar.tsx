@@ -214,7 +214,7 @@ function Navbar() {
                 <div className="flex justify-between items-center grow-0 sm:grow">
                     <div className="flex justify-center ms-auto me-3 gap-3 text-3xl">
                         {userToken && (
-                            <div className="dropdown dropdown-end bg-transparent text-3xl z-[10000]">
+                            <div className="dropdown dropdown-end bg-transparent text-3xl z-[1000]">
                                 <div tabIndex={0} role="button">
                                     <img
                                         src="/assets/navbar/Asset_26.png"

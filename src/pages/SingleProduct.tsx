@@ -7,6 +7,10 @@ import { addNewItem, getCartData } from '../store/CartSlice/CartSlice';
 import { AppDispatch } from '../store';
 import instance from '../axios';
 import { Helmet } from 'react-helmet-async';
+import Modal from 'react-modal';
+import { IoIosCheckmarkCircle } from 'react-icons/io';
+
+Modal.setAppElement('#root');
 
 function SingleProduct() {
     const [Product, setProduct] = useState<any>();
@@ -18,11 +22,25 @@ function SingleProduct() {
     const userToken = localstorage?.userToken;
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
-    const [addedInTheCard, setAddedInTheCard] = useState<boolean>(false);
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [popdata, setPopdata] = useState<any>(null);
 
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
+
+    const openModal = (data: any) => {
+        setPopdata(data);
+        setModalIsOpen(true);
+    };
+
+    const closeModal = () => {
+        setModalIsOpen(false);
+    };
+
+    const checkOut = () => {
+        navigate('/checkout');
+    };
 
     useEffect(() => {
         instance.get(`/api/home/products/${id}`).then((d) => {
@@ -35,8 +53,6 @@ function SingleProduct() {
     }, [id]);
 
     const AddtoCart = async () => {
-        setAddedInTheCard(false);
-
         if (!userToken) {
             alert('You should sign in to add products');
             return;
@@ -51,6 +67,8 @@ function SingleProduct() {
             return;
         }
 
+        openModal(selectedPartData);
+
         await dispatch(
             addNewItem({
                 product_id: Product.id,
@@ -61,7 +79,6 @@ function SingleProduct() {
             })
         );
         dispatch(getCartData());
-        setAddedInTheCard(true);
     };
 
     const buyNow = () => {
@@ -116,9 +133,6 @@ function SingleProduct() {
                         <div className="hidden sm:flex bg-white flex-col justify-stretch items-center p-6 w-full rounded-md">
                             <div className="relative w-1/3 rounded-full bg-black h-[15px]">
                                 <div className="size-5 rounded-full bg-black absolute -top-[50%] left-[50%] -translate-x-[50%]"></div>
-                                {/* <span className="absolute text-gray-500 font-semibold -right-[80px] -top-[4px]">
-                                    ${Product?.price}
-                                </span> */}
                             </div>
                             <div className="flex flex-col text-gray-500 justify-center items-center mt-5">
                                 <span className="text-2xl">
@@ -218,11 +232,6 @@ function SingleProduct() {
                             >
                                 Add to cart
                             </button>
-                            {addedInTheCard && (
-                                <span className="text-green-600 w-full text-center ">
-                                    Product added successfully
-                                </span>
-                            )}
                         </div>
                         <button
                             className="btn grow !bg-white !rounded-md basis-auto"
@@ -284,6 +293,70 @@ function SingleProduct() {
                     </div>
                 </div>
             </div>
+            <Modal
+                isOpen={modalIsOpen}
+                onRequestClose={closeModal}
+                style={{
+                    overlay: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.75)',
+                        zIndex: 1000,
+                    },
+                    content: {
+                        color: '#F0B90B',
+                        top: '50%',
+                        left: '50%',
+                        right: 'auto',
+                        bottom: 'auto',
+                        marginRight: '-50%',
+                        transform: 'translate(-50%, -50%)',
+                        zIndex: 10000,
+                        width: '40%',
+                        maxWidth: '90%',
+                        backgroundColor: '#1E2329',
+                        overflowY: 'hidden',
+                        border: 'none',
+                    },
+                }}
+            >
+                <div className="flex flex-col items-start justify-center w-full">
+                    <div className="text-[#699F4C] flex items-center justify-center gap-2 mb-[13px]">
+                        <IoIosCheckmarkCircle className="  " />
+                        <span className=" text-[12px]">Added to cart</span>
+                    </div>
+                    <div className="flex items-center  mb-[30px]">
+                        <img
+                            src={`${
+                                import.meta.env.VITE_BASEURL
+                            }/public/storage/${Product?.image}`}
+                            alt="product card"
+                            className="w-[76px] h-[46px] rounded-[7px] mr-[15px]"
+                        />
+                        {popdata && (
+                            <div className="flex flex-col  justify-center text-[#fff]">
+                                <p>{popdata.title}</p>
+                                <p className="text-[#6D6D6D]">
+                                    {' '}
+                                    {popdata.price} USDT
+                                </p>
+                            </div>
+                        )}
+                    </div>
+                    <div className="flex flex-col w-full gap-[14px]">
+                        <button
+                            className="min-h-[37px] border border-[2px] border-[#F0B90B] !rounded-md !w-full !bg-[#1E2329]"
+                            onClick={closeModal}
+                        >
+                            keep shopping
+                        </button>
+                        <button
+                            className="btn !rounded-md !w-full"
+                            onClick={checkOut}
+                        >
+                            Check out
+                        </button>
+                    </div>
+                </div>
+            </Modal>
         </>
     );
 }

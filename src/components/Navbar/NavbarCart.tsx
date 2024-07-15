@@ -16,20 +16,6 @@ function NavbarCart({ setOpenCart, openCart }: Props) {
     const navigate = useNavigate();
     const carts = useSelector((state: RootState) => state.cartSlice.items);
     const dispatch = useDispatch();
-    // const carts = [
-    //   {
-    //     img: "/assets/cards/card1.png",
-    //     description: "avsfvsgd",
-    //     price: 125,
-    //     quantity: 1,
-    //   },
-    //   {
-    //     img: "/assets/cards/card1.png",
-    //     description: "avsfvsgadfvasdvafvdd",
-    //     price: 125,
-    //     quantity: 1,
-    //   },
-    // ];
 
     return (
         <div className="bg-white flex flex-col gap-2 rounded-md p-3 ">
@@ -48,7 +34,6 @@ function NavbarCart({ setOpenCart, openCart }: Props) {
                                 alt="cart"
                             />
                             <div className="flex flex-col gap-0">
-                                {/* <span className="text-xl text-black ">{(cart.product as IProduct).description?.length > 10 ? cart.product?.description.slice(0, 10) + '...' : cart?.product?.description}</span> */}
                                 <span className="text-sm text-gray-500">
                                     AED {cart.product?.price}
                                 </span>

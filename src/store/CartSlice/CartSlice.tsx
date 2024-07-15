@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-// import { IProduct } from '../../models/IProduct';
 import axios from 'axios';
 import instance from '../../axios';
 
