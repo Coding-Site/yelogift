@@ -1,7 +1,5 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from 'react';
 import { AiOutlinePlus } from 'react-icons/ai';
-// import { GoPencil } from "react-icons/go";
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { FaTrash } from 'react-icons/fa6';
 import { PiEye } from 'react-icons/pi';

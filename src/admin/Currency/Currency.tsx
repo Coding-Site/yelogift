@@ -1,7 +1,6 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { ICurrency } from '../../models/ICurrency';
 import { useEffect, useState } from 'react';
-// import { GoPencil } from 'react-icons/go';
 import instance from '../../axios';
 import { FaTrash } from 'react-icons/fa6';
 

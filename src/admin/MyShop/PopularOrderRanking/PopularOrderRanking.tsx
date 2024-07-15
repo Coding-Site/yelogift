@@ -13,7 +13,6 @@ interface DragItem {
 const PopularOrderRanking = () => {
     const [popularProducts, setPopularProducts] = useState<any[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
-    // const [error, setError] = useState<string | null>(null);
     const [isDropping, setIsDropping] = useState<boolean>(false);
     const localstorage = JSON.parse(
         localStorage.getItem('adminData') as string
@@ -29,7 +28,6 @@ const PopularOrderRanking = () => {
     }, []);
 
     if (loading) return <Spinner />;
-    // if (error) return <div>Error: {error}</div>;
 
     const moveProduct = (dragIndex: number, hoverIndex: number) => {
         const dragProduct = popularProducts[dragIndex];
