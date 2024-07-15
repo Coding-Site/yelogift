@@ -168,18 +168,21 @@ function Checkout() {
                                 if (item.quantity) {
                                     return (
                                         <div key={idx}>
-                                            <div className="flex flex-col flex-wrap	 sm:flex-row justify-between w-full gap-[6px]">
-                                                <div className="flex items-center  sm:justify-center gap-[7px]">
-                                                    <img
-                                                        className="w-20 h-12 mr-[15px]"
-                                                        src={`${
-                                                            import.meta.env
-                                                                .VITE_BASEURL
-                                                        }/public/storage/${
-                                                            item.product.image
-                                                        }`}
-                                                        alt="cart"
-                                                    />
+                                            <div className="flex items-center justify-between w-full gap-[6px]">
+                                                <img
+                                                    className="w-[108px] h-[66px] mr-[15px] rounded-[12px]"
+                                                    src={`${
+                                                        import.meta.env
+                                                            .VITE_BASEURL
+                                                    }/public/storage/${
+                                                        item.product.image
+                                                    }`}
+                                                    alt="cart"
+                                                />
+                                                {/* <div className="flex items-center  sm:justify-center gap-[7px]"> */}
+
+                                                {/* </div> */}
+                                                <div className="flex flex-col flex-wrap	 sm:flex-row justify-center sm:w-full sm:justify-between  w-full sm:w-auto  items-start">
                                                     <div className="flex flex-col gap-[5px] ">
                                                         <span className="text-white sm:text-black sm:text-base text-sm whitespace-nowrap">
                                                             {
@@ -206,58 +209,62 @@ function Checkout() {
                                                             </span>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div className="flex justify-center items-center w-full sm:w-auto">
-                                                    <div className="flex sm:basis-24 basis-16 text-base h-8 min-w-[55px] sm:min-w-[100px] px-2 sm:px-3 items-center ms-auto w-auto  justify-between rounded-[8px] sm:rounded-full border border-[#6D6D6D]">
-                                                        <span
+                                                    <div className="flex mt-[5px]">
+                                                        <div className="flex sm:basis-24 basis-16 text-base h-8 min-w-[70px] sm:min-w-[100px] px-2 sm:px-3 items-center ms-auto w-auto  justify-between rounded-[8px] sm:rounded-full border border-[#6D6D6D]">
+                                                            <span
+                                                                onClick={() =>
+                                                                    handleDecrease(
+                                                                        item.id
+                                                                    )
+                                                                }
+                                                                className="cursor-pointer"
+                                                            >
+                                                                -
+                                                            </span>
+                                                            <span>
+                                                                {item.quantity}
+                                                            </span>
+                                                            <span
+                                                                onClick={() => {
+                                                                    dispatch(
+                                                                        updateCartItem(
+                                                                            {
+                                                                                cart_id:
+                                                                                    item.id as number,
+                                                                                quantity:
+                                                                                    item.quantity +
+                                                                                    1,
+                                                                            }
+                                                                        )
+                                                                    ).then(
+                                                                        () => {
+                                                                            dispatch(
+                                                                                getCartData()
+                                                                            );
+                                                                        }
+                                                                    );
+                                                                    setFlag(
+                                                                        !flag
+                                                                    );
+                                                                }}
+                                                                className="cursor-pointer"
+                                                            >
+                                                                +
+                                                            </span>
+                                                        </div>
+                                                        <div
                                                             onClick={() =>
-                                                                handleDecrease(
+                                                                handleRemove(
                                                                     item.id
                                                                 )
                                                             }
-                                                            className="cursor-pointer"
+                                                            className="cursor-pointer h-8 flex items-center justify-center gap-[7px] ml-[5px] sm:ml-[17px] mx-auto rounded-[8px] sm:rounded-full border border-[#6D6D6D] p-[7px] sm:border-none"
                                                         >
-                                                            -
-                                                        </span>
-                                                        <span>
-                                                            {item.quantity}
-                                                        </span>
-                                                        <span
-                                                            onClick={() => {
-                                                                dispatch(
-                                                                    updateCartItem(
-                                                                        {
-                                                                            cart_id:
-                                                                                item.id as number,
-                                                                            quantity:
-                                                                                item.quantity +
-                                                                                1,
-                                                                        }
-                                                                    )
-                                                                ).then(() => {
-                                                                    dispatch(
-                                                                        getCartData()
-                                                                    );
-                                                                });
-                                                                setFlag(!flag);
-                                                            }}
-                                                            className="cursor-pointer"
-                                                        >
-                                                            +
-                                                        </span>
-                                                    </div>
-                                                    <div
-                                                        onClick={() =>
-                                                            handleRemove(
-                                                                item.id
-                                                            )
-                                                        }
-                                                        className="cursor-pointer h-8 flex items-center justify-center gap-[7px] ml-[5px] sm:ml-[17px] mx-auto rounded-[8px] sm:rounded-full border border-[#6D6D6D] p-[7px] sm:border-none"
-                                                    >
-                                                        <FaRegTrashAlt className="text-[#6D6D6D] text-[15px]" />
-                                                        <span className="sm:hidden text-[11px] text-[#6D6D6D]">
-                                                            Remove
-                                                        </span>
+                                                            <FaRegTrashAlt className="text-[#6D6D6D] text-[15px]" />
+                                                            <span className="sm:hidden text-[11px] text-[#6D6D6D]">
+                                                                Remove
+                                                            </span>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -273,10 +280,10 @@ function Checkout() {
                         )}
                     </div>
                     <div>
-                        <div className="flex items-center container justify-between text-sm mt-5">
+                        <div className="flex items-center  justify-between text-sm mt-5">
                             <span>Total Estimate</span>
                             <span className="text-xl text-[#6D6D6D]">
-                                USDT {calculateTotalPrice()}
+                                USDT {calculateTotalPrice().toFixed(2)}
                             </span>
                         </div>
                         {feeDesc && payMethod === 'binance' && (
