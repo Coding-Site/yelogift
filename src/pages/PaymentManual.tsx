@@ -42,6 +42,9 @@ function PaymentManual() {
 
     const copyToClipboard = (text: any) => {
         navigator.clipboard.writeText(text);
+        toast.success('Copied', {
+            autoClose: 700,
+        });
     };
 
     const sentToDB = () => {
